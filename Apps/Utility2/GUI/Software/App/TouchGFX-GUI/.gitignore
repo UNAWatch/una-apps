@@ -1,0 +1,15 @@
+# build
+
+*.vcxproj.user
+
+/build/
+/simulator/msvs/.vs/*
+/simulator/msvs/screenshots/*
+/config/gcc/*
+
+# GUI generated files
+/generated/*.config
+/generated/**/*.txt
+/generated/**/*.cache
+/generated/simulator/**/Makefile
+

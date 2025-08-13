@@ -1,0 +1,100 @@
+#ifndef __IMODEL_TEMPLATE_HPP__
+#define __IMODEL_TEMPLATE_HPP__
+
+#include "Interfaces/IKernel.hpp"
+
+#include <stdint.h>
+
+#include <variant>
+#include <string>
+
+namespace S2GEvent {    // Service-to-GUI events
+    enum class State {
+        none,
+        suspend,
+        resume,
+        quit
+    };
+
+    struct UpdateState {
+        State state;
+    };
+
+    struct Counter {
+        uint32_t value;
+    };
+
+    using Data = std::variant<
+            UpdateState,
+            Counter
+    >;
+};
+
+namespace G2SEvent {    // GUI-to-Service events
+    struct Run {};
+    struct Stop {};
+
+    using Data = std::variant<
+            Run,
+            Stop
+    >;
+};
+
+class IServiceModelHandler {
+public:
+    virtual ~IServiceModelHandler() = default;
+
+    virtual void handleEvent(const G2SEvent::Run& event)  = 0;
+    virtual void handleEvent(const G2SEvent::Stop& event) = 0;
+};
+
+class IGUIModelHandler {
+public:
+    virtual ~IGUIModelHandler() = default;
+
+    void handleEvent(const S2GEvent::UpdateState& event)
+    {
+        mGUIState = event.state;
+    }
+
+    S2GEvent::State getGUIState()
+    {
+        S2GEvent::State res = mGUIState;
+
+        mGUIState = S2GEvent::State::none;
+
+        return res;
+    }
+
+    virtual void handleEvent(const S2GEvent::Counter& event) = 0;
+
+
+private:
+    S2GEvent::State mGUIState;
+};
+
+class IGUIModel {
+public:
+    IGUIModel()
+        : mGUIHandler()
+        , mGUIKernel(nullptr)
+    {}
+
+    virtual ~IGUIModel() = default;
+
+    void setGUIHandler(const IKernel* kernel, IGUIModelHandler* handler)
+    {
+        mGUIKernel  = kernel;
+        mGUIHandler = handler;
+    }
+
+    virtual S2GEvent::State checkS2GEvents(uint32_t timeout = 0xFFFFFFFF)  = 0;
+    virtual bool            sendToService(const G2SEvent::Data& data)      = 0;
+    virtual void            updateGUIState(S2GEvent::State state)          = 0;
+
+protected:
+    IGUIModelHandler* mGUIHandler;
+    const IKernel*    mGUIKernel;
+};
+
+#endif
