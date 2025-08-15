@@ -26,7 +26,7 @@ extern const IKernel *kernel;
 
 static uint32_t LoggerGetTicks()
 {
-    return kernel->time.getTicks();
+    return kernel->app.getTimeMs();
 }
 
 static void LoggerPrint(const char* str)
