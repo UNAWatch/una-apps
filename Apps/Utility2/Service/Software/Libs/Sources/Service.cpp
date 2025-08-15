@@ -49,7 +49,7 @@ void Service::run()
 //            mKernel.vibro.stop();
         } else {
             mKernel.buzzer.play();
-//            mKernel.buzzer.stop();
+            mKernel.buzzer.stop();
         }
 
         if (++stage > 2) {
