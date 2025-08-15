@@ -75,26 +75,13 @@ private:
 
 class IGUIModel {
 public:
-    IGUIModel()
-        : mGUIHandler()
-        , mGUIKernel(nullptr)
-    {}
-
     virtual ~IGUIModel() = default;
 
-    void setGUIHandler(const IKernel* kernel, IGUIModelHandler* handler)
-    {
-        mGUIKernel  = kernel;
-        mGUIHandler = handler;
-    }
+    virtual void            setGUIHandler(const IKernel* kernel, IGUIModelHandler* handler) = 0;
+    virtual S2GEvent::State checkS2GEvents(uint32_t timeout = 0xFFFFFFFF)                   = 0;
+    virtual bool            sendToService(const G2SEvent::Data& data)                       = 0;
+    virtual void            updateGUIState(S2GEvent::State state)                           = 0;
 
-    virtual S2GEvent::State checkS2GEvents(uint32_t timeout = 0xFFFFFFFF)  = 0;
-    virtual bool            sendToService(const G2SEvent::Data& data)      = 0;
-    virtual void            updateGUIState(S2GEvent::State state)          = 0;
-
-protected:
-    IGUIModelHandler* mGUIHandler;
-    const IKernel*    mGUIKernel;
 };
 
 #endif

@@ -7,6 +7,8 @@ GSModel::GSModel(const IKernel& kernel, IServiceModelHandler& handler)
     , mS2GQueue(kernel)
     , mG2SQueue(kernel)
     , mServiceHandler(handler)
+    , mGUIHandler(nullptr)
+    , mGUIKernel(nullptr)
 {
     mS2GQueue.init();
     mG2SQueue.init();
@@ -16,8 +18,17 @@ GSModel::~GSModel()
 {
 }
 
+void GSModel::setGUIHandler(const IKernel* kernel, IGUIModelHandler* handler)
+{
+    mGUIKernel  = kernel;
+    mGUIHandler = handler;
+}
+
 S2GEvent::State GSModel::checkS2GEvents(uint32_t timeout)
 {
+    assert(mGUIKernel != nullptr);
+    assert(mGUIHandler != nullptr);
+
     S2GEvent::Data data {};
 
     mGUIKernel->app.unLock();

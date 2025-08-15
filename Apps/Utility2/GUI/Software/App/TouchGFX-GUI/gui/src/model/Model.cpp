@@ -23,7 +23,6 @@ Model::Model()
 {
     mKernel->app.registerApp(this);
     mGSModel->setGUIHandler(mKernel, this);
-    mKernel->app.initialized();
 
     LOG_INFO("GUI [Utility #2] is initialized\n");
 
@@ -54,7 +53,7 @@ void Model::tick()
 {
 //    LOG_INFO_WP("tick\n");
 
-    if (mCounter >= 5) {
+    if (mCounter >= 15) {
         mGSModel->sendToService(G2SEvent::Stop {});
         mGSModel->setGUIHandler(nullptr, nullptr);
 

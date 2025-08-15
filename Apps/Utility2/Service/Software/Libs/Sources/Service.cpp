@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#define TAG                 "ServiceModule"
+#define TAG                 "Service2"
 #define LOG_MODULE_PRX      TAG"::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "Logger.h"
@@ -26,42 +26,30 @@ void Service::run()
 {
     mKernel.app.initialized();
 
-    mKernel.app.enableMusicControl(false);
-    mKernel.app.enablePhoneNotification(false);
-    mKernel.app.enableUsbCharging(false);
-    mKernel.app.enableMusicControl(true);
-    mKernel.app.enablePhoneNotification(true);
-    mKernel.app.enableUsbCharging(true);
+//    mKernel.app.enableMusicControl(false);
+//    mKernel.app.enablePhoneNotification(false);
+//    mKernel.app.enableUsbCharging(false);
+//    mKernel.app.enableMusicControl(true);
+//    mKernel.app.enablePhoneNotification(true);
+//    mKernel.app.enableUsbCharging(true);
 
     uint8_t stage = 0;
 
-    mDS = mKernel.sensorManager.getDefaultSensor(Sensor::Type::SENSOR_TYPE_AMBIENT_TEMPERATURE);
-    mDS->connect(this, &mKernel.app, 1000, 1000);
-
-    std::vector<Interface::ISensorDriver*> tempList = mKernel.sensorManager.getSensorList(Sensor::Type::SENSOR_TYPE_AMBIENT_TEMPERATURE);
-    mBMETemp = tempList[1];
-    mBMETemp->connect(this, &mKernel.app, 1000, 1000);
-
-    mBMEPressure = mKernel.sensorManager.getDefaultSensor(Sensor::Type::SENSOR_TYPE_PRESSURE);
-    mBMEPressure->connect(this, &mKernel.app, 1000, 1000);
-
     mAltimeter = mKernel.sensorManager.getDefaultSensor(Sensor::Type::SENSOR_TYPE_ALTIMETER);
-    mAltimeter->connect(this, &mKernel.app, 1000, 1000);
+    mAltimeter->connect(this, &mKernel.app, 1000, 2000);
 
     while (!mTerminate) {
         mGSModel->checkG2SEvents(1000);
-
-        LOG_INFO("test\n");
 
         if (stage == 0) {
             mKernel.backlight.on(1000);
             mKernel.backlight.off();
         } else if (stage == 1) {
-            mKernel.vibro.play();
-            mKernel.vibro.stop();
+//            mKernel.vibro.play();
+//            mKernel.vibro.stop();
         } else {
             mKernel.buzzer.play();
-            mKernel.buzzer.stop();
+//            mKernel.buzzer.stop();
         }
 
         if (++stage > 2) {
@@ -79,9 +67,6 @@ void Service::run()
         }
     }
 
-    mDS->disconnect(this);
-    mBMETemp->disconnect(this);
-    mBMEPressure->disconnect(this);
     mAltimeter->disconnect(this);
 }
 
@@ -141,7 +126,7 @@ void Service::onNewSensorData(const Interface::ISensorDriver*             sensor
     } else if (sensor == mBMEPressure) {
         LOG_INFO("BME.P     = %.2f\n", data[0]->getValue(0));
     } else if (sensor == mAltimeter) {
-        LOG_INFO("Altimeter = %.2f\n", data[0]->getValue(0));
+        LOG_INFO("Altimeter = %.2f (%d)\n", data[0]->getValue(0), data.size());
     } else {
         LOG_ERROR("unknown sensor\n");
     }
