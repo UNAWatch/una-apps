@@ -65,14 +65,19 @@ private:
         printf("%s::onStart()\n", mName);
     }
 
-    void onStop() override
+    virtual void onResume() override
     {
-        printf("%s::onStop()\n", mName);
+        printf("%s::onResume()\n", mName);
     }
 
     void onPause() override
     {
         printf("%s::onPause()\n", mName);
+    }
+
+    void onStop() override
+    {
+        printf("%s::onStop()\n", mName);
     }
 
     void onDestroy() override

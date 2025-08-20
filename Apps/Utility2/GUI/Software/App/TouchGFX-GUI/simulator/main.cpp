@@ -6,15 +6,15 @@
 #include <platform/driver/touch/NoTouchController.hpp>
 #include <touchgfx/lcd/LCD.hpp>
 #include <simulator/mainBase.hpp>
-#include "gui/common/GuiConfig.hpp"
 #include "touchgfx/Utils.hpp"
+
+#include "gui/common/GuiConfig.hpp"
 #include "KernelBase.hpp"
 #include "Service.hpp"
-#include "MockServiceControl.hpp"
 #include "KernelManager.hpp"
-#include "OS/OS.hpp"
-#include "SensorLayer/SensorManager.hpp"
-#include "SensorLayer/SensorCore.hpp"
+#include "Platform/OS/OS.hpp"
+#include "Simulator/Sensors/SensorCore.hpp"
+#include "Simulator/Kernel/Mock/MockServiceControl.hpp"
 
 #include <stdlib.h>
 #include <thread>

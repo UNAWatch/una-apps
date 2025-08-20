@@ -32,11 +32,11 @@ public:
     {
 #if defined(SIMULATOR)
         if (Simulator::KernelHolder::Get().keyFilter(key)) {
-            //model.keyEvent(key);
+            model.handleKeyEvent(key);
             FrontendApplicationBase::handleKeyEvent(key);
         }
 #else
-//        model.keyEvent(key);
+        model.handleKeyEvent(key);
         FrontendApplicationBase::handleKeyEvent(key);
 #endif
     }

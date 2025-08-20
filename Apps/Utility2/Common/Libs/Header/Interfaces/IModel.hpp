@@ -1,5 +1,5 @@
-#ifndef __IMODEL_TEMPLATE_HPP__
-#define __IMODEL_TEMPLATE_HPP__
+#ifndef __IMODEL_HPP__
+#define __IMODEL_HPP__
 
 #include "Interfaces/IKernel.hpp"
 
@@ -39,6 +39,7 @@ namespace G2SEvent {    // GUI-to-Service events
             Stop
     >;
 };
+
 
 class IServiceModelHandler {
 public:
@@ -84,4 +85,4 @@ public:
 
 };
 
-#endif
+#endif // __IMODEL_HPP__

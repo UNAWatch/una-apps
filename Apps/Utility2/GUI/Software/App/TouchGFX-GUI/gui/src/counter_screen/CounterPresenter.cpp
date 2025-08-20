@@ -21,3 +21,8 @@ void CounterPresenter::updateCounter(uint32_t value)
 {
     view.updateCounter(value);
 }
+
+void CounterPresenter::exit()
+{
+    model->exitApp();
+}

@@ -29,6 +29,8 @@ public:
 
     void updateCounter(uint32_t value) override;
 
+    void exit();
+
 private:
     CounterPresenter();
 
