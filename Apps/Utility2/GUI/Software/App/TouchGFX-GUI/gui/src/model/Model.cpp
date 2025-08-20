@@ -30,6 +30,9 @@ Model::Model()
 #if defined(SIMULATOR)
     LOG_DEBUG("Application is running through simulator! \n");
 
+    std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
+    LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
+
     LOG_DEBUG_WP("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
