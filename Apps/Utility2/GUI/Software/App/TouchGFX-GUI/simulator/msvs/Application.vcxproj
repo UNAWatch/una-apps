@@ -17,15 +17,15 @@
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\hal\simulator\sdl2\OSWrappers.cpp" />
     <ClCompile Include="$(ApplicationRoot)\simulator\main.cpp" />
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Logger\Logger.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Platform\OS\OS.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\BacklightStub.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\BuzzerStub.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\FileSystem.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\MockMemory.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\VibroStub.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Sensors\SensorCore.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c" />
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\Service.cpp" />
@@ -36,10 +36,6 @@
     <ClCompile Include="..\..\gui\src\counter_screen\CounterView.cpp" />
     <ClCompile Include="..\..\generated\gui_generated\src\counter_screen\CounterViewBase.cpp" />
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp" />
-    <ClCompile Include="..\Libs\Source\SensorLayer\Altimeter.cpp" />
-    <ClCompile Include="..\Libs\Source\SensorLayer\BME280.cpp" />
-    <ClCompile Include="..\Libs\Source\SensorLayer\DS18B20.cpp" />
-    <ClCompile Include="..\Libs\Source\SensorLayer\SensorCore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml" />
@@ -180,6 +176,40 @@
     <ClInclude Include="$(TouchGFXReleasePath)\framework\include\touchgfx\widgets\TouchArea.hpp" />
     <ClInclude Include="$(TouchGFXReleasePath)\framework\include\touchgfx\widgets\Widget.hpp" />
     <ClInclude Include="$(ApplicationRoot)\generated\simulator\include\simulator\mainBase.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Backlight.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Buzzer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\FileSystem.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Power.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Settings.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Time.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Vibro.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IKernel.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IMutex.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISemaphore.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISensorManager.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISynchManager.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserApp.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserAppControl.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserAppMemAllocator.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\KernelManager.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Platform\OS\OS.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorData.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorDataListener.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorDriver.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\SensorTypes.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\KernelBase.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Backlight.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Buzzer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\MockServiceControl.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Power.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\SensorManager.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Settings.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Vibro.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Sensors\ISensorCore.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Sensors\SensorCore.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SynchManager\SynchManager.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\UnaLogger\Logger.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Wrappers\StdLibWrappers.h" />
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\DirectFrameBufferVideoController.hpp" />
     <ClInclude Include="..\..\gui\include\gui\common\FrontendApplication.hpp" />
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendApplicationBase.hpp" />
@@ -192,7 +222,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp" />
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp" />
     <ClInclude Include="..\..\gui\include\gui\common\GuiConfig.hpp" />
-    <ClInclude Include="..\Backend.hpp" />
     <ClInclude Include="..\..\gui\include\gui\counter_screen\CounterPresenter.hpp" />
     <ClInclude Include="..\..\gui\include\gui\counter_screen\CounterView.hpp" />
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\counter_screen\CounterViewBase.hpp" />
@@ -257,8 +286,8 @@
       <DisableSpecificWarnings>4355</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/Logger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../../../Service/Software/Libs/Header;../../../../../../Common/Libs/Header;../Libs/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../../../Service/Software/Libs/Header;../../../../../../Common/Libs/Header;../Libs/Header</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -280,6 +309,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ApplicationRoot)\gui\include;$(ApplicationRoot)\generated\images\include;$(ApplicationRoot)\generated\bitmaps\include;$(ApplicationRoot)\generated\fonts\include;$(ApplicationRoot)\generated\texts\include;$(ApplicationRoot)\generated\videos\include;$(ApplicationRoot)\generated\gui_generated\include;$(ApplicationRoot)\generated\simulator\include;$(TouchGFXReleasePath)\framework\common\include;$(TouchGFXReleasePath)\framework\mvp\include;$(TouchGFXReleasePath)\framework\include\platform\hal\simulator\sdl2\vendor;$(TouchGFXReleasePath)\3rdparty\libjpeg\include;$(TouchGFXReleasePath)\framework\include;../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../../../Service/Software/Libs/Header;../../../../../../Common/Libs/Header;../Libs/Header</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

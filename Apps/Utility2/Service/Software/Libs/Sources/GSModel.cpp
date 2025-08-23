@@ -55,7 +55,7 @@ bool GSModel::sendToService(const G2SEvent::Data& data)
 
 void GSModel::updateGUIState(S2GEvent::State state)
 {
-    sendToGUI(S2GEvent::UpdateState {.state = state});
+    sendToGUI(S2GEvent::UpdateState {state});
 }
 
 void GSModel::checkG2SEvents(uint32_t timeout)

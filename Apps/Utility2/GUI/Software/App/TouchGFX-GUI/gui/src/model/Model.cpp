@@ -3,6 +3,7 @@
 #include <gui/common/FrontendApplication.hpp>
 #include "KernelManager.hpp"
 
+
 #define TAG                 "Model"
 #define LOG_MODULE_PRX      TAG"::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
@@ -29,24 +30,24 @@ Model::Model()
 #if defined(SIMULATOR)
     LOG_DEBUG("Application is running through simulator! \n");
 
+    std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
+    LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
+
     LOG_DEBUG_WP("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
-        "       1   L1,         !   Long L1 \n"
-        "       2   L2,         @   Long L2 \n"
-        "       3   R1,         #   Long R1 \n"
-        "       4   R2,         $   Long R2 \n"
-        "       q   L1+L2                   \n"
-        "       e   R1+R2                   \n"
-        "       a   L1+R1                   \n"
-        "       s   L2+R2                   \n"
+        "       1   L1,                     \n"
+        "       2   L2,                     \n"
+        "       3   R1,                     \n"
+        "       4   R2,                     \n"
         "       z   L1+R2                   \n"
-        "       w   R1+L2                   \n"
-        "       +   Increase Batt level     \n"
-        "       -   Decrease Batt level     \n"
-        "       C   Toggle Batt charging    \n"
     );
 #endif
+}
+
+FrontendApplication& Model::application()
+{
+    return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());
 }
 
 void Model::tick()
@@ -54,10 +55,7 @@ void Model::tick()
 //    LOG_INFO_WP("tick\n");
 
     if (mCounter >= 15) {
-        mGSModel->sendToService(G2SEvent::Stop {});
-        mGSModel->setGUIHandler(nullptr, nullptr);
-
-        exitApp();
+        //exitApp();
 #if defined(SIMULATOR)        
         return;
 #endif
@@ -69,16 +67,35 @@ void Model::tick()
 void Model::handleKeyEvent(uint8_t key)
 {
     LOG_INFO("key = %c\n", static_cast<char>(key));
+
+    // Hardwaare buttons
+    if (Gui::Config::Button::L1 == key) {
+        resetIdleTimer();
+    }
+
+    if (Gui::Config::Button::L2 == key) {
+        resetIdleTimer();
+    }
+
+    if (Gui::Config::Button::R1 == key) {
+        resetIdleTimer();
+    }
+
+    if (Gui::Config::Button::R2 == key) {
+        resetIdleTimer();
+    }
 }
 
-FrontendApplication& Model::application()
+void Model::resetIdleTimer()
 {
-    return *static_cast<FrontendApplication *>(touchgfx::Application::getInstance());
+    mIdleTimer = Gui::Config::kScreenTimeoutSteps;
 }
 
 void Model::exitApp()
 {
     LOG_INFO("exit from Utility2 GUI\n");
+    mGSModel->sendToService(G2SEvent::Stop{});
+    mGSModel->setGUIHandler(nullptr, nullptr);
     mKernel->app.exit();
 }
 
@@ -90,6 +107,19 @@ void Model::handleEvent(const S2GEvent::Counter& event)
     ++mCounter;
 }
 
+
+
+void Model::decIdleTimer()
+{
+    if (mIdleTimer > 0) {
+        mIdleTimer--;
+        if (mIdleTimer == 0) {
+            modelListener->onIdleTimeout();
+        }
+    }
+}
+
+// IUserApp implementation
 void Model::onCreate()
 {
     LOG_INFO("called\n");
@@ -110,8 +140,7 @@ void Model::onResume()
 
 void Model::onFrame()
 {
-//    LOG_INFO("called\n");
-//    mKernel->app.waitForFrame();
+    //LOG_INFO("called\n");
 }
 
 void Model::onPause()

@@ -190,12 +190,6 @@
     <Filter Include="SDK\Libs">
       <UniqueIdentifier>{ee319ebd-f4cf-4da8-9a28-0bdc60fe5396}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\Libs\Simulator">
-      <UniqueIdentifier>{3f2f9986-6440-4e15-8cdd-b78bae914892}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SDK\Libs\Simulator\Kernel">
-      <UniqueIdentifier>{7b67e0eb-0d65-43b9-abf8-c74316450680}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application">
       <UniqueIdentifier>{804b77d2-7856-4019-a3df-befef51d5372}</UniqueIdentifier>
     </Filter>
@@ -205,23 +199,74 @@
     <Filter Include="Application\Service">
       <UniqueIdentifier>{b07516d9-faa7-49d7-b74b-57a4e4f50870}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\Libs\Logger">
-      <UniqueIdentifier>{6af29a94-bac1-49a9-894b-e8463a6c4b48}</UniqueIdentifier>
+    <Filter Include="SDK\Libs\Header">
+      <UniqueIdentifier>{885ad249-d458-4ba4-8197-a5acd251a8f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\Libs\Wrappers">
-      <UniqueIdentifier>{026f21ea-e6d8-4a47-ab54-16b0256b1102}</UniqueIdentifier>
+    <Filter Include="SDK\Libs\Header\UnaLogger">
+      <UniqueIdentifier>{3cda9bb6-5c15-406e-882b-f8ef063f0b80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs">
-      <UniqueIdentifier>{a39d1344-ae75-4e7a-bfbf-7dd463c2800e}</UniqueIdentifier>
+    <Filter Include="SDK\Libs\Source">
+      <UniqueIdentifier>{8b2072b3-80a5-4927-833e-58bfd31407d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs\SensorLayer">
-      <UniqueIdentifier>{42d943a1-18aa-4ff3-9e31-d2e051bc8e30}</UniqueIdentifier>
+    <Filter Include="SDK\Libs\Source\UnaLogger">
+      <UniqueIdentifier>{6cfcc2ae-2afe-4fb6-b3aa-835b8950e79b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\Libs\OS">
-      <UniqueIdentifier>{09d1d298-6477-4e35-a23d-a8166917d261}</UniqueIdentifier>
+    <Filter Include="SDK\Libs\Header\Simulator">
+      <UniqueIdentifier>{d035d229-7770-4d00-97b9-1bf997879673}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\Libs\SynchManager">
-      <UniqueIdentifier>{401b9799-b5a2-430e-917d-f223a806b8df}</UniqueIdentifier>
+    <Filter Include="SDK\Libs\Header\Simulator\Kernel">
+      <UniqueIdentifier>{d89ead94-d0e0-478e-9ecd-409863a5d5d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator">
+      <UniqueIdentifier>{d5c80563-ed1c-4fe2-abab-849fb1373499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Kernel">
+      <UniqueIdentifier>{69b5d87f-6cc1-436e-9b3e-2d59faa6589e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Platform">
+      <UniqueIdentifier>{62852571-6666-49d2-ae7a-54221337ee26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Platform\OS">
+      <UniqueIdentifier>{1c2c2143-9701-4d02-bf13-59162b33c957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\Platform">
+      <UniqueIdentifier>{7f3e6023-ceba-4b1e-b6e9-588217a9e792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\Platform\OS">
+      <UniqueIdentifier>{200b340b-1163-447b-8f8a-961b3ee47257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Wrappers">
+      <UniqueIdentifier>{0f5b88dd-4110-4d8a-872f-08a443bc67eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\Wrappers">
+      <UniqueIdentifier>{ab8824a4-5628-40a6-b8ae-821d23c3c0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\SynchManager">
+      <UniqueIdentifier>{185fc203-a6a2-48a6-bec3-5c3da4061270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\SynchManager">
+      <UniqueIdentifier>{1d5c2174-dff5-42c0-a533-ddb64995846d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\API">
+      <UniqueIdentifier>{396e2be4-9e83-44f3-b31d-b90fbfaa2996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\Interfaces">
+      <UniqueIdentifier>{bca8ac95-798e-48ab-b3aa-00cc61c3c931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\Simulator\Kernel\Mock">
+      <UniqueIdentifier>{e85bc027-a615-452b-af0f-5a0a4671f6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Kernel\Mock">
+      <UniqueIdentifier>{be8de38a-d127-48dd-a9ed-3bf6e9f88b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\SensorLayer">
+      <UniqueIdentifier>{7f214aba-f1e2-4711-9dca-775797bc75a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\Simulator\Sensors">
+      <UniqueIdentifier>{4c0c2a76-82dc-4d71-9e06-32ae21825a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Sensors">
+      <UniqueIdentifier>{9bd6c100-a452-4f78-a688-f9b9ddc56d76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -264,53 +309,41 @@
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp">
       <Filter>Source Files\gui\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\FileSystem.cpp">
-      <Filter>SDK\Libs\Simulator\Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp">
-      <Filter>SDK\Libs\Simulator\Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\MockMemory.cpp">
-      <Filter>SDK\Libs\Simulator\Kernel</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\Service.cpp">
       <Filter>Application\Service</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp">
       <Filter>Application\Service</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\BacklightStub.cpp">
-      <Filter>SDK\Libs\Simulator\Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\BuzzerStub.cpp">
-      <Filter>SDK\Libs\Simulator\Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\VibroStub.cpp">
-      <Filter>SDK\Libs\Simulator\Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c">
-      <Filter>SDK\Libs\Wrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Logger\Logger.cpp">
-      <Filter>SDK\Libs\Logger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Libs\Source\SensorLayer\Altimeter.cpp">
-      <Filter>Libs\SensorLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Libs\Source\SensorLayer\BME280.cpp">
-      <Filter>Libs\SensorLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Libs\Source\SensorLayer\DS18B20.cpp">
-      <Filter>Libs\SensorLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Libs\Source\SensorLayer\SensorCore.cpp">
-      <Filter>Libs\SensorLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp">
-      <Filter>SDK\Libs\SynchManager</Filter>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp">
+      <Filter>SDK\Libs\Source\UnaLogger</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Platform\OS\OS.cpp">
-      <Filter>SDK\Libs\OS</Filter>
+      <Filter>SDK\Libs\Source\Platform\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c">
+      <Filter>SDK\Libs\Source\Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp">
+      <Filter>SDK\Libs\Source\SynchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Sensors\SensorCore.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Sensors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -760,9 +793,6 @@
     <ClInclude Include="..\..\gui\include\gui\model\AppTypes.hpp">
       <Filter>Header Files\gui\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\Backend.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\counter_screen\CounterPresenter.hpp">
       <Filter>Header Files\gui\counter_screen</Filter>
     </ClInclude>
@@ -771,6 +801,108 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\counter_screen\CounterViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\counter_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\UnaLogger\Logger.h">
+      <Filter>SDK\Libs\Header\UnaLogger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Platform\OS\OS.hpp">
+      <Filter>SDK\Libs\Header\Platform\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Wrappers\StdLibWrappers.h">
+      <Filter>SDK\Libs\Header\Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SynchManager\SynchManager.hpp">
+      <Filter>SDK\Libs\Header\SynchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Backlight.hpp">
+      <Filter>SDK\Libs\Header\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Buzzer.hpp">
+      <Filter>SDK\Libs\Header\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\FileSystem.hpp">
+      <Filter>SDK\Libs\Header\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Power.hpp">
+      <Filter>SDK\Libs\Header\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Settings.hpp">
+      <Filter>SDK\Libs\Header\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Time.hpp">
+      <Filter>SDK\Libs\Header\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Vibro.hpp">
+      <Filter>SDK\Libs\Header\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IKernel.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IMutex.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISemaphore.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISynchManager.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserApp.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserAppControl.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserAppMemAllocator.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Backlight.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Buzzer.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Vibro.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\MockServiceControl.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\SensorManager.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\KernelManager.hpp">
+      <Filter>SDK\Libs\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Power.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Settings.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\KernelBase.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorDataListener.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorDriver.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\SensorTypes.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorData.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Sensors\SensorCore.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Sensors\ISensorCore.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISensorManager.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

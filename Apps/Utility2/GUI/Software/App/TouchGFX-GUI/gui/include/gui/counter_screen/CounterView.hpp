@@ -15,6 +15,7 @@ public:
     void updateCounter(uint32_t value);
 
 protected:
+    virtual void handleKeyEvent(uint8_t key) override;
 };
 
 #endif // COUNTERVIEW_HPP

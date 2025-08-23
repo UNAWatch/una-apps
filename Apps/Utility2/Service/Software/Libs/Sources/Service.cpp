@@ -36,38 +36,40 @@ void Service::run()
     uint8_t stage = 0;
 
     mAltimeter = mKernel.sensorManager.getDefaultSensor(Sensor::Type::SENSOR_TYPE_ALTIMETER);
-    mAltimeter->connect(this, &mKernel.app, 1000, 2000);
+    if (mAltimeter) {
+        mAltimeter->connect(this, &mKernel.app, 1000, 2000);
+    }
 
     while (!mTerminate) {
         mGSModel->checkG2SEvents(1000);
 
-        if (stage == 0) {
-            mKernel.backlight.on(1000);
-            mKernel.backlight.off();
-        } else if (stage == 1) {
-//            mKernel.vibro.play();
-//            mKernel.vibro.stop();
-        } else {
-            mKernel.buzzer.play();
-            mKernel.buzzer.stop();
-        }
-
-        if (++stage > 2) {
-            stage = 0;
-        }
+//        if (stage == 0) {
+//            mKernel.backlight.on(1000);
+//            mKernel.backlight.off();
+//        } else if (stage == 1) {
+////            mKernel.vibro.play();
+////            mKernel.vibro.stop();
+//        } else {
+//            mKernel.buzzer.play();
+//            mKernel.buzzer.stop();
+//        }
+//
+//        if (++stage > 2) {
+//            stage = 0;
+//        }
 
         mCounter += 10;
 
         if (mGUIStarted) {
-            S2GEvent::Counter counter = {
-                    .value = mCounter
-            };
+            S2GEvent::Counter counter = { mCounter };
 
             mGSModel->sendToGUI(counter);
         }
     }
 
-    mAltimeter->disconnect(this);
+    if (mAltimeter) {
+        mAltimeter->disconnect(this);
+    }
 }
 
 void Service::handleEvent(const G2SEvent::Run& event)

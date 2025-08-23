@@ -16,7 +16,9 @@ public:
         model = m;
     }
 
-    virtual void updateCounter(uint32_t value) = 0;
+    virtual void onIdleTimeout() {}
+
+    virtual void updateCounter(uint32_t value) {}
 
 protected:
     Model* model;
