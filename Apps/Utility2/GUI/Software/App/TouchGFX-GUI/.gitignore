@@ -1,6 +1,7 @@
 # build
 
 *.vcxproj.user
+*.bak
 
 /build/
 /simulator/msvs/.vs/*

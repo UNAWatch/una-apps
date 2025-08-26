@@ -1,2 +1,6 @@
 # Folder for creating files by user programs in the simulator
 **/UserAppFS/
+
+# Visual Studio files
+**/Visual Studio 2022/
+**/.vs/
