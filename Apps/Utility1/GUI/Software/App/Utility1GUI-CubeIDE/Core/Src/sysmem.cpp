@@ -201,15 +201,19 @@ extern "C" {
     }
 
     void __assert_func(const char *file,
-                                  int         line,
-                                  const char *func,
-                                  const char *failedexpr)
+                       int         line,
+                       const char *func,
+                       const char *failedexpr)
     {
         kernel->app.log("assert: %s %d %s %s\n", file, line, func, failedexpr);
         exit(-1);
     }
 
-    void exitA(int status)
+    __attribute__((noreturn)) void abort(void) {
+        exit(-1);
+    }
+
+    __attribute__((noreturn)) void exitA(int status)
     {
         kernel->app.log("exit %d\n", status);
         kernel->app.exit(status);
@@ -217,7 +221,7 @@ extern "C" {
         while (1) {}    /* Make sure we hang here */
     }
 
-    void exit(int status)
+    __attribute__((noreturn)) void exit(int status)
     {
         __una_fini_array();
 

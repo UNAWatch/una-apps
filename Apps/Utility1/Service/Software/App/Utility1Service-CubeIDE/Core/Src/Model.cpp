@@ -1,7 +1,5 @@
 #include "../Inc/Model.hpp"
 
-#include <assert.h>
-
 Model::Model(const IKernel& kernel, IServiceModelHandler& handler)
     : mServiceKernel(kernel)
     , mS2GQueue(kernel)

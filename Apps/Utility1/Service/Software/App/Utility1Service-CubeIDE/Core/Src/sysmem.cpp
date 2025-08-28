@@ -34,7 +34,6 @@
 // The value DUMMY_KERNEL_ADDR is a dummy value which will be sanity checked
 // before being replaced with actual address on the mcu during app loading
 const IKernel *kernel __attribute__((unused, section(".sys_calls"))) = (IKernel*) (DUMMY_KERNEL_ADDR);
-//const void* dummy __attribute__((unused, section(".AppStart"))) = (void*) (DUMMY_KERNEL_ADDR);
 
 extern void (*__preinit_array_start []) (void) __attribute__((weak));
 extern void (*__preinit_array_end [])   (void) __attribute__((weak));
@@ -202,15 +201,19 @@ extern "C" {
     }
 
     void __assert_func(const char *file,
-                                  int         line,
-                                  const char *func,
-                                  const char *failedexpr)
+                       int         line,
+                       const char *func,
+                       const char *failedexpr)
     {
         kernel->app.log("assert: %s %d %s %s\n", file, line, func, failedexpr);
         exit(-1);
     }
 
-    void exitA(int status)
+    __attribute__((noreturn)) void abort(void) {
+        exit(-1);
+    }
+
+    __attribute__((noreturn)) void exitA(int status)
     {
         kernel->app.log("exit %d\n", status);
         kernel->app.exit(status);
@@ -218,7 +221,7 @@ extern "C" {
         while (1) {}    /* Make sure we hang here */
     }
 
-    void exit(int status)
+    __attribute__((noreturn)) void exit(int status)
     {
         __una_fini_array();
 
