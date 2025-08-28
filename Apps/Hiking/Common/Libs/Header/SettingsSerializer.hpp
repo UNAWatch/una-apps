@@ -28,8 +28,9 @@
 #include <cstdbool>
 #include <string>
 
-#include "IFileSystem.hpp"
-#include "Settings.hpp"
+#include "IKernel.hpp"
+
+#include "Common/Libs/Header/Settings.hpp"
 
 
  /**
@@ -45,7 +46,7 @@ public:
      * @param fs: Reference to the file system interface.
      * @param pathToFile: Path of the settings file.
      */
-    SettingsSerializer(Interface::IFileSystem &fs, const char *pathToFile);
+    SettingsSerializer(const IKernel& kernel, const char *pathToFile);
 
     /**
      * @brief Destructor.
@@ -67,8 +68,11 @@ public:
     bool load(Settings &settings);
 
 private:
-    Interface::IFileSystem &mFs;    ///< File system interface reference.
-    const char *mPath = nullptr;    ///< Path to settings file
+    /// A constant reference to an IKernel object.
+    const IKernel& mKernel;
+
+    /// Path to settings file
+    const char *mPath = nullptr;    
 };
 
 #endif /* __SETTINGS_SERIALIZER_HPP */

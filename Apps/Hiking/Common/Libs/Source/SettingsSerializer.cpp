@@ -15,13 +15,11 @@
 #include "JsonStreamWriter.hpp"
 #include "JsonStreamReader.hpp"
 
-#include "IKernel.hpp"
 
-#include "gui/common/GuiCommon.hpp"
 
-SettingsSerializer::SettingsSerializer(Interface::IFileSystem &fs,
+SettingsSerializer::SettingsSerializer(const IKernel& kernel,
     const char *pathToFile) :
-    mFs(fs), mPath(pathToFile)
+    mKernel(kernel), mPath(pathToFile)
 {
     assert(pathToFile != nullptr);
 }
@@ -30,16 +28,16 @@ bool SettingsSerializer::save(const Settings &settings)
 {
     const char *slash = strrchr(mPath, '/');
     if (slash) {
-        char buff[Interface::IFileSystem::skMaxPathLen] { };
+        char buff[sdk::api::FileSystem::skMaxPathLen] { };
         snprintf(buff, sizeof(buff), "%.*s", static_cast<size_t>(slash - mPath),
             mPath);
         // Create dir
-        if (!mFs.mkdir(buff)) {
+        if (!mKernel.fs.mkdir(buff)) {
             return false;
         }
     }
 
-    std::unique_ptr<Interface::IFile> file = mFs.file(mPath);
+    std::unique_ptr<sdk::api::File> file = mKernel.fs.file(mPath);
 
     if (!file) {
         return false;
@@ -70,7 +68,7 @@ bool SettingsSerializer::save(const Settings &settings)
 
 bool SettingsSerializer::load(Settings &settings)
 {
-    std::unique_ptr<Interface::IFile> file = mFs.file(mPath);
+    std::unique_ptr<sdk::api::File> file = mKernel.fs.file(mPath);
 
     if (!file) {
         return false;
@@ -93,7 +91,7 @@ bool SettingsSerializer::load(Settings &settings)
         return false;
     }
 
-    char *buffer = static_cast<char *>(kernel->mem.malloc(fileSize));
+    char *buffer = static_cast<char *>(mKernel.mem.malloc(fileSize));
     if (buffer == nullptr) {
         file->close();
         file.reset();
@@ -107,15 +105,15 @@ bool SettingsSerializer::load(Settings &settings)
     file.reset();
 
     if (!status) {
-        kernel->mem.free(buffer);
+        mKernel.mem.free(buffer);
         return false;
     }
 
     JsonStreamReader reader(buffer, fileSize);
 
     if (!reader.validate()) {
-        kernel->app.log("JSON is invalid\n");
-        kernel->mem.free(buffer);
+        mKernel.app.log("JSON is invalid\n");
+        mKernel.mem.free(buffer);
         return false;
     }
 
