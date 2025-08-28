@@ -31,11 +31,10 @@
 *****************************************************************************
 */
 
-INCLUDE "libc_exports.ld"
+INCLUDE "libc_exports_0.0.2.ld"
 
 /* Entry Point */
 ENTRY(AppStart)
-
 
 /* This stack size will be allocated by the kernel for the app */
 _Max_Stack_Size = 10*1024;	/* required amount of stack */
@@ -50,147 +49,133 @@ MEMORY
   RAM	(xrw)	: ORIGIN = 0x20000000,	LENGTH = 500K
 }
 
+/* === ДОДАНО: два програмні сегменти ===
+   text  -> RX (PF_R|PF_X = 5)
+   data  -> RW (PF_R|PF_W = 6) */
+PHDRS
+{
+  text PT_LOAD FLAGS(5);
+  data PT_LOAD FLAGS(6);
+}
+
 /* Sections */
 SECTIONS
 {
-
-  /* The program code and other data into "RAM" Ram type memory */
+  /* Код + RO-секції -> сегмент :text */
   .text :
   {
     . = ALIGN(4);
-    
-    *(.AppStart)	   /* Run app function */
-    
-    *(.text)           /* .text sections (code) */
-    *(.text*)          /* .text* sections (code) */
-    *(.glue_7)         /* glue arm to thumb code */
-    *(.glue_7t)        /* glue thumb to arm code */
-    *(.eh_frame)
-    
-    /* Insert .ARM sections here */
-    *(.ARM.extab* .gnu.linkonce.armextab.*)
-    
-	__exidx_start = .;
-	*(.ARM.exidx*)
-	__exidx_end = .;
 
-    
-    *(.RamFunc)        /* .RamFunc sections */
-    *(.RamFunc*)       /* .RamFunc* sections */
+    *(.AppStart)
+
+    *(.text) *(.text*) *(.glue_7) *(.glue_7t) *(.eh_frame)
+
+    /* ARM unwind tables (RO) */
+    *(.ARM.extab* .gnu.linkonce.armextab.*)
+    __exidx_start = .;
+    *(.ARM.exidx)
+    __exidx_end = .;
+
+    *(.RamFunc) *(.RamFunc*)   /* якщо це код у RAM — теж RX */
 
     KEEP (*(.init))
     KEEP (*(.fini))
 
-    *(.rodata)         /* .rodata sections (constants, strings, etc.) */
-    *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
-    
-    /* TouchGFX sections*/
+    *(.rodata) *(.rodata*)
+
+    /* TouchGFX RO-секції */
     *(FontFlashSection)
     *(FontSearchFlashSection)
     *(TextFlashSection)
     *(IntFlashSection)
 
     . = ALIGN(4);
-    
-    _etext = .;        /* define a global symbols at end of code */
-  } >RAM AT>RAM
+    _etext = .;
+  } > RAM :text    /* <=== прив’язка до RX-сегмента */
 
-  .preinit_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  .preinit_array (READONLY) :
   {
     . = ALIGN(4);
-    PROVIDE_HIDDEN (__preinit_array_start = .);
-    KEEP (*(.preinit_array*))
-    PROVIDE_HIDDEN (__preinit_array_end = .);
+    PROVIDE_HIDDEN(__preinit_array_start = .);
+    KEEP(*(.preinit_array*))
+    PROVIDE_HIDDEN(__preinit_array_end = .);
     . = ALIGN(4);
-  } >RAM
+  } > RAM :text
 
-  .init_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  .init_array (READONLY) :
   {
     . = ALIGN(4);
-    PROVIDE_HIDDEN (__init_array_start = .);
-    KEEP (*(SORT(.init_array.*)))
-    KEEP (*(.init_array*))
-    PROVIDE_HIDDEN (__init_array_end = .);
+    PROVIDE_HIDDEN(__init_array_start = .);
+    KEEP(*(SORT(.init_array.*)))
+    KEEP(*(.init_array*))
+    PROVIDE_HIDDEN(__init_array_end = .);
     . = ALIGN(4);
-  } >RAM
+  } > RAM :text
 
-  .fini_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  .fini_array (READONLY) :
   {
     . = ALIGN(4);
-    PROVIDE_HIDDEN (__fini_array_start = .);
-    KEEP (*(SORT(.fini_array.*)))
-    KEEP (*(.fini_array*))
-    PROVIDE_HIDDEN (__fini_array_end = .);
+    PROVIDE_HIDDEN(__fini_array_start = .);
+    KEEP(*(SORT(.fini_array.*)))
+    KEEP(*(.fini_array*))
+    PROVIDE_HIDDEN(__fini_array_end = .);
     . = ALIGN(4);
-  } >RAM
+  } > RAM :text
 
-  /* PLT section contains code for accessing the dynamically linked functions
-   * ie funtions from shared libraries in a postion independent manner */
-
+  /* PLT — код переходів -> RX */
   .plt :
   {
     . = ALIGN(4);
-      KEEP(*(.plt))
+    KEEP(*(.plt))
     . = ALIGN(4);
-  } >RAM
+  } > RAM :text
 
   /* Used by the startup to initialize data */
   _sidata = LOADADDR(.data);
-    
-  /* Initialized data sections into "RAM" Ram type memory */
-  .data : 
+
+  /* Дані -> RW сегмент :data */
+  .data :
   {
     . = ALIGN(4);
-
-    _sdata = .;        /* create a global symbol at data start */
-    *(.sys_calls)      /* system calls pointer */
-    *(.data)           /* .data sections */
-    *(.data*)          /* .data* sections */
-
+    _sdata = .;
+    *(.sys_calls)
+    *(.data) *(.data*)
     . = ALIGN(4);
-
-    _edata = .;        /* define a global symbol at data end */
-  } >RAM
+    _edata = .;
+  } > RAM :data
 
   .got :
   {
     . = ALIGN(4);
     _sgot = .;
-    *(.got)        
+    *(.got)
     *(.got.plt)
     . = ALIGN(4);
-    _egot = .;     
-  } > RAM
-    
-  /* Uninitialized data section into "RAM" Ram type memory */
+    _egot = .;
+  } > RAM :data
+
   .bss :
   {
     . = ALIGN(4);
-    /* This is used by the startup in order to initialize the .bss section */
-    _sbss = .;         /* define a global symbol at bss start */
+    _sbss = .;
     __bss_start__ = _sbss;
-    *(.bss)
-    *(.bss*)
-    *(COMMON)
-
-	. = ALIGN(4);
-    _ebss = .;         /* define a global symbol at bss end */
+    *(.bss) *(.bss*) *(COMMON)
+    . = ALIGN(4);
+    _ebss = .;
     __bss_end__ = _ebss;
-  } >RAM
+  } > RAM :data
 
-  /* User stack section, used to check that there is enough "RAM" Ram type memory left */
   .stack :
   {
     . = ALIGN(4);
-    PROVIDE ( end = . );
-    PROVIDE ( _end = . );
+    PROVIDE(end = .);
+    PROVIDE(_end = .);
     . = . + _Max_Stack_Size;
     . = ALIGN(4);
-  } >RAM
-  
-  _estack =.;			/* Highest address of the user mode stack */
+  } > RAM :data
 
-  /* Remove information from the compiler libraries */
+  _estack = .;
+
   /DISCARD/ :
   {
     libc.a ( * )
@@ -198,5 +183,6 @@ SECTIONS
     libgcc.a ( * )
   }
 
-  .ARM.attributes 0 : { *(.ARM.attributes) }
+  /* атрибути — теж у :text, щоб не створювати третій LOAD */
+  .ARM.attributes 0 : { *(.ARM.attributes) } :text
 }

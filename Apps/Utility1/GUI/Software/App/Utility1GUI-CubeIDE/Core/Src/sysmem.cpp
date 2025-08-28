@@ -26,6 +26,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <cstring>
+#include <inttypes.h>
 
 #include "Interfaces/IKernel.hpp"
 
@@ -86,6 +87,8 @@ extern "C" {
 
 extern "C" {
 
+    void* __dso_handle = nullptr;
+
     void* _sbrk(ptrdiff_t incr)
     {
         kernel->app.log("_sbrk %d\n", incr);
@@ -96,33 +99,37 @@ extern "C" {
 
     void* malloc(size_t size)
     {
-        return _malloc_r(_REENT, size);
+        return _malloc_r(NULL, size);
     }
 
     void free(void* ptr)
     {
-        _free_r(_REENT, ptr);
+        _free_r(NULL, ptr);
     }
 
     void* calloc(size_t __nmemb, size_t __size)
     {
-        void* res = malloc(__nmemb * __size);
+        size_t bytes = __nmemb * __size;
 
-        memset(res, 0, __nmemb * __size);
+        void* res = malloc(bytes);
+
+        if (res) {
+            memset(res, 0, bytes);
+        }
 
         return res;
     }
 
     void* realloc(void* ptr, size_t __size)
     {
-        return _realloc_r(_REENT, ptr, __size);
+        return _realloc_r(NULL, ptr, __size);
     }
 
     void* _malloc_r(struct _reent *r, size_t size)
     {
         (void) r;
         void *ptr = kernel->mem.malloc(size);
-        kernel->app.log("malloc 0x%08X %u b\n", ptr, size);
+        kernel->app.log("malloc 0x%08" PRIx32 " %u b\n", (uint32_t)(uintptr_t)ptr, (unsigned)size);
         return ptr;
     }
 
@@ -130,7 +137,7 @@ extern "C" {
     {
         (void) r;
         if (ptr) {
-            kernel->app.log("free   0x%08X\n", ptr);
+            kernel->app.log("free   0x%08" PRIx32 "\n", (uint32_t)(uintptr_t)ptr);
             kernel->mem.free(ptr);
         }
     }
@@ -176,7 +183,7 @@ extern "C" {
         return new_ptr;
     }
 
-    void __cxa_pure_virtual()
+    __attribute__((noreturn)) void __cxa_pure_virtual()
     {
         assert(false);
     }
@@ -200,16 +207,20 @@ extern "C" {
         return 0;
     }
 
-    void __assert_func(const char *file,
-                                  int         line,
-                                  const char *func,
-                                  const char *failedexpr)
+    __attribute__((noreturn)) void __assert_func(const char *file,
+                                                 int         line,
+                                                 const char *func,
+                                                 const char *failedexpr)
     {
         kernel->app.log("assert: %s %d %s %s\n", file, line, func, failedexpr);
         exit(-1);
     }
 
-    void exitA(int status)
+    __attribute__((noreturn)) void abort(void) {
+        exit(-1);
+    }
+
+    __attribute__((noreturn)) void exitA(int status)
     {
         kernel->app.log("exit %d\n", status);
         kernel->app.exit(status);
@@ -217,7 +228,7 @@ extern "C" {
         while (1) {}    /* Make sure we hang here */
     }
 
-    void exit(int status)
+    __attribute__((noreturn)) void exit(int status)
     {
         __una_fini_array();
 

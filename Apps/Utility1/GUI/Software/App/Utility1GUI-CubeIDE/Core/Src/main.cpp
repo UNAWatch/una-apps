@@ -11,7 +11,6 @@
 
 #include <cstdint>
 #include <cstring>
-#include <cassert>
 #include <math.h>
 #include <stdio.h>
 
