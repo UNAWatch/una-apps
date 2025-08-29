@@ -32,4 +32,22 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>SDK/Libs/Source/AppTemplate/startup_user_app.s</name>
+			<type>1</type>
+			<location>G:/DTs/Solutions/Una/una-watch/SDK/Libs/Source/AppTemplate/startup_user_app.s</location>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppTemplate/sysmem.cpp</name>
+			<type>1</type>
+			<location>G:/DTs/Solutions/Una/una-watch/SDK/Libs/Source/AppTemplate/sysmem.cpp</location>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>SDK_SRC_LOC</name>
+			<value>$%7BPATH_SDK%7D/Libs/Source</value>
+		</variable>
+	</variableList>
 </projectDescription>
