@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <memory>
 
-#include "Interfaces/IKernel.hpp"
+#include "SDK/Interfaces/IKernel.hpp"
 #include "Model.hpp"
 
 static const char* mName = "Service::Utility#1";
@@ -31,46 +31,46 @@ public:
         , mCounter(0)
         , mGUIStarted(false)
     {
-//        kernel.app.registerApp(this);
-//        kernel.sctrl.setContext(mModel);
-//        kernel.app.initialized();
+        kernel.app.registerApp(this);
+        kernel.sctrl.setContext(mModel);
+        kernel.app.initialized();
     }
 
     virtual ~Service() = default;
 
     void run()
     {
-//        while (!mTerminate) {
-//            mModel->checkG2SEvents();
-//
-//            mCounter += 1;
-//
-//            if (mGUIStarted) {
-//                S2GEvent::Counter counter = {
-//                    .value = mCounter
-//                };
-//
-//                mModel->sendToGUI(counter);
-//            }
-//        }
+        while (!mTerminate) {
+            mModel->checkG2SEvents();
+
+            mCounter += 1;
+
+            if (mGUIStarted) {
+                S2GEvent::Counter counter = {
+                    .value = mCounter
+                };
+
+                mModel->sendToGUI(counter);
+            }
+        }
     }
 
     void handleEvent(const G2SEvent::Run& event)
     {
-//        (void) event;
-//
-//        printf("%s::G2SEvent::Run\n", mName);
-//
-//        mGUIStarted = true;
+        (void) event;
+
+        printf("%s::G2SEvent::Run\n", mName);
+
+        mGUIStarted = true;
     }
 
     void handleEvent(const G2SEvent::Stop& event)
     {
-//        (void) event;
-//
-//        printf("%s::G2SEvent::Stop\n", mName);
-//
-//        mGUIStarted = false;
+        (void) event;
+
+        printf("%s::G2SEvent::Stop\n", mName);
+
+        mGUIStarted = false;
     }
 
 private:
@@ -96,7 +96,7 @@ int main()
     extern const IKernel* kernel;
 
     Service service(*kernel);
-//    service.run();
+    service.run();
 
     return 0;
 }

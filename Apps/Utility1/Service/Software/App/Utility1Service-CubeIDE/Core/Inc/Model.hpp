@@ -1,6 +1,6 @@
 #include "Interfaces/IModel.hpp"
 
-#include "CircularBuffer.hpp"
+#include "SDK/CircularBuffer.hpp"
 
 class Model : public IGUIModel
 {

@@ -8,29 +8,31 @@
 #include <variant>
 #include <string>
 
-namespace S2GEvent {    // Service-to-GUI events
-    enum class State {
-        none,
-        suspend,
-        resume,
-        quit
-    };
+//////////////////////////////////////////////////////////
+//// Service-to-GUI events
+//////////////////////////////////////////////////////////
 
-    struct UpdateState {
-        State state;
-    };
-
+namespace S2GEvent {
     struct Counter {
         uint32_t value;
     };
 
     using Data = std::variant<
-            UpdateState,
             Counter
     >;
 };
 
-namespace G2SEvent {    // GUI-to-Service events
+class IGUIModelHandler {
+public:
+    virtual ~IGUIModelHandler() = default;
+    virtual void handleEvent(const S2GEvent::Counter& event) = 0;
+};
+
+//////////////////////////////////////////////////////////
+//// GUI-to-Service events
+//////////////////////////////////////////////////////////
+
+namespace G2SEvent {
     struct Run {};
     struct Stop {};
 
@@ -40,7 +42,6 @@ namespace G2SEvent {    // GUI-to-Service events
     >;
 };
 
-
 class IServiceModelHandler {
 public:
     virtual ~IServiceModelHandler() = default;
@@ -49,30 +50,9 @@ public:
     virtual void handleEvent(const G2SEvent::Stop& event) = 0;
 };
 
-class IGUIModelHandler {
-public:
-    virtual ~IGUIModelHandler() = default;
-
-    void handleEvent(const S2GEvent::UpdateState& event)
-    {
-        mGUIState = event.state;
-    }
-
-    S2GEvent::State getGUIState()
-    {
-        S2GEvent::State res = mGUIState;
-
-        mGUIState = S2GEvent::State::none;
-
-        return res;
-    }
-
-    virtual void handleEvent(const S2GEvent::Counter& event) = 0;
-
-
-private:
-    S2GEvent::State mGUIState;
-};
+///////////////////////////////////////////////////////////////
+//// IGUIModel
+//////////////////////////////////////////////////////////
 
 class IGUIModel {
 public:

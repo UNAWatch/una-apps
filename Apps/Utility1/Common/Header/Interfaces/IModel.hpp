@@ -1,7 +1,7 @@
 #ifndef __IMODEL_TEMPLATE_HPP__
 #define __IMODEL_TEMPLATE_HPP__
 
-#include "Interfaces/IKernel.hpp"
+#include "SDK/Interfaces/IKernel.hpp"
 
 #include <stdint.h>
 

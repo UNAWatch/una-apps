@@ -34,20 +34,50 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>SDK/Libs/Source/AppTemplate/startup_user_app.s</name>
-			<type>1</type>
-			<location>G:/DTs/Solutions/Una/una-watch/SDK/Libs/Source/AppTemplate/startup_user_app.s</location>
+			<name>SDK</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppTemplate/sysmem.cpp</name>
+			<name>SDK/Header</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Header/Interfaces</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Source/AppSystem</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
-			<location>G:/DTs/Solutions/Una/una-watch/SDK/Libs/Source/AppTemplate/sysmem.cpp</location>
+			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Source/AppSystem/startup_user_app.s</name>
+			<type>1</type>
+			<locationURI>SDK_SRC_LOC/AppSystem/startup_user_app.s</locationURI>
+		</link>
+		<link>
+			<name>SDK/Source/AppSystem/sysmem.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_SRC_LOC/AppSystem/sysmem.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>SDK_SRC_LOC</name>
-			<value>$%7BPATH_SDK%7D/Libs/Source</value>
+			<value>$%7BPARENT-6-PROJECT_LOC%7D/SDK/Libs/Source</value>
 		</variable>
 	</variableList>
 </projectDescription>
