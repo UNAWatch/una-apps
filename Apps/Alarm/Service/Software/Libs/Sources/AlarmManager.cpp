@@ -11,8 +11,7 @@
 
 #include "AlarmManager.hpp"
 
-#define TAG "App::Alarm[S]::AlarmManager"
-#define LOG_MODULE_PRX      TAG"::"
+#define LOG_MODULE_PRX      LOG_TAG"AlarmManager"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "Logger.h"
 

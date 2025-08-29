@@ -12,8 +12,7 @@
 #include <stdio.h>
 #include "KernelManager.hpp"
 
-#define TAG                 "App::Alarm[G]::Main"
-#define LOG_MODULE_PRX      TAG"::"
+#define LOG_MODULE_PRX      LOG_TAG"main"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "Logger.h"
 

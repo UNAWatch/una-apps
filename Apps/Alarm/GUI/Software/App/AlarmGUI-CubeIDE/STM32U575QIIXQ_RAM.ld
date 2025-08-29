@@ -31,7 +31,7 @@
 *****************************************************************************
 */
 
-INCLUDE "libc_exports.ld"
+INCLUDE "libc_exports_0.0.2.ld"
 
 /* Entry Point */
 ENTRY(AppStart)

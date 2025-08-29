@@ -17,8 +17,7 @@
 
 #include "Service.hpp"
 
-#define TAG                 "ServiceMain"
-#define LOG_MODULE_PRX      TAG"::"
+#define LOG_MODULE_PRX      LOG_TAG"main"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "Logger.h"
 
@@ -43,7 +42,7 @@ int main()
     Logger_init(LoggerPrint);
     Logger_setTimeFunc(LoggerGetTicks);
 
-    LOG_INFO("service is started\n");
+    LOG_INFO("started\n");
 
     Service service(*kernel);
     service.run();

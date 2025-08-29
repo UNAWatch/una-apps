@@ -26,6 +26,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <cstring>
+#include <inttypes.h>
 
 #include "Interfaces/IKernel.hpp"
 
@@ -41,8 +42,6 @@ extern void (*__init_array_start [])    (void) __attribute__((weak));
 extern void (*__init_array_end [])      (void) __attribute__((weak));
 extern void (*__fini_array_start[])     (void) __attribute__((weak));
 extern void (*__fini_array_end[])       (void) __attribute__((weak));
-
-void* __dso_handle = nullptr;
 
 extern "C" {
     /* Iterate over all the init routines.  */
@@ -88,9 +87,11 @@ extern "C" {
 
 extern "C" {
 
+    void* __dso_handle = nullptr;
+
     void* _sbrk(ptrdiff_t incr)
     {
-        kernel->app.log("_sbrk %d\n", incr);
+        kernel->app.log(LOG_TAG"_sbrk %d\n", incr);
         assert(0);  // Should not use in user app
         errno = ENOMEM;
         return (void*) -1;
@@ -98,33 +99,37 @@ extern "C" {
 
     void* malloc(size_t size)
     {
-        return _malloc_r(_REENT, size);
+        return _malloc_r(NULL, size);
     }
 
     void free(void* ptr)
     {
-        _free_r(_REENT, ptr);
+        _free_r(NULL, ptr);
     }
 
     void* calloc(size_t __nmemb, size_t __size)
     {
-        void* res = malloc(__nmemb * __size);
+        size_t bytes = __nmemb * __size;
 
-        memset(res, 0, __nmemb * __size);
+        void* res = malloc(bytes);
+
+        if (res) {
+            memset(res, 0, bytes);
+        }
 
         return res;
     }
 
     void* realloc(void* ptr, size_t __size)
     {
-        return _realloc_r(_REENT, ptr, __size);
+        return _realloc_r(NULL, ptr, __size);
     }
 
     void* _malloc_r(struct _reent *r, size_t size)
     {
         (void) r;
         void *ptr = kernel->mem.malloc(size);
-        kernel->app.log("App::Alarm[G]::malloc 0x%08X %u b\n", ptr, size);
+        kernel->app.log(LOG_TAG"malloc 0x%08" PRIx32 " %u b\n", (uint32_t)(uintptr_t)ptr, (unsigned)size);
         return ptr;
     }
 
@@ -132,7 +137,7 @@ extern "C" {
     {
         (void) r;
         if (ptr) {
-            kernel->app.log("App::Alarm[G]::free   0x%08X\n", ptr);
+            kernel->app.log(LOG_TAG"free   0x%08" PRIx32 "\n", (uint32_t)(uintptr_t)ptr);
             kernel->mem.free(ptr);
         }
     }
@@ -178,7 +183,7 @@ extern "C" {
         return new_ptr;
     }
 
-    void __cxa_pure_virtual()
+    __attribute__((noreturn)) void __cxa_pure_virtual()
     {
         assert(false);
     }
@@ -202,24 +207,28 @@ extern "C" {
         return 0;
     }
 
-    void __assert_func(const char *file,
-                                  int         line,
-                                  const char *func,
-                                  const char *failedexpr)
+    __attribute__((noreturn)) void __assert_func(const char *file,
+                                                 int         line,
+                                                 const char *func,
+                                                 const char *failedexpr)
     {
-        kernel->app.log("App::Alarm[G]::assert: %s %d %s %s\n", file, line, func, failedexpr);
+        kernel->app.log(LOG_TAG"assert: %s %d %s %s\n", file, line, func, failedexpr);
         exit(-1);
     }
 
-    void exitA(int status)
+    __attribute__((noreturn)) void abort(void) {
+        exit(-1);
+    }
+
+    __attribute__((noreturn)) void exitA(int status)
     {
-        kernel->app.log("App::Alarm[G]::exit %d\n", status);
+        kernel->app.log(LOG_TAG"exitA %d\n", status);
         kernel->app.exit(status);
 
         while (1) {}    /* Make sure we hang here */
     }
 
-    void exit(int status)
+    __attribute__((noreturn)) void exit(int status)
     {
         __una_fini_array();
 
@@ -230,25 +239,25 @@ extern "C" {
 
 }
 
-//namespace std
-//{
-//    void __throw_bad_alloc()
-//    {
-//        assert(false);
-//    }
-//
-//    void __throw_bad_array_new_length()
-//    {
-//        assert(false);
-//    }
-//
-//    void __throw_length_error(const char* msg)
-//    {
-//        (void) msg;
-//
-//        assert(false);
-//    }
-//}
+namespace std
+{
+    void __throw_bad_alloc()
+    {
+        assert(false);
+    }
+
+    void __throw_bad_array_new_length()
+    {
+        assert(false);
+    }
+
+    void __throw_length_error(const char* msg)
+    {
+        (void) msg;
+
+        assert(false);
+    }
+}
 
 void* operator new(std::size_t size) noexcept
 {

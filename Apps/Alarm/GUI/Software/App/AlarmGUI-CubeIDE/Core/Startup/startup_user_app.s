@@ -60,14 +60,14 @@ LoopFillZerobss:
 /* Call static constructors */
     bl  __una_init_array
 
-/* Call the application's entry point and save returned value - status */
+/* Call the application's entry point.*/
 	bl	main
 	push {r0}
 
 /* Call static destructors */
 	bl  __una_fini_array
 
-/* Call the exit function with status */
+/* Call the exit function with status -1 */
 	pop {r0}
     bl  exitA
 
