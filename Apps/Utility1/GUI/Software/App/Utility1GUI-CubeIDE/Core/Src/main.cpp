@@ -14,7 +14,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "SDK/GSModel/IGUIModel.hpp"
 #include "SDK/GSModel/GSModelHelper.hpp"
 
 extern const IKernel *kernel;

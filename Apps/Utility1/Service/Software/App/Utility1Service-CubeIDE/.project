@@ -34,7 +34,17 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Common</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Common/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -45,6 +55,11 @@
 		</link>
 		<link>
 			<name>SDK/Source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Common/Header/GSModelEvents</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -62,6 +77,16 @@
 			<name>SDK/Source/AppSystem</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Common/Header/GSModelEvents/G2SEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/GSModelEvents/G2SEvents.hpp</locationURI>
+		</link>
+		<link>
+			<name>Common/Header/GSModelEvents/S2GEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Header/GSModel/GSModel.hpp</name>
