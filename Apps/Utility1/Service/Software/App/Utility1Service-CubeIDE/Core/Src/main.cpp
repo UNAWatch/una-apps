@@ -16,8 +16,7 @@
 #include <stdio.h>
 #include <memory>
 
-#include "SDK/Interfaces/IKernel.hpp"
-#include "Model.hpp"
+#include "SDK/GSModel/GSModelHelper.hpp"
 
 static const char* mName = "Service::Utility#1";
 
@@ -26,13 +25,13 @@ class Service : public IServiceModelHandler,
 {
 public:
     Service(const IKernel& kernel)
-        : mModel(std::make_shared<Model>(kernel, *this))
+        : mGSModel(std::make_shared<GSModelService>(kernel, *this))
         , mTerminate(false)
         , mCounter(0)
         , mGUIStarted(false)
     {
         kernel.app.registerApp(this);
-        kernel.sctrl.setContext(mModel);
+        kernel.sctrl.setContext(mGSModel);
         kernel.app.initialized();
     }
 
@@ -41,7 +40,7 @@ public:
     void run()
     {
         while (!mTerminate) {
-            mModel->checkG2SEvents();
+            mGSModel->checkG2SEvents();
 
             mCounter += 1;
 
@@ -50,7 +49,7 @@ public:
                     .value = mCounter
                 };
 
-                mModel->sendToGUI(counter);
+                mGSModel->sendToGUI(counter);
             }
         }
     }
@@ -79,10 +78,10 @@ private:
         mTerminate = true;
     }
 
-    std::shared_ptr<Model> mModel;
-    bool                   mTerminate;
-    uint32_t               mCounter;
-    bool                   mGUIStarted;
+    std::shared_ptr<GSModelService> mGSModel;
+    bool                            mTerminate;
+    uint32_t                        mCounter;
+    bool                            mGUIStarted;
 };
 
 /**

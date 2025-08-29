@@ -14,7 +14,8 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "Interfaces/IModel.hpp"
+#include "SDK/GSModel/IGUIModel.hpp"
+#include "SDK/GSModel/GSModelHelper.hpp"
 
 extern const IKernel *kernel;
 
@@ -25,26 +26,26 @@ class Application : public IGUIModelHandler,
 {
 public:
     Application(const IKernel& kernel)
-        : mModel(std::static_pointer_cast<IGUIModel>(kernel.gctrl.getContext()))
+        : mGSModel(std::static_pointer_cast<GSModelGUI>(kernel.gctrl.getContext()))
         , mTerminate(false)
     {
         kernel.app.registerApp(this);
-        mModel->setGUIHandler(&kernel, this);
+        mGSModel->setGUIHandler(&kernel, this);
         kernel.app.initialized();
     }
 
     virtual ~Application()
     {
-        mModel->sendToService(G2SEvent::Stop {});
-        mModel->setGUIHandler(nullptr, nullptr);
+        mGSModel->sendToService(G2SEvent::Stop {});
+        mGSModel->setGUIHandler(nullptr, nullptr);
     }
 
     void run()
     {
-        mModel->sendToService(G2SEvent::Run {});
+        mGSModel->sendToService(G2SEvent::Run {});
 
         while (!mTerminate) {
-            mModel->checkS2GEvents();
+            mGSModel->checkS2GEvents();
         }
     }
 
@@ -85,8 +86,8 @@ private:
         mTerminate = true;
     }
 
-    std::shared_ptr<IGUIModel> mModel;
-    volatile bool              mTerminate;
+    std::shared_ptr<GSModelGUI> mGSModel;
+    volatile bool               mTerminate;
 };
 
 /**
