@@ -802,106 +802,106 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\counter_screen\CounterViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\counter_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\UnaLogger\Logger.h">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\UnaLogger\Logger.h">
       <Filter>SDK\Libs\Header\UnaLogger</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Platform\OS\OS.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Platform\OS\OS.hpp">
       <Filter>SDK\Libs\Header\Platform\OS</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Wrappers\StdLibWrappers.h">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Wrappers\StdLibWrappers.h">
       <Filter>SDK\Libs\Header\Wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SynchManager\SynchManager.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\SynchManager\SynchManager.hpp">
       <Filter>SDK\Libs\Header\SynchManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Backlight.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\API\Backlight.hpp">
       <Filter>SDK\Libs\Header\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Buzzer.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\API\Buzzer.hpp">
       <Filter>SDK\Libs\Header\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\FileSystem.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\API\FileSystem.hpp">
       <Filter>SDK\Libs\Header\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Power.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\API\Power.hpp">
       <Filter>SDK\Libs\Header\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Settings.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\API\Settings.hpp">
       <Filter>SDK\Libs\Header\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Time.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\API\Time.hpp">
       <Filter>SDK\Libs\Header\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\API\Vibro.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\API\Vibro.hpp">
       <Filter>SDK\Libs\Header\API</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IKernel.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\IKernel.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IMutex.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\IMutex.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISemaphore.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\ISemaphore.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISynchManager.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\ISynchManager.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserApp.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\IUserApp.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserAppControl.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\IUserAppControl.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\IUserAppMemAllocator.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\IUserAppMemAllocator.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Backlight.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\Mock\Backlight.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Buzzer.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\Mock\Buzzer.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Vibro.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\Mock\Vibro.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\MockServiceControl.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\Mock\MockServiceControl.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\SensorManager.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\Mock\SensorManager.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\KernelManager.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\KernelManager.hpp">
       <Filter>SDK\Libs\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Power.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\Mock\Power.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\Mock\Settings.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\Mock\Settings.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Kernel\KernelBase.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Kernel\KernelBase.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorDataListener.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\SensorLayer\ISensorDataListener.hpp">
       <Filter>SDK\Libs\Header\SensorLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorDriver.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\SensorLayer\ISensorDriver.hpp">
       <Filter>SDK\Libs\Header\SensorLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\SensorTypes.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\SensorLayer\SensorTypes.hpp">
       <Filter>SDK\Libs\Header\SensorLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\SensorLayer\ISensorData.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\SensorLayer\ISensorData.hpp">
       <Filter>SDK\Libs\Header\SensorLayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Sensors\SensorCore.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Sensors\SensorCore.hpp">
       <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Simulator\Sensors\ISensorCore.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Simulator\Sensors\ISensorCore.hpp">
       <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\Interfaces\ISensorManager.hpp">
+    <ClInclude Include="$(UnaSdkPath)\Libs\Header\Interfaces\ISensorManager.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
