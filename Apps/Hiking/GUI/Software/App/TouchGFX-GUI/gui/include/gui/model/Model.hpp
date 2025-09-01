@@ -4,15 +4,15 @@
 #include <vector>
 #include <memory>
 
-#include "Interfaces/IModel.hpp"
+
 #include "Interfaces/IKernel.hpp"
 #include "touchgfx/UIEventListener.hpp"
 #include "gui/common/GuiConfig.hpp"
 
-#include "TrackMapBuilder.hpp"
-
-#include "Common/Libs/Header/Settings.hpp"
-#include "Common/Libs/Header/ActivitySummary.hpp"
+#include "Common/Header/Interfaces/IModel.hpp"
+#include "Common/Header/Settings.hpp"
+#include "Common/Header/ActivitySummary.hpp"
+#include "Common/Header/TrackInfo.hpp"
 
 
 
@@ -62,9 +62,9 @@ public:
     void setMenuPosMenuAlerts(uint16_t p);
     uint16_t getMenuPosMenuAlerts();
 
-    // Time
-    void getDate(uint16_t& year, uint8_t& month, uint8_t& day, uint8_t& wday);
-    void getTime(uint8_t& hour, uint8_t& minute, uint8_t& sec);
+    // Date/Time
+    void getDate(uint8_t& m, uint8_t& d, uint8_t& wd);
+    void getTime(uint8_t& h, uint8_t& m, uint8_t& s);
     std::tm getDateTime();
 
     // Power
@@ -81,7 +81,8 @@ public:
     // Track
     void trackStart();
     bool trackIsActive();
-    const Gui::TrackInfo& getTrackInfo() const;
+    bool trackIsPaused();
+    const Track::Data& getTrackData() const;
     void saveTrack();
     void discardTrack();
     bool trackIsSummaryAvailable();
@@ -106,7 +107,14 @@ protected:
     virtual void onDestroy() override;
 
     // IGUIModelHandler implementation
-    //void handleEvent(const S2GEvent::Counter& event) override;
+    virtual void handleEvent(const S2GEvent::Time& event) override;
+    virtual void handleEvent(const S2GEvent::SettingsUpd& event) override;
+    virtual void handleEvent(const S2GEvent::Battery& event) override;
+    virtual void handleEvent(const S2GEvent::GpsFix& event) override;
+    virtual void handleEvent(const S2GEvent::TrackStateUpd& event) override;
+    virtual void handleEvent(const S2GEvent::TrackDataUpd& event) override;
+    virtual void handleEvent(const S2GEvent::LapEnded& event) override;
+    virtual void handleEvent(const S2GEvent::Summary& event) override;
 
     const IKernel*             mKernel;
     ModelListener*             modelListener;
@@ -115,7 +123,33 @@ protected:
     // User data
     uint32_t mIdleTimer = 0;
 
-    uint32_t                   mCounter;
+    // Menu positions
+    struct {
+        uint16_t enter;
+        uint16_t track;
+        uint16_t action;
+        uint16_t settings;
+        uint16_t alerts;
+    } mMenuPosition {};
+
+    std::tm mTime {};
+
+    // Kernel settings
+    bool mUnitsImperial = false;
+    std::array<uint8_t, 4> mHrThresholds { 150, 170, 190, 210 };
+
+    // Application settings
+    Settings mSettings {};
+
+    // Kernel state
+    bool mGpsFix = false;
+    uint8_t mBatteryLevel = 0;
+
+    // Track
+    Track::State mTrackState {};
+    std::shared_ptr<const ActivitySummary> mpActivitySummary = nullptr;
+    Track::Data mTrackData {};
+
 };
 
 #endif // MODEL_HPP

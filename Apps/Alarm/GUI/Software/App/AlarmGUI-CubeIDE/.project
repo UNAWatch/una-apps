@@ -54,6 +54,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Common/Logger.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/una-watch-develop2/Apps/Alarm/Common/Logger.cpp</locationURI>
+		</link>
+		<link>
 			<name>GUI/TouchGFX-GUI</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TouchGFX-GUI</locationURI>

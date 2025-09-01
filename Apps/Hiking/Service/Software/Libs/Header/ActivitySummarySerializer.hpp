@@ -30,8 +30,9 @@
 #ifndef __ACTIVITY_SUMMARY_SERIALIZER_HPP
 #define __ACTIVITY_SUMMARY_SERIALIZER_HPP
 
-#include "IFileSystem.hpp"
-#include "ActivitySummary.hpp"
+#include "IKernel.hpp"
+
+#include "Common/Header/ActivitySummary.hpp"
 
 /**
  * @class ActivitySummarySerializer
@@ -43,10 +44,10 @@ public:
 
     /**
      * @brief Constructor.
-     * @param fs: Reference to the file system interface.
-     * @param pathToFile: Path of the summary file.
+     * @param kernel: Reference to the kernel interface.
+     * @param pathToFile: Path to the summary file.
      */
-    ActivitySummarySerializer(Interface::IFileSystem &fs, const char *pathToFile);
+    ActivitySummarySerializer(const IKernel& kernel, const char *pathToFile);
 
     /**
      * @brief Destructor.
@@ -68,8 +69,11 @@ public:
     bool load(ActivitySummary &summary);
 
 private:
-    Interface::IFileSystem &mFs;    ///< File system interface reference.
-    const char *mPath = nullptr;    ///< Path to summary file
+    /// A constant reference to an IKernel object.
+    const IKernel& mKernel;
+    
+    /// Path to summary file
+    const char *mPath = nullptr;    
 };
 
 #endif /* __ACTIVITY_SUMMARY_SERIALIZER_HPP */

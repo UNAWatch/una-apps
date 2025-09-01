@@ -43,9 +43,9 @@ void TrackLapView::setLapNum(uint8_t n)
     title.set(buffer);
 }
 
-void TrackLapView::setSteps(uint32_t steps)
+void TrackLapView::setSteps(int32_t steps)
 {
-    Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%u", steps);
+    Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%d", steps);
     stepsValue.invalidate();
 }
 
@@ -60,7 +60,7 @@ void TrackLapView::setDistance(float km)
     distanceValue.invalidate();
 }
 
-void TrackLapView::setTimer(uint32_t sec)
+void TrackLapView::setTimer(std::time_t sec)
 {
     Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d",
         Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec));

@@ -12,7 +12,7 @@ public:
     virtual void initialize();
 
     void setHR(float hr);
-    void setAvgPace(uint32_t sec, bool isImperial);
+    void setAvgPace(int32_t sec, bool isImperial);
     void setElevation(float elevation, bool isImperial);
 
 protected:

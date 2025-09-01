@@ -15,7 +15,7 @@ void TrackPresenter::activate()
     // Set current menu position
     view.setPositionId(model->getMenuPosTrack());
 
-    onTrackInfo(model->getTrackInfo());
+    onTrackData(model->getTrackData());
 
     uint8_t hour;
     uint8_t minute;
@@ -31,9 +31,9 @@ void TrackPresenter::deactivate()
     model->setMenuPosTrack(view.getPositionId());
 }
 
-void TrackPresenter::onTrackInfo(const Gui::TrackInfo &info)
+void TrackPresenter::onTrackData(const Track::Data& data)
 {
-    view.setTrackInfo(info, model->isUnitsImperial());
+    view.setTrackData(data, model->isUnitsImperial());
 }
 
 void TrackPresenter::onBatteryLevel(uint8_t lvl)
@@ -46,7 +46,7 @@ void TrackPresenter::onTime(uint8_t hour, uint8_t minute, uint8_t sec)
     view.setTime(hour, minute);
 }
 
-void TrackPresenter::onLapChanged()
+void TrackPresenter::onLapChanged(uint8_t lapEnd)
 {
     model->application().gotoTrackLapScreenNoTransition();
 }

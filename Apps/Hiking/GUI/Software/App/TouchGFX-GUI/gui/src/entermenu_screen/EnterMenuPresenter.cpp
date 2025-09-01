@@ -33,6 +33,11 @@ void EnterMenuPresenter::onGpsFix(bool acquired)
     view.setGpsFix(acquired);
 }
 
+void EnterMenuPresenter::onActivitySummary(const ActivitySummary& summary)
+{
+    view.setSummaryAvailable(true);
+}
+
 void EnterMenuPresenter::startTrack()
 {
     model->trackStart();

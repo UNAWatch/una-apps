@@ -10,7 +10,7 @@ TrackActionPresenter::TrackActionPresenter(TrackActionView& v)
 void TrackActionPresenter::activate()
 {
     view.setUnitsImperial(model->isUnitsImperial());
-    onTrackInfo(model->getTrackInfo());
+    onTrackData(model->getTrackData());
 
     // Reset idle timer
     model->resetIdleTimer();
@@ -23,12 +23,12 @@ void TrackActionPresenter::deactivate()
     model->setMenuPosTrackAction(view.getPositionId());
 }
 
-void TrackActionPresenter::onTrackInfo(const Gui::TrackInfo &info)
+void TrackActionPresenter::onTrackData(const Track::Data& data)
 {
-    view.setTimer(static_cast<uint32_t>(info.totalTime));
-    view.setAvgPace(info.avgPace);
-    view.setDistance(info.totalDistance);
-    view.setSteps(info.steps);
-    view.setAvgHR(info.avgHR);
-    view.setCalories(info.floors);
+    view.setTimer(data.totalTime);
+    view.setAvgPace(data.avgPace);
+    view.setDistance(data.totalDistance);
+    view.setSteps(data.steps);
+    view.setAvgHR(data.avgHR);
+    view.setFloors(data.floors);
 }

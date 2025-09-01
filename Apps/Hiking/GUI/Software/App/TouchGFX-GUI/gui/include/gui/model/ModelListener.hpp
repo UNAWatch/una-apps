@@ -31,9 +31,10 @@ public:
     virtual void onBatteryLevel(uint8_t level) {}
     virtual void onDate(uint16_t year, uint8_t month, uint8_t day, uint8_t wday) {}
     virtual void onTime(uint8_t hour, uint8_t minute, uint8_t sec) {}
-    virtual void onTrackInfo(const Gui::TrackInfo& info) {}
-    virtual void onLapChanged() {}
-
+    virtual void onTrackState(const Track::State& state) {}
+    virtual void onTrackData(const Track::Data& data) {}
+    virtual void onLapChanged(uint8_t lapEnd) {}
+    virtual void onActivitySummary(const ActivitySummary& summary) {}
 
 
 protected:

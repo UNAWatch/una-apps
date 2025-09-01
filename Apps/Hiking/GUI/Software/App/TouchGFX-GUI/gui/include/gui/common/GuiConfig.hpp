@@ -14,6 +14,8 @@
 
 #include <cstdint>
 #include <cstdbool>
+#include <ctime>
+#include <cmath>
 
 #include "touchgfx/Color.hpp"
 #include <texts/TextKeysAndLanguages.hpp>
@@ -196,39 +198,7 @@ static constexpr uint16_t kStepsList[Gui::Menu::Settings::Alerts::Steps::ID_COUN
 static constexpr uint16_t kDistanceList[Gui::Menu::Settings::Alerts::Distance::ID_COUNT] = { 0,1,2,3,4,5,10 };
 static constexpr uint16_t kTimeList[Gui::Menu::Settings::Alerts::Time::ID_COUNT] = { 0,10,20,30,60 };
 
-struct TrackInfo {
 
-    // Pace in seconds/km
-    uint32_t pace;
-    uint32_t avgPace;
-    uint32_t lapPace;
-
-    // Distance in km
-    float totalDistance;
-    float lapDistance;
-
-    // Time in seconds
-    time_t totalTime;
-    time_t lapTime;
-
-    uint32_t lapNum;
-
-    float HR;
-    float avgHR;
-    float maxHR;
-
-    // Speed in km/h
-    float speed;
-    float avgSpeed;
-    float lapSpeed;
-
-    float elevation;
-
-    uint32_t steps;
-    uint32_t lapSteps;
-
-    uint32_t floors;
-};
 
 namespace Utils
 {
@@ -328,7 +298,7 @@ inline size_t RoundToNearestIndex(T* arr, size_t len, float target)
  * @param   m: Reference to store minutes.
  * @param   s: Reference to store seconds.
  */
-inline void sec2hms(uint32_t sec, uint16_t& h, uint8_t& m, uint8_t& s)
+inline void sec2hms(std::time_t sec, uint16_t& h, uint8_t& m, uint8_t& s)
 {
     h = static_cast<uint16_t>(sec / 3600);
     sec %= 3600;
@@ -341,7 +311,7 @@ inline void sec2hms(uint32_t sec, uint16_t& h, uint8_t& m, uint8_t& s)
  * @param   sec: Seconds to convert.
  * @return  Hours.
  */
-inline uint16_t sec2hmsH(uint32_t sec)
+inline uint16_t sec2hmsH(std::time_t sec)
 {
     uint16_t h;
     uint8_t m;
@@ -355,7 +325,7 @@ inline uint16_t sec2hmsH(uint32_t sec)
  * @param   sec: Seconds to convert.
  * @return  Minutes.
  */
-inline uint8_t sec2hmsM(uint32_t sec)
+inline uint8_t sec2hmsM(std::time_t sec)
 {
     uint16_t h;
     uint8_t m;
@@ -369,7 +339,7 @@ inline uint8_t sec2hmsM(uint32_t sec)
  * @param   sec: Seconds to convert.
  * @return  Seconds.
  */
-inline uint8_t sec2hmsS(uint32_t sec)
+inline uint8_t sec2hmsS(std::time_t sec)
 {
     uint16_t h;
     uint8_t m;
@@ -377,6 +347,7 @@ inline uint8_t sec2hmsS(uint32_t sec)
     sec2hms(sec, h, m, s);
     return s;
 }
+
 
 } // namespace Utils
 

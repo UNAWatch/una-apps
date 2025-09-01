@@ -31,7 +31,7 @@
 *****************************************************************************
 */
 
-INCLUDE "libc_exports.ld"
+INCLUDE "libc_exports_0.0.2.ld"
 
 /* Entry Point */
 ENTRY(AppStart)
@@ -45,7 +45,7 @@ _Max_Stack_Size = 10*1024;	/* required amount of stack */
 /* Dummy memories definition */
 MEMORY
 {
-  RAM	(xrw)	: ORIGIN = 0x20000000,	LENGTH = 500K
+  RAM	(xrw)	: ORIGIN = 0x20000000,	LENGTH = 1000K
 }
 
 /* Sections */

@@ -460,20 +460,32 @@
     <Filter Include="Application\Common">
       <UniqueIdentifier>{6b191666-68fc-402f-b8a9-dc4c833a796e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Common\Libs">
-      <UniqueIdentifier>{8d4951c7-d046-482c-bac5-cf1fc3c601cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Common\Libs\Header">
-      <UniqueIdentifier>{943ddaa3-5d89-49d4-836e-79265796ce30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Common\Libs\Source">
-      <UniqueIdentifier>{a99aa030-327c-42d4-b8ba-4c71a57f1d9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Common\Libs\Header\Interfaces">
-      <UniqueIdentifier>{3a7ca060-08ce-4fe4-a5d7-cd9625b6b45e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gui\common">
       <UniqueIdentifier>6D7395F6-5C2A-EC5C-D513-67318558748F</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Service\Header">
+      <UniqueIdentifier>{28fbf234-43bb-4521-a668-3826b3576b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Service\Source">
+      <UniqueIdentifier>{f2a4f5b6-4cb5-4d40-89bc-699a5add4383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\ThirdParty">
+      <UniqueIdentifier>{9cd0adae-3b13-4746-856c-b082a0453afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\ThirdParty\coreJSON">
+      <UniqueIdentifier>{c4b438f5-0c7b-417b-8ecb-e9cdb39f2fbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Common\Header">
+      <UniqueIdentifier>{1d545ccb-d046-4830-b007-42625c2b5d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Common\Source">
+      <UniqueIdentifier>{a6fe576d-d68f-41e4-b0c4-37ce3012f795}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Common\Header\Interfaces">
+      <UniqueIdentifier>{5b254b5b-6fb4-4f5a-9068-49214586a233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\ThirdParty\FIT">
+      <UniqueIdentifier>{e6d7c18f-1a40-43e4-8d55-d6c58683dd14}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -506,12 +518,6 @@
     </ClCompile>
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp">
       <Filter>Source Files\gui\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\Service.cpp">
-      <Filter>Application\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp">
-      <Filter>Application\Service</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp">
       <Filter>SDK\Libs\Source\UnaLogger</Filter>
@@ -789,14 +795,80 @@
     <ClCompile Include="..\..\generated\gui_generated\src\track_screen\TrackViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\track_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Common\Libs\Source\ActivitySummarySerializer.cpp">
-      <Filter>Application\Common\Libs\Source</Filter>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamReader.cpp">
+      <Filter>SDK\Libs\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Common\Libs\Source\ActivityWriter.cpp">
-      <Filter>Application\Common\Libs\Source</Filter>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamWriter.cpp">
+      <Filter>SDK\Libs\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Common\Libs\Source\SettingsSerializer.cpp">
-      <Filter>Application\Common\Libs\Source</Filter>
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp">
+      <Filter>Application\Service\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\Service.cpp">
+      <Filter>Application\Service\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\SettingsSerializer.cpp">
+      <Filter>Application\Service\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\core_json.c">
+      <Filter>SDK\ThirdParty\coreJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\PolyLine.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\ActivitySummarySerializer.cpp">
+      <Filter>Application\Service\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\TrackMapBuilder.cpp">
+      <Filter>SDK\Libs\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_unicode.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_buffer_encode.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_crc.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_date_time.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field_definition.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_encode.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_base.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_definition.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg_definition.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_profile.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_protocol_validator.cpp">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\ActivityWriter.cpp">
+      <Filter>Application\Service\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1594,23 +1666,53 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\track_screen\TrackViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\track_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\ActivitySummary.hpp">
-      <Filter>Application\Common\Libs\Header</Filter>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\JsonStreamReader.hpp">
+      <Filter>SDK\Libs\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\ActivitySummarySerializer.hpp">
-      <Filter>Application\Common\Libs\Header</Filter>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\JsonStreamWriter.hpp">
+      <Filter>SDK\Libs\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\ActivityWriter.hpp">
-      <Filter>Application\Common\Libs\Header</Filter>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\TrackMapBuilder.hpp">
+      <Filter>SDK\Libs\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\Settings.hpp">
-      <Filter>Application\Common\Libs\Header</Filter>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\TrackMapScreen.hpp">
+      <Filter>SDK\Libs\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\SettingsSerializer.hpp">
-      <Filter>Application\Common\Libs\Header</Filter>
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\GSModel.hpp">
+      <Filter>Application\Service\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\Interfaces\IModel.hpp">
-      <Filter>Application\Common\Libs\Header\Interfaces</Filter>
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\Service.hpp">
+      <Filter>Application\Service\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\ActivityWriter.hpp">
+      <Filter>Application\Service\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\SettingsSerializer.hpp">
+      <Filter>Application\Service\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\ActivitySummarySerializer.hpp">
+      <Filter>Application\Service\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\include\core_json.h">
+      <Filter>SDK\ThirdParty\coreJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\ActivitySummary.hpp">
+      <Filter>Application\Common\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\Settings.hpp">
+      <Filter>Application\Common\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\TrackInfo.hpp">
+      <Filter>Application\Common\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\Interfaces\IModel.hpp">
+      <Filter>Application\Common\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\PolyLine.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\FileStreamBuf.hpp">
+      <Filter>SDK\Libs\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

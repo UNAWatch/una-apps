@@ -62,19 +62,19 @@ uint16_t TrackView::getPositionId()
     return sideBar.getActiveId();
 }
 
-void TrackView::setTrackInfo(const Gui::TrackInfo &info, bool isImperial)
+void TrackView::setTrackData(const Track::Data &data, bool isImperial)
 {
-    trackFace1.setSteps(info.steps);
-    trackFace1.setDistance(info.totalDistance, isImperial);
-    trackFace1.setTimer(static_cast<uint32_t>(info.totalTime));
+    trackFace1.setSteps(data.steps);
+    trackFace1.setDistance(data.totalDistance, isImperial);
+    trackFace1.setTimer(data.totalTime);
 
-    trackFace2.setHR(info.HR);
-    trackFace2.setAvgPace(info.avgPace, isImperial);
-    trackFace2.setElevation(info.elevation, isImperial);
+    trackFace2.setHR(data.HR);
+    trackFace2.setAvgPace(data.avgPace, isImperial);
+    trackFace2.setElevation(data.elevation, isImperial);
 
-    trackFace3.setLapPace(info.lapPace, isImperial);
-    trackFace3.setLapDistance(info.lapDistance, isImperial);
-    trackFace3.setLapTimer(static_cast<uint32_t>(info.lapTime));
+    trackFace3.setLapPace(data.lapPace, isImperial);
+    trackFace3.setLapDistance(data.lapDistance, isImperial);
+    trackFace3.setLapTimer(data.lapTime);
 }
 
 void TrackView::setTime(uint8_t h, uint8_t m)

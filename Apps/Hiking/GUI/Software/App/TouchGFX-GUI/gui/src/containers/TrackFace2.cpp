@@ -18,10 +18,10 @@ void TrackFace2::setHR(float hr)
     hrBar.setHR(hr);
 }
 
-void TrackFace2::setAvgPace(uint32_t sec, bool isImperial)
+void TrackFace2::setAvgPace(int32_t sec, bool isImperial)
 {
     if (isImperial) {
-        sec = static_cast<uint32_t>(sec / Gui::Utils::km2mi(1.0f));
+        sec = static_cast<std::time_t>(sec / Gui::Utils::km2mi(1.0f));
     }
     Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%d:%02d", Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
     avgPaceValue.invalidate();

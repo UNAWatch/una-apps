@@ -28,6 +28,7 @@ public:
     virtual ~EnterMenuPresenter() {}
 
     virtual void onGpsFix(bool acquired) override;
+    virtual void onActivitySummary(const ActivitySummary& summary) override;
 
     void startTrack();
     void exitApp();

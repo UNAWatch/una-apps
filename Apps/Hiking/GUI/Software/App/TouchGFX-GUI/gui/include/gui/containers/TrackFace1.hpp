@@ -11,9 +11,9 @@ public:
 
     virtual void initialize();
 
-    void setSteps(uint32_t v);
+    void setSteps(int32_t v);
     void setDistance(float km, bool isImperial);
-    void setTimer(uint32_t sec);
+    void setTimer(std::time_t sec);
 
 protected:
 };

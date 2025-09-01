@@ -17,6 +17,8 @@
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\hal\simulator\sdl2\OSWrappers.cpp" />
     <ClCompile Include="$(ApplicationRoot)\simulator\main.cpp" />
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamReader.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamWriter.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Platform\OS\OS.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp" />
@@ -25,14 +27,32 @@
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Sensors\SensorCore.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\TrackMapBuilder.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c" />
-    <ClCompile Include="..\..\..\..\..\..\Common\Libs\Source\ActivitySummarySerializer.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Common\Libs\Source\ActivityWriter.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Common\Libs\Source\SettingsSerializer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\core_json.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_buffer_encode.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_crc.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_date_time.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field_definition.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_encode.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_base.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_definition.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg_definition.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_profile.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_protocol_validator.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_unicode.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\ActivitySummarySerializer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\ActivityWriter.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\Service.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\SettingsSerializer.cpp" />
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp" />
+    <ClCompile Include="..\..\gui\src\containers\PolyLine.cpp" />
     <ClCompile Include="..\..\gui\src\model\Model.cpp" />
     <ClCompile Include="..\..\generated\simulator\src\video\SoftwareMJPEGDecoder.cpp" />
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp" />
@@ -292,18 +312,28 @@
     <ClInclude Include="$(UnaSdkPath)\Libs\Header\SynchManager\SynchManager.hpp" />
     <ClInclude Include="$(UnaSdkPath)\Libs\Header\UnaLogger\Logger.h" />
     <ClInclude Include="$(UnaSdkPath)\Libs\Header\Wrappers\StdLibWrappers.h" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\ActivitySummary.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\ActivitySummarySerializer.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\ActivityWriter.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\Interfaces\IModel.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\Settings.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\SettingsSerializer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\FileStreamBuf.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\JsonStreamReader.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\JsonStreamWriter.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\TrackMapBuilder.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\Libs\Header\TrackMapScreen.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\include\core_json.h" />
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\ActivitySummary.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\Interfaces\IModel.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\Settings.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Common\Header\TrackInfo.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\ActivitySummarySerializer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\ActivityWriter.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\GSModel.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\Service.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\SettingsSerializer.hpp" />
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\DirectFrameBufferVideoController.hpp" />
     <ClInclude Include="..\..\gui\include\gui\common\FrontendApplication.hpp" />
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendApplicationBase.hpp" />
     <ClInclude Include="..\..\gui\include\gui\common\FrontendHeap.hpp" />
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendHeapBase.hpp" />
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\MJPEGDecoder.hpp" />
+    <ClInclude Include="..\..\gui\include\gui\containers\PolyLine.hpp" />
     <ClInclude Include="..\..\gui\include\gui\model\AppTypes.hpp" />
     <ClInclude Include="..\..\gui\include\gui\model\Model.hpp" />
     <ClInclude Include="..\..\gui\include\gui\model\ModelListener.hpp" />
@@ -448,13 +478,13 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;APP_ID="ABCDEF1234567890";DEV_ID="UNA Simulator";BUILD_VERSION="1.2.3";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4355</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../../../Service/Software/Libs/Header;../../../../../../Common/Libs/Header;../../../../../../;../Libs/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;../../../../../../;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;$(UnaSdkPath)/ThirdParty/FitSDKRelease_21.171.00/cpp;$(UnaSdkPath)/ThirdParty/coreJSON/source/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
