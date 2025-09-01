@@ -60,6 +60,7 @@ private:
     ActivitySummary mSummary;
     ActivitySummarySerializer mActivitySummarySerializer;
     TrackMapBuilder mTrackMapBuilder;
+    ActivityWriter mActivityWriter;
 
     // Sensors
     Interface::ISensorDriver* mGpsSensor = nullptr;
@@ -108,6 +109,12 @@ private:
 
         // Working data
         float initialAltitude = -1; // < 0 - not avaliable
+
+        float ascent;           // m
+        float descent;          // m
+
+        float lapAscent;        // m
+        float lapDescent;       // m
     } mAltimeter {};
     
     struct {
@@ -130,9 +137,6 @@ private:
     TrackMapBuilder::GpsPoint mPrevGpsPoint {};
 
     Track::Data mTrackData {};
-
-    std::vector<ActivityWriter::LapData> mLaps;
-    std::vector<ActivityWriter::PointData> mPoints;
 
     void startTrack();
     void processTrack(std::time_t utc);

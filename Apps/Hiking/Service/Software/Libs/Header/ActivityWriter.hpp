@@ -14,9 +14,13 @@
 
 #include <cstdint>
 #include <cstdbool>
+#include <string>
 
 #include "IKernel.hpp"
-#include "fit_encode.hpp"
+
+extern "C" {
+#include "fit_example.h"
+}
 
 /**
  * @class ActivityWriter
@@ -25,44 +29,15 @@
 class ActivityWriter {
 
 public:
-    struct TrackData {
+
+    struct AppInfo {
+        std::time_t timestamp;  // UTC
         uint32_t appVersion;    // Application version 4 bytes LE [patch, minor, major, 0]
         std::string devID;      // Developer ID (max len 16)
         std::string appID;      // Application ID (max len 16)
-
-        std::time_t timeStart;  // UTC
-        std::time_t duration;   // seconds
-        std::time_t elapsed;    // seconds
-        float totalDistance;    // m
-        float speedAvg;         // m/s
-        float speedMax;         // m/s
-        uint8_t hrAvg;          // bpm
-        uint8_t hrMax;          // bpm
-        float elevation;        // m
-        uint32_t steps;
-        uint32_t floors;
     };
 
-
-    struct LapData {
-        std::time_t timeStart;  // UTC
-        std::time_t duration;   // seconds
-        std::time_t elapsed;    // seconds
-        float distance;         // m
-        float speedAvg;         // m/s
-        float speedMax;         // m/s
-        uint8_t hrAvg;          // bpm
-        uint8_t hrMax;          // bpm
-        float elevation;        // m
-        uint32_t steps;
-        uint32_t floors;
-    };
-
-    /**
-     * @struct PointData
-     * @brief Represents a single activity data point.
-     */
-    struct PointData {
+    struct RecordData {
         std::time_t timestamp;  // UTC
         float latitude;         // degrees
         float longitude;        // degrees
@@ -71,10 +46,48 @@ public:
         uint32_t floors;
     };
 
+    struct LapData {
+        std::time_t timestamp;  // UTC
+        std::time_t timeStart;  // UTC
+        std::time_t duration;   // seconds
+        std::time_t elapsed;    // seconds
+        float distance;         // m
+        float speedAvg;         // m/s
+        float speedMax;         // m/s
+        uint8_t hrAvg;          // bpm
+        uint8_t hrMax;          // bpm
+        float ascent;           // m
+        float descent;          // m
+        uint32_t steps;
+        uint32_t floors;
+    };
+
+    struct TrackData {
+        std::time_t timeStart;  // UTC
+        std::time_t duration;   // seconds
+        std::time_t elapsed;    // seconds
+        float totalDistance;    // m
+        float speedAvg;         // m/s
+        float speedMax;         // m/s
+        uint8_t hrAvg;          // bpm
+        uint8_t hrMax;          // bpm
+        float ascent;           // m
+        float descent;          // m
+        uint32_t steps;
+        uint32_t floors;
+    };
+
 
     ActivityWriter(const IKernel& kernel, const char* pathToDir);
 
-    bool createFile(const TrackData& track, const std::vector<LapData>& laps, const std::vector<PointData>& points);
+
+    void start(const AppInfo& info);
+    void pause();
+    void resume();
+    void addRecord(const RecordData& record);
+    void addLap(const LapData& lap);
+    void stop(const TrackData& track);
+    void discard();
 
     
 private:
@@ -84,10 +97,40 @@ private:
     /// Path to FIT file
     const char* mPath = nullptr;
 
-    void fill(fit::Encode& encode, const TrackData& track, const std::vector<LapData>& laps, const std::vector<PointData>& points);
+    std::unique_ptr<sdk::api::File> mFile = nullptr;
+    uint16_t mLapCounter = 0;
+    FIT_UINT16 mDataCRC = 0;
+
+    static constexpr uint8_t skFileMsgNum = 1;
+    static constexpr uint8_t skDevelopMsgNum = 2;
+    static constexpr uint8_t skRecordMsgNum = 3;
+    static constexpr uint8_t skLapMsgNum = 4;
+    static constexpr uint8_t skSessionMsgNum = 5;
+    static constexpr uint8_t skActivityMsgNum = 6;
+    static constexpr uint8_t skEventMsgNum = 7;
+    static constexpr uint8_t skStepsMsgNum = 8;
+    static constexpr uint8_t skFloorsMsgNum = 9;
+
+
+
+    bool createAndOpenFile(std::time_t utc);
+    void saveFile();
+    void deleteFile();
+
     static time_t tm2epoch(const struct tm* tm);
+    static time_t epochToLocal(time_t utc);
     static FIT_DATE_TIME unixToFitTimestamp(std::time_t unixTimestamp);
     static FIT_SINT32 ConvertDegreesToSemicircles(float degrees);
+
+    void WriteFileHeader(sdk::api::File* fp);
+    void WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size, sdk::api::File* fp); 
+    void WriteMessageDefinitionWithDevFields(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size,
+        FIT_UINT8 number_dev_fields, FIT_DEV_FIELD_DEF* dev_field_definitions, sdk::api::File* fp);
+    void WriteMessage(FIT_UINT8 local_mesg_number, const void* mesg_pointer, FIT_UINT16 mesg_size, sdk::api::File* fp);
+    void WriteDeveloperField(const void* data, FIT_UINT16 data_size, sdk::api::File* fp);
+    void WriteData(const void* data, FIT_UINT16 data_size, sdk::api::File* fp);
+    void WriteCRC(sdk::api::File* fp);
+
 };
 
 #endif /* __ACTIVITY_WRITER_HPP */

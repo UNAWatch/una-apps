@@ -1,6 +1,5 @@
 ﻿#include "Service/Software/Libs/Header/Service.hpp"
 
-#include <cstdio>
 #include <ctime>
 #include <cmath>
 #include <memory>
@@ -24,6 +23,7 @@ Service::Service(const IKernel& kernel)
         , mSettingsSerializer(mKernel, "settings.json")
         , mSummary{}
         , mActivitySummarySerializer(mKernel, "Activity/summary.json")
+        , mActivityWriter(mKernel, "Activity")
 {
     mKernel.app.registerApp(this);
     mKernel.sctrl.setContext(mGSModel);
@@ -267,13 +267,14 @@ void Service::startTrack()
     mTrackMapBuilder.reset();
     mTrackMapBuilder.setDistanceThreshold(mPrevGpsPoint, skMapDistanceThreshold);
 
-    // Reset storage
-    mLaps.clear();
-    mPoints.clear();
-
     mStepCounter.initialSteps = -1;
     mFloorsCounter.initialFloors = -1;
+
     mAltimeter.initialAltitude = -1;
+    mAltimeter.ascent = 0.0f;
+    mAltimeter.descent = 0.0f;
+    mAltimeter.lapAscent = 0.0f;
+    mAltimeter.lapDescent = 0.0f;
 
     mHr.totalCnt = 0;
     mHr.totalSum = 0;
@@ -299,6 +300,13 @@ void Service::startTrack()
     if (mHrSensor) {
         mHrSensor->connect(this, &mKernel.app, skInitialSamplePeriod, skSampleLatency);
     }
+
+    ActivityWriter::AppInfo info{};
+    info.timestamp = std::time(nullptr);
+    info.appVersion = ParseVersion(BUILD_VERSION);
+    info.devID = DEV_ID;
+    info.appID = APP_ID;
+    mActivityWriter.start(info);
 
     mTrackState = Track::State::ACTIVE;
 
@@ -373,6 +381,14 @@ void Service::processTrack(std::time_t utc)
         float diff = total - mTrackData.elevation;
         mTrackData.elevation = total;
         mTrackData.lapElevation += diff;
+
+        if (diff > 0) {
+            mAltimeter.ascent += diff;
+            mAltimeter.lapAscent += diff;
+        } else {
+            mAltimeter.descent -= diff;
+            mAltimeter.lapDescent -= diff;
+        }
     }
 
     // Speed, km/h. Pace, seconds/km
@@ -399,16 +415,17 @@ void Service::processTrack(std::time_t utc)
         mTrackData.avgLapSpeed = 0.0f;
         mTrackData.lapPace = 0;
     }
+    
 
-    // Save point to the FIT file
-    ActivityWriter::PointData fitPoint{};
-    fitPoint.timestamp = utc;
-    fitPoint.latitude = mGps.latitude;
-    fitPoint.longitude = mGps.longitude;
-    fitPoint.heartRate = static_cast<uint8_t>(mTrackData.HR);
-    fitPoint.steps = static_cast<uint32_t>(mTrackData.steps);
-    fitPoint.floors = static_cast<uint32_t>(mTrackData.floors);
-    mPoints.push_back(fitPoint);
+    // Save record to the FIT file
+    ActivityWriter::RecordData fitRecord {};
+    fitRecord.timestamp = utc;
+    fitRecord.latitude = mGps.latitude;
+    fitRecord.longitude = mGps.longitude;
+    fitRecord.heartRate = static_cast<uint8_t>(mTrackData.HR);
+    fitRecord.steps = static_cast<uint32_t>(mTrackData.steps);
+    fitRecord.floors = static_cast<uint32_t>(mTrackData.floors);
+    mActivityWriter.addRecord(fitRecord);
 
     mGSModel->sendToGUI(S2GEvent::TrackDataUpd{ mTrackData });
 
@@ -427,10 +444,11 @@ void Service::processTrack(std::time_t utc)
         fitLap.speedMax = mTrackData.maxLapSpeed;
         fitLap.hrAvg = static_cast<uint8_t>(mTrackData.avgLapHR);
         fitLap.hrMax = static_cast<uint8_t>(mTrackData.maxLapHR);
-        fitLap.elevation = mTrackData.lapElevation;
+        fitLap.ascent = mAltimeter.lapAscent;
+        fitLap.descent = mAltimeter.lapDescent;
         fitLap.steps = static_cast<uint32_t>(mTrackData.lapSteps);
         fitLap.floors = static_cast<uint32_t>(mTrackData.lapFloors);
-        mLaps.push_back(fitLap);
+        mActivityWriter.addLap(fitLap);
 
         // Reset lap counters
         mTrackData.lapTime = 0;
@@ -439,6 +457,9 @@ void Service::processTrack(std::time_t utc)
         mTrackData.lapFloors = 0;
         mTrackData.lapElevation = 0.0f;
 
+        mAltimeter.lapAscent = 0.0f;
+        mAltimeter.lapDescent = 0.0f;
+
         mTrackData.maxLapSpeed = 0.0f;
         mTrackData.avgLapSpeed = 0.0f;
 
@@ -446,6 +467,8 @@ void Service::processTrack(std::time_t utc)
         mTrackData.maxLapHR = 0.0f;
         mHr.lapCnt = 0;
         mHr.lapSum = 0;
+
+
 
         mGSModel->sendToGUI(S2GEvent::LapEnded{ mTrackData.lapNum });
         mTrackData.lapNum = lapNum;
@@ -476,9 +499,6 @@ void Service::stopTrack(bool discard)
 
         // Create FIT file
         ActivityWriter::TrackData fitTrack{};
-        fitTrack.appVersion = ParseVersion(BUILD_VERSION);
-        fitTrack.devID = DEV_ID;
-        fitTrack.appID = APP_ID;
         fitTrack.timeStart = mTrackStartUTC;
         fitTrack.duration = mTrackData.totalTime;
         fitTrack.elapsed = mTrackData.totalTime;
@@ -487,11 +507,13 @@ void Service::stopTrack(bool discard)
         fitTrack.speedMax = mTrackData.maxSpeed;
         fitTrack.hrAvg = static_cast<uint8_t>(mTrackData.avgHR);
         fitTrack.hrMax = static_cast<uint8_t>(mTrackData.maxHR);
-        fitTrack.elevation = mTrackData.elevation;
-
-        ActivityWriter aw{ mKernel, "Activity"};
-        aw.createFile(fitTrack, mLaps, mPoints);
-        
+        fitTrack.ascent = mAltimeter.ascent;
+        fitTrack.descent = mAltimeter.descent;
+        fitTrack.steps = static_cast<uint32_t>(mTrackData.steps);
+        fitTrack.floors = static_cast<uint32_t>(mTrackData.floors);
+        mActivityWriter.stop(fitTrack);        
+    } else {
+        mActivityWriter.discard();
     }
 
     mTrackState = Track::State::INACTIVE;

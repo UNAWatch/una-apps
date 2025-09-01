@@ -31,21 +31,10 @@
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c" />
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\core_json.c" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_buffer_encode.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_crc.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_date_time.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field_definition.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_encode.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_base.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_definition.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg_definition.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_profile.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_protocol_validator.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_unicode.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_convert.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_crc.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_product.c" />
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\ActivitySummarySerializer.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\ActivityWriter.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp" />
@@ -484,7 +473,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;../../../../../../;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;$(UnaSdkPath)/ThirdParty/FitSDKRelease_21.171.00/cpp;$(UnaSdkPath)/ThirdParty/coreJSON/source/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;../../../../../../;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;$(UnaSdkPath)/ThirdParty/FitSDKRelease_21.171.00/c;$(UnaSdkPath)/ThirdParty/FitSDKRelease_21.171.00/cpp;$(UnaSdkPath)/ThirdParty/coreJSON/source/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

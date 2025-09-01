@@ -484,8 +484,8 @@
     <Filter Include="Application\Common\Header\Interfaces">
       <UniqueIdentifier>{5b254b5b-6fb4-4f5a-9068-49214586a233}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\ThirdParty\FIT">
-      <UniqueIdentifier>{e6d7c18f-1a40-43e4-8d55-d6c58683dd14}</UniqueIdentifier>
+    <Filter Include="SDK\ThirdParty\FITC">
+      <UniqueIdentifier>{a243601f-2537-43ea-87f5-82ff31d0e05e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -822,53 +822,20 @@
     <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\TrackMapBuilder.cpp">
       <Filter>SDK\Libs\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_unicode.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_buffer_encode.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_crc.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_date_time.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_developer_field_definition.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_encode.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_base.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_field_definition.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_mesg_definition.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_profile.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\cpp\fit_protocol_validator.cpp">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\ActivityWriter.cpp">
       <Filter>Application\Service\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit.c">
+      <Filter>SDK\ThirdParty\FITC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_convert.c">
+      <Filter>SDK\ThirdParty\FITC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_crc.c">
+      <Filter>SDK\ThirdParty\FITC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_product.c">
+      <Filter>SDK\ThirdParty\FITC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

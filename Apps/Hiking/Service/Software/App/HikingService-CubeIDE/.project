@@ -174,74 +174,24 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/ThirdParty/FitSDK/fit.cpp</name>
+			<name>SDK/ThirdParty/FitSDK/fit.c</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit.cpp</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/SDK/ThirdParty/FitSDKRelease_21.171.00/c/fit.c</locationURI>
 		</link>
 		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_buffer_encode.cpp</name>
+			<name>SDK/ThirdParty/FitSDK/fit_convert.c</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_buffer_encode.cpp</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/SDK/ThirdParty/FitSDKRelease_21.171.00/c/fit_convert.c</locationURI>
 		</link>
 		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_crc.cpp</name>
+			<name>SDK/ThirdParty/FitSDK/fit_crc.c</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_crc.cpp</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/SDK/ThirdParty/FitSDKRelease_21.171.00/c/fit_crc.c</locationURI>
 		</link>
 		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_date_time.cpp</name>
+			<name>SDK/ThirdParty/FitSDK/fit_product.c</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_date_time.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_developer_field.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_developer_field.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_developer_field_definition.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_developer_field_definition.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_encode.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_encode.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_field.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_field.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_field_base.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_field_base.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_field_definition.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_field_definition.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_mesg.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_mesg.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_mesg_definition.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_mesg_definition.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_profile.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_profile.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_protocol_validator.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/cpp/fit_protocol_validator.cpp</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/SDK/ThirdParty/FitSDKRelease_21.171.00/c/fit_product.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/ThirdParty/coreJSON/core_json.c</name>
