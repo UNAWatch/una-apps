@@ -30,9 +30,9 @@
 #ifndef __ACTIVITY_SUMMARY_SERIALIZER_HPP
 #define __ACTIVITY_SUMMARY_SERIALIZER_HPP
 
-#include "IKernel.hpp"
+#include "SDK/Interfaces/IKernel.hpp"
 
-#include "Common/Header/ActivitySummary.hpp"
+#include "ActivitySummary.hpp"
 
 /**
  * @class ActivitySummarySerializer

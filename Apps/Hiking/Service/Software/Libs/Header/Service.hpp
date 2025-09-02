@@ -1,15 +1,15 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "Interfaces/IKernel.hpp"
-#include "Service/Software/Libs/Header/GSModel.hpp"
-#include "Service/Software/Libs/Header/SettingsSerializer.hpp"
-#include "Service/Software/Libs/Header/ActivitySummarySerializer.hpp"
-#include "Service/Software/Libs/Header/ActivityWriter.hpp"
+#include "SDK/GSModel/GSModelHelper.hpp"
+#include "SDK/SensorLayer/ISensorDriver.hpp"
+#include "SDK/SensorLayer/ISensorDataListener.hpp"
+#include "SDK/TrackMapBuilder.hpp"
 
-#include "SensorLayer/ISensorDriver.hpp"
-#include "SensorLayer/ISensorDataListener.hpp"
-#include "TrackMapBuilder.hpp"
+#include "SettingsSerializer.hpp"
+#include "ActivitySummarySerializer.hpp"
+#include "ActivityWriter.hpp"
+
 
 class Service : public IServiceModelHandler,
                 public Interface::IUserApp::Callback,
@@ -49,10 +49,10 @@ private:
 
 
 
-    const IKernel&            mKernel;
-    std::shared_ptr<GSModel>  mGSModel;
-    bool                      mTerminate;
-    bool                      mGUIStarted;
+    const IKernel&                  mKernel;
+    std::shared_ptr<GSModelService> mGSModel;
+    bool                            mTerminate;
+    bool                            mGUIStarted;
 
     Settings mSettings;
     SettingsSerializer mSettingsSerializer;
@@ -90,7 +90,7 @@ private:
         uint32_t timestamp; // ms
 
         // Working data
-        float    initialSteps = -1; // < 0 - not avaliable
+        uint32_t initialSteps = 0; // 0 - not avaliable
     } mStepCounter {};
 
     struct {
@@ -99,7 +99,7 @@ private:
         uint32_t timestamp; // ms
 
         // Working data
-        float    initialFloors = -1; // < 0 - not avaliable
+        uint32_t initialFloors = 0; // 0 - not avaliable
     } mFloorsCounter {};
 
     struct {
@@ -108,7 +108,7 @@ private:
         uint32_t timestamp; // ms
 
         // Working data
-        float initialAltitude = -1; // < 0 - not avaliable
+        float initialAltitude = 0.0f; // 0 - not avaliable
 
         float ascent;           // m
         float descent;          // m

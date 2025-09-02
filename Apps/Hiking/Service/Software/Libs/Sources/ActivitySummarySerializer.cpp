@@ -9,16 +9,16 @@
  ******************************************************************************
  */
 
-#include "Service/Software/Libs/Header/ActivitySummarySerializer.hpp"
+#include "ActivitySummarySerializer.hpp"
 
 #include <cassert>
 
-#include "JsonStreamWriter.hpp"
-#include "JsonStreamReader.hpp"
+#include "SDK/JsonStreamWriter.hpp"
+#include "SDK/JsonStreamReader.hpp"
 
-#define LOG_MODULE_PRX      "ActivitySummarySerializer"
+#define LOG_MODULE_PRX      "ActivitySummarySerializer::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "UnaLogger/Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 ActivitySummarySerializer::ActivitySummarySerializer(const IKernel& kernel,
         const char *pathToFile) :

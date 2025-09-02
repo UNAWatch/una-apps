@@ -8,17 +8,17 @@
  *
  ******************************************************************************
  */
-#include "Service/Software/Libs/Header/SettingsSerializer.hpp"
+#include "SettingsSerializer.hpp"
 
 #include <cassert>
 
-#include "JsonStreamWriter.hpp"
-#include "JsonStreamReader.hpp"
+#include "SDK/JsonStreamWriter.hpp"
+#include "SDK/JsonStreamReader.hpp"
 
 
 #define LOG_MODULE_PRX      "SettingsSerializer"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "UnaLogger/Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 
 SettingsSerializer::SettingsSerializer(const IKernel& kernel,

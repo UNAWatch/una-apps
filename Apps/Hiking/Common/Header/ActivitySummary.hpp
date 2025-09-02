@@ -16,7 +16,7 @@
 #include <string>
 #include <ctime>
 
-#include "TrackMapScreen.hpp"
+#include "SDK/TrackMapScreen.hpp"
 
 /**
  * @struct ActivitySummary

@@ -10,21 +10,21 @@
  */
 
 
-#include "Service/Software/Libs/Header/ActivityWriter.hpp"
+#include "ActivityWriter.hpp"
 
 #include <cassert>
 #include <cstring>
 
-#include "API/FileSystem.hpp"
+#include "SDK/API/FileSystem.hpp"
 
 extern "C" {
 #include "fit_product.h"
 #include "fit_crc.h"
 }
 
-#define LOG_MODULE_PRX      "ActivityWriter"
+#define LOG_MODULE_PRX      "ActivityWriter::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "UnaLogger/Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 
 

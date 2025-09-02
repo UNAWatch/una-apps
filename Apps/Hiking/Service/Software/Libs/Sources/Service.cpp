@@ -1,22 +1,28 @@
-﻿#include "Service/Software/Libs/Header/Service.hpp"
+﻿#include "Service.hpp"
+
+#define LOG_MODULE_PRX      "Service::"
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#include "SDK/UnaLogger/Logger.h"
 
 #include <ctime>
 #include <cmath>
 #include <memory>
 #include <cstring>
 
-#include "Common/Header/Settings.hpp"
-#include "Common/Header/ActivitySummary.hpp"
-#include "Common/Header/TrackInfo.hpp"
+#include "Settings.hpp"
+#include "ActivitySummary.hpp"
+#include "TrackInfo.hpp"
 
+#include "SDK/SensorLayer/DataParsers/SensorDataParserGPS.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
-#define LOG_MODULE_PRX      "Service::"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "UnaLogger/Logger.h"
 
 Service::Service(const IKernel& kernel)
         : mKernel(kernel)
-        , mGSModel(std::make_shared<GSModel>(kernel, *this))
+        , mGSModel(std::make_shared<GSModelService>(mKernel, *this))
         , mTerminate(false)
         , mGUIStarted(false)
         , mSettings{}
@@ -149,44 +155,56 @@ void Service::onNewSensorData(const Interface::ISensorDriver* sensor,
     if (sapleNum == 0) {
         return;
     }
-    Interface::ISensorData* sample = data[sapleNum -1];
+    const Interface::ISensorData& sample = *data[sapleNum -1];
+
     // [time, fix, speed, acc], 
     // [mask, time, lat, lon, alt, speed,  ...]
     if (sensor == mGpsSensor) {
-        mGps.fix = sample->getValue(0);
-        if (mGps.fix) { // Do not change position if no fix
-            mGps.latitude = sample->getValue(1);
-            mGps.longitude = sample->getValue(2);
-            mGps.altitude = sample->getValue(3);
+        SDK::SensorDataParser::GPS gps {sample};
+        if (gps.isDataValid()) {
+            mGps.timestamp = sample.getTimestamp();
+            mGps.fix = gps.isCoordinatesValid();
+
+            if (mGps.fix) { // Do not change position if no fix
+                gps.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
+            }
         }
     } else if (sensor == mStepCounterSensor) {
-        if (mStepCounter.initialSteps < 0) {
-            mStepCounter.initialSteps = sample->getValue(0);
+        SDK::SensorDataParser::StepCounter sc {sample};
+        if (sc.isDataValid()) {
+            if (mStepCounter.initialSteps == 0) {
+                mStepCounter.initialSteps = sc.getStepCount();
+            }
+            mStepCounter.steps = sc.getStepCount();
+            mStepCounter.timestamp = sample.getTimestamp();
         }
-
-        mStepCounter.steps = sample->getValue(0);
-        mStepCounter.timestamp = sample->getTimestamp();
-
     } else if (sensor == mFloorCounterSensor) {
-        if (mFloorsCounter.initialFloors < 0) {
-            mFloorsCounter.initialFloors = sample->getValue(0);
+        SDK::SensorDataParser::FloorCounter fc {sample};
+        if (fc.isDataValid()) {
+            if (mFloorsCounter.initialFloors == 0) {
+                mFloorsCounter.initialFloors = fc.getFloorCount();
+            }
+            mFloorsCounter.floors = fc.getFloorCount();
+            mFloorsCounter.timestamp = sample.getTimestamp();
         }
-
-        mFloorsCounter.floors = sample->getValue(0);
-        mFloorsCounter.timestamp = sample->getTimestamp();
     } else if (sensor == mAltimeterSensor) {
-        if (mAltimeter.initialAltitude < 0) {
-            mAltimeter.initialAltitude = sample->getValue(0);
+        SDK::SensorDataParser::Altimeter alt {sample};
+        if (alt.isDataValid()) {
+            if (std::abs(mAltimeter.initialAltitude) < 0.01) {
+                mAltimeter.initialAltitude = alt.getAltitude();
+            }
+            mAltimeter.altitude = alt.getAltitude();
+            mAltimeter.timestamp = sample.getTimestamp();
         }
-
-        mAltimeter.altitude = sample->getValue(0);
-        mAltimeter.timestamp = sample->getTimestamp();
     } else if (sensor == mHrSensor) {
-        mHr.hr = sample->getValue(0);
-        mHr.timestamp = sample->getTimestamp();
+        SDK::SensorDataParser::HeartRate hr {sample};
+        if (hr.isDataValid()) {
+            mHr.hr = hr.getBpm();
+            mHr.timestamp = sample.getTimestamp();
 
-        mHr.totalSum += mHr.hr;
-        mHr.totalCnt++;
+            mHr.totalSum += mHr.hr;
+            mHr.totalCnt++;
+        }
     }
 }
 
@@ -360,7 +378,7 @@ void Service::processTrack(std::time_t utc)
     mTrackData.lapDistance += distance;
 
     // Steps
-    if (mStepCounter.initialSteps >= 0) {
+    if (mStepCounter.initialSteps > 0) {
         int32_t total = static_cast<int32_t>(mStepCounter.steps - mStepCounter.initialSteps);
         int32_t diff = total - mTrackData.steps;
         mTrackData.steps = total;
@@ -376,7 +394,7 @@ void Service::processTrack(std::time_t utc)
     }
 
     // Elevation
-    if (mAltimeter.initialAltitude >= 0) {
+    if (std::abs(mAltimeter.initialAltitude) > 0.01) {
         float total = mAltimeter.altitude - mAltimeter.initialAltitude;
         float diff = total - mTrackData.elevation;
         mTrackData.elevation = total;

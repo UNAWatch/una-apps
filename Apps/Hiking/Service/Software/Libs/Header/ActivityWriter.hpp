@@ -16,7 +16,7 @@
 #include <cstdbool>
 #include <string>
 
-#include "IKernel.hpp"
+#include "SDK/Interfaces/IKernel.hpp"
 
 extern "C" {
 #include "fit_example.h"

@@ -5,14 +5,14 @@
 #include <memory>
 
 
-#include "Interfaces/IKernel.hpp"
+#include "SDK/GSModel/GSModelHelper.hpp"
+
 #include "touchgfx/UIEventListener.hpp"
 #include "gui/common/GuiConfig.hpp"
 
-#include "Common/Header/Interfaces/IModel.hpp"
-#include "Common/Header/Settings.hpp"
-#include "Common/Header/ActivitySummary.hpp"
-#include "Common/Header/TrackInfo.hpp"
+#include "Settings.hpp"
+#include "ActivitySummary.hpp"
+#include "TrackInfo.hpp"
 
 
 
@@ -118,7 +118,7 @@ protected:
 
     const IKernel*             mKernel;
     ModelListener*             modelListener;
-    std::shared_ptr<IGUIModel> mGSModel;
+    std::shared_ptr<GSModelGUI> mGSModel;
 
     // User data
     uint32_t mIdleTimer = 0;

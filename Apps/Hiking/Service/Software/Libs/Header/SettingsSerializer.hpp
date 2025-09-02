@@ -28,9 +28,9 @@
 #include <cstdbool>
 #include <string>
 
-#include "IKernel.hpp"
+#include "SDK/Interfaces/IKernel.hpp"
 
-#include "Common/Header/Settings.hpp"
+#include "Settings.hpp"
 
 
  /**

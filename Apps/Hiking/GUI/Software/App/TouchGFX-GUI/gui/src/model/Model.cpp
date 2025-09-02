@@ -1,12 +1,16 @@
 #include <gui/model/Model.hpp>
-#include <gui/model/ModelListener.hpp>
-#include <gui/common/FrontendApplication.hpp>
-#include "KernelManager.hpp"
-
 
 #define LOG_MODULE_PRX      "Model::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+#include "SDK/UnaLogger/Logger.h"
+
+#include <memory>
+
+#include <gui/model/ModelListener.hpp>
+#include <gui/common/FrontendApplication.hpp>
+
+#include "SDK/KernelManager.hpp"
+
 
 #if defined(SIMULATOR)
     #include "touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp"
@@ -18,12 +22,12 @@
 Model::Model()
     : mKernel(KernelManager::GetInstance().getKernel())
     , modelListener(0)
-    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel->gctrl.getContext()))
+    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel->gctrl.getContext()))
 {
     mKernel->app.registerApp(this);
     mGSModel->setGUIHandler(mKernel, this);
 
-    LOG_INFO("GUI [Utility #2] is initialized\n");
+    LOG_INFO("GUI is initialized\n");
 
 #if defined(SIMULATOR)
     LOG_DEBUG("Application is running through simulator! \n");
@@ -54,7 +58,7 @@ void Model::tick()
 //    LOG_INFO_WP("tick\n");
 
 
-    mGSModel->checkS2GEvents(0);
+    mGSModel->checkS2GEvents();
 }
 
 void Model::handleKeyEvent(uint8_t key)
