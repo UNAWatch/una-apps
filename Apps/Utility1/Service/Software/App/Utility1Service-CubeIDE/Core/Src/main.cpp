@@ -16,8 +16,7 @@
 #include <stdio.h>
 #include <memory>
 
-#include "Interfaces/IKernel.hpp"
-#include "Model.hpp"
+#include "SDK/GSModel/GSModelHelper.hpp"
 
 static const char* mName = "Service::Utility#1";
 
@@ -26,51 +25,51 @@ class Service : public IServiceModelHandler,
 {
 public:
     Service(const IKernel& kernel)
-        : mModel(std::make_shared<Model>(kernel, *this))
+        : mGSModel(std::make_shared<GSModelService>(kernel, *this))
         , mTerminate(false)
         , mCounter(0)
         , mGUIStarted(false)
     {
-//        kernel.app.registerApp(this);
-//        kernel.sctrl.setContext(mModel);
-//        kernel.app.initialized();
+        kernel.app.registerApp(this);
+        kernel.sctrl.setContext(mGSModel);
+        kernel.app.initialized();
     }
 
     virtual ~Service() = default;
 
     void run()
     {
-//        while (!mTerminate) {
-//            mModel->checkG2SEvents();
-//
-//            mCounter += 1;
-//
-//            if (mGUIStarted) {
-//                S2GEvent::Counter counter = {
-//                    .value = mCounter
-//                };
-//
-//                mModel->sendToGUI(counter);
-//            }
-//        }
+        while (!mTerminate) {
+            mGSModel->checkG2SEvents();
+
+            mCounter += 1;
+
+            if (mGUIStarted) {
+                S2GEvent::Counter counter = {
+                    .value = mCounter
+                };
+
+                mGSModel->sendToGUI(counter);
+            }
+        }
     }
 
     void handleEvent(const G2SEvent::Run& event)
     {
-//        (void) event;
-//
-//        printf("%s::G2SEvent::Run\n", mName);
-//
-//        mGUIStarted = true;
+        (void) event;
+
+        printf("%s::G2SEvent::Run\n", mName);
+
+        mGUIStarted = true;
     }
 
     void handleEvent(const G2SEvent::Stop& event)
     {
-//        (void) event;
-//
-//        printf("%s::G2SEvent::Stop\n", mName);
-//
-//        mGUIStarted = false;
+        (void) event;
+
+        printf("%s::G2SEvent::Stop\n", mName);
+
+        mGUIStarted = false;
     }
 
 private:
@@ -79,10 +78,10 @@ private:
         mTerminate = true;
     }
 
-    std::shared_ptr<Model> mModel;
-    bool                   mTerminate;
-    uint32_t               mCounter;
-    bool                   mGUIStarted;
+    std::shared_ptr<GSModelService> mGSModel;
+    bool                            mTerminate;
+    uint32_t                        mCounter;
+    bool                            mGUIStarted;
 };
 
 /**
@@ -96,7 +95,7 @@ int main()
     extern const IKernel* kernel;
 
     Service service(*kernel);
-//    service.run();
+    service.run();
 
     return 0;
 }
