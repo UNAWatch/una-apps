@@ -45,7 +45,7 @@ _Max_Stack_Size = 10*1024;	/* required amount of stack */
 /* Dummy memories definition */
 MEMORY
 {
-  RAM	(xrw)	: ORIGIN = 0x20000000,	LENGTH = 1000K
+  RAM	(xrw)	: ORIGIN = 0x20000000,	LENGTH = 500K
 }
 
 /* Sections */

@@ -10,7 +10,7 @@
 #include "Common/Header/TrackInfo.hpp"
 
 
-#define LOG_MODULE_PRX      "Service"
+#define LOG_MODULE_PRX      "Service::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "UnaLogger/Logger.h"
 

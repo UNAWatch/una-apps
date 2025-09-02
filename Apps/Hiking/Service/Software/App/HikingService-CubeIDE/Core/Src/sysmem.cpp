@@ -44,6 +44,12 @@ extern void (*__fini_array_start[])     (void) __attribute__((weak));
 extern void (*__fini_array_end[])       (void) __attribute__((weak));
 
 extern "C" {
+    void una_check_kernel() {
+        if ((uintptr_t)kernel == (uintptr_t)DUMMY_KERNEL_ADDR) {
+            for(;;){}
+        }
+    }
+
     /* Iterate over all the init routines.  */
     void __una_init_array (void)
     {
@@ -239,24 +245,30 @@ extern "C" {
 
 }
 
+namespace __gnu_cxx {
+    void __verbose_terminate_handler() {
+        for(;;) { /* trap */ }
+    }
+}
+
 namespace std
 {
-    void __throw_bad_alloc()
-    {
-        assert(false);
-    }
-
-    void __throw_bad_array_new_length()
-    {
-        assert(false);
-    }
-
-    void __throw_length_error(const char* msg)
-    {
-        (void) msg;
-
-        assert(false);
-    }
+//    void __throw_bad_alloc()
+//    {
+//        assert(false);
+//    }
+//
+//    void __throw_bad_array_new_length()
+//    {
+//        assert(false);
+//    }
+//
+//    void __throw_length_error(const char* msg)
+//    {
+//        (void) msg;
+//
+//        assert(false);
+//    }
 }
 
 void* operator new(std::size_t size) noexcept

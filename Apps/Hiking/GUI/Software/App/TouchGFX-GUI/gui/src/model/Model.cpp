@@ -4,7 +4,7 @@
 #include "KernelManager.hpp"
 
 
-#define LOG_MODULE_PRX      "Model"
+#define LOG_MODULE_PRX      "Model::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "Logger.h"
 

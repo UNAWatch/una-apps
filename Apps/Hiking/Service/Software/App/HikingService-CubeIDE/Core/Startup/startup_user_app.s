@@ -64,6 +64,9 @@ LoopFillZerobss:
 	bl	main
 	push {r0}
 
+/* Call to check the kernel pointer */
+    bl una_check_kernel
+
 /* Call static destructors */
 	bl  __una_fini_array
 
