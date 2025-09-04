@@ -35,6 +35,7 @@ public:
     FrontendApplication &application();
     void tick();
     void handleKeyEvent(uint8_t c);
+    void invalidate();
 
     /**
      * @brief Resets the idle timer.
@@ -122,6 +123,7 @@ protected:
 
     // User data
     uint32_t mIdleTimer = 0;
+    bool mInvalidate = false;
 
     // Menu positions
     struct {

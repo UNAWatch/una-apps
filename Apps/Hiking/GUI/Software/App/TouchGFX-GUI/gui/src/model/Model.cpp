@@ -53,12 +53,24 @@ FrontendApplication& Model::application()
     return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());
 }
 
+void Model::invalidate()
+{
+    mInvalidate = true;
+}
+
+
 void Model::tick()
 {
 //    LOG_INFO_WP("tick\n");
 
 
     mGSModel->checkS2GEvents();
+
+    if (mInvalidate) {
+        mInvalidate = false;
+        application().invalidate();
+    }
+
 }
 
 void Model::handleKeyEvent(uint8_t key)
@@ -277,6 +289,7 @@ void Model::onStart()
 void Model::onResume()
 {
     LOG_INFO("called\n");
+    invalidate();   // Redraw screen
 }
 
 void Model::onFrame()
@@ -360,7 +373,7 @@ void Model::handleEvent(const S2GEvent::TrackStateUpd& event)
 
 void Model::handleEvent(const S2GEvent::TrackDataUpd& event)
 {
-    LOG_DEBUG("S2GEvent::TrackDataUpd\n");
+    //LOG_DEBUG("S2GEvent::TrackDataUpd\n");
     mTrackData = event.data;
     modelListener->onTrackData(mTrackData);
 }

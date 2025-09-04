@@ -86,7 +86,7 @@ private:
 
     struct {
         // Last sensor data
-        float    steps;     // steps
+        uint32_t steps;     // steps
         uint32_t timestamp; // ms
 
         // Working data
@@ -95,7 +95,7 @@ private:
 
     struct {
         // Last sensor data
-        float    floors;     // steps
+        uint32_t floors;     // floors
         uint32_t timestamp; // ms
 
         // Working data
@@ -119,7 +119,7 @@ private:
     
     struct {
         // Last sensor data
-        float    hr;        // bpm
+        uint8_t  hr;        // bpm
         uint32_t timestamp; // ms
 
         // Working data
