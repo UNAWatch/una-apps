@@ -21,7 +21,7 @@ extern const IKernel *kernel;
 static const char* mName = "GUI::Utility#1";
 
 class Application : public IGUIModelHandler,
-                    public Interface::IUserApp::Callback
+                    public SDK::Interface::IUserApp::Callback
 {
 public:
     Application(const IKernel& kernel)

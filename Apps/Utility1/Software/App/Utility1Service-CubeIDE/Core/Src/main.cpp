@@ -21,7 +21,7 @@
 static const char* mName = "Service::Utility#1";
 
 class Service : public IServiceModelHandler,
-                public Interface::IUserApp::Callback
+                public SDK::Interface::IUserApp::Callback
 {
 public:
     Service(const IKernel& kernel)
