@@ -1,10 +1,14 @@
 #include "Service.hpp"
+#include "SDK/Interfaces/IBuzzer.hpp"
+#include "SDK/Interfaces/IVibro.hpp"
 
-#include <stdio.h>
+#define ARRAY_SIZE(a)   (sizeof(a) / sizeof(a[0]))
 
-#define LOG_MODULE_PRX      LOG_TAG"Service"
+#define LOG_MODULE_PRX      LOG_TAG "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "Logger.h"
+
+#include <stdio.h>
 
 Service::Service(const IKernel& kernel)
         : mKernel(kernel)
@@ -104,31 +108,33 @@ void Service::handleEvent(const G2SEvent::AlarmActiveteEffect& event)
     bool isBuzzer = event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
             event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP;
 
-    if (isVibro) {
-        sdk::api::Vibro::Note vm[5] {};
-        vm[0].effect = sdk::api::Vibro::ALERT_750MS_100;
-        vm[1].pause = 250;
-        vm[2].effect = sdk::api::Vibro::ALERT_750MS_100;
-        vm[3].pause = 250;
-        vm[4].effect = sdk::api::Vibro::ALERT_750MS_100;
+    LOG_INFO("isVibro isBuzzer : %d %d\n", (int)isVibro, (int)isBuzzer);
 
-        mKernel.vibro.play(vm, 5);
+    if (isVibro) {
+        SDK::Interface::IVibro::Note vm[5]{};
+        vm[0].effect = SDK::Interface::IVibro::Effect::ALERT_750MS_100;
+        vm[1].pause  = 250;
+        vm[2].effect = SDK::Interface::IVibro::Effect::ALERT_750MS_100;
+        vm[3].pause  = 250;
+        vm[4].effect = SDK::Interface::IVibro::Effect::ALERT_750MS_100;
+
+        mKernel.vibro.play(vm, ARRAY_SIZE(vm));
     }
 
     if (isBuzzer) {
-        sdk::api::Buzzer::Note bm[5] {};
+        SDK::Interface::IBuzzer::Note bm[5]{};
         bm[0].level = 3;
-        bm[0].time = 750;
+        bm[0].time  = 750;
         bm[1].level = 0;
-        bm[1].time = 250;
+        bm[1].time  = 250;
         bm[2].level = 3;
-        bm[2].time = 750;
+        bm[2].time  = 750;
         bm[3].level = 0;
-        bm[3].time = 250;
+        bm[3].time  = 250;
         bm[4].level = 3;
-        bm[4].time = 750;
+        bm[4].time  = 750;
 
-        mKernel.buzzer.play(bm, 5);
+        mKernel.buzzer.play(bm, ARRAY_SIZE(bm));
     }
 }
 

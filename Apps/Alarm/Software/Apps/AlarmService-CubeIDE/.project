@@ -69,29 +69,24 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API</name>
+			<name>SDK/Libs/Header/SDK</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/Interfaces</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/UnaLogger</name>
+			<name>SDK/Libs/Source/AppSystem</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/JsonStreamReader.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/JsonStreamReader.cpp</locationURI>
+			<locationURI>SDK_LOC/JsonStreamReader.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/JsonStreamWriter.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/JsonStreamWriter.cpp</locationURI>
+			<locationURI>SDK_LOC/JsonStreamWriter.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger</name>
@@ -99,99 +94,129 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.gitignore</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.gitignore</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.gitmodules</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.gitmodules</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.lgtm.yml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.lgtm.yml</locationURI>
+		</link>
+		<link>
 			<name>SDK/ThirdParty/coreJSON/source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API/Backlight.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Backlight.hpp</locationURI>
+			<name>SDK/Libs/Header/SDK/AppSystem</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API/Buzzer.hpp</name>
+			<name>SDK/Libs/Header/SDK/JsonStreamReader.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Buzzer.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JsonStreamReader.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API/FileSystem.hpp</name>
+			<name>SDK/Libs/Header/SDK/JsonStreamWriter.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/FileSystem.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JsonStreamWriter.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API/Power.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Power.hpp</locationURI>
+			<name>SDK/Libs/Header/SDK/UnaLogger</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API/Settings.hpp</name>
+			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Settings.hpp</locationURI>
+			<locationURI>SDK_LOC/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API/Time.hpp</name>
+			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Time.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/API/Vibro.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Vibro.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IKernel.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IMutex.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IMutex.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISemaphore.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISemaphore.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISensorManager.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISensorManager.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISynchManager.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISynchManager.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IUserApp.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IUserApp.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IUserAppControl.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IUserAppControl.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IUserAppMemAllocator.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IUserAppMemAllocator.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/UnaLogger/Logger.h</locationURI>
+			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+			<locationURI>SDK_LOC/UnaLogger/Logger.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/Dockerfile</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/Dockerfile</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/README.md</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/README.md</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/build.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/build.sh</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/project.yaml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/project.yaml</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/validate_fuzzer.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/validate_fuzzer.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/.cSpellWords.txt</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/.cSpellWords.txt</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/CODEOWNERS</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/CODEOWNERS</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/CONTRIBUTING.md</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/CONTRIBUTING.md</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/memory_statistics_config.json</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/memory_statistics_config.json</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/pull_request_template.md</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/pull_request_template.md</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/workflows</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/ThirdParty/coreJSON/source/core_json.c</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/coreJSON/source/core_json.c</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/core_json.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/ThirdParty/coreJSON/source/include</name>
@@ -199,15 +224,50 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/SDK/UnaLogger/Logger.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/workflows/cflite_pr.yml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/cflite_pr.yml</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/workflows/ci.yml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/ci.yml</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/workflows/doxygen.yml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/doxygen.yml</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/.github/workflows/release.yml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/release.yml</locationURI>
+		</link>
+		<link>
 			<name>SDK/ThirdParty/coreJSON/source/include/core_json.h</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/ThirdParty/coreJSON/source/include/core_json.h</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/include/core_json.h</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/source/include/stdbool.readme</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/include/stdbool.readme</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/source/include/stdint.readme</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/include/stdint.readme</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>SDK_LOC</name>
-			<value>$%7BPARENT-6-PROJECT_LOC%7D/SDK</value>
+			<value>$%7BPARENT-5-PROJECT_LOC%7D/SDK/Libs/Source</value>
 		</variable>
 	</variableList>
 </projectDescription>

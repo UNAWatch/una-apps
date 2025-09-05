@@ -6,7 +6,7 @@
 #include "AlarmManager.hpp"
 
 class Service : public IServiceModelHandler,
-                public Interface::IUserApp::Callback,
+                public SDK::Interface::IUserApp::Callback,
                 public AlarmManager::AlarmCallback
 {
 public:
