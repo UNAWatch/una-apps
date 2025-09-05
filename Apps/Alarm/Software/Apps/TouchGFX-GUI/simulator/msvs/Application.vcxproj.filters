@@ -181,9 +181,6 @@
     <Filter Include="Application">
       <UniqueIdentifier>{804b77d2-7856-4019-a3df-befef51d5372}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\GUI">
-      <UniqueIdentifier>{667c9642-4b20-432e-bc6c-f2a7d3696f89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Service">
       <UniqueIdentifier>{b07516d9-faa7-49d7-b74b-57a4e4f50870}</UniqueIdentifier>
     </Filter>
@@ -340,9 +337,6 @@
     <Filter Include="Header Files\generated\gui_generated\saved_screen">
       <UniqueIdentifier>A2B45043-58CB-7F37-DCDF-DD623C3527E7</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Common">
-      <UniqueIdentifier>{e411b6e6-d685-4388-bdca-1474314e9ae5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\gui\start_screen">
       <UniqueIdentifier>A99BC658-722F-560C-96BB-4B4147F473D0</UniqueIdentifier>
     </Filter>
@@ -398,36 +392,6 @@
     </ClCompile>
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp">
       <Filter>Source Files\gui\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp">
-      <Filter>SDK\Libs\Source\UnaLogger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Platform\OS\OS.cpp">
-      <Filter>SDK\Libs\Source\Platform\OS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c">
-      <Filter>SDK\Libs\Source\Wrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp">
-      <Filter>SDK\Libs\Source\SynchManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Sensors\SensorCore.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Sensors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gui\src\action_screen\ActionPresenter.cpp">
       <Filter>Source Files\gui\action_screen</Filter>
@@ -558,23 +522,53 @@
     <ClCompile Include="..\..\generated\gui_generated\src\start_screen\StartViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\start_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\AlarmManager.cpp">
+    <ClCompile Include="..\..\..\..\Libs\Sources\AlarmManager.cpp">
       <Filter>Application\Service\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp">
+    <ClCompile Include="..\..\..\..\Libs\Sources\GSModel.cpp">
       <Filter>Application\Service\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\Service.cpp">
+    <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp">
       <Filter>Application\Service\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamReader.cpp">
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamReader.cpp">
       <Filter>SDK\Libs\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamWriter.cpp">
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamWriter.cpp">
       <Filter>SDK\Libs\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\core_json.c">
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Platform\OS\OS.cpp">
+      <Filter>SDK\Libs\Source\Platform\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Sensors\SensorCore.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp">
+      <Filter>SDK\Libs\Source\SynchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp">
+      <Filter>SDK\Libs\Source\UnaLogger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c">
+      <Filter>SDK\Libs\Source\Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\core_json.c">
       <Filter>SDK\ThirdParty\coreJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1242,12 +1236,6 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ToggleBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\Interfaces\IModel.hpp">
-      <Filter>Application\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\AppTypes.hpp">
-      <Filter>Application\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\start_screen\StartPresenter.hpp">
       <Filter>Header Files\gui\start_screen</Filter>

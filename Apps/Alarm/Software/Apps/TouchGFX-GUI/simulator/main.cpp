@@ -9,12 +9,12 @@
 #include "touchgfx/Utils.hpp"
 
 #include "gui/common/GuiConfig.hpp"
-#include "KernelBase.hpp"
+#include "SDK/Simulator/Kernel/KernelBase.hpp"
 #include "Service.hpp"
-#include "KernelManager.hpp"
-#include "Platform/OS/OS.hpp"
-#include "Simulator/Sensors/SensorCore.hpp"
-#include "Simulator/Kernel/Mock/MockServiceControl.hpp"
+#include "SDK/KernelManager.hpp"
+#include "SDK/Platform/OS/OS.hpp"
+#include "SDK/Simulator/Sensors/SensorCore.hpp"
+#include "SDK/Simulator/Kernel/Mock/MockServiceControl.hpp"
 
 #include <stdlib.h>
 #include <thread>

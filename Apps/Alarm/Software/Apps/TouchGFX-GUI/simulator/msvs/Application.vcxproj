@@ -17,22 +17,22 @@
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\hal\simulator\sdl2\OSWrappers.cpp" />
     <ClCompile Include="$(ApplicationRoot)\simulator\main.cpp" />
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamReader.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamWriter.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Platform\OS\OS.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Sensors\SensorCore.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c" />
-    <ClCompile Include="..\..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\core_json.c" />
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\AlarmManager.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\GSModel.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Service\Software\Libs\Sources\Service.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamReader.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\JsonStreamWriter.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Platform\OS\OS.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\KernelBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Sensors\SensorCore.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SynchManager\SynchManager.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\UnaLogger\Logger.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Wrappers\StdLibWrappers.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\coreJSON\source\core_json.c" />
+    <ClCompile Include="..\..\..\..\Libs\Sources\AlarmManager.cpp" />
+    <ClCompile Include="..\..\..\..\Libs\Sources\GSModel.cpp" />
+    <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp" />
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp" />
     <ClCompile Include="..\..\gui\src\model\Model.cpp" />
     <ClCompile Include="..\..\generated\simulator\src\video\SoftwareMJPEGDecoder.cpp" />
@@ -257,8 +257,6 @@
     <ClInclude Include="$(UnaSdkPath)\Libs\Header\JsonStreamReader.hpp" />
     <ClInclude Include="$(UnaSdkPath)\Libs\Header\JsonStreamWriter.hpp" />
     <ClInclude Include="$(UnaSdkPath)\ThirdParty\coreJSON\source\include\core_json.h" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\AppTypes.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Common\Libs\Header\Interfaces\IModel.hpp" />
     <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\AlarmManager.hpp" />
     <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\GSModel.hpp" />
     <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\Service.hpp" />
@@ -378,7 +376,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/ThirdParty/coreJSON/source/include;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../../../Service/Software/Libs/Header;../../../../../../Common/Libs/Header;../Libs/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/SDK/UnaLogger;$(UnaSdkPath)/ThirdParty/coreJSON/source/include;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../Libs/Header</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
