@@ -19,7 +19,7 @@
 Model::Model()
     : mKernel(KernelManager::GetInstance().getKernel())
     , modelListener(0)
-    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel->gctrl.getContext()))
+    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel->gctrl.getContext()))
 {
     mKernel->app.registerApp(this);
     mGSModel->setGUIHandler(mKernel, this);

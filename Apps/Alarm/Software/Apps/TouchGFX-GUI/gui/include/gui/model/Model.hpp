@@ -1,7 +1,8 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include "Interfaces/IModel.hpp"
+#include "SDK/GSModel/GSModelHelper.hpp"
+#include "SDK/Interfaces/IKernel.hpp"
 #include "touchgfx/UIEventListener.hpp"
 #include "gui/common/GuiConfig.hpp"
 
@@ -85,7 +86,7 @@ protected:
     // Fields required for for GUI <-> Service communication
     const IKernel* mKernel;                 ///< Pointer to kernel interface
     ModelListener* modelListener;           ///< Pointer to model listener
-    std::shared_ptr<IGUIModel> mGSModel;    ///< Pointer to GUI-Service model interface
+    std::shared_ptr<GSModelGUI> mGSModel;   ///< Pointer to GUI-Service model interface
 
     // IUserApp implementation required methods for app lifecycle
     virtual void onCreate()  override;
@@ -117,8 +118,8 @@ protected:
     bool isAnyKeyPressed(uint8_t key) const;
 
     // IGUIModelHandler implementation
-    virtual void handleEvent(const S2GEvent::AlarmList& event) override;
-    virtual void handleEvent(const S2GEvent::Alarm& event) override;
+    void handleEvent(const S2GEvent::AlarmList& event) override;
+    void handleEvent(const S2GEvent::Alarm& event) override;
 
 
     /// Is app running (between onResume and onPause)

@@ -18,7 +18,6 @@
     <ClCompile Include="$(ApplicationRoot)\simulator\main.cpp" />
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\AlarmManager.cpp" />
-    <ClCompile Include="..\..\..\..\Libs\Sources\GSModel.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp" />
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp" />
     <ClCompile Include="..\..\gui\src\model\Model.cpp" />
@@ -326,7 +325,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/SDK/UnaLogger;$(UnaSdkPath)/ThirdParty/coreJSON/source/include;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../Libs/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/SDK/UnaLogger;$(UnaSdkPath)/ThirdParty/coreJSON/source/include;../../../../Libs/Header</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

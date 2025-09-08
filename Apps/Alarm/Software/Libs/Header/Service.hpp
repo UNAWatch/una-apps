@@ -2,7 +2,7 @@
 #define __SERVICE_HPP__
 
 #include "SDK/Interfaces/IKernel.hpp"
-#include "GSModel.hpp"
+#include "SDK/GSModel/GSModelHelper.hpp"
 #include "AlarmManager.hpp"
 
 class Service : public IServiceModelHandler,
@@ -46,13 +46,12 @@ private:
     void refreshService();
 
 
-    const IKernel&            mKernel;
-    std::shared_ptr<GSModel>  mGSModel;
-    bool                      mTerminate;
-    bool                      mGUIStarted;
-
-    AlarmManager              mAlarmManager;
-    AppType::Alarm            mActiveAlarm;
+    const IKernel&                  mKernel;
+    std::shared_ptr<GSModelService> mGSModel;
+    bool                            mTerminate;
+    bool                            mGUIStarted;
+    AlarmManager                    mAlarmManager;
+    AppType::Alarm                  mActiveAlarm;
 };
 
 #endif

@@ -12,7 +12,7 @@
 
 Service::Service(const IKernel& kernel)
         : mKernel(kernel)
-        , mGSModel(std::make_shared<GSModel>(kernel, *this))
+        , mGSModel(std::make_shared<GSModelService>(kernel, *this))
         , mTerminate(false)
         , mGUIStarted(false)
         , mAlarmManager(kernel)
