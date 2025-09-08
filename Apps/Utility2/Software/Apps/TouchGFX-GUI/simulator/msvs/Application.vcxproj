@@ -17,56 +17,14 @@
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\hal\simulator\sdl2\OSWrappers.cpp" />
     <ClCompile Include="$(ApplicationRoot)\simulator\main.cpp" />
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp" />
-    <ClCompile Include="..\..\..\..\Libs\Sources\AlarmManager.cpp" />
-    <ClCompile Include="..\..\..\..\Libs\Sources\GSModel.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp" />
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp" />
     <ClCompile Include="..\..\gui\src\model\Model.cpp" />
     <ClCompile Include="..\..\generated\simulator\src\video\SoftwareMJPEGDecoder.cpp" />
+    <ClCompile Include="..\..\gui\src\counter_screen\CounterPresenter.cpp" />
+    <ClCompile Include="..\..\gui\src\counter_screen\CounterView.cpp" />
+    <ClCompile Include="..\..\generated\gui_generated\src\counter_screen\CounterViewBase.cpp" />
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp" />
-    <ClCompile Include="..\..\gui\src\action_screen\ActionPresenter.cpp" />
-    <ClCompile Include="..\..\gui\src\action_screen\ActionView.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\action_screen\ActionViewBase.cpp" />
-    <ClCompile Include="..\..\gui\src\alarm_screen\AlarmPresenter.cpp" />
-    <ClCompile Include="..\..\gui\src\alarm_screen\AlarmView.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\alarm_screen\AlarmViewBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\Buttons.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\ButtonsBase.cpp" />
-    <ClCompile Include="..\..\gui\src\deleted_screen\DeletedPresenter.cpp" />
-    <ClCompile Include="..\..\gui\src\deleted_screen\DeletedView.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\deleted_screen\DeletedViewBase.cpp" />
-    <ClCompile Include="..\..\gui\src\main_screen\MainPresenter.cpp" />
-    <ClCompile Include="..\..\gui\src\main_screen\MainView.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\main_screen\MainViewBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\MenuWheel.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\MenuWheelItemNotSelected.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelItemNotSelectedBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\MenuWheelItemSelected.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelItemSelectedBase.cpp" />
-    <ClCompile Include="..\..\gui\src\saved_screen\SavedPresenter.cpp" />
-    <ClCompile Include="..\..\gui\src\saved_screen\SavedView.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\saved_screen\SavedViewBase.cpp" />
-    <ClCompile Include="..\..\gui\src\settime_screen\SetTimePresenter.cpp" />
-    <ClCompile Include="..\..\gui\src\settime_screen\SetTimeView.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\settime_screen\SetTimeViewBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\TimeWheel.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemHoursNotSelected.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemHoursNotSelectedBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemHoursSelected.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemHoursSelectedBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemMinutesNotSelected.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemMinutesNotSelectedBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemMinutesSelected.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemMinutesSelectedBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\Title.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TitleBase.cpp" />
-    <ClCompile Include="..\..\gui\src\containers\Toggle.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\ToggleBase.cpp" />
-    <ClCompile Include="..\..\gui\src\start_screen\StartPresenter.cpp" />
-    <ClCompile Include="..\..\gui\src\start_screen\StartView.cpp" />
-    <ClCompile Include="..\..\generated\gui_generated\src\start_screen\StartViewBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml" />
@@ -207,63 +165,21 @@
     <ClInclude Include="$(TouchGFXReleasePath)\framework\include\touchgfx\widgets\TouchArea.hpp" />
     <ClInclude Include="$(TouchGFXReleasePath)\framework\include\touchgfx\widgets\Widget.hpp" />
     <ClInclude Include="$(ApplicationRoot)\generated\simulator\include\simulator\mainBase.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\AlarmManager.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\GSModel.hpp" />
-    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\Service.hpp" />
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\DirectFrameBufferVideoController.hpp" />
     <ClInclude Include="..\..\gui\include\gui\common\FrontendApplication.hpp" />
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendApplicationBase.hpp" />
     <ClInclude Include="..\..\gui\include\gui\common\FrontendHeap.hpp" />
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendHeapBase.hpp" />
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\MJPEGDecoder.hpp" />
+    <ClInclude Include="..\..\gui\include\gui\model\AppTypes.hpp" />
     <ClInclude Include="..\..\gui\include\gui\model\Model.hpp" />
     <ClInclude Include="..\..\gui\include\gui\model\ModelListener.hpp" />
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp" />
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp" />
     <ClInclude Include="..\..\gui\include\gui\common\GuiConfig.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionPresenter.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionView.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\action_screen\ActionViewBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmPresenter.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmView.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\alarm_screen\AlarmViewBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\Buttons.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ButtonsBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\deleted_screen\DeletedPresenter.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\deleted_screen\DeletedView.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\deleted_screen\DeletedViewBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\main_screen\MainPresenter.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\main_screen\MainView.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\main_screen\MainViewBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheel.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemNotSelected.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemNotSelectedBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemSelected.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemSelectedBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\saved_screen\SavedPresenter.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\saved_screen\SavedView.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\saved_screen\SavedViewBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimePresenter.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimeView.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\settime_screen\SetTimeViewBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheel.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursNotSelected.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursNotSelectedBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursSelected.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursSelectedBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesNotSelected.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesNotSelectedBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesSelected.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesSelectedBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\Title.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TitleBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\containers\Toggle.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ToggleBase.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartPresenter.hpp" />
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartView.hpp" />
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\start_screen\StartViewBase.hpp" />
+    <ClInclude Include="..\..\gui\include\gui\counter_screen\CounterPresenter.hpp" />
+    <ClInclude Include="..\..\gui\include\gui\counter_screen\CounterView.hpp" />
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\counter_screen\CounterViewBase.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc" />
@@ -326,7 +242,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/SDK/UnaLogger;$(UnaSdkPath)/ThirdParty/coreJSON/source/include;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../Libs/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;../../../../Libs/Header</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -348,7 +264,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ApplicationRoot)\gui\include;$(ApplicationRoot)\generated\images\include;$(ApplicationRoot)\generated\bitmaps\include;$(ApplicationRoot)\generated\fonts\include;$(ApplicationRoot)\generated\texts\include;$(ApplicationRoot)\generated\videos\include;$(ApplicationRoot)\generated\gui_generated\include;$(ApplicationRoot)\generated\simulator\include;$(TouchGFXReleasePath)\framework\common\include;$(TouchGFXReleasePath)\framework\mvp\include;$(TouchGFXReleasePath)\framework\include\platform\hal\simulator\sdl2\vendor;$(TouchGFXReleasePath)\3rdparty\libjpeg\include;$(TouchGFXReleasePath)\framework\include;../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/ThirdParty/coreJSON/source/include;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../../../Service/Software/Libs/Header;../../../../../../Common/Libs/Header;../Libs/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ApplicationRoot)\gui\include;$(ApplicationRoot)\generated\images\include;$(ApplicationRoot)\generated\bitmaps\include;$(ApplicationRoot)\generated\fonts\include;$(ApplicationRoot)\generated\texts\include;$(ApplicationRoot)\generated\videos\include;$(ApplicationRoot)\generated\gui_generated\include;$(ApplicationRoot)\generated\simulator\include;$(TouchGFXReleasePath)\framework\common\include;$(TouchGFXReleasePath)\framework\mvp\include;$(TouchGFXReleasePath)\framework\include\platform\hal\simulator\sdl2\vendor;$(TouchGFXReleasePath)\3rdparty\libjpeg\include;$(TouchGFXReleasePath)\framework\include;../../gui/include;$(UnaSdkPath)/Libs/Header;$(UnaSdkPath)/Libs/Header/Platform;$(UnaSdkPath)/Libs/Header/UnaLogger;$(UnaSdkPath)/Libs/Header/Interfaces;$(UnaSdkPath)/Libs/Header/API;$(UnaSdkPath)/Libs/Header/Simulator;$(UnaSdkPath)/Libs/Header/Simulator/Kernel;../../../../../../Service/Software/Libs/Header;../../../../../../Common/Libs/Header;../Libs/Header</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -361,4 +277,5 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(ApplicationRoot)\generated\simulator\msvs\touchgfx_prebuild.targets" />
   </ImportGroup>
+  <ImportGroup Label="Shared" />
 </Project>

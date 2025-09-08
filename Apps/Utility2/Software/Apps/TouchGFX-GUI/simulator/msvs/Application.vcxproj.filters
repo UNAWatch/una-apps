@@ -169,116 +169,32 @@
     <Filter Include="Header Files\generated\simulator\include\simulator\video">
       <UniqueIdentifier>C9A0BBB1-4BEB-8CD2-6982-26654D3C09E2</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gui\counter_screen">
+      <UniqueIdentifier>F5C40AB3-7FCE-220C-F794-0EE1A1DA75AD</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\counter_screen">
+      <UniqueIdentifier>3ABFAC88-CCC7-4124-1C20-0062DBE14623</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\counter_screen">
+      <UniqueIdentifier>62FA4398-6C0F-F1F4-8181-F4623CB0DCBD</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\counter_screen">
+      <UniqueIdentifier>547E3835-1D04-A117-FC7D-093BCF6E3D4A</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\gui\common">
       <UniqueIdentifier>46B7D464-311A-591F-AD2E-AD5C77A0EA63</UniqueIdentifier>
     </Filter>
     <Filter Include="Application">
       <UniqueIdentifier>{804b77d2-7856-4019-a3df-befef51d5372}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Service">
-      <UniqueIdentifier>{b07516d9-faa7-49d7-b74b-57a4e4f50870}</UniqueIdentifier>
+    <Filter Include="Application\Libs">
+      <UniqueIdentifier>{0e7abf68-1b98-4f44-b902-393a00f8fe9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\saved_screen">
-      <UniqueIdentifier>4298C293-1569-26FB-4300-EC8BD3076B48</UniqueIdentifier>
+    <Filter Include="Application\Libs\Sources">
+      <UniqueIdentifier>{7dc38dc7-f532-42ac-b469-4a08b71f3b6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\saved_screen">
-      <UniqueIdentifier>041BF8ED-25A1-E78B-DD12-3AEEFBC04EF2</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\action_screen">
-      <UniqueIdentifier>5734CEA9-817E-2541-73E3-62D433D4F73A</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\action_screen">
-      <UniqueIdentifier>942C67AD-ACA8-0BAC-BBCB-7AE4471A6116</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\containers">
-      <UniqueIdentifier>08ECEC2B-610E-A4D7-C4D7-6F2C9EBCB1F0</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\settime_screen">
-      <UniqueIdentifier>808615A0-3A11-FB18-D70A-BC896D6571B2</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\settime_screen">
-      <UniqueIdentifier>65861383-03E1-EDEE-9B4A-29395EC7A1C5</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\containers">
-      <UniqueIdentifier>40DF7DDC-783C-682B-C5EB-CB6F38F6792C</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\alarm_screen">
-      <UniqueIdentifier>AC21CD47-6E72-6E20-A299-989998142379</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\alarm_screen">
-      <UniqueIdentifier>145848F9-7502-DA4C-100E-A9F19DE8EC65</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\main_screen">
-      <UniqueIdentifier>CBF72E00-B4C8-F523-90B3-175612659EDA</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\main_screen">
-      <UniqueIdentifier>41513E89-2DDC-31A3-E076-4BCD85255777</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\deleted_screen">
-      <UniqueIdentifier>98D26140-A126-441B-BD74-970F63396ADB</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\deleted_screen">
-      <UniqueIdentifier>E0A55C0E-4E48-8D12-8600-3EAA8230282E</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\containers">
-      <UniqueIdentifier>C872EB0A-4670-8EC4-D74C-2D45B5465677</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\containers">
-      <UniqueIdentifier>D9BBB57F-5EA3-60AA-13B7-D3A851776595</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\deleted_screen">
-      <UniqueIdentifier>BAD12F75-69CB-D6D2-C453-86AFB7666808</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\deleted_screen">
-      <UniqueIdentifier>A70F9BA0-BFE8-1ADA-288A-7DACE7EF855D</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\alarm_screen">
-      <UniqueIdentifier>502E561C-5204-A1BF-F417-8F2C5782F15A</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\main_screen">
-      <UniqueIdentifier>360312AB-464E-A72E-4C51-AABAA5FD61EE</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\saved_screen">
-      <UniqueIdentifier>3AC9D0A7-6BC6-3002-E4C4-F13DFFCAF141</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\alarm_screen">
-      <UniqueIdentifier>C54C9087-A6C3-A8BF-1F54-165BCA2C38B2</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\main_screen">
-      <UniqueIdentifier>C76295BE-84E5-9490-9D02-0BFB8FC4ADF6</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\settime_screen">
-      <UniqueIdentifier>A7068B1C-000D-917D-47A9-79450C51F993</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\action_screen">
-      <UniqueIdentifier>D4C6A24B-9AB5-6D8C-C4F4-E173FB0DDF6A</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\settime_screen">
-      <UniqueIdentifier>DBFCC1AE-E496-AEA9-8F53-6D95D6C83078</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\action_screen">
-      <UniqueIdentifier>D9736B61-2442-8DFC-03B3-ADC3A1D5E7B3</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\saved_screen">
-      <UniqueIdentifier>A2B45043-58CB-7F37-DCDF-DD623C3527E7</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\start_screen">
-      <UniqueIdentifier>A99BC658-722F-560C-96BB-4B4147F473D0</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\start_screen">
-      <UniqueIdentifier>BD7C67F9-E22D-0466-3286-C31E22FB8CC7</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\start_screen">
-      <UniqueIdentifier>132A8414-7207-820A-2250-C717A0C59EDA</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\start_screen">
-      <UniqueIdentifier>297AA3AE-4B9A-1E1F-A87E-7A22C0CAEC64</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Service\Header">
-      <UniqueIdentifier>{959109ce-66a8-443c-b0ba-e81246719cd4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Service\Source">
-      <UniqueIdentifier>{ff283391-9268-4891-a425-1eba45e0fad7}</UniqueIdentifier>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{fd3c546c-42cf-4afc-9799-336ab557600f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -309,146 +225,20 @@
     <ClCompile Include="..\..\generated\simulator\src\video\SoftwareMJPEGDecoder.cpp">
       <Filter>Source Files\generated\simulator\video</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gui\src\counter_screen\CounterPresenter.cpp">
+      <Filter>Source Files\gui\counter_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\counter_screen\CounterView.cpp">
+      <Filter>Source Files\gui\counter_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\counter_screen\CounterViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\counter_screen</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp">
       <Filter>Source Files\gui\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\action_screen\ActionPresenter.cpp">
-      <Filter>Source Files\gui\action_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\action_screen\ActionView.cpp">
-      <Filter>Source Files\gui\action_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\action_screen\ActionViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\action_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\alarm_screen\AlarmPresenter.cpp">
-      <Filter>Source Files\gui\alarm_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\alarm_screen\AlarmView.cpp">
-      <Filter>Source Files\gui\alarm_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\alarm_screen\AlarmViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\alarm_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\Buttons.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\ButtonsBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\deleted_screen\DeletedPresenter.cpp">
-      <Filter>Source Files\gui\deleted_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\deleted_screen\DeletedView.cpp">
-      <Filter>Source Files\gui\deleted_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\deleted_screen\DeletedViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\deleted_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\main_screen\MainPresenter.cpp">
-      <Filter>Source Files\gui\main_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\main_screen\MainView.cpp">
-      <Filter>Source Files\gui\main_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\main_screen\MainViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\main_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MenuWheel.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MenuWheelItemNotSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelItemNotSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MenuWheelItemSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelItemSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\saved_screen\SavedPresenter.cpp">
-      <Filter>Source Files\gui\saved_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\saved_screen\SavedView.cpp">
-      <Filter>Source Files\gui\saved_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\saved_screen\SavedViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\saved_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\settime_screen\SetTimePresenter.cpp">
-      <Filter>Source Files\gui\settime_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\settime_screen\SetTimeView.cpp">
-      <Filter>Source Files\gui\settime_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\settime_screen\SetTimeViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\settime_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheel.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemHoursNotSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemHoursNotSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemHoursSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemHoursSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemMinutesNotSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemMinutesNotSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemMinutesSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemMinutesSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\Title.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TitleBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\Toggle.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\ToggleBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\start_screen\StartPresenter.cpp">
-      <Filter>Source Files\gui\start_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\start_screen\StartView.cpp">
-      <Filter>Source Files\gui\start_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\start_screen\StartViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\start_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Libs\Sources\AlarmManager.cpp">
-      <Filter>Application\Service\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Libs\Sources\GSModel.cpp">
-      <Filter>Application\Service\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp">
-      <Filter>Application\Service\Source</Filter>
+      <Filter>Application\Libs\Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -895,143 +685,17 @@
     <ClInclude Include="..\..\gui\include\gui\common\GuiConfig.hpp">
       <Filter>Header Files\gui\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionPresenter.hpp">
-      <Filter>Header Files\gui\action_screen</Filter>
+    <ClInclude Include="..\..\gui\include\gui\model\AppTypes.hpp">
+      <Filter>Header Files\gui\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionView.hpp">
-      <Filter>Header Files\gui\action_screen</Filter>
+    <ClInclude Include="..\..\gui\include\gui\counter_screen\CounterPresenter.hpp">
+      <Filter>Header Files\gui\counter_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\action_screen\ActionViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\action_screen</Filter>
+    <ClInclude Include="..\..\gui\include\gui\counter_screen\CounterView.hpp">
+      <Filter>Header Files\gui\counter_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmPresenter.hpp">
-      <Filter>Header Files\gui\alarm_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmView.hpp">
-      <Filter>Header Files\gui\alarm_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\alarm_screen\AlarmViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\alarm_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\Buttons.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ButtonsBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\deleted_screen\DeletedPresenter.hpp">
-      <Filter>Header Files\gui\deleted_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\deleted_screen\DeletedView.hpp">
-      <Filter>Header Files\gui\deleted_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\deleted_screen\DeletedViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\deleted_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\main_screen\MainPresenter.hpp">
-      <Filter>Header Files\gui\main_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\main_screen\MainView.hpp">
-      <Filter>Header Files\gui\main_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\main_screen\MainViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\main_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheel.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemNotSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemNotSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\saved_screen\SavedPresenter.hpp">
-      <Filter>Header Files\gui\saved_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\saved_screen\SavedView.hpp">
-      <Filter>Header Files\gui\saved_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\saved_screen\SavedViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\saved_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimePresenter.hpp">
-      <Filter>Header Files\gui\settime_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimeView.hpp">
-      <Filter>Header Files\gui\settime_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\settime_screen\SetTimeViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\settime_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheel.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursNotSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursNotSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesNotSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesNotSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\Title.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TitleBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\Toggle.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ToggleBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartPresenter.hpp">
-      <Filter>Header Files\gui\start_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartView.hpp">
-      <Filter>Header Files\gui\start_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\start_screen\StartViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\start_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\AlarmManager.hpp">
-      <Filter>Application\Service\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\GSModel.hpp">
-      <Filter>Application\Service\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Service\Software\Libs\Header\Service.hpp">
-      <Filter>Application\Service\Header</Filter>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\counter_screen\CounterViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\counter_screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
