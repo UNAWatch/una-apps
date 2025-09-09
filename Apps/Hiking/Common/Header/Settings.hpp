@@ -19,12 +19,12 @@
   * @brief Represents a settings of the app.
   */
 struct Settings {
-    bool autoPauseEn;       ///< Flag to enable auto pause during activity track
-    bool phoneNotifEn;      ///< Flag to enable receiving phone notification when app is run
-    uint32_t alertSteps;    ///< Steps alert threshold for. 0 if not use.
-    float alertDistance;    ///< Distance alert threshold in kilometers. 0 if not used.
-    uint32_t alertTime;     ///< Activity time threshold. 0 if not use.
+    bool autoPauseEn = false;   ///< Flag to enable auto pause during activity track
+    bool phoneNotifEn = true;   ///< Flag to enable receiving phone notification when app is run
+    uint32_t alertSteps = 0;    ///< Steps alert threshold for. 0 if not use.
+    float alertDistance = 0;    ///< Distance alert threshold in kilometers. 0 if not used.
+    uint32_t alertTime = 0;     ///< Activity time threshold. 0 if not use.
 };
 
 
-#endif /* __SETTINGS_SERIALIZER_HPP */
+#endif /* __SETTINGS_HPP */

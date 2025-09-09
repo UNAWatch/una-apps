@@ -12,9 +12,13 @@
 
 #include <cassert>
 
-#include "JsonStreamWriter.hpp"
-#include "JsonStreamReader.hpp"
+#include "SDK/JsonStreamWriter.hpp"
+#include "SDK/JsonStreamReader.hpp"
 
+
+#define LOG_MODULE_PRX      "SettingsSerializer"
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#include "SDK/UnaLogger/Logger.h"
 
 
 SettingsSerializer::SettingsSerializer(const IKernel& kernel,
@@ -29,8 +33,7 @@ bool SettingsSerializer::save(const Settings &settings)
     const char *slash = strrchr(mPath, '/');
     if (slash) {
         char buff[sdk::api::FileSystem::skMaxPathLen] { };
-        snprintf(buff, sizeof(buff), "%.*s", static_cast<size_t>(slash - mPath),
-            mPath);
+        snprintf(buff, sizeof(buff), "%.*s", static_cast<size_t>(slash - mPath), mPath);
         // Create dir
         if (!mKernel.fs.mkdir(buff)) {
             return false;
@@ -48,7 +51,7 @@ bool SettingsSerializer::save(const Settings &settings)
         return false;
     }
 
-    JsonStreamWriter writer(file.get());
+    sdk::JsonStreamWriter writer(file.get());
 
     writer.startMap();
 
@@ -91,7 +94,7 @@ bool SettingsSerializer::load(Settings &settings)
         return false;
     }
 
-    char *buffer = static_cast<char *>(mKernel.mem.malloc(fileSize));
+    char* buffer = new (std::nothrow)char[fileSize];
     if (buffer == nullptr) {
         file->close();
         file.reset();
@@ -105,45 +108,25 @@ bool SettingsSerializer::load(Settings &settings)
     file.reset();
 
     if (!status) {
-        mKernel.mem.free(buffer);
+        delete[] buffer;
         return false;
     }
 
-    JsonStreamReader reader(buffer, fileSize);
+    sdk::JsonStreamReader reader(buffer, fileSize);
 
     if (!reader.validate()) {
-        mKernel.app.log("JSON is invalid\n");
-        mKernel.mem.free(buffer);
+        LOG_ERROR("JSON is invalid\n");
+        delete[] buffer;
         return false;
     }
 
     reader.get("auto_pause_en", settings.autoPauseEn);
     reader.get("phone_notif_en", settings.phoneNotifEn);
+    reader.get("alert_steps", settings.alertSteps);
+    reader.get("alert_distance", settings.alertDistance);
+    reader.get("alert_time", settings.alertTime);
 
-    uint32_t steps = 0;
-    if (reader.get("alert_steps", steps) &&
-        steps >= Gui::kStepsList[0] &&
-        steps <= Gui::kStepsList[Gui::Menu::Settings::Alerts::Steps::MAX - 1]) 
-    {
-        settings.alertSteps = steps;
-    }
-
-    float distance = 0;
-    if (reader.get("alert_distance", distance) &&
-        distance >= Gui::kDistanceList[0] &&
-        distance <= Gui::kDistanceList[Gui::Menu::Settings::Alerts::Distance::ID_COUNT - 1]) 
-    {
-        settings.alertDistance = distance;
-    }
-
-    uint32_t time = 0;
-    if (reader.get("alert_time", time) &&
-        time >= Gui::kTimeList[0] &&
-        time <= Gui::kTimeList[Gui::Menu::Settings::Alerts::Time::MAX - 1]) {
-        settings.alertTime = time;
-    }
-
-    kernel->mem.free(buffer);
+    delete[] buffer;
 
     return true;
 }

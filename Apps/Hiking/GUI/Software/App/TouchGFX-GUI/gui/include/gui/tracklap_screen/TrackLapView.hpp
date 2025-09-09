@@ -14,9 +14,9 @@ public:
 
     void setUnitsImperial(bool isImperial);
     void setLapNum(uint8_t n);
-    void setSteps(uint32_t steps);
+    void setSteps(int32_t steps);
     void setDistance(float km);
-    void setTimer(uint32_t sec);
+    void setTimer(std::time_t sec);
 
 protected:
     bool mUnitsImperial {};

@@ -9,11 +9,17 @@ TrackLapPresenter::TrackLapPresenter(TrackLapView& v)
 
 void TrackLapPresenter::activate()
 {
-    view.setUnitsImperial(model->isUnitsImperial());
-    onTrackInfo(model->getTrackInfo());
-
     // Reset idle timer
     model->resetIdleTimer();
+
+    view.setUnitsImperial(model->isUnitsImperial());
+
+    const Track::Data& data = model->getTrackData();
+
+    view.setLapNum(data.lapNum);
+    view.setDistance(data.totalDistance);
+    view.setTimer(data.totalTime);
+    view.setSteps(data.steps);
 }
 
 void TrackLapPresenter::deactivate()
@@ -21,10 +27,10 @@ void TrackLapPresenter::deactivate()
 
 }
 
-void TrackLapPresenter::onTrackInfo(const Gui::TrackInfo &info)
-{
-    view.setLapNum(info.lapNum);
-    view.setDistance(info.totalDistance);
-    view.setTimer(static_cast<uint32_t>(info.totalTime));
-    view.setSteps(info.steps);
-}
+//void TrackLapPresenter::onTrackData(const Track::Data& data)
+//{
+//    view.setLapNum(data.lapNum);
+//    view.setDistance(data.totalDistance);
+//    view.setTimer(data.totalTime);
+//    view.setSteps(data.steps);
+//}

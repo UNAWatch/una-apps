@@ -28,9 +28,9 @@
 #include <cstdbool>
 #include <string>
 
-#include "IKernel.hpp"
+#include "SDK/Interfaces/IKernel.hpp"
 
-#include "Common/Libs/Header/Settings.hpp"
+#include "Settings.hpp"
 
 
  /**
@@ -43,7 +43,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param fs: Reference to the file system interface.
+     * @param kernel: Reference to the kernel interface.
      * @param pathToFile: Path of the settings file.
      */
     SettingsSerializer(const IKernel& kernel, const char *pathToFile);

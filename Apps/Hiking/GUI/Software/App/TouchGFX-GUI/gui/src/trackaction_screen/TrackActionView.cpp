@@ -69,13 +69,13 @@ void TrackActionView::setUnitsImperial(bool isImperial)
     updTitleInfo();
 }
 
-void TrackActionView::setTimer(uint32_t sec)
+void TrackActionView::setTimer(std::time_t sec)
 {
     mTimerSec = sec;
     updTitleInfo();
 }
 
-void TrackActionView::setAvgPace(uint32_t sec)
+void TrackActionView::setAvgPace(int32_t sec)
 {
     mAvgPace = sec;
     updTitleInfo();
@@ -87,7 +87,7 @@ void TrackActionView::setDistance(float km)
     updTitleInfo();
 }
 
-void TrackActionView::setSteps(uint32_t steps)
+void TrackActionView::setSteps(int32_t steps)
 {
     mSteps = steps;
     updTitleInfo();
@@ -99,9 +99,9 @@ void TrackActionView::setAvgHR(float v)
     updTitleInfo();
 }
 
-void TrackActionView::setCalories(uint32_t kcal)
+void TrackActionView::setFloors(int32_t floors)
 {
-    mCalories = kcal;
+    mFloors = floors;
     updTitleInfo();
 }
 
@@ -190,13 +190,13 @@ void TrackActionView::updTitleInfo()
         }
     } else if (mTitleInfoMsgId == 3) {
         titleInfo.setTitle(T_TEXT_STEPS_UC);
-        Unicode::snprintf(buffer, bufferSize, "%u", mSteps);
+        Unicode::snprintf(buffer, bufferSize, "%d", mSteps);
     } else if (mTitleInfoMsgId == 4) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_HR);
         Unicode::snprintfFloat(buffer, bufferSize, "%.0f", mAvgHr);
     } else if (mTitleInfoMsgId == 5) {
         titleInfo.setTitle(T_TEXT_CALORIES_UC);
-        Unicode::snprintf(buffer, bufferSize, "%u", mCalories);
+        Unicode::snprintf(buffer, bufferSize, "%d", mFloors);
     }
 
     titleInfo.setValue(buffer);

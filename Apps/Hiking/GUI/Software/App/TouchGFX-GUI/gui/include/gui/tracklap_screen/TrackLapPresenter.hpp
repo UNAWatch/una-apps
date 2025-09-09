@@ -28,7 +28,7 @@ public:
     virtual ~TrackLapPresenter() {}
 
     virtual void onIdleTimeout() override { }
-    virtual void onTrackInfo(const Gui::TrackInfo &info) override;
+    //virtual void onTrackData(const Track::Data& data) override;
 
 private:
     TrackLapPresenter();

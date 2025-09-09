@@ -9,17 +9,18 @@
  ******************************************************************************
  */
 
+#include "Service.hpp"
+
+#define LOG_MODULE_PRX      "main::"
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#include "SDK/UnaLogger/Logger.h"
+
 #include <cstdint>
 #include <cstring>
 #include <cassert>
 #include <math.h>
 #include <stdio.h>
 
-#include "Service.hpp"
-
-#define LOG_MODULE_PRX      LOG_TAG"main"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
 
 extern const IKernel *kernel;
 
@@ -46,8 +47,6 @@ int main()
 
     Service service(*kernel);
     service.run();
-
-
 
     return 0;
 }

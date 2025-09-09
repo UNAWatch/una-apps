@@ -10,10 +10,10 @@ void TrackFace3::initialize()
     TrackFace3Base::initialize();
 }
 
-void TrackFace3::setLapPace(uint32_t sec, bool isImperial)
+void TrackFace3::setLapPace(int32_t sec, bool isImperial)
 {
     if (isImperial) {
-        sec = static_cast<uint32_t>(sec / Gui::Utils::km2mi(1.0f));
+        sec = static_cast<std::time_t>(sec / Gui::Utils::km2mi(1.0f));
     }
     Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%d:%02d", Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
     lapPaceValue.invalidate();
@@ -29,7 +29,7 @@ void TrackFace3::setLapDistance(float km, bool isImperial)
     lapDistanceValue.invalidate();
 }
 
-void TrackFace3::setLapTimer(uint32_t sec)
+void TrackFace3::setLapTimer(std::time_t sec)
 {
     Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d:%02d",
         Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));

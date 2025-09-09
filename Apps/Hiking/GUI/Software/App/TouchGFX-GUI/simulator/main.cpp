@@ -10,11 +10,12 @@
 
 #include "gui/common/GuiConfig.hpp"
 #include "KernelBase.hpp"
-#include "Service.hpp"
+#include "Service/Software/Libs/Header/Service.hpp"
 #include "KernelManager.hpp"
 #include "Platform/OS/OS.hpp"
 #include "Simulator/Sensors/SensorCore.hpp"
 #include "Simulator/Kernel/Mock/MockServiceControl.hpp"
+#include "UnaLogger/Logger.h"
 
 #include <stdlib.h>
 #include <thread>
@@ -25,10 +26,7 @@
 #include "Windows.h"
 #endif
 
-#define TAG                 "Main"
-#define LOG_MODULE_PRX      TAG"::"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+
 
 using namespace touchgfx;
 
@@ -40,7 +38,8 @@ static uint32_t LoggerTimeFunc(void)
 
     return (uint32_t)((ts.tv_sec * 1000ULL) + (ts.tv_nsec / 1000000ULL));
 #else
-    return (uint32_t)GetTickCount64();
+    static uint64_t start = GetTickCount64();
+    return (uint32_t)(GetTickCount64() - start);
 #endif
 }
 
@@ -52,8 +51,6 @@ static void LoggerPrint(const char* str)
 // Service thread function
 static void runService(Service* service)
 {
-    LOG_INFO("service thread is started\n");
-
     service->run();
 }
 

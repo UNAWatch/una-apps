@@ -27,7 +27,7 @@ public:
 
     virtual ~TrackActionPresenter() {}
 
-    virtual void onTrackInfo(const Gui::TrackInfo &info) override;
+    virtual void onTrackData(const Track::Data& data) override;
 
 private:
     TrackActionPresenter();

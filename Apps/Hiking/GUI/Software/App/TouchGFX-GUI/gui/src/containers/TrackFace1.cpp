@@ -11,7 +11,7 @@ void TrackFace1::initialize()
 }
 
 
-void TrackFace1::setSteps(uint32_t v)
+void TrackFace1::setSteps(int32_t v)
 {
     Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%u", v);
     stepsValue.invalidate();
@@ -29,7 +29,7 @@ void TrackFace1::setDistance(float km, bool isImperial)
     distanceValue.invalidate();
 }
 
-void TrackFace1::setTimer(uint32_t sec)
+void TrackFace1::setTimer(std::time_t sec)
 {
     Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%d:%02d:%02d",
         Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
