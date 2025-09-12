@@ -1,0 +1,2562 @@
+
+ProofGUI-CubeIDE.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000012cc  20000000  20000000  00001000  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .preinit_array 00000000  200012cc  20001494  00002494  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .init_array   00000004  200012cc  200012cc  000022cc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+  3 .fini_array   00000004  200012d0  200012d0  000022d0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+  4 .plt          00000000  200012d4  20001494  00002494  2**0
+                  CONTENTS, ALLOC, LOAD, CODE
+  5 .data         00000170  200012d8  200012d8  000022d8  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  6 .got          0000004c  20001448  20001448  00002448  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  7 .bss          0000013c  20001494  20001494  00002494  2**2
+                  ALLOC
+  8 .stack        00002800  200015d0  200015d0  00002494  2**0
+                  ALLOC
+  9 .ARM.attributes 00000038  00000000  00000000  00002494  2**0
+                  CONTENTS, READONLY
+ 10 .debug_info   00009c8d  00000000  00000000  000024cc  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 11 .debug_abbrev 0000108d  00000000  00000000  0000c159  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_aranges 00000290  00000000  00000000  0000d1e6  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 13 .debug_rnglists 000001e5  00000000  00000000  0000d476  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 14 .debug_macro  00005169  00000000  00000000  0000d65b  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 15 .debug_line   0000377c  00000000  00000000  000127c4  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 16 .debug_str    00016a2e  00000000  00000000  00015f40  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .comment      00000043  00000000  00000000  0002c96e  2**0
+                  CONTENTS, READONLY
+ 18 .debug_frame  00000b34  00000000  00000000  0002c9b4  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+20000000 <AppStart>:
+20000000:	4681      	mov	r9, r0
+20000002:	4a0a      	ldr	r2, [pc, #40]	@ (2000002c <LoopFillZerobss+0x20>)
+20000004:	e002      	b.n	2000000c <LoopFillZerobss>
+
+20000006 <FillZerobss>:
+20000006:	2300      	movs	r3, #0
+20000008:	f842 3b04 	str.w	r3, [r2], #4
+
+2000000c <LoopFillZerobss>:
+2000000c:	4b08      	ldr	r3, [pc, #32]	@ (20000030 <LoopFillZerobss+0x24>)
+2000000e:	429a      	cmp	r2, r3
+20000010:	d3f9      	bcc.n	20000006 <FillZerobss>
+20000012:	f000 fdcd 	bl	20000bb0 <__una_init_kernel>
+20000016:	f000 fdf3 	bl	20000c00 <__una_init_array>
+2000001a:	f000 fb33 	bl	20000684 <main>
+2000001e:	f000 fe33 	bl	20000c88 <__una_fini_array>
+20000022:	f05f 30ff 	movs.w	r0, #4294967295
+20000026:	f000 ff61 	bl	20000eec <exit>
+2000002a:	4770      	bx	lr
+2000002c:	20001494 	.word	0x20001494
+20000030:	200015d0 	.word	0x200015d0
+
+20000034 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE15_M_add_ref_copyEv>:
+    }
+
+  template<>
+    inline void
+    _Sp_counted_base<_S_single>::_M_add_ref_copy()
+    { ++_M_use_count; }
+20000034:	b480      	push	{r7}
+20000036:	b083      	sub	sp, #12
+20000038:	af00      	add	r7, sp, #0
+2000003a:	6078      	str	r0, [r7, #4]
+2000003c:	687b      	ldr	r3, [r7, #4]
+2000003e:	685b      	ldr	r3, [r3, #4]
+20000040:	1c5a      	adds	r2, r3, #1
+20000042:	687b      	ldr	r3, [r7, #4]
+20000044:	605a      	str	r2, [r3, #4]
+20000046:	bf00      	nop
+20000048:	370c      	adds	r7, #12
+2000004a:	46bd      	mov	sp, r7
+2000004c:	f85d 7b04 	ldr.w	r7, [sp], #4
+20000050:	4770      	bx	lr
+
+20000052 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_releaseEv>:
+
+  template<>
+    inline void
+    _Sp_counted_base<_S_single>::_M_release() noexcept
+    {
+20000052:	b580      	push	{r7, lr}
+20000054:	b082      	sub	sp, #8
+20000056:	af00      	add	r7, sp, #0
+20000058:	6078      	str	r0, [r7, #4]
+      if (--_M_use_count == 0)
+2000005a:	687b      	ldr	r3, [r7, #4]
+2000005c:	685b      	ldr	r3, [r3, #4]
+2000005e:	1e5a      	subs	r2, r3, #1
+20000060:	687b      	ldr	r3, [r7, #4]
+20000062:	605a      	str	r2, [r3, #4]
+20000064:	687b      	ldr	r3, [r7, #4]
+20000066:	685b      	ldr	r3, [r3, #4]
+20000068:	2b00      	cmp	r3, #0
+2000006a:	bf0c      	ite	eq
+2000006c:	2301      	moveq	r3, #1
+2000006e:	2300      	movne	r3, #0
+20000070:	b2db      	uxtb	r3, r3
+20000072:	2b00      	cmp	r3, #0
+20000074:	d019      	beq.n	200000aa <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_releaseEv+0x58>
+        {
+          _M_dispose();
+20000076:	687b      	ldr	r3, [r7, #4]
+20000078:	681b      	ldr	r3, [r3, #0]
+2000007a:	3308      	adds	r3, #8
+2000007c:	681b      	ldr	r3, [r3, #0]
+2000007e:	6878      	ldr	r0, [r7, #4]
+20000080:	4798      	blx	r3
+          if (--_M_weak_count == 0)
+20000082:	687b      	ldr	r3, [r7, #4]
+20000084:	689b      	ldr	r3, [r3, #8]
+20000086:	1e5a      	subs	r2, r3, #1
+20000088:	687b      	ldr	r3, [r7, #4]
+2000008a:	609a      	str	r2, [r3, #8]
+2000008c:	687b      	ldr	r3, [r7, #4]
+2000008e:	689b      	ldr	r3, [r3, #8]
+20000090:	2b00      	cmp	r3, #0
+20000092:	bf0c      	ite	eq
+20000094:	2301      	moveq	r3, #1
+20000096:	2300      	movne	r3, #0
+20000098:	b2db      	uxtb	r3, r3
+2000009a:	2b00      	cmp	r3, #0
+2000009c:	d005      	beq.n	200000aa <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_releaseEv+0x58>
+            _M_destroy();
+2000009e:	687b      	ldr	r3, [r7, #4]
+200000a0:	681b      	ldr	r3, [r3, #0]
+200000a2:	330c      	adds	r3, #12
+200000a4:	681b      	ldr	r3, [r3, #0]
+200000a6:	6878      	ldr	r0, [r7, #4]
+200000a8:	4798      	blx	r3
+        }
+    }
+200000aa:	bf00      	nop
+200000ac:	3708      	adds	r7, #8
+200000ae:	46bd      	mov	sp, r7
+200000b0:	bd80      	pop	{r7, pc}
+
+200000b2 <_ZNSt12__shared_ptrIvLN9__gnu_cxx12_Lock_policyE0EED1Ev>:
+	  __r._M_ptr = nullptr;
+	}
+
+      __shared_ptr(const __shared_ptr&) noexcept = default;
+      __shared_ptr& operator=(const __shared_ptr&) noexcept = default;
+      ~__shared_ptr() = default;
+200000b2:	b580      	push	{r7, lr}
+200000b4:	b082      	sub	sp, #8
+200000b6:	af00      	add	r7, sp, #0
+200000b8:	6078      	str	r0, [r7, #4]
+200000ba:	687b      	ldr	r3, [r7, #4]
+200000bc:	3304      	adds	r3, #4
+200000be:	4618      	mov	r0, r3
+200000c0:	f000 fae8 	bl	20000694 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+200000c4:	687b      	ldr	r3, [r7, #4]
+200000c6:	4618      	mov	r0, r3
+200000c8:	3708      	adds	r7, #8
+200000ca:	46bd      	mov	sp, r7
+200000cc:	bd80      	pop	{r7, pc}
+
+200000ce <_ZNSt10shared_ptrIvED1Ev>:
+   * the stored pointer returned by `get()`, not the owned pointer.
+   * To test whether two `shared_ptr` objects share ownership of the same
+   * pointer see `std::shared_ptr::owner_before` and `std::owner_less`.
+  */
+  template<typename _Tp>
+    class shared_ptr : public __shared_ptr<_Tp>
+200000ce:	b580      	push	{r7, lr}
+200000d0:	b082      	sub	sp, #8
+200000d2:	af00      	add	r7, sp, #0
+200000d4:	6078      	str	r0, [r7, #4]
+200000d6:	687b      	ldr	r3, [r7, #4]
+200000d8:	4618      	mov	r0, r3
+200000da:	f7ff ffea 	bl	200000b2 <_ZNSt12__shared_ptrIvLN9__gnu_cxx12_Lock_policyE0EED1Ev>
+200000de:	687b      	ldr	r3, [r7, #4]
+200000e0:	4618      	mov	r0, r3
+200000e2:	3708      	adds	r7, #8
+200000e4:	46bd      	mov	sp, r7
+200000e6:	bd80      	pop	{r7, pc}
+
+200000e8 <_ZN9IGUIModel13setGUIHandlerEP16IGUIModelHandler>:
+    IGUIModel() : mGUIHandler()
+    {}
+
+    virtual ~IGUIModel() = default;
+
+    void setGUIHandler(IGUIModelHandler* handler)
+200000e8:	b480      	push	{r7}
+200000ea:	b083      	sub	sp, #12
+200000ec:	af00      	add	r7, sp, #0
+200000ee:	6078      	str	r0, [r7, #4]
+200000f0:	6039      	str	r1, [r7, #0]
+    {
+        mGUIHandler = handler;
+200000f2:	687b      	ldr	r3, [r7, #4]
+200000f4:	683a      	ldr	r2, [r7, #0]
+200000f6:	605a      	str	r2, [r3, #4]
+    }
+200000f8:	bf00      	nop
+200000fa:	370c      	adds	r7, #12
+200000fc:	46bd      	mov	sp, r7
+200000fe:	f85d 7b04 	ldr.w	r7, [sp], #4
+20000102:	4770      	bx	lr
+
+20000104 <_ZN4TestC1Ev>:
+#include "IKernel.hpp"
+#include "Interfaces/IModel.hpp"
+
+class Test {
+public:
+    Test() : value(sin(90 * M_PI / 180.0))
+20000104:	b480      	push	{r7}
+20000106:	b083      	sub	sp, #12
+20000108:	af00      	add	r7, sp, #0
+2000010a:	6078      	str	r0, [r7, #4]
+2000010c:	687b      	ldr	r3, [r7, #4]
+2000010e:	f04f 527e 	mov.w	r2, #1065353216	@ 0x3f800000
+20000112:	601a      	str	r2, [r3, #0]
+    {
+        // printf("static constructor\n");
+    }
+20000114:	687b      	ldr	r3, [r7, #4]
+20000116:	4618      	mov	r0, r3
+20000118:	370c      	adds	r7, #12
+2000011a:	46bd      	mov	sp, r7
+2000011c:	f85d 7b04 	ldr.w	r7, [sp], #4
+20000120:	4770      	bx	lr
+	...
+
+20000124 <_ZN4TestD1Ev>:
+
+    ~Test()
+20000124:	b580      	push	{r7, lr}
+20000126:	b082      	sub	sp, #8
+20000128:	af00      	add	r7, sp, #0
+2000012a:	6078      	str	r0, [r7, #4]
+    {
+        printf("static destructor\n");
+2000012c:	4b04      	ldr	r3, [pc, #16]	@ (20000140 <_ZN4TestD1Ev+0x1c>)
+2000012e:	447b      	add	r3, pc
+20000130:	4618      	mov	r0, r3
+20000132:	f000 ff09 	bl	20000f48 <__puts_veneer>
+    }
+20000136:	687b      	ldr	r3, [r7, #4]
+20000138:	4618      	mov	r0, r3
+2000013a:	3708      	adds	r7, #8
+2000013c:	46bd      	mov	sp, r7
+2000013e:	bd80      	pop	{r7, pc}
+20000140:	00000e46 	.word	0x00000e46
+
+20000144 <_ZN7Handler11handleEventERKN8S2GEvent11DailyHealthE>:
+
+class Handler : public IGUIModelHandler {
+public:
+    virtual ~Handler() = default;
+
+    void handleEvent(const S2GEvent::DailyHealth& event) override
+20000144:	b580      	push	{r7, lr}
+20000146:	b082      	sub	sp, #8
+20000148:	af00      	add	r7, sp, #0
+2000014a:	6078      	str	r0, [r7, #4]
+2000014c:	6039      	str	r1, [r7, #0]
+    {
+        printf("GUI - DailyHealth event:\n");
+2000014e:	4b18      	ldr	r3, [pc, #96]	@ (200001b0 <_ZN7Handler11handleEventERKN8S2GEvent11DailyHealthE+0x6c>)
+20000150:	447b      	add	r3, pc
+20000152:	4618      	mov	r0, r3
+20000154:	f000 fef8 	bl	20000f48 <__puts_veneer>
+
+        printf("steps            = %ld\n", event.steps);
+20000158:	683b      	ldr	r3, [r7, #0]
+2000015a:	681b      	ldr	r3, [r3, #0]
+2000015c:	4619      	mov	r1, r3
+2000015e:	4b15      	ldr	r3, [pc, #84]	@ (200001b4 <_ZN7Handler11handleEventERKN8S2GEvent11DailyHealthE+0x70>)
+20000160:	447b      	add	r3, pc
+20000162:	4618      	mov	r0, r3
+20000164:	f000 ff04 	bl	20000f70 <__printf_veneer>
+        printf("floors           = %ld\n", event.floors);
+20000168:	683b      	ldr	r3, [r7, #0]
+2000016a:	685b      	ldr	r3, [r3, #4]
+2000016c:	4619      	mov	r1, r3
+2000016e:	4b12      	ldr	r3, [pc, #72]	@ (200001b8 <_ZN7Handler11handleEventERKN8S2GEvent11DailyHealthE+0x74>)
+20000170:	447b      	add	r3, pc
+20000172:	4618      	mov	r0, r3
+20000174:	f000 fefc 	bl	20000f70 <__printf_veneer>
+        printf("activityMinutes  = %ld\n", event.activityMinutes);
+20000178:	683b      	ldr	r3, [r7, #0]
+2000017a:	689b      	ldr	r3, [r3, #8]
+2000017c:	4619      	mov	r1, r3
+2000017e:	4b0f      	ldr	r3, [pc, #60]	@ (200001bc <_ZN7Handler11handleEventERKN8S2GEvent11DailyHealthE+0x78>)
+20000180:	447b      	add	r3, pc
+20000182:	4618      	mov	r0, r3
+20000184:	f000 fef4 	bl	20000f70 <__printf_veneer>
+        printf("restingHeartRate = %ld\n", event.restingHeartRate);
+20000188:	683b      	ldr	r3, [r7, #0]
+2000018a:	68db      	ldr	r3, [r3, #12]
+2000018c:	4619      	mov	r1, r3
+2000018e:	4b0c      	ldr	r3, [pc, #48]	@ (200001c0 <_ZN7Handler11handleEventERKN8S2GEvent11DailyHealthE+0x7c>)
+20000190:	447b      	add	r3, pc
+20000192:	4618      	mov	r0, r3
+20000194:	f000 feec 	bl	20000f70 <__printf_veneer>
+        printf("averageHeartRate = %ld\n", event.averageHeartRate);
+20000198:	683b      	ldr	r3, [r7, #0]
+2000019a:	691b      	ldr	r3, [r3, #16]
+2000019c:	4619      	mov	r1, r3
+2000019e:	4b09      	ldr	r3, [pc, #36]	@ (200001c4 <_ZN7Handler11handleEventERKN8S2GEvent11DailyHealthE+0x80>)
+200001a0:	447b      	add	r3, pc
+200001a2:	4618      	mov	r0, r3
+200001a4:	f000 fee4 	bl	20000f70 <__printf_veneer>
+    }
+200001a8:	bf00      	nop
+200001aa:	3708      	adds	r7, #8
+200001ac:	46bd      	mov	sp, r7
+200001ae:	bd80      	pop	{r7, pc}
+200001b0:	00000e38 	.word	0x00000e38
+200001b4:	00000e44 	.word	0x00000e44
+200001b8:	00000e4c 	.word	0x00000e4c
+200001bc:	00000e54 	.word	0x00000e54
+200001c0:	00000e5c 	.word	0x00000e5c
+200001c4:	00000e64 	.word	0x00000e64
+
+200001c8 <_ZN16IGUIModelHandlerD1Ev>:
+    virtual ~IGUIModelHandler() = default;
+200001c8:	b480      	push	{r7}
+200001ca:	b083      	sub	sp, #12
+200001cc:	af00      	add	r7, sp, #0
+200001ce:	6078      	str	r0, [r7, #4]
+200001d0:	4a07      	ldr	r2, [pc, #28]	@ (200001f0 <_ZN16IGUIModelHandlerD1Ev+0x28>)
+200001d2:	447a      	add	r2, pc
+200001d4:	4b07      	ldr	r3, [pc, #28]	@ (200001f4 <_ZN16IGUIModelHandlerD1Ev+0x2c>)
+200001d6:	58d3      	ldr	r3, [r2, r3]
+200001d8:	f103 0208 	add.w	r2, r3, #8
+200001dc:	687b      	ldr	r3, [r7, #4]
+200001de:	601a      	str	r2, [r3, #0]
+200001e0:	687b      	ldr	r3, [r7, #4]
+200001e2:	4618      	mov	r0, r3
+200001e4:	370c      	adds	r7, #12
+200001e6:	46bd      	mov	sp, r7
+200001e8:	f85d 7b04 	ldr.w	r7, [sp], #4
+200001ec:	4770      	bx	lr
+200001ee:	bf00      	nop
+200001f0:	00001272 	.word	0x00001272
+200001f4:	00000030 	.word	0x00000030
+
+200001f8 <_ZN16IGUIModelHandlerD0Ev>:
+200001f8:	b580      	push	{r7, lr}
+200001fa:	b082      	sub	sp, #8
+200001fc:	af00      	add	r7, sp, #0
+200001fe:	6078      	str	r0, [r7, #4]
+20000200:	6878      	ldr	r0, [r7, #4]
+20000202:	f7ff ffe1 	bl	200001c8 <_ZN16IGUIModelHandlerD1Ev>
+20000206:	2104      	movs	r1, #4
+20000208:	6878      	ldr	r0, [r7, #4]
+2000020a:	f000 fe63 	bl	20000ed4 <_ZdlPvj>
+2000020e:	687b      	ldr	r3, [r7, #4]
+20000210:	4618      	mov	r0, r3
+20000212:	3708      	adds	r7, #8
+20000214:	46bd      	mov	sp, r7
+20000216:	bd80      	pop	{r7, pc}
+
+20000218 <_ZN7HandlerD1Ev>:
+    virtual ~Handler() = default;
+20000218:	b580      	push	{r7, lr}
+2000021a:	b082      	sub	sp, #8
+2000021c:	af00      	add	r7, sp, #0
+2000021e:	6078      	str	r0, [r7, #4]
+20000220:	4a08      	ldr	r2, [pc, #32]	@ (20000244 <_ZN7HandlerD1Ev+0x2c>)
+20000222:	447a      	add	r2, pc
+20000224:	4b08      	ldr	r3, [pc, #32]	@ (20000248 <_ZN7HandlerD1Ev+0x30>)
+20000226:	58d3      	ldr	r3, [r2, r3]
+20000228:	f103 0208 	add.w	r2, r3, #8
+2000022c:	687b      	ldr	r3, [r7, #4]
+2000022e:	601a      	str	r2, [r3, #0]
+20000230:	687b      	ldr	r3, [r7, #4]
+20000232:	4618      	mov	r0, r3
+20000234:	f7ff ffc8 	bl	200001c8 <_ZN16IGUIModelHandlerD1Ev>
+20000238:	687b      	ldr	r3, [r7, #4]
+2000023a:	4618      	mov	r0, r3
+2000023c:	3708      	adds	r7, #8
+2000023e:	46bd      	mov	sp, r7
+20000240:	bd80      	pop	{r7, pc}
+20000242:	bf00      	nop
+20000244:	00001222 	.word	0x00001222
+20000248:	00000014 	.word	0x00000014
+
+2000024c <_ZN7HandlerD0Ev>:
+2000024c:	b580      	push	{r7, lr}
+2000024e:	b082      	sub	sp, #8
+20000250:	af00      	add	r7, sp, #0
+20000252:	6078      	str	r0, [r7, #4]
+20000254:	6878      	ldr	r0, [r7, #4]
+20000256:	f7ff ffdf 	bl	20000218 <_ZN7HandlerD1Ev>
+2000025a:	2104      	movs	r1, #4
+2000025c:	6878      	ldr	r0, [r7, #4]
+2000025e:	f000 fe39 	bl	20000ed4 <_ZdlPvj>
+20000262:	687b      	ldr	r3, [r7, #4]
+20000264:	4618      	mov	r0, r3
+20000266:	3708      	adds	r7, #8
+20000268:	46bd      	mov	sp, r7
+2000026a:	bd80      	pop	{r7, pc}
+
+2000026c <_ZNSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EED1Ev>:
+2000026c:	b580      	push	{r7, lr}
+2000026e:	b082      	sub	sp, #8
+20000270:	af00      	add	r7, sp, #0
+20000272:	6078      	str	r0, [r7, #4]
+20000274:	687b      	ldr	r3, [r7, #4]
+20000276:	3304      	adds	r3, #4
+20000278:	4618      	mov	r0, r3
+2000027a:	f000 fa0b 	bl	20000694 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+2000027e:	687b      	ldr	r3, [r7, #4]
+20000280:	4618      	mov	r0, r3
+20000282:	3708      	adds	r7, #8
+20000284:	46bd      	mov	sp, r7
+20000286:	bd80      	pop	{r7, pc}
+
+20000288 <_ZNSt10shared_ptrI9IGUIModelED1Ev>:
+20000288:	b580      	push	{r7, lr}
+2000028a:	b082      	sub	sp, #8
+2000028c:	af00      	add	r7, sp, #0
+2000028e:	6078      	str	r0, [r7, #4]
+20000290:	687b      	ldr	r3, [r7, #4]
+20000292:	4618      	mov	r0, r3
+20000294:	f7ff ffea 	bl	2000026c <_ZNSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EED1Ev>
+20000298:	687b      	ldr	r3, [r7, #4]
+2000029a:	4618      	mov	r0, r3
+2000029c:	3708      	adds	r7, #8
+2000029e:	46bd      	mov	sp, r7
+200002a0:	bd80      	pop	{r7, pc}
+	...
+
+200002a4 <_Z3appv>:
+/**
+ * @brief   The application entry point.
+ * @retval  int
+ */
+int app()
+{
+200002a4:	b5f0      	push	{r4, r5, r6, r7, lr}
+200002a6:	b08d      	sub	sp, #52	@ 0x34
+200002a8:	af00      	add	r7, sp, #0
+200002aa:	4cce      	ldr	r4, [pc, #824]	@ (200005e4 <_Z3appv+0x340>)
+200002ac:	447c      	add	r4, pc
+    printf("\nGUI is started\n");
+200002ae:	4bce      	ldr	r3, [pc, #824]	@ (200005e8 <_Z3appv+0x344>)
+200002b0:	447b      	add	r3, pc
+200002b2:	4618      	mov	r0, r3
+200002b4:	f000 fe48 	bl	20000f48 <__puts_veneer>
+
+    printf("addr prinf      : 0x%08lX\n", (uint32_t)printf);
+200002b8:	4bcc      	ldr	r3, [pc, #816]	@ (200005ec <_Z3appv+0x348>)
+200002ba:	58e3      	ldr	r3, [r4, r3]
+200002bc:	4619      	mov	r1, r3
+200002be:	4bcc      	ldr	r3, [pc, #816]	@ (200005f0 <_Z3appv+0x34c>)
+200002c0:	447b      	add	r3, pc
+200002c2:	4618      	mov	r0, r3
+200002c4:	f000 fe54 	bl	20000f70 <__printf_veneer>
+    printf("addr malloc     : 0x%08lX\n", (uint32_t)malloc);
+200002c8:	4bca      	ldr	r3, [pc, #808]	@ (200005f4 <_Z3appv+0x350>)
+200002ca:	58e3      	ldr	r3, [r4, r3]
+200002cc:	4619      	mov	r1, r3
+200002ce:	4bca      	ldr	r3, [pc, #808]	@ (200005f8 <_Z3appv+0x354>)
+200002d0:	447b      	add	r3, pc
+200002d2:	4618      	mov	r0, r3
+200002d4:	f000 fe4c 	bl	20000f70 <__printf_veneer>
+    printf("addr malloc_r   : 0x%08lX\n", (uint32_t)_malloc_r);
+200002d8:	4bc8      	ldr	r3, [pc, #800]	@ (200005fc <_Z3appv+0x358>)
+200002da:	58e3      	ldr	r3, [r4, r3]
+200002dc:	4619      	mov	r1, r3
+200002de:	4bc8      	ldr	r3, [pc, #800]	@ (20000600 <_Z3appv+0x35c>)
+200002e0:	447b      	add	r3, pc
+200002e2:	4618      	mov	r0, r3
+200002e4:	f000 fe44 	bl	20000f70 <__printf_veneer>
+    printf("addr free       : 0x%08lX\n", (uint32_t)free);
+200002e8:	4bc6      	ldr	r3, [pc, #792]	@ (20000604 <_Z3appv+0x360>)
+200002ea:	58e3      	ldr	r3, [r4, r3]
+200002ec:	4619      	mov	r1, r3
+200002ee:	4bc6      	ldr	r3, [pc, #792]	@ (20000608 <_Z3appv+0x364>)
+200002f0:	447b      	add	r3, pc
+200002f2:	4618      	mov	r0, r3
+200002f4:	f000 fe3c 	bl	20000f70 <__printf_veneer>
+    printf("addr calloc     : 0x%08lX\n", (uint32_t)calloc);
+200002f8:	4bc4      	ldr	r3, [pc, #784]	@ (2000060c <_Z3appv+0x368>)
+200002fa:	58e3      	ldr	r3, [r4, r3]
+200002fc:	4619      	mov	r1, r3
+200002fe:	4bc4      	ldr	r3, [pc, #784]	@ (20000610 <_Z3appv+0x36c>)
+20000300:	447b      	add	r3, pc
+20000302:	4618      	mov	r0, r3
+20000304:	f000 fe34 	bl	20000f70 <__printf_veneer>
+    printf("addr realloc    : 0x%08lX\n", (uint32_t)realloc);
+20000308:	4bc2      	ldr	r3, [pc, #776]	@ (20000614 <_Z3appv+0x370>)
+2000030a:	58e3      	ldr	r3, [r4, r3]
+2000030c:	4619      	mov	r1, r3
+2000030e:	4bc2      	ldr	r3, [pc, #776]	@ (20000618 <_Z3appv+0x374>)
+20000310:	447b      	add	r3, pc
+20000312:	4618      	mov	r0, r3
+20000314:	f000 fe2c 	bl	20000f70 <__printf_veneer>
+    printf("kernel          : 0x%08lX\n", (uint32_t)kernel);
+20000318:	4bc0      	ldr	r3, [pc, #768]	@ (2000061c <_Z3appv+0x378>)
+2000031a:	58e3      	ldr	r3, [r4, r3]
+2000031c:	681b      	ldr	r3, [r3, #0]
+2000031e:	4619      	mov	r1, r3
+20000320:	4bbf      	ldr	r3, [pc, #764]	@ (20000620 <_Z3appv+0x37c>)
+20000322:	447b      	add	r3, pc
+20000324:	4618      	mov	r0, r3
+20000326:	f000 fe23 	bl	20000f70 <__printf_veneer>
+    printf("kernel.mem      : 0x%08lX\n", (uint32_t)&kernel->mem);
+2000032a:	4bbc      	ldr	r3, [pc, #752]	@ (2000061c <_Z3appv+0x378>)
+2000032c:	58e3      	ldr	r3, [r4, r3]
+2000032e:	681b      	ldr	r3, [r3, #0]
+20000330:	699b      	ldr	r3, [r3, #24]
+20000332:	4619      	mov	r1, r3
+20000334:	4bbb      	ldr	r3, [pc, #748]	@ (20000624 <_Z3appv+0x380>)
+20000336:	447b      	add	r3, pc
+20000338:	4618      	mov	r0, r3
+2000033a:	f000 fe19 	bl	20000f70 <__printf_veneer>
+    printf("sin(90)         : %f\n", mTest.value);
+2000033e:	4bba      	ldr	r3, [pc, #744]	@ (20000628 <_Z3appv+0x384>)
+20000340:	447b      	add	r3, pc
+20000342:	681b      	ldr	r3, [r3, #0]
+20000344:	4618      	mov	r0, r3
+20000346:	f000 fe0f 	bl	20000f68 <____aeabi_f2d_veneer>
+2000034a:	4602      	mov	r2, r0
+2000034c:	460b      	mov	r3, r1
+2000034e:	49b7      	ldr	r1, [pc, #732]	@ (2000062c <_Z3appv+0x388>)
+20000350:	4479      	add	r1, pc
+20000352:	4608      	mov	r0, r1
+20000354:	f000 fe0c 	bl	20000f70 <__printf_veneer>
+
+    printf("\n");
+20000358:	200a      	movs	r0, #10
+2000035a:	f000 fe01 	bl	20000f60 <__putchar_veneer>
+    printf("////////////////////////////\n");
+2000035e:	4bb4      	ldr	r3, [pc, #720]	@ (20000630 <_Z3appv+0x38c>)
+20000360:	447b      	add	r3, pc
+20000362:	4618      	mov	r0, r3
+20000364:	f000 fdf0 	bl	20000f48 <__puts_veneer>
+    printf("//// malloc test\n");
+20000368:	4bb2      	ldr	r3, [pc, #712]	@ (20000634 <_Z3appv+0x390>)
+2000036a:	447b      	add	r3, pc
+2000036c:	4618      	mov	r0, r3
+2000036e:	f000 fdeb 	bl	20000f48 <__puts_veneer>
+    printf("////////////////////////////\n");
+20000372:	4bb1      	ldr	r3, [pc, #708]	@ (20000638 <_Z3appv+0x394>)
+20000374:	447b      	add	r3, pc
+20000376:	4618      	mov	r0, r3
+20000378:	f000 fde6 	bl	20000f48 <__puts_veneer>
+    uint32_t* test = (uint32_t*) malloc(sizeof(uint32_t));
+2000037c:	2004      	movs	r0, #4
+2000037e:	f000 fcab 	bl	20000cd8 <malloc>
+20000382:	4603      	mov	r3, r0
+20000384:	62bb      	str	r3, [r7, #40]	@ 0x28
+    *test = 0x00C0FFEE;
+20000386:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+20000388:	4a95      	ldr	r2, [pc, #596]	@ (200005e0 <_Z3appv+0x33c>)
+2000038a:	601a      	str	r2, [r3, #0]
+    printf("addr test       : 0x%08lX\n", (uint32_t)test);
+2000038c:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000038e:	4619      	mov	r1, r3
+20000390:	4baa      	ldr	r3, [pc, #680]	@ (2000063c <_Z3appv+0x398>)
+20000392:	447b      	add	r3, pc
+20000394:	4618      	mov	r0, r3
+20000396:	f000 fdeb 	bl	20000f70 <__printf_veneer>
+    printf("value test      : 0x%08lX\n", test[0]);
+2000039a:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000039c:	681b      	ldr	r3, [r3, #0]
+2000039e:	4619      	mov	r1, r3
+200003a0:	4ba7      	ldr	r3, [pc, #668]	@ (20000640 <_Z3appv+0x39c>)
+200003a2:	447b      	add	r3, pc
+200003a4:	4618      	mov	r0, r3
+200003a6:	f000 fde3 	bl	20000f70 <__printf_veneer>
+
+    printf("\n");
+200003aa:	200a      	movs	r0, #10
+200003ac:	f000 fdd8 	bl	20000f60 <__putchar_veneer>
+    printf("////////////////////////////\n");
+200003b0:	4ba4      	ldr	r3, [pc, #656]	@ (20000644 <_Z3appv+0x3a0>)
+200003b2:	447b      	add	r3, pc
+200003b4:	4618      	mov	r0, r3
+200003b6:	f000 fdc7 	bl	20000f48 <__puts_veneer>
+    printf("//// realloc test\n");
+200003ba:	4ba3      	ldr	r3, [pc, #652]	@ (20000648 <_Z3appv+0x3a4>)
+200003bc:	447b      	add	r3, pc
+200003be:	4618      	mov	r0, r3
+200003c0:	f000 fdc2 	bl	20000f48 <__puts_veneer>
+    printf("////////////////////////////\n");
+200003c4:	4ba1      	ldr	r3, [pc, #644]	@ (2000064c <_Z3appv+0x3a8>)
+200003c6:	447b      	add	r3, pc
+200003c8:	4618      	mov	r0, r3
+200003ca:	f000 fdbd 	bl	20000f48 <__puts_veneer>
+    test = (uint32_t*) realloc(test, sizeof(uint32_t) * 2);
+200003ce:	2108      	movs	r1, #8
+200003d0:	6ab8      	ldr	r0, [r7, #40]	@ 0x28
+200003d2:	f000 fcc9 	bl	20000d68 <realloc>
+200003d6:	62b8      	str	r0, [r7, #40]	@ 0x28
+    test[0] = 0x55555555;
+200003d8:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+200003da:	f04f 3255 	mov.w	r2, #1431655765	@ 0x55555555
+200003de:	601a      	str	r2, [r3, #0]
+    test[1] = 0xAAAAAAAA;
+200003e0:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+200003e2:	3304      	adds	r3, #4
+200003e4:	f04f 32aa 	mov.w	r2, #2863311530	@ 0xaaaaaaaa
+200003e8:	601a      	str	r2, [r3, #0]
+    printf("addr test       : 0x%08lX\n", (uint32_t)test);
+200003ea:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+200003ec:	4619      	mov	r1, r3
+200003ee:	4b98      	ldr	r3, [pc, #608]	@ (20000650 <_Z3appv+0x3ac>)
+200003f0:	447b      	add	r3, pc
+200003f2:	4618      	mov	r0, r3
+200003f4:	f000 fdbc 	bl	20000f70 <__printf_veneer>
+    printf("value test[0]   : 0x%08lX\n", test[0]);
+200003f8:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+200003fa:	681b      	ldr	r3, [r3, #0]
+200003fc:	4619      	mov	r1, r3
+200003fe:	4b95      	ldr	r3, [pc, #596]	@ (20000654 <_Z3appv+0x3b0>)
+20000400:	447b      	add	r3, pc
+20000402:	4618      	mov	r0, r3
+20000404:	f000 fdb4 	bl	20000f70 <__printf_veneer>
+    printf("value test[1]   : 0x%08lX\n", test[1]);
+20000408:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000040a:	3304      	adds	r3, #4
+2000040c:	681b      	ldr	r3, [r3, #0]
+2000040e:	4619      	mov	r1, r3
+20000410:	4b91      	ldr	r3, [pc, #580]	@ (20000658 <_Z3appv+0x3b4>)
+20000412:	447b      	add	r3, pc
+20000414:	4618      	mov	r0, r3
+20000416:	f000 fdab 	bl	20000f70 <__printf_veneer>
+
+    printf("\n");
+2000041a:	200a      	movs	r0, #10
+2000041c:	f000 fda0 	bl	20000f60 <__putchar_veneer>
+    printf("////////////////////////////\n");
+20000420:	4b8e      	ldr	r3, [pc, #568]	@ (2000065c <_Z3appv+0x3b8>)
+20000422:	447b      	add	r3, pc
+20000424:	4618      	mov	r0, r3
+20000426:	f000 fd8f 	bl	20000f48 <__puts_veneer>
+    printf("//// calloc test\n");
+2000042a:	4b8d      	ldr	r3, [pc, #564]	@ (20000660 <_Z3appv+0x3bc>)
+2000042c:	447b      	add	r3, pc
+2000042e:	4618      	mov	r0, r3
+20000430:	f000 fd8a 	bl	20000f48 <__puts_veneer>
+    printf("////////////////////////////\n");
+20000434:	4b8b      	ldr	r3, [pc, #556]	@ (20000664 <_Z3appv+0x3c0>)
+20000436:	447b      	add	r3, pc
+20000438:	4618      	mov	r0, r3
+2000043a:	f000 fd85 	bl	20000f48 <__puts_veneer>
+    test = (uint32_t*) calloc(sizeof(uint32_t), 4);
+2000043e:	2104      	movs	r1, #4
+20000440:	2004      	movs	r0, #4
+20000442:	f000 fc75 	bl	20000d30 <calloc>
+20000446:	4603      	mov	r3, r0
+20000448:	62bb      	str	r3, [r7, #40]	@ 0x28
+    printf("addr test       : 0x%08lX\n", (uint32_t)test);
+2000044a:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000044c:	4619      	mov	r1, r3
+2000044e:	4b86      	ldr	r3, [pc, #536]	@ (20000668 <_Z3appv+0x3c4>)
+20000450:	447b      	add	r3, pc
+20000452:	4618      	mov	r0, r3
+20000454:	f000 fd8c 	bl	20000f70 <__printf_veneer>
+    printf("value test[0]   : 0x%08lX\n", test[0]);
+20000458:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000045a:	681b      	ldr	r3, [r3, #0]
+2000045c:	4619      	mov	r1, r3
+2000045e:	4b83      	ldr	r3, [pc, #524]	@ (2000066c <_Z3appv+0x3c8>)
+20000460:	447b      	add	r3, pc
+20000462:	4618      	mov	r0, r3
+20000464:	f000 fd84 	bl	20000f70 <__printf_veneer>
+    printf("value test[1]   : 0x%08lX\n", test[1]);
+20000468:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000046a:	3304      	adds	r3, #4
+2000046c:	681b      	ldr	r3, [r3, #0]
+2000046e:	4619      	mov	r1, r3
+20000470:	4b7f      	ldr	r3, [pc, #508]	@ (20000670 <_Z3appv+0x3cc>)
+20000472:	447b      	add	r3, pc
+20000474:	4618      	mov	r0, r3
+20000476:	f000 fd7b 	bl	20000f70 <__printf_veneer>
+    printf("value test[2]   : 0x%08lX\n", test[2]);
+2000047a:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000047c:	3308      	adds	r3, #8
+2000047e:	681b      	ldr	r3, [r3, #0]
+20000480:	4619      	mov	r1, r3
+20000482:	4b7c      	ldr	r3, [pc, #496]	@ (20000674 <_Z3appv+0x3d0>)
+20000484:	447b      	add	r3, pc
+20000486:	4618      	mov	r0, r3
+20000488:	f000 fd72 	bl	20000f70 <__printf_veneer>
+    printf("value test[3]   : 0x%08lX\n", test[3]);
+2000048c:	6abb      	ldr	r3, [r7, #40]	@ 0x28
+2000048e:	330c      	adds	r3, #12
+20000490:	681b      	ldr	r3, [r3, #0]
+20000492:	4619      	mov	r1, r3
+20000494:	4b78      	ldr	r3, [pc, #480]	@ (20000678 <_Z3appv+0x3d4>)
+20000496:	447b      	add	r3, pc
+20000498:	4618      	mov	r0, r3
+2000049a:	f000 fd69 	bl	20000f70 <__printf_veneer>
+
+    printf("\n");
+2000049e:	200a      	movs	r0, #10
+200004a0:	f000 fd5e 	bl	20000f60 <__putchar_veneer>
+    free(test);
+200004a4:	6ab8      	ldr	r0, [r7, #40]	@ 0x28
+200004a6:	f000 fc2d 	bl	20000d04 <free>
+
+    Handler handler;
+200004aa:	4b74      	ldr	r3, [pc, #464]	@ (2000067c <_Z3appv+0x3d8>)
+200004ac:	58e3      	ldr	r3, [r4, r3]
+200004ae:	3308      	adds	r3, #8
+200004b0:	60fb      	str	r3, [r7, #12]
+
+    std::shared_ptr<IGUIModel> model = std::static_pointer_cast<IGUIModel>(kernel->gctrl.getContext());
+200004b2:	4b5a      	ldr	r3, [pc, #360]	@ (2000061c <_Z3appv+0x378>)
+200004b4:	58e3      	ldr	r3, [r4, r3]
+200004b6:	681b      	ldr	r3, [r3, #0]
+200004b8:	6a9b      	ldr	r3, [r3, #40]	@ 0x28
+200004ba:	681b      	ldr	r3, [r3, #0]
+200004bc:	3308      	adds	r3, #8
+200004be:	681b      	ldr	r3, [r3, #0]
+200004c0:	4a56      	ldr	r2, [pc, #344]	@ (2000061c <_Z3appv+0x378>)
+200004c2:	58a2      	ldr	r2, [r4, r2]
+200004c4:	6812      	ldr	r2, [r2, #0]
+200004c6:	6a91      	ldr	r1, [r2, #40]	@ 0x28
+200004c8:	f107 0210 	add.w	r2, r7, #16
+200004cc:	4610      	mov	r0, r2
+200004ce:	4798      	blx	r3
+200004d0:	1d3b      	adds	r3, r7, #4
+200004d2:	f107 0210 	add.w	r2, r7, #16
+200004d6:	4611      	mov	r1, r2
+200004d8:	4618      	mov	r0, r3
+200004da:	f000 f8ed 	bl	200006b8 <_ZSt19static_pointer_castI9IGUIModelvESt10shared_ptrIT_ERKS1_IT0_E>
+200004de:	f107 0310 	add.w	r3, r7, #16
+200004e2:	4618      	mov	r0, r3
+200004e4:	f7ff fdf3 	bl	200000ce <_ZNSt10shared_ptrIvED1Ev>
+
+    if (model == nullptr) {
+200004e8:	1d3b      	adds	r3, r7, #4
+200004ea:	2100      	movs	r1, #0
+200004ec:	4618      	mov	r0, r3
+200004ee:	f000 f8f6 	bl	200006de <_ZSteqI9IGUIModelEbRKSt10shared_ptrIT_EDn>
+200004f2:	4603      	mov	r3, r0
+200004f4:	2b00      	cmp	r3, #0
+200004f6:	d007      	beq.n	20000508 <_Z3appv+0x264>
+        printf("the model is NULL\n");
+200004f8:	4b61      	ldr	r3, [pc, #388]	@ (20000680 <_Z3appv+0x3dc>)
+200004fa:	447b      	add	r3, pc
+200004fc:	4618      	mov	r0, r3
+200004fe:	f000 fd23 	bl	20000f48 <__puts_veneer>
+        exit(0);
+20000502:	2000      	movs	r0, #0
+20000504:	f000 fcf2 	bl	20000eec <exit>
+    }
+
+    model->setGUIHandler(&handler);
+20000508:	1d3b      	adds	r3, r7, #4
+2000050a:	4618      	mov	r0, r3
+2000050c:	f000 f8f8 	bl	20000700 <_ZNKSt19__shared_ptr_accessI9IGUIModelLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+20000510:	4602      	mov	r2, r0
+20000512:	f107 030c 	add.w	r3, r7, #12
+20000516:	4619      	mov	r1, r3
+20000518:	4610      	mov	r0, r2
+2000051a:	f7ff fde5 	bl	200000e8 <_ZN9IGUIModel13setGUIHandlerEP16IGUIModelHandler>
+    model->sendToService(G2SEvent::IsReady {});
+2000051e:	1d3b      	adds	r3, r7, #4
+20000520:	4618      	mov	r0, r3
+20000522:	f000 f8ed 	bl	20000700 <_ZNKSt19__shared_ptr_accessI9IGUIModelLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+20000526:	4605      	mov	r5, r0
+20000528:	682b      	ldr	r3, [r5, #0]
+2000052a:	330c      	adds	r3, #12
+2000052c:	681e      	ldr	r6, [r3, #0]
+2000052e:	f107 021c 	add.w	r2, r7, #28
+20000532:	f107 0318 	add.w	r3, r7, #24
+20000536:	4611      	mov	r1, r2
+20000538:	4618      	mov	r0, r3
+2000053a:	f000 f8ed 	bl	20000718 <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1IS1_vvS1_vEEOT_>
+2000053e:	f107 0318 	add.w	r3, r7, #24
+20000542:	4619      	mov	r1, r3
+20000544:	4628      	mov	r0, r5
+20000546:	47b0      	blx	r6
+
+    // This is FreeRTOS thread context
+    uint32_t cycles = 4;
+20000548:	2304      	movs	r3, #4
+2000054a:	62fb      	str	r3, [r7, #44]	@ 0x2c
+    for (;;) {
+        // Some delay function
+        //kernel->app.delay(1000);
+
+        if (--cycles == 0) {
+2000054c:	6afb      	ldr	r3, [r7, #44]	@ 0x2c
+2000054e:	3b01      	subs	r3, #1
+20000550:	62fb      	str	r3, [r7, #44]	@ 0x2c
+20000552:	6afb      	ldr	r3, [r7, #44]	@ 0x2c
+20000554:	2b00      	cmp	r3, #0
+20000556:	bf0c      	ite	eq
+20000558:	2301      	moveq	r3, #1
+2000055a:	2300      	movne	r3, #0
+2000055c:	b2db      	uxtb	r3, r3
+2000055e:	2b00      	cmp	r3, #0
+20000560:	d024      	beq.n	200005ac <_Z3appv+0x308>
+            model->sendToService(G2SEvent::Quit {});
+20000562:	1d3b      	adds	r3, r7, #4
+20000564:	4618      	mov	r0, r3
+20000566:	f000 f8cb 	bl	20000700 <_ZNKSt19__shared_ptr_accessI9IGUIModelLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+2000056a:	4605      	mov	r5, r0
+2000056c:	682b      	ldr	r3, [r5, #0]
+2000056e:	330c      	adds	r3, #12
+20000570:	681e      	ldr	r6, [r3, #0]
+20000572:	f107 0224 	add.w	r2, r7, #36	@ 0x24
+20000576:	f107 0320 	add.w	r3, r7, #32
+2000057a:	4611      	mov	r1, r2
+2000057c:	4618      	mov	r0, r3
+2000057e:	f000 f8de 	bl	2000073e <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1IS2_vvS2_vEEOT_>
+20000582:	f107 0320 	add.w	r3, r7, #32
+20000586:	4619      	mov	r1, r3
+20000588:	4628      	mov	r0, r5
+2000058a:	47b0      	blx	r6
+            kernel->app.delay(2000);
+2000058c:	4b23      	ldr	r3, [pc, #140]	@ (2000061c <_Z3appv+0x378>)
+2000058e:	58e3      	ldr	r3, [r4, r3]
+20000590:	681b      	ldr	r3, [r3, #0]
+20000592:	6a1b      	ldr	r3, [r3, #32]
+20000594:	681b      	ldr	r3, [r3, #0]
+20000596:	3334      	adds	r3, #52	@ 0x34
+20000598:	681b      	ldr	r3, [r3, #0]
+2000059a:	4a20      	ldr	r2, [pc, #128]	@ (2000061c <_Z3appv+0x378>)
+2000059c:	58a2      	ldr	r2, [r4, r2]
+2000059e:	6812      	ldr	r2, [r2, #0]
+200005a0:	6a12      	ldr	r2, [r2, #32]
+200005a2:	f44f 61fa 	mov.w	r1, #2000	@ 0x7d0
+200005a6:	4610      	mov	r0, r2
+200005a8:	4798      	blx	r3
+            break;
+200005aa:	e00a      	b.n	200005c2 <_Z3appv+0x31e>
+        }
+
+        model->checkS2GEvents();
+200005ac:	1d3b      	adds	r3, r7, #4
+200005ae:	4618      	mov	r0, r3
+200005b0:	f000 f8a6 	bl	20000700 <_ZNKSt19__shared_ptr_accessI9IGUIModelLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+200005b4:	4603      	mov	r3, r0
+200005b6:	681a      	ldr	r2, [r3, #0]
+200005b8:	3208      	adds	r2, #8
+200005ba:	6812      	ldr	r2, [r2, #0]
+200005bc:	4618      	mov	r0, r3
+200005be:	4790      	blx	r2
+        if (--cycles == 0) {
+200005c0:	e7c4      	b.n	2000054c <_Z3appv+0x2a8>
+    }
+
+    return 0;
+200005c2:	2400      	movs	r4, #0
+}
+200005c4:	1d3b      	adds	r3, r7, #4
+200005c6:	4618      	mov	r0, r3
+200005c8:	f7ff fe5e 	bl	20000288 <_ZNSt10shared_ptrI9IGUIModelED1Ev>
+200005cc:	f107 030c 	add.w	r3, r7, #12
+200005d0:	4618      	mov	r0, r3
+200005d2:	f7ff fe21 	bl	20000218 <_ZN7HandlerD1Ev>
+    return 0;
+200005d6:	4623      	mov	r3, r4
+}
+200005d8:	4618      	mov	r0, r3
+200005da:	3734      	adds	r7, #52	@ 0x34
+200005dc:	46bd      	mov	sp, r7
+200005de:	bdf0      	pop	{r4, r5, r6, r7, pc}
+200005e0:	00c0ffee 	.word	0x00c0ffee
+200005e4:	00001198 	.word	0x00001198
+200005e8:	00000d6c 	.word	0x00000d6c
+200005ec:	00000000 	.word	0x00000000
+200005f0:	00000d6c 	.word	0x00000d6c
+200005f4:	00000008 	.word	0x00000008
+200005f8:	00000d78 	.word	0x00000d78
+200005fc:	00000020 	.word	0x00000020
+20000600:	00000d84 	.word	0x00000d84
+20000604:	0000003c 	.word	0x0000003c
+20000608:	00000d90 	.word	0x00000d90
+2000060c:	0000000c 	.word	0x0000000c
+20000610:	00000d9c 	.word	0x00000d9c
+20000614:	00000010 	.word	0x00000010
+20000618:	00000da8 	.word	0x00000da8
+2000061c:	00000024 	.word	0x00000024
+20000620:	00000db2 	.word	0x00000db2
+20000624:	00000dba 	.word	0x00000dba
+20000628:	00001150 	.word	0x00001150
+2000062c:	00000dbc 	.word	0x00000dbc
+20000630:	00000dc4 	.word	0x00000dc4
+20000634:	00000dda 	.word	0x00000dda
+20000638:	00000db0 	.word	0x00000db0
+2000063c:	00000dc6 	.word	0x00000dc6
+20000640:	00000dd2 	.word	0x00000dd2
+20000644:	00000d72 	.word	0x00000d72
+20000648:	00000dd4 	.word	0x00000dd4
+2000064c:	00000d5e 	.word	0x00000d5e
+20000650:	00000d68 	.word	0x00000d68
+20000654:	00000da4 	.word	0x00000da4
+20000658:	00000dae 	.word	0x00000dae
+2000065c:	00000d02 	.word	0x00000d02
+20000660:	00000db0 	.word	0x00000db0
+20000664:	00000cee 	.word	0x00000cee
+20000668:	00000d08 	.word	0x00000d08
+2000066c:	00000d44 	.word	0x00000d44
+20000670:	00000d4e 	.word	0x00000d4e
+20000674:	00000d6c 	.word	0x00000d6c
+20000678:	00000d76 	.word	0x00000d76
+2000067c:	00000014 	.word	0x00000014
+20000680:	00000d2e 	.word	0x00000d2e
+
+20000684 <main>:
+
+int main()
+{
+20000684:	b580      	push	{r7, lr}
+20000686:	af00      	add	r7, sp, #0
+    exit(app());
+20000688:	f7ff fe0c 	bl	200002a4 <_Z3appv>
+2000068c:	4603      	mov	r3, r0
+2000068e:	4618      	mov	r0, r3
+20000690:	f000 fc2c 	bl	20000eec <exit>
+
+20000694 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>:
+      ~__shared_count() noexcept
+20000694:	b580      	push	{r7, lr}
+20000696:	b082      	sub	sp, #8
+20000698:	af00      	add	r7, sp, #0
+2000069a:	6078      	str	r0, [r7, #4]
+	if (_M_pi != nullptr)
+2000069c:	687b      	ldr	r3, [r7, #4]
+2000069e:	681b      	ldr	r3, [r3, #0]
+200006a0:	2b00      	cmp	r3, #0
+200006a2:	d004      	beq.n	200006ae <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x1a>
+	  _M_pi->_M_release();
+200006a4:	687b      	ldr	r3, [r7, #4]
+200006a6:	681b      	ldr	r3, [r3, #0]
+200006a8:	4618      	mov	r0, r3
+200006aa:	f7ff fcd2 	bl	20000052 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_releaseEv>
+      }
+200006ae:	687b      	ldr	r3, [r7, #4]
+200006b0:	4618      	mov	r0, r3
+200006b2:	3708      	adds	r7, #8
+200006b4:	46bd      	mov	sp, r7
+200006b6:	bd80      	pop	{r7, pc}
+
+200006b8 <_ZSt19static_pointer_castI9IGUIModelvESt10shared_ptrIT_ERKS1_IT0_E>:
+  // 20.7.2.2.9 shared_ptr casts.
+
+  /// Convert type of `shared_ptr`, via `static_cast`
+  template<typename _Tp, typename _Up>
+    inline shared_ptr<_Tp>
+    static_pointer_cast(const shared_ptr<_Up>& __r) noexcept
+200006b8:	b580      	push	{r7, lr}
+200006ba:	b082      	sub	sp, #8
+200006bc:	af00      	add	r7, sp, #0
+200006be:	6078      	str	r0, [r7, #4]
+200006c0:	6039      	str	r1, [r7, #0]
+    {
+      using _Sp = shared_ptr<_Tp>;
+      return _Sp(__r, static_cast<typename _Sp::element_type*>(__r.get()));
+200006c2:	683b      	ldr	r3, [r7, #0]
+200006c4:	4618      	mov	r0, r3
+200006c6:	f000 f84d 	bl	20000764 <_ZNKSt12__shared_ptrIvLN9__gnu_cxx12_Lock_policyE0EE3getEv>
+200006ca:	4603      	mov	r3, r0
+200006cc:	461a      	mov	r2, r3
+200006ce:	6839      	ldr	r1, [r7, #0]
+200006d0:	6878      	ldr	r0, [r7, #4]
+200006d2:	f000 f853 	bl	2000077c <_ZNSt10shared_ptrI9IGUIModelEC1IvEERKS_IT_EPS0_>
+    }
+200006d6:	6878      	ldr	r0, [r7, #4]
+200006d8:	3708      	adds	r7, #8
+200006da:	46bd      	mov	sp, r7
+200006dc:	bd80      	pop	{r7, pc}
+
+200006de <_ZSteqI9IGUIModelEbRKSt10shared_ptrIT_EDn>:
+    operator==(const shared_ptr<_Tp>& __a, nullptr_t) noexcept
+200006de:	b580      	push	{r7, lr}
+200006e0:	b082      	sub	sp, #8
+200006e2:	af00      	add	r7, sp, #0
+200006e4:	6078      	str	r0, [r7, #4]
+200006e6:	6039      	str	r1, [r7, #0]
+    { return !__a; }
+200006e8:	687b      	ldr	r3, [r7, #4]
+200006ea:	4618      	mov	r0, r3
+200006ec:	f000 f857 	bl	2000079e <_ZNKSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EEcvbEv>
+200006f0:	4603      	mov	r3, r0
+200006f2:	f083 0301 	eor.w	r3, r3, #1
+200006f6:	b2db      	uxtb	r3, r3
+200006f8:	4618      	mov	r0, r3
+200006fa:	3708      	adds	r7, #8
+200006fc:	46bd      	mov	sp, r7
+200006fe:	bd80      	pop	{r7, pc}
+
+20000700 <_ZNKSt19__shared_ptr_accessI9IGUIModelLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>:
+      operator->() const noexcept
+20000700:	b580      	push	{r7, lr}
+20000702:	b082      	sub	sp, #8
+20000704:	af00      	add	r7, sp, #0
+20000706:	6078      	str	r0, [r7, #4]
+	return _M_get();
+20000708:	6878      	ldr	r0, [r7, #4]
+2000070a:	f000 f859 	bl	200007c0 <_ZNKSt19__shared_ptr_accessI9IGUIModelLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EE6_M_getEv>
+2000070e:	4603      	mov	r3, r0
+      }
+20000710:	4618      	mov	r0, r3
+20000712:	3708      	adds	r7, #8
+20000714:	46bd      	mov	sp, r7
+20000716:	bd80      	pop	{r7, pc}
+
+20000718 <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1IS1_vvS1_vEEOT_>:
+	       typename = enable_if_t<__not_in_place_tag<_Tp>>,
+	       typename _Tj = __accepted_type<_Tp&&>,
+	       typename = enable_if_t<__exactly_once<_Tj>
+				      && is_constructible_v<_Tj, _Tp>>>
+	constexpr
+	variant(_Tp&& __t)
+20000718:	b590      	push	{r4, r7, lr}
+2000071a:	b083      	sub	sp, #12
+2000071c:	af00      	add	r7, sp, #0
+2000071e:	6078      	str	r0, [r7, #4]
+20000720:	6039      	str	r1, [r7, #0]
+	noexcept(is_nothrow_constructible_v<_Tj, _Tp>)
+	: variant(in_place_index<__accepted_index<_Tp>>,
+		  std::forward<_Tp>(__t))
+20000722:	6838      	ldr	r0, [r7, #0]
+20000724:	f000 f858 	bl	200007d8 <_ZSt7forwardIN8G2SEvent7IsReadyEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000728:	4603      	mov	r3, r0
+2000072a:	461a      	mov	r2, r3
+2000072c:	4621      	mov	r1, r4
+2000072e:	6878      	ldr	r0, [r7, #4]
+20000730:	f000 f85d 	bl	200007ee <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1ILj0EJS1_ES1_vEESt16in_place_index_tIXT_EEDpOT0_>
+	{ }
+20000734:	687b      	ldr	r3, [r7, #4]
+20000736:	4618      	mov	r0, r3
+20000738:	370c      	adds	r7, #12
+2000073a:	46bd      	mov	sp, r7
+2000073c:	bd90      	pop	{r4, r7, pc}
+
+2000073e <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1IS2_vvS2_vEEOT_>:
+	variant(_Tp&& __t)
+2000073e:	b590      	push	{r4, r7, lr}
+20000740:	b083      	sub	sp, #12
+20000742:	af00      	add	r7, sp, #0
+20000744:	6078      	str	r0, [r7, #4]
+20000746:	6039      	str	r1, [r7, #0]
+		  std::forward<_Tp>(__t))
+20000748:	6838      	ldr	r0, [r7, #0]
+2000074a:	f000 f869 	bl	20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>
+2000074e:	4603      	mov	r3, r0
+20000750:	461a      	mov	r2, r3
+20000752:	4621      	mov	r1, r4
+20000754:	6878      	ldr	r0, [r7, #4]
+20000756:	f000 f86e 	bl	20000836 <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1ILj1EJS2_ES2_vEESt16in_place_index_tIXT_EEDpOT0_>
+	{ }
+2000075a:	687b      	ldr	r3, [r7, #4]
+2000075c:	4618      	mov	r0, r3
+2000075e:	370c      	adds	r7, #12
+20000760:	46bd      	mov	sp, r7
+20000762:	bd90      	pop	{r4, r7, pc}
+
+20000764 <_ZNKSt12__shared_ptrIvLN9__gnu_cxx12_Lock_policyE0EE3getEv>:
+	reset(_Yp* __p, _Deleter __d, _Alloc __a)
+        { __shared_ptr(__p, std::move(__d), std::move(__a)).swap(*this); }
+
+      /// Return the stored pointer.
+      element_type*
+      get() const noexcept
+20000764:	b480      	push	{r7}
+20000766:	b083      	sub	sp, #12
+20000768:	af00      	add	r7, sp, #0
+2000076a:	6078      	str	r0, [r7, #4]
+      { return _M_ptr; }
+2000076c:	687b      	ldr	r3, [r7, #4]
+2000076e:	681b      	ldr	r3, [r3, #0]
+20000770:	4618      	mov	r0, r3
+20000772:	370c      	adds	r7, #12
+20000774:	46bd      	mov	sp, r7
+20000776:	f85d 7b04 	ldr.w	r7, [sp], #4
+2000077a:	4770      	bx	lr
+
+2000077c <_ZNSt10shared_ptrI9IGUIModelEC1IvEERKS_IT_EPS0_>:
+	shared_ptr(const shared_ptr<_Yp>& __r, element_type* __p) noexcept
+2000077c:	b580      	push	{r7, lr}
+2000077e:	b084      	sub	sp, #16
+20000780:	af00      	add	r7, sp, #0
+20000782:	60f8      	str	r0, [r7, #12]
+20000784:	60b9      	str	r1, [r7, #8]
+20000786:	607a      	str	r2, [r7, #4]
+	: __shared_ptr<_Tp>(__r, __p) { }
+20000788:	68fb      	ldr	r3, [r7, #12]
+2000078a:	68b9      	ldr	r1, [r7, #8]
+2000078c:	687a      	ldr	r2, [r7, #4]
+2000078e:	4618      	mov	r0, r3
+20000790:	f000 f86a 	bl	20000868 <_ZNSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EEC1IvEERKS_IT_LS2_0EEPS0_>
+20000794:	68fb      	ldr	r3, [r7, #12]
+20000796:	4618      	mov	r0, r3
+20000798:	3710      	adds	r7, #16
+2000079a:	46bd      	mov	sp, r7
+2000079c:	bd80      	pop	{r7, pc}
+
+2000079e <_ZNKSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EEcvbEv>:
+
+      /// Return true if the stored pointer is not null.
+      explicit operator bool() const noexcept
+2000079e:	b480      	push	{r7}
+200007a0:	b083      	sub	sp, #12
+200007a2:	af00      	add	r7, sp, #0
+200007a4:	6078      	str	r0, [r7, #4]
+      { return _M_ptr != nullptr; }
+200007a6:	687b      	ldr	r3, [r7, #4]
+200007a8:	681b      	ldr	r3, [r3, #0]
+200007aa:	2b00      	cmp	r3, #0
+200007ac:	bf14      	ite	ne
+200007ae:	2301      	movne	r3, #1
+200007b0:	2300      	moveq	r3, #0
+200007b2:	b2db      	uxtb	r3, r3
+200007b4:	4618      	mov	r0, r3
+200007b6:	370c      	adds	r7, #12
+200007b8:	46bd      	mov	sp, r7
+200007ba:	f85d 7b04 	ldr.w	r7, [sp], #4
+200007be:	4770      	bx	lr
+
+200007c0 <_ZNKSt19__shared_ptr_accessI9IGUIModelLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EE6_M_getEv>:
+      _M_get() const noexcept
+200007c0:	b580      	push	{r7, lr}
+200007c2:	b082      	sub	sp, #8
+200007c4:	af00      	add	r7, sp, #0
+200007c6:	6078      	str	r0, [r7, #4]
+      { return static_cast<const __shared_ptr<_Tp, _Lp>*>(this)->get(); }
+200007c8:	6878      	ldr	r0, [r7, #4]
+200007ca:	f000 f863 	bl	20000894 <_ZNKSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EE3getEv>
+200007ce:	4603      	mov	r3, r0
+200007d0:	4618      	mov	r0, r3
+200007d2:	3708      	adds	r7, #8
+200007d4:	46bd      	mov	sp, r7
+200007d6:	bd80      	pop	{r7, pc}
+
+200007d8 <_ZSt7forwardIN8G2SEvent7IsReadyEEOT_RNSt16remove_referenceIS2_E4typeE>:
+   *  This function is used to implement "perfect forwarding".
+   */
+  template<typename _Tp>
+    _GLIBCXX_NODISCARD
+    constexpr _Tp&&
+    forward(typename std::remove_reference<_Tp>::type& __t) noexcept
+200007d8:	b480      	push	{r7}
+200007da:	b083      	sub	sp, #12
+200007dc:	af00      	add	r7, sp, #0
+200007de:	6078      	str	r0, [r7, #4]
+    { return static_cast<_Tp&&>(__t); }
+200007e0:	687b      	ldr	r3, [r7, #4]
+200007e2:	4618      	mov	r0, r3
+200007e4:	370c      	adds	r7, #12
+200007e6:	46bd      	mov	sp, r7
+200007e8:	f85d 7b04 	ldr.w	r7, [sp], #4
+200007ec:	4770      	bx	lr
+
+200007ee <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1ILj0EJS1_ES1_vEESt16in_place_index_tIXT_EEDpOT0_>:
+
+      template<size_t _Np, typename... _Args,
+	       typename _Tp = __to_type<_Np>,
+	       typename = enable_if_t<is_constructible_v<_Tp, _Args...>>>
+	constexpr explicit
+	variant(in_place_index_t<_Np>, _Args&&... __args)
+200007ee:	b5f0      	push	{r4, r5, r6, r7, lr}
+200007f0:	b085      	sub	sp, #20
+200007f2:	af00      	add	r7, sp, #0
+200007f4:	60f8      	str	r0, [r7, #12]
+200007f6:	7239      	strb	r1, [r7, #8]
+200007f8:	607a      	str	r2, [r7, #4]
+	: _Base(in_place_index<_Np>, std::forward<_Args>(__args)...),
+	_Default_ctor_enabler(_Enable_default_constructor_tag{})
+200007fa:	68fc      	ldr	r4, [r7, #12]
+200007fc:	6878      	ldr	r0, [r7, #4]
+200007fe:	f7ff ffeb 	bl	200007d8 <_ZSt7forwardIN8G2SEvent7IsReadyEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000802:	4603      	mov	r3, r0
+20000804:	461a      	mov	r2, r3
+20000806:	4631      	mov	r1, r6
+20000808:	4620      	mov	r0, r4
+2000080a:	f000 f893 	bl	20000934 <_ZNSt8__detail9__variant13_Variant_baseIJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>
+2000080e:	4629      	mov	r1, r5
+20000810:	68f8      	ldr	r0, [r7, #12]
+20000812:	f000 f8a4 	bl	2000095e <_ZNSt27_Enable_default_constructorILb1ESt7variantIJN8G2SEvent7IsReadyENS1_4QuitEEEEC1ESt31_Enable_default_constructor_tag>
+	{ }
+20000816:	68fb      	ldr	r3, [r7, #12]
+20000818:	4618      	mov	r0, r3
+2000081a:	3714      	adds	r7, #20
+2000081c:	46bd      	mov	sp, r7
+2000081e:	bdf0      	pop	{r4, r5, r6, r7, pc}
+
+20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>:
+    forward(typename std::remove_reference<_Tp>::type& __t) noexcept
+20000820:	b480      	push	{r7}
+20000822:	b083      	sub	sp, #12
+20000824:	af00      	add	r7, sp, #0
+20000826:	6078      	str	r0, [r7, #4]
+    { return static_cast<_Tp&&>(__t); }
+20000828:	687b      	ldr	r3, [r7, #4]
+2000082a:	4618      	mov	r0, r3
+2000082c:	370c      	adds	r7, #12
+2000082e:	46bd      	mov	sp, r7
+20000830:	f85d 7b04 	ldr.w	r7, [sp], #4
+20000834:	4770      	bx	lr
+
+20000836 <_ZNSt7variantIJN8G2SEvent7IsReadyENS0_4QuitEEEC1ILj1EJS2_ES2_vEESt16in_place_index_tIXT_EEDpOT0_>:
+	variant(in_place_index_t<_Np>, _Args&&... __args)
+20000836:	b5f0      	push	{r4, r5, r6, r7, lr}
+20000838:	b085      	sub	sp, #20
+2000083a:	af00      	add	r7, sp, #0
+2000083c:	60f8      	str	r0, [r7, #12]
+2000083e:	7239      	strb	r1, [r7, #8]
+20000840:	607a      	str	r2, [r7, #4]
+	_Default_ctor_enabler(_Enable_default_constructor_tag{})
+20000842:	68fc      	ldr	r4, [r7, #12]
+20000844:	6878      	ldr	r0, [r7, #4]
+20000846:	f7ff ffeb 	bl	20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>
+2000084a:	4603      	mov	r3, r0
+2000084c:	461a      	mov	r2, r3
+2000084e:	4631      	mov	r1, r6
+20000850:	4620      	mov	r0, r4
+20000852:	f000 f8d4 	bl	200009fe <_ZNSt8__detail9__variant13_Variant_baseIJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>
+20000856:	4629      	mov	r1, r5
+20000858:	68f8      	ldr	r0, [r7, #12]
+2000085a:	f000 f880 	bl	2000095e <_ZNSt27_Enable_default_constructorILb1ESt7variantIJN8G2SEvent7IsReadyENS1_4QuitEEEEC1ESt31_Enable_default_constructor_tag>
+	{ }
+2000085e:	68fb      	ldr	r3, [r7, #12]
+20000860:	4618      	mov	r0, r3
+20000862:	3714      	adds	r7, #20
+20000864:	46bd      	mov	sp, r7
+20000866:	bdf0      	pop	{r4, r5, r6, r7, pc}
+
+20000868 <_ZNSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EEC1IvEERKS_IT_LS2_0EEPS0_>:
+	__shared_ptr(const __shared_ptr<_Yp, _Lp>& __r,
+20000868:	b580      	push	{r7, lr}
+2000086a:	b084      	sub	sp, #16
+2000086c:	af00      	add	r7, sp, #0
+2000086e:	60f8      	str	r0, [r7, #12]
+20000870:	60b9      	str	r1, [r7, #8]
+20000872:	607a      	str	r2, [r7, #4]
+	: _M_ptr(__p), _M_refcount(__r._M_refcount) // never throws
+20000874:	68fb      	ldr	r3, [r7, #12]
+20000876:	687a      	ldr	r2, [r7, #4]
+20000878:	601a      	str	r2, [r3, #0]
+2000087a:	68fb      	ldr	r3, [r7, #12]
+2000087c:	1d1a      	adds	r2, r3, #4
+2000087e:	68bb      	ldr	r3, [r7, #8]
+20000880:	3304      	adds	r3, #4
+20000882:	4619      	mov	r1, r3
+20000884:	4610      	mov	r0, r2
+20000886:	f000 f8cf 	bl	20000a28 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_>
+	{ }
+2000088a:	68fb      	ldr	r3, [r7, #12]
+2000088c:	4618      	mov	r0, r3
+2000088e:	3710      	adds	r7, #16
+20000890:	46bd      	mov	sp, r7
+20000892:	bd80      	pop	{r7, pc}
+
+20000894 <_ZNKSt12__shared_ptrI9IGUIModelLN9__gnu_cxx12_Lock_policyE0EE3getEv>:
+      get() const noexcept
+20000894:	b480      	push	{r7}
+20000896:	b083      	sub	sp, #12
+20000898:	af00      	add	r7, sp, #0
+2000089a:	6078      	str	r0, [r7, #4]
+      { return _M_ptr; }
+2000089c:	687b      	ldr	r3, [r7, #4]
+2000089e:	681b      	ldr	r3, [r3, #0]
+200008a0:	4618      	mov	r0, r3
+200008a2:	370c      	adds	r7, #12
+200008a4:	46bd      	mov	sp, r7
+200008a6:	f85d 7b04 	ldr.w	r7, [sp], #4
+200008aa:	4770      	bx	lr
+
+200008ac <_ZNSt8__detail9__variant15_Copy_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+200008ac:	b590      	push	{r4, r7, lr}
+200008ae:	b085      	sub	sp, #20
+200008b0:	af00      	add	r7, sp, #0
+200008b2:	60f8      	str	r0, [r7, #12]
+200008b4:	7239      	strb	r1, [r7, #8]
+200008b6:	607a      	str	r2, [r7, #4]
+200008b8:	68fb      	ldr	r3, [r7, #12]
+200008ba:	687a      	ldr	r2, [r7, #4]
+200008bc:	4621      	mov	r1, r4
+200008be:	4618      	mov	r0, r3
+200008c0:	f000 f8c9 	bl	20000a56 <_ZNSt8__detail9__variant16_Variant_storageILb1EJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>
+200008c4:	68fb      	ldr	r3, [r7, #12]
+200008c6:	4618      	mov	r0, r3
+200008c8:	3714      	adds	r7, #20
+200008ca:	46bd      	mov	sp, r7
+200008cc:	bd90      	pop	{r4, r7, pc}
+
+200008ce <_ZNSt8__detail9__variant15_Move_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+200008ce:	b590      	push	{r4, r7, lr}
+200008d0:	b085      	sub	sp, #20
+200008d2:	af00      	add	r7, sp, #0
+200008d4:	60f8      	str	r0, [r7, #12]
+200008d6:	7239      	strb	r1, [r7, #8]
+200008d8:	607a      	str	r2, [r7, #4]
+200008da:	68fb      	ldr	r3, [r7, #12]
+200008dc:	687a      	ldr	r2, [r7, #4]
+200008de:	4621      	mov	r1, r4
+200008e0:	4618      	mov	r0, r3
+200008e2:	f7ff ffe3 	bl	200008ac <_ZNSt8__detail9__variant15_Copy_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>
+200008e6:	68fb      	ldr	r3, [r7, #12]
+200008e8:	4618      	mov	r0, r3
+200008ea:	3714      	adds	r7, #20
+200008ec:	46bd      	mov	sp, r7
+200008ee:	bd90      	pop	{r4, r7, pc}
+
+200008f0 <_ZNSt8__detail9__variant17_Copy_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+200008f0:	b590      	push	{r4, r7, lr}
+200008f2:	b085      	sub	sp, #20
+200008f4:	af00      	add	r7, sp, #0
+200008f6:	60f8      	str	r0, [r7, #12]
+200008f8:	7239      	strb	r1, [r7, #8]
+200008fa:	607a      	str	r2, [r7, #4]
+200008fc:	68fb      	ldr	r3, [r7, #12]
+200008fe:	687a      	ldr	r2, [r7, #4]
+20000900:	4621      	mov	r1, r4
+20000902:	4618      	mov	r0, r3
+20000904:	f7ff ffe3 	bl	200008ce <_ZNSt8__detail9__variant15_Move_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>
+20000908:	68fb      	ldr	r3, [r7, #12]
+2000090a:	4618      	mov	r0, r3
+2000090c:	3714      	adds	r7, #20
+2000090e:	46bd      	mov	sp, r7
+20000910:	bd90      	pop	{r4, r7, pc}
+
+20000912 <_ZNSt8__detail9__variant17_Move_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+20000912:	b590      	push	{r4, r7, lr}
+20000914:	b085      	sub	sp, #20
+20000916:	af00      	add	r7, sp, #0
+20000918:	60f8      	str	r0, [r7, #12]
+2000091a:	7239      	strb	r1, [r7, #8]
+2000091c:	607a      	str	r2, [r7, #4]
+2000091e:	68fb      	ldr	r3, [r7, #12]
+20000920:	687a      	ldr	r2, [r7, #4]
+20000922:	4621      	mov	r1, r4
+20000924:	4618      	mov	r0, r3
+20000926:	f7ff ffe3 	bl	200008f0 <_ZNSt8__detail9__variant17_Copy_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>
+2000092a:	68fb      	ldr	r3, [r7, #12]
+2000092c:	4618      	mov	r0, r3
+2000092e:	3714      	adds	r7, #20
+20000930:	46bd      	mov	sp, r7
+20000932:	bd90      	pop	{r4, r7, pc}
+
+20000934 <_ZNSt8__detail9__variant13_Variant_baseIJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>:
+	_Variant_base(in_place_index_t<_Np> __i, _Args&&... __args)
+20000934:	b5b0      	push	{r4, r5, r7, lr}
+20000936:	b084      	sub	sp, #16
+20000938:	af00      	add	r7, sp, #0
+2000093a:	60f8      	str	r0, [r7, #12]
+2000093c:	7239      	strb	r1, [r7, #8]
+2000093e:	607a      	str	r2, [r7, #4]
+	: _Base(__i, std::forward<_Args>(__args)...)
+20000940:	68fc      	ldr	r4, [r7, #12]
+20000942:	6878      	ldr	r0, [r7, #4]
+20000944:	f7ff ff48 	bl	200007d8 <_ZSt7forwardIN8G2SEvent7IsReadyEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000948:	4603      	mov	r3, r0
+2000094a:	461a      	mov	r2, r3
+2000094c:	4629      	mov	r1, r5
+2000094e:	4620      	mov	r0, r4
+20000950:	f7ff ffdf 	bl	20000912 <_ZNSt8__detail9__variant17_Move_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>
+	{ }
+20000954:	68fb      	ldr	r3, [r7, #12]
+20000956:	4618      	mov	r0, r3
+20000958:	3710      	adds	r7, #16
+2000095a:	46bd      	mov	sp, r7
+2000095c:	bdb0      	pop	{r4, r5, r7, pc}
+
+2000095e <_ZNSt27_Enable_default_constructorILb1ESt7variantIJN8G2SEvent7IsReadyENS1_4QuitEEEEC1ESt31_Enable_default_constructor_tag>:
+    _Enable_default_constructor&
+    operator=(_Enable_default_constructor&&) noexcept = default;
+
+    // Can be used in other ctors.
+    constexpr explicit
+    _Enable_default_constructor(_Enable_default_constructor_tag) { }
+2000095e:	b480      	push	{r7}
+20000960:	b083      	sub	sp, #12
+20000962:	af00      	add	r7, sp, #0
+20000964:	6078      	str	r0, [r7, #4]
+20000966:	7039      	strb	r1, [r7, #0]
+20000968:	687b      	ldr	r3, [r7, #4]
+2000096a:	4618      	mov	r0, r3
+2000096c:	370c      	adds	r7, #12
+2000096e:	46bd      	mov	sp, r7
+20000970:	f85d 7b04 	ldr.w	r7, [sp], #4
+20000974:	4770      	bx	lr
+
+20000976 <_ZNSt8__detail9__variant15_Copy_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+20000976:	b590      	push	{r4, r7, lr}
+20000978:	b085      	sub	sp, #20
+2000097a:	af00      	add	r7, sp, #0
+2000097c:	60f8      	str	r0, [r7, #12]
+2000097e:	7239      	strb	r1, [r7, #8]
+20000980:	607a      	str	r2, [r7, #4]
+20000982:	68fb      	ldr	r3, [r7, #12]
+20000984:	687a      	ldr	r2, [r7, #4]
+20000986:	4621      	mov	r1, r4
+20000988:	4618      	mov	r0, r3
+2000098a:	f000 f87c 	bl	20000a86 <_ZNSt8__detail9__variant16_Variant_storageILb1EJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>
+2000098e:	68fb      	ldr	r3, [r7, #12]
+20000990:	4618      	mov	r0, r3
+20000992:	3714      	adds	r7, #20
+20000994:	46bd      	mov	sp, r7
+20000996:	bd90      	pop	{r4, r7, pc}
+
+20000998 <_ZNSt8__detail9__variant15_Move_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+20000998:	b590      	push	{r4, r7, lr}
+2000099a:	b085      	sub	sp, #20
+2000099c:	af00      	add	r7, sp, #0
+2000099e:	60f8      	str	r0, [r7, #12]
+200009a0:	7239      	strb	r1, [r7, #8]
+200009a2:	607a      	str	r2, [r7, #4]
+200009a4:	68fb      	ldr	r3, [r7, #12]
+200009a6:	687a      	ldr	r2, [r7, #4]
+200009a8:	4621      	mov	r1, r4
+200009aa:	4618      	mov	r0, r3
+200009ac:	f7ff ffe3 	bl	20000976 <_ZNSt8__detail9__variant15_Copy_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>
+200009b0:	68fb      	ldr	r3, [r7, #12]
+200009b2:	4618      	mov	r0, r3
+200009b4:	3714      	adds	r7, #20
+200009b6:	46bd      	mov	sp, r7
+200009b8:	bd90      	pop	{r4, r7, pc}
+
+200009ba <_ZNSt8__detail9__variant17_Copy_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+200009ba:	b590      	push	{r4, r7, lr}
+200009bc:	b085      	sub	sp, #20
+200009be:	af00      	add	r7, sp, #0
+200009c0:	60f8      	str	r0, [r7, #12]
+200009c2:	7239      	strb	r1, [r7, #8]
+200009c4:	607a      	str	r2, [r7, #4]
+200009c6:	68fb      	ldr	r3, [r7, #12]
+200009c8:	687a      	ldr	r2, [r7, #4]
+200009ca:	4621      	mov	r1, r4
+200009cc:	4618      	mov	r0, r3
+200009ce:	f7ff ffe3 	bl	20000998 <_ZNSt8__detail9__variant15_Move_ctor_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>
+200009d2:	68fb      	ldr	r3, [r7, #12]
+200009d4:	4618      	mov	r0, r3
+200009d6:	3714      	adds	r7, #20
+200009d8:	46bd      	mov	sp, r7
+200009da:	bd90      	pop	{r4, r7, pc}
+
+200009dc <_ZNSt8__detail9__variant17_Move_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>:
+      using _Base::_Base;
+200009dc:	b590      	push	{r4, r7, lr}
+200009de:	b085      	sub	sp, #20
+200009e0:	af00      	add	r7, sp, #0
+200009e2:	60f8      	str	r0, [r7, #12]
+200009e4:	7239      	strb	r1, [r7, #8]
+200009e6:	607a      	str	r2, [r7, #4]
+200009e8:	68fb      	ldr	r3, [r7, #12]
+200009ea:	687a      	ldr	r2, [r7, #4]
+200009ec:	4621      	mov	r1, r4
+200009ee:	4618      	mov	r0, r3
+200009f0:	f7ff ffe3 	bl	200009ba <_ZNSt8__detail9__variant17_Copy_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>
+200009f4:	68fb      	ldr	r3, [r7, #12]
+200009f6:	4618      	mov	r0, r3
+200009f8:	3714      	adds	r7, #20
+200009fa:	46bd      	mov	sp, r7
+200009fc:	bd90      	pop	{r4, r7, pc}
+
+200009fe <_ZNSt8__detail9__variant13_Variant_baseIJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>:
+	_Variant_base(in_place_index_t<_Np> __i, _Args&&... __args)
+200009fe:	b5b0      	push	{r4, r5, r7, lr}
+20000a00:	b084      	sub	sp, #16
+20000a02:	af00      	add	r7, sp, #0
+20000a04:	60f8      	str	r0, [r7, #12]
+20000a06:	7239      	strb	r1, [r7, #8]
+20000a08:	607a      	str	r2, [r7, #4]
+	: _Base(__i, std::forward<_Args>(__args)...)
+20000a0a:	68fc      	ldr	r4, [r7, #12]
+20000a0c:	6878      	ldr	r0, [r7, #4]
+20000a0e:	f7ff ff07 	bl	20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000a12:	4603      	mov	r3, r0
+20000a14:	461a      	mov	r2, r3
+20000a16:	4629      	mov	r1, r5
+20000a18:	4620      	mov	r0, r4
+20000a1a:	f7ff ffdf 	bl	200009dc <_ZNSt8__detail9__variant17_Move_assign_baseILb1EJN8G2SEvent7IsReadyENS2_4QuitEEECI1NS0_16_Variant_storageILb1EJS3_S4_EEEILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>
+	{ }
+20000a1e:	68fb      	ldr	r3, [r7, #12]
+20000a20:	4618      	mov	r0, r3
+20000a22:	3710      	adds	r7, #16
+20000a24:	46bd      	mov	sp, r7
+20000a26:	bdb0      	pop	{r4, r5, r7, pc}
+
+20000a28 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_>:
+      __shared_count(const __shared_count& __r) noexcept
+20000a28:	b580      	push	{r7, lr}
+20000a2a:	b082      	sub	sp, #8
+20000a2c:	af00      	add	r7, sp, #0
+20000a2e:	6078      	str	r0, [r7, #4]
+20000a30:	6039      	str	r1, [r7, #0]
+      : _M_pi(__r._M_pi)
+20000a32:	683b      	ldr	r3, [r7, #0]
+20000a34:	681a      	ldr	r2, [r3, #0]
+20000a36:	687b      	ldr	r3, [r7, #4]
+20000a38:	601a      	str	r2, [r3, #0]
+	if (_M_pi != nullptr)
+20000a3a:	687b      	ldr	r3, [r7, #4]
+20000a3c:	681b      	ldr	r3, [r3, #0]
+20000a3e:	2b00      	cmp	r3, #0
+20000a40:	d004      	beq.n	20000a4c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_+0x24>
+	  _M_pi->_M_add_ref_copy();
+20000a42:	687b      	ldr	r3, [r7, #4]
+20000a44:	681b      	ldr	r3, [r3, #0]
+20000a46:	4618      	mov	r0, r3
+20000a48:	f7ff faf4 	bl	20000034 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE15_M_add_ref_copyEv>
+      }
+20000a4c:	687b      	ldr	r3, [r7, #4]
+20000a4e:	4618      	mov	r0, r3
+20000a50:	3708      	adds	r7, #8
+20000a52:	46bd      	mov	sp, r7
+20000a54:	bd80      	pop	{r7, pc}
+
+20000a56 <_ZNSt8__detail9__variant16_Variant_storageILb1EJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj0EJS3_EEESt16in_place_index_tIXT_EEDpOT0_>:
+	_Variant_storage(in_place_index_t<_Np>, _Args&&... __args)
+20000a56:	b5b0      	push	{r4, r5, r7, lr}
+20000a58:	b084      	sub	sp, #16
+20000a5a:	af00      	add	r7, sp, #0
+20000a5c:	60f8      	str	r0, [r7, #12]
+20000a5e:	7239      	strb	r1, [r7, #8]
+20000a60:	607a      	str	r2, [r7, #4]
+	: _M_u(in_place_index<_Np>, std::forward<_Args>(__args)...),
+20000a62:	68fc      	ldr	r4, [r7, #12]
+20000a64:	6878      	ldr	r0, [r7, #4]
+20000a66:	f7ff feb7 	bl	200007d8 <_ZSt7forwardIN8G2SEvent7IsReadyEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000a6a:	4603      	mov	r3, r0
+20000a6c:	461a      	mov	r2, r3
+20000a6e:	4629      	mov	r1, r5
+20000a70:	4620      	mov	r0, r4
+20000a72:	f000 f820 	bl	20000ab6 <_ZNSt8__detail9__variant15_Variadic_unionIJN8G2SEvent7IsReadyENS2_4QuitEEEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>
+	_M_index{_Np}
+20000a76:	68fb      	ldr	r3, [r7, #12]
+20000a78:	2200      	movs	r2, #0
+20000a7a:	705a      	strb	r2, [r3, #1]
+	{ }
+20000a7c:	68fb      	ldr	r3, [r7, #12]
+20000a7e:	4618      	mov	r0, r3
+20000a80:	3710      	adds	r7, #16
+20000a82:	46bd      	mov	sp, r7
+20000a84:	bdb0      	pop	{r4, r5, r7, pc}
+
+20000a86 <_ZNSt8__detail9__variant16_Variant_storageILb1EJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>:
+	_Variant_storage(in_place_index_t<_Np>, _Args&&... __args)
+20000a86:	b5b0      	push	{r4, r5, r7, lr}
+20000a88:	b084      	sub	sp, #16
+20000a8a:	af00      	add	r7, sp, #0
+20000a8c:	60f8      	str	r0, [r7, #12]
+20000a8e:	7239      	strb	r1, [r7, #8]
+20000a90:	607a      	str	r2, [r7, #4]
+	: _M_u(in_place_index<_Np>, std::forward<_Args>(__args)...),
+20000a92:	68fc      	ldr	r4, [r7, #12]
+20000a94:	6878      	ldr	r0, [r7, #4]
+20000a96:	f7ff fec3 	bl	20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000a9a:	4603      	mov	r3, r0
+20000a9c:	461a      	mov	r2, r3
+20000a9e:	4629      	mov	r1, r5
+20000aa0:	4620      	mov	r0, r4
+20000aa2:	f000 f81d 	bl	20000ae0 <_ZNSt8__detail9__variant15_Variadic_unionIJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>
+	_M_index{_Np}
+20000aa6:	68fb      	ldr	r3, [r7, #12]
+20000aa8:	2201      	movs	r2, #1
+20000aaa:	705a      	strb	r2, [r3, #1]
+	{ }
+20000aac:	68fb      	ldr	r3, [r7, #12]
+20000aae:	4618      	mov	r0, r3
+20000ab0:	3710      	adds	r7, #16
+20000ab2:	46bd      	mov	sp, r7
+20000ab4:	bdb0      	pop	{r4, r5, r7, pc}
+
+20000ab6 <_ZNSt8__detail9__variant15_Variadic_unionIJN8G2SEvent7IsReadyENS2_4QuitEEEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>:
+	_Variadic_union(in_place_index_t<0>, _Args&&... __args)
+20000ab6:	b5b0      	push	{r4, r5, r7, lr}
+20000ab8:	b084      	sub	sp, #16
+20000aba:	af00      	add	r7, sp, #0
+20000abc:	60f8      	str	r0, [r7, #12]
+20000abe:	7239      	strb	r1, [r7, #8]
+20000ac0:	607a      	str	r2, [r7, #4]
+	: _M_first(in_place_index<0>, std::forward<_Args>(__args)...)
+20000ac2:	68fc      	ldr	r4, [r7, #12]
+20000ac4:	6878      	ldr	r0, [r7, #4]
+20000ac6:	f7ff fe87 	bl	200007d8 <_ZSt7forwardIN8G2SEvent7IsReadyEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000aca:	4603      	mov	r3, r0
+20000acc:	461a      	mov	r2, r3
+20000ace:	4629      	mov	r1, r5
+20000ad0:	4620      	mov	r0, r4
+20000ad2:	f000 f81a 	bl	20000b0a <_ZNSt8__detail9__variant14_UninitializedIN8G2SEvent7IsReadyELb1EEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>
+	{ }
+20000ad6:	68fb      	ldr	r3, [r7, #12]
+20000ad8:	4618      	mov	r0, r3
+20000ada:	3710      	adds	r7, #16
+20000adc:	46bd      	mov	sp, r7
+20000ade:	bdb0      	pop	{r4, r5, r7, pc}
+
+20000ae0 <_ZNSt8__detail9__variant15_Variadic_unionIJN8G2SEvent7IsReadyENS2_4QuitEEEC1ILj1EJS4_EEESt16in_place_index_tIXT_EEDpOT0_>:
+	_Variadic_union(in_place_index_t<_Np>, _Args&&... __args)
+20000ae0:	b5b0      	push	{r4, r5, r7, lr}
+20000ae2:	b084      	sub	sp, #16
+20000ae4:	af00      	add	r7, sp, #0
+20000ae6:	60f8      	str	r0, [r7, #12]
+20000ae8:	7239      	strb	r1, [r7, #8]
+20000aea:	607a      	str	r2, [r7, #4]
+	: _M_rest(in_place_index<_Np-1>, std::forward<_Args>(__args)...)
+20000aec:	68fc      	ldr	r4, [r7, #12]
+20000aee:	6878      	ldr	r0, [r7, #4]
+20000af0:	f7ff fe96 	bl	20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000af4:	4603      	mov	r3, r0
+20000af6:	461a      	mov	r2, r3
+20000af8:	4629      	mov	r1, r5
+20000afa:	4620      	mov	r0, r4
+20000afc:	f000 f813 	bl	20000b26 <_ZNSt8__detail9__variant15_Variadic_unionIJN8G2SEvent4QuitEEEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>
+	{ }
+20000b00:	68fb      	ldr	r3, [r7, #12]
+20000b02:	4618      	mov	r0, r3
+20000b04:	3710      	adds	r7, #16
+20000b06:	46bd      	mov	sp, r7
+20000b08:	bdb0      	pop	{r4, r5, r7, pc}
+
+20000b0a <_ZNSt8__detail9__variant14_UninitializedIN8G2SEvent7IsReadyELb1EEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>:
+	_Uninitialized(in_place_index_t<0>, _Args&&... __args)
+20000b0a:	b580      	push	{r7, lr}
+20000b0c:	b084      	sub	sp, #16
+20000b0e:	af00      	add	r7, sp, #0
+20000b10:	60f8      	str	r0, [r7, #12]
+20000b12:	7239      	strb	r1, [r7, #8]
+20000b14:	607a      	str	r2, [r7, #4]
+	: _M_storage(std::forward<_Args>(__args)...)
+20000b16:	6878      	ldr	r0, [r7, #4]
+20000b18:	f7ff fe5e 	bl	200007d8 <_ZSt7forwardIN8G2SEvent7IsReadyEEOT_RNSt16remove_referenceIS2_E4typeE>
+	{ }
+20000b1c:	68fb      	ldr	r3, [r7, #12]
+20000b1e:	4618      	mov	r0, r3
+20000b20:	3710      	adds	r7, #16
+20000b22:	46bd      	mov	sp, r7
+20000b24:	bd80      	pop	{r7, pc}
+
+20000b26 <_ZNSt8__detail9__variant15_Variadic_unionIJN8G2SEvent4QuitEEEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>:
+	_Variadic_union(in_place_index_t<0>, _Args&&... __args)
+20000b26:	b5b0      	push	{r4, r5, r7, lr}
+20000b28:	b084      	sub	sp, #16
+20000b2a:	af00      	add	r7, sp, #0
+20000b2c:	60f8      	str	r0, [r7, #12]
+20000b2e:	7239      	strb	r1, [r7, #8]
+20000b30:	607a      	str	r2, [r7, #4]
+	: _M_first(in_place_index<0>, std::forward<_Args>(__args)...)
+20000b32:	68fc      	ldr	r4, [r7, #12]
+20000b34:	6878      	ldr	r0, [r7, #4]
+20000b36:	f7ff fe73 	bl	20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>
+20000b3a:	4603      	mov	r3, r0
+20000b3c:	461a      	mov	r2, r3
+20000b3e:	4629      	mov	r1, r5
+20000b40:	4620      	mov	r0, r4
+20000b42:	f000 f805 	bl	20000b50 <_ZNSt8__detail9__variant14_UninitializedIN8G2SEvent4QuitELb1EEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>
+	{ }
+20000b46:	68fb      	ldr	r3, [r7, #12]
+20000b48:	4618      	mov	r0, r3
+20000b4a:	3710      	adds	r7, #16
+20000b4c:	46bd      	mov	sp, r7
+20000b4e:	bdb0      	pop	{r4, r5, r7, pc}
+
+20000b50 <_ZNSt8__detail9__variant14_UninitializedIN8G2SEvent4QuitELb1EEC1IJS3_EEESt16in_place_index_tILj0EEDpOT_>:
+	_Uninitialized(in_place_index_t<0>, _Args&&... __args)
+20000b50:	b580      	push	{r7, lr}
+20000b52:	b084      	sub	sp, #16
+20000b54:	af00      	add	r7, sp, #0
+20000b56:	60f8      	str	r0, [r7, #12]
+20000b58:	7239      	strb	r1, [r7, #8]
+20000b5a:	607a      	str	r2, [r7, #4]
+	: _M_storage(std::forward<_Args>(__args)...)
+20000b5c:	6878      	ldr	r0, [r7, #4]
+20000b5e:	f7ff fe5f 	bl	20000820 <_ZSt7forwardIN8G2SEvent4QuitEEOT_RNSt16remove_referenceIS2_E4typeE>
+	{ }
+20000b62:	68fb      	ldr	r3, [r7, #12]
+20000b64:	4618      	mov	r0, r3
+20000b66:	3710      	adds	r7, #16
+20000b68:	46bd      	mov	sp, r7
+20000b6a:	bd80      	pop	{r7, pc}
+
+20000b6c <_Z41__static_initialization_and_destruction_0v>:
+    return -1;
+}
+20000b6c:	b580      	push	{r7, lr}
+20000b6e:	af00      	add	r7, sp, #0
+static Test mTest;
+20000b70:	4b03      	ldr	r3, [pc, #12]	@ (20000b80 <_Z41__static_initialization_and_destruction_0v+0x14>)
+20000b72:	447b      	add	r3, pc
+20000b74:	4618      	mov	r0, r3
+20000b76:	f7ff fac5 	bl	20000104 <_ZN4TestC1Ev>
+}
+20000b7a:	bf00      	nop
+20000b7c:	bd80      	pop	{r7, pc}
+20000b7e:	bf00      	nop
+20000b80:	0000091e 	.word	0x0000091e
+
+20000b84 <_Z41__static_initialization_and_destruction_1v>:
+20000b84:	b580      	push	{r7, lr}
+20000b86:	af00      	add	r7, sp, #0
+static Test mTest;
+20000b88:	4b03      	ldr	r3, [pc, #12]	@ (20000b98 <_Z41__static_initialization_and_destruction_1v+0x14>)
+20000b8a:	447b      	add	r3, pc
+20000b8c:	4618      	mov	r0, r3
+20000b8e:	f7ff fac9 	bl	20000124 <_ZN4TestD1Ev>
+}
+20000b92:	bf00      	nop
+20000b94:	bd80      	pop	{r7, pc}
+20000b96:	bf00      	nop
+20000b98:	00000906 	.word	0x00000906
+
+20000b9c <_GLOBAL__sub_I_main.cpp>:
+20000b9c:	b580      	push	{r7, lr}
+20000b9e:	af00      	add	r7, sp, #0
+20000ba0:	f7ff ffe4 	bl	20000b6c <_Z41__static_initialization_and_destruction_0v>
+20000ba4:	bd80      	pop	{r7, pc}
+
+20000ba6 <_GLOBAL__sub_D_main.cpp>:
+20000ba6:	b580      	push	{r7, lr}
+20000ba8:	af00      	add	r7, sp, #0
+20000baa:	f7ff ffeb 	bl	20000b84 <_Z41__static_initialization_and_destruction_1v>
+20000bae:	bd80      	pop	{r7, pc}
+
+20000bb0 <__una_init_kernel>:
+extern void (*__fini_array_start[])     (void) __attribute__((weak));
+extern void (*__fini_array_end[])       (void) __attribute__((weak));
+
+extern "C" {
+    void __una_init_kernel (void)
+    {
+20000bb0:	b598      	push	{r3, r4, r7, lr}
+20000bb2:	af00      	add	r7, sp, #0
+20000bb4:	4c0f      	ldr	r4, [pc, #60]	@ (20000bf4 <__una_init_kernel+0x44>)
+20000bb6:	447c      	add	r4, pc
+        kernel->app.initialized();
+20000bb8:	4b0f      	ldr	r3, [pc, #60]	@ (20000bf8 <__una_init_kernel+0x48>)
+20000bba:	58e3      	ldr	r3, [r4, r3]
+20000bbc:	681b      	ldr	r3, [r3, #0]
+20000bbe:	6a1b      	ldr	r3, [r3, #32]
+20000bc0:	681b      	ldr	r3, [r3, #0]
+20000bc2:	3304      	adds	r3, #4
+20000bc4:	681b      	ldr	r3, [r3, #0]
+20000bc6:	4a0c      	ldr	r2, [pc, #48]	@ (20000bf8 <__una_init_kernel+0x48>)
+20000bc8:	58a2      	ldr	r2, [r4, r2]
+20000bca:	6812      	ldr	r2, [r2, #0]
+20000bcc:	6a12      	ldr	r2, [r2, #32]
+20000bce:	4610      	mov	r0, r2
+20000bd0:	4798      	blx	r3
+        kernel->app.log("\n");
+20000bd2:	4b09      	ldr	r3, [pc, #36]	@ (20000bf8 <__una_init_kernel+0x48>)
+20000bd4:	58e3      	ldr	r3, [r4, r3]
+20000bd6:	681b      	ldr	r3, [r3, #0]
+20000bd8:	6a1b      	ldr	r3, [r3, #32]
+20000bda:	681b      	ldr	r3, [r3, #0]
+20000bdc:	332c      	adds	r3, #44	@ 0x2c
+20000bde:	681b      	ldr	r3, [r3, #0]
+20000be0:	4a05      	ldr	r2, [pc, #20]	@ (20000bf8 <__una_init_kernel+0x48>)
+20000be2:	58a2      	ldr	r2, [r4, r2]
+20000be4:	6812      	ldr	r2, [r2, #0]
+20000be6:	6a12      	ldr	r2, [r2, #32]
+20000be8:	4904      	ldr	r1, [pc, #16]	@ (20000bfc <__una_init_kernel+0x4c>)
+20000bea:	4479      	add	r1, pc
+20000bec:	4610      	mov	r0, r2
+20000bee:	4798      	blx	r3
+    }
+20000bf0:	bf00      	nop
+20000bf2:	bd98      	pop	{r3, r4, r7, pc}
+20000bf4:	0000088e 	.word	0x0000088e
+20000bf8:	00000024 	.word	0x00000024
+20000bfc:	00000652 	.word	0x00000652
+
+20000c00 <__una_init_array>:
+
+    /* Iterate over all the init routines.  */
+    void __una_init_array (void)
+    {
+20000c00:	b590      	push	{r4, r7, lr}
+20000c02:	b083      	sub	sp, #12
+20000c04:	af00      	add	r7, sp, #0
+20000c06:	4c1b      	ldr	r4, [pc, #108]	@ (20000c74 <__una_init_array+0x74>)
+20000c08:	447c      	add	r4, pc
+        size_t count;
+        size_t i;
+
+        count = __preinit_array_end - __preinit_array_start;
+20000c0a:	4b1b      	ldr	r3, [pc, #108]	@ (20000c78 <__una_init_array+0x78>)
+20000c0c:	58e3      	ldr	r3, [r4, r3]
+20000c0e:	461a      	mov	r2, r3
+20000c10:	4b1a      	ldr	r3, [pc, #104]	@ (20000c7c <__una_init_array+0x7c>)
+20000c12:	58e3      	ldr	r3, [r4, r3]
+20000c14:	1ad3      	subs	r3, r2, r3
+20000c16:	109b      	asrs	r3, r3, #2
+20000c18:	603b      	str	r3, [r7, #0]
+        for (i = 0; i < count; ++i) {
+20000c1a:	2300      	movs	r3, #0
+20000c1c:	607b      	str	r3, [r7, #4]
+20000c1e:	e008      	b.n	20000c32 <__una_init_array+0x32>
+            __preinit_array_start[i] ();
+20000c20:	4b16      	ldr	r3, [pc, #88]	@ (20000c7c <__una_init_array+0x7c>)
+20000c22:	58e3      	ldr	r3, [r4, r3]
+20000c24:	687a      	ldr	r2, [r7, #4]
+20000c26:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+20000c2a:	4798      	blx	r3
+        for (i = 0; i < count; ++i) {
+20000c2c:	687b      	ldr	r3, [r7, #4]
+20000c2e:	3301      	adds	r3, #1
+20000c30:	607b      	str	r3, [r7, #4]
+20000c32:	687a      	ldr	r2, [r7, #4]
+20000c34:	683b      	ldr	r3, [r7, #0]
+20000c36:	429a      	cmp	r2, r3
+20000c38:	d3f2      	bcc.n	20000c20 <__una_init_array+0x20>
+
+        #ifdef _HAVE_INIT_FINI
+          _init ();
+        #endif
+
+        count = __init_array_end - __init_array_start;
+20000c3a:	4b11      	ldr	r3, [pc, #68]	@ (20000c80 <__una_init_array+0x80>)
+20000c3c:	58e3      	ldr	r3, [r4, r3]
+20000c3e:	461a      	mov	r2, r3
+20000c40:	4b10      	ldr	r3, [pc, #64]	@ (20000c84 <__una_init_array+0x84>)
+20000c42:	58e3      	ldr	r3, [r4, r3]
+20000c44:	1ad3      	subs	r3, r2, r3
+20000c46:	109b      	asrs	r3, r3, #2
+20000c48:	603b      	str	r3, [r7, #0]
+        for (i = 0; i < count; ++i) {
+20000c4a:	2300      	movs	r3, #0
+20000c4c:	607b      	str	r3, [r7, #4]
+20000c4e:	e008      	b.n	20000c62 <__una_init_array+0x62>
+           __init_array_start[i] ();
+20000c50:	4b0c      	ldr	r3, [pc, #48]	@ (20000c84 <__una_init_array+0x84>)
+20000c52:	58e3      	ldr	r3, [r4, r3]
+20000c54:	687a      	ldr	r2, [r7, #4]
+20000c56:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+20000c5a:	4798      	blx	r3
+        for (i = 0; i < count; ++i) {
+20000c5c:	687b      	ldr	r3, [r7, #4]
+20000c5e:	3301      	adds	r3, #1
+20000c60:	607b      	str	r3, [r7, #4]
+20000c62:	687a      	ldr	r2, [r7, #4]
+20000c64:	683b      	ldr	r3, [r7, #0]
+20000c66:	429a      	cmp	r2, r3
+20000c68:	d3f2      	bcc.n	20000c50 <__una_init_array+0x50>
+        }
+   }
+20000c6a:	bf00      	nop
+20000c6c:	bf00      	nop
+20000c6e:	370c      	adds	r7, #12
+20000c70:	46bd      	mov	sp, r7
+20000c72:	bd90      	pop	{r4, r7, pc}
+20000c74:	0000083c 	.word	0x0000083c
+20000c78:	0000002c 	.word	0x0000002c
+20000c7c:	00000038 	.word	0x00000038
+20000c80:	0000001c 	.word	0x0000001c
+20000c84:	00000034 	.word	0x00000034
+
+20000c88 <__una_fini_array>:
+
+    void __una_fini_array(void)
+    {
+20000c88:	b590      	push	{r4, r7, lr}
+20000c8a:	b083      	sub	sp, #12
+20000c8c:	af00      	add	r7, sp, #0
+20000c8e:	4c0f      	ldr	r4, [pc, #60]	@ (20000ccc <__una_fini_array+0x44>)
+20000c90:	447c      	add	r4, pc
+        int count = __fini_array_end - __fini_array_start;
+20000c92:	4b0f      	ldr	r3, [pc, #60]	@ (20000cd0 <__una_fini_array+0x48>)
+20000c94:	58e3      	ldr	r3, [r4, r3]
+20000c96:	461a      	mov	r2, r3
+20000c98:	4b0e      	ldr	r3, [pc, #56]	@ (20000cd4 <__una_fini_array+0x4c>)
+20000c9a:	58e3      	ldr	r3, [r4, r3]
+20000c9c:	1ad3      	subs	r3, r2, r3
+20000c9e:	109b      	asrs	r3, r3, #2
+20000ca0:	603b      	str	r3, [r7, #0]
+        for (int i = 0; i < count; ++i) {
+20000ca2:	2300      	movs	r3, #0
+20000ca4:	607b      	str	r3, [r7, #4]
+20000ca6:	e008      	b.n	20000cba <__una_fini_array+0x32>
+            __fini_array_start[i] ();
+20000ca8:	4b0a      	ldr	r3, [pc, #40]	@ (20000cd4 <__una_fini_array+0x4c>)
+20000caa:	58e3      	ldr	r3, [r4, r3]
+20000cac:	687a      	ldr	r2, [r7, #4]
+20000cae:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+20000cb2:	4798      	blx	r3
+        for (int i = 0; i < count; ++i) {
+20000cb4:	687b      	ldr	r3, [r7, #4]
+20000cb6:	3301      	adds	r3, #1
+20000cb8:	607b      	str	r3, [r7, #4]
+20000cba:	687a      	ldr	r2, [r7, #4]
+20000cbc:	683b      	ldr	r3, [r7, #0]
+20000cbe:	429a      	cmp	r2, r3
+20000cc0:	dbf2      	blt.n	20000ca8 <__una_fini_array+0x20>
+        }
+    }
+20000cc2:	bf00      	nop
+20000cc4:	bf00      	nop
+20000cc6:	370c      	adds	r7, #12
+20000cc8:	46bd      	mov	sp, r7
+20000cca:	bd90      	pop	{r4, r7, pc}
+20000ccc:	000007b4 	.word	0x000007b4
+20000cd0:	00000004 	.word	0x00000004
+20000cd4:	00000018 	.word	0x00000018
+
+20000cd8 <malloc>:
+    errno = ENOMEM;
+    return (void*) -1;
+}
+
+extern "C" void* malloc(size_t size)
+{
+20000cd8:	b580      	push	{r7, lr}
+20000cda:	b082      	sub	sp, #8
+20000cdc:	af00      	add	r7, sp, #0
+20000cde:	6078      	str	r0, [r7, #4]
+20000ce0:	4a06      	ldr	r2, [pc, #24]	@ (20000cfc <malloc+0x24>)
+20000ce2:	447a      	add	r2, pc
+    return _malloc_r(_REENT, size);
+20000ce4:	4b06      	ldr	r3, [pc, #24]	@ (20000d00 <malloc+0x28>)
+20000ce6:	58d3      	ldr	r3, [r2, r3]
+20000ce8:	681b      	ldr	r3, [r3, #0]
+20000cea:	6879      	ldr	r1, [r7, #4]
+20000cec:	4618      	mov	r0, r3
+20000cee:	f000 f853 	bl	20000d98 <_malloc_r>
+20000cf2:	4603      	mov	r3, r0
+}
+20000cf4:	4618      	mov	r0, r3
+20000cf6:	3708      	adds	r7, #8
+20000cf8:	46bd      	mov	sp, r7
+20000cfa:	bd80      	pop	{r7, pc}
+20000cfc:	00000762 	.word	0x00000762
+20000d00:	00000028 	.word	0x00000028
+
+20000d04 <free>:
+
+extern "C" void free(void* ptr)
+{
+20000d04:	b580      	push	{r7, lr}
+20000d06:	b082      	sub	sp, #8
+20000d08:	af00      	add	r7, sp, #0
+20000d0a:	6078      	str	r0, [r7, #4]
+20000d0c:	4a06      	ldr	r2, [pc, #24]	@ (20000d28 <free+0x24>)
+20000d0e:	447a      	add	r2, pc
+    _free_r(_REENT, ptr);
+20000d10:	4b06      	ldr	r3, [pc, #24]	@ (20000d2c <free+0x28>)
+20000d12:	58d3      	ldr	r3, [r2, r3]
+20000d14:	681b      	ldr	r3, [r3, #0]
+20000d16:	6879      	ldr	r1, [r7, #4]
+20000d18:	4618      	mov	r0, r3
+20000d1a:	f000 f86d 	bl	20000df8 <_free_r>
+}
+20000d1e:	bf00      	nop
+20000d20:	3708      	adds	r7, #8
+20000d22:	46bd      	mov	sp, r7
+20000d24:	bd80      	pop	{r7, pc}
+20000d26:	bf00      	nop
+20000d28:	00000736 	.word	0x00000736
+20000d2c:	00000028 	.word	0x00000028
+
+20000d30 <calloc>:
+
+extern "C" void* calloc(size_t __nmemb, size_t __size)
+{
+20000d30:	b580      	push	{r7, lr}
+20000d32:	b084      	sub	sp, #16
+20000d34:	af00      	add	r7, sp, #0
+20000d36:	6078      	str	r0, [r7, #4]
+20000d38:	6039      	str	r1, [r7, #0]
+    void* res = malloc(__nmemb * __size);
+20000d3a:	687b      	ldr	r3, [r7, #4]
+20000d3c:	683a      	ldr	r2, [r7, #0]
+20000d3e:	fb02 f303 	mul.w	r3, r2, r3
+20000d42:	4618      	mov	r0, r3
+20000d44:	f7ff ffc8 	bl	20000cd8 <malloc>
+20000d48:	4603      	mov	r3, r0
+20000d4a:	60fb      	str	r3, [r7, #12]
+
+    memset(res, 0, __nmemb * __size);
+20000d4c:	687b      	ldr	r3, [r7, #4]
+20000d4e:	683a      	ldr	r2, [r7, #0]
+20000d50:	fb02 f303 	mul.w	r3, r2, r3
+20000d54:	461a      	mov	r2, r3
+20000d56:	2100      	movs	r1, #0
+20000d58:	68f8      	ldr	r0, [r7, #12]
+20000d5a:	f000 f8f9 	bl	20000f50 <__memset_veneer>
+
+    return res;
+20000d5e:	68fb      	ldr	r3, [r7, #12]
+}
+20000d60:	4618      	mov	r0, r3
+20000d62:	3710      	adds	r7, #16
+20000d64:	46bd      	mov	sp, r7
+20000d66:	bd80      	pop	{r7, pc}
+
+20000d68 <realloc>:
+
+extern "C" void* realloc(void* ptr, size_t __size)
+{
+20000d68:	b580      	push	{r7, lr}
+20000d6a:	b082      	sub	sp, #8
+20000d6c:	af00      	add	r7, sp, #0
+20000d6e:	6078      	str	r0, [r7, #4]
+20000d70:	6039      	str	r1, [r7, #0]
+20000d72:	4a07      	ldr	r2, [pc, #28]	@ (20000d90 <realloc+0x28>)
+20000d74:	447a      	add	r2, pc
+    return _realloc_r(_REENT, ptr, __size);
+20000d76:	4b07      	ldr	r3, [pc, #28]	@ (20000d94 <realloc+0x2c>)
+20000d78:	58d3      	ldr	r3, [r2, r3]
+20000d7a:	681b      	ldr	r3, [r3, #0]
+20000d7c:	683a      	ldr	r2, [r7, #0]
+20000d7e:	6879      	ldr	r1, [r7, #4]
+20000d80:	4618      	mov	r0, r3
+20000d82:	f000 f86b 	bl	20000e5c <_realloc_r>
+20000d86:	4603      	mov	r3, r0
+}
+20000d88:	4618      	mov	r0, r3
+20000d8a:	3708      	adds	r7, #8
+20000d8c:	46bd      	mov	sp, r7
+20000d8e:	bd80      	pop	{r7, pc}
+20000d90:	000006d0 	.word	0x000006d0
+20000d94:	00000028 	.word	0x00000028
+
+20000d98 <_malloc_r>:
+
+extern "C" void* _malloc_r(struct _reent *r, size_t size)
+{
+20000d98:	b5b0      	push	{r4, r5, r7, lr}
+20000d9a:	b084      	sub	sp, #16
+20000d9c:	af00      	add	r7, sp, #0
+20000d9e:	6078      	str	r0, [r7, #4]
+20000da0:	6039      	str	r1, [r7, #0]
+20000da2:	4c12      	ldr	r4, [pc, #72]	@ (20000dec <_malloc_r+0x54>)
+20000da4:	447c      	add	r4, pc
+    (void) r;
+    void *ptr = kernel->mem.malloc(size);
+20000da6:	4b12      	ldr	r3, [pc, #72]	@ (20000df0 <_malloc_r+0x58>)
+20000da8:	58e3      	ldr	r3, [r4, r3]
+20000daa:	681b      	ldr	r3, [r3, #0]
+20000dac:	699b      	ldr	r3, [r3, #24]
+20000dae:	681b      	ldr	r3, [r3, #0]
+20000db0:	681b      	ldr	r3, [r3, #0]
+20000db2:	4a0f      	ldr	r2, [pc, #60]	@ (20000df0 <_malloc_r+0x58>)
+20000db4:	58a2      	ldr	r2, [r4, r2]
+20000db6:	6812      	ldr	r2, [r2, #0]
+20000db8:	6992      	ldr	r2, [r2, #24]
+20000dba:	6839      	ldr	r1, [r7, #0]
+20000dbc:	4610      	mov	r0, r2
+20000dbe:	4798      	blx	r3
+20000dc0:	60f8      	str	r0, [r7, #12]
+    kernel->app.log("malloc 0x%08X %u b\n", ptr, size);
+20000dc2:	4b0b      	ldr	r3, [pc, #44]	@ (20000df0 <_malloc_r+0x58>)
+20000dc4:	58e3      	ldr	r3, [r4, r3]
+20000dc6:	681b      	ldr	r3, [r3, #0]
+20000dc8:	6a1b      	ldr	r3, [r3, #32]
+20000dca:	681b      	ldr	r3, [r3, #0]
+20000dcc:	332c      	adds	r3, #44	@ 0x2c
+20000dce:	681d      	ldr	r5, [r3, #0]
+20000dd0:	4b07      	ldr	r3, [pc, #28]	@ (20000df0 <_malloc_r+0x58>)
+20000dd2:	58e3      	ldr	r3, [r4, r3]
+20000dd4:	681b      	ldr	r3, [r3, #0]
+20000dd6:	6a18      	ldr	r0, [r3, #32]
+20000dd8:	683b      	ldr	r3, [r7, #0]
+20000dda:	68fa      	ldr	r2, [r7, #12]
+20000ddc:	4905      	ldr	r1, [pc, #20]	@ (20000df4 <_malloc_r+0x5c>)
+20000dde:	4479      	add	r1, pc
+20000de0:	47a8      	blx	r5
+    return ptr;
+20000de2:	68fb      	ldr	r3, [r7, #12]
+}
+20000de4:	4618      	mov	r0, r3
+20000de6:	3710      	adds	r7, #16
+20000de8:	46bd      	mov	sp, r7
+20000dea:	bdb0      	pop	{r4, r5, r7, pc}
+20000dec:	000006a0 	.word	0x000006a0
+20000df0:	00000024 	.word	0x00000024
+20000df4:	000004a2 	.word	0x000004a2
+
+20000df8 <_free_r>:
+
+extern "C" void _free_r(struct _reent *r, void *ptr)
+{
+20000df8:	b590      	push	{r4, r7, lr}
+20000dfa:	b083      	sub	sp, #12
+20000dfc:	af00      	add	r7, sp, #0
+20000dfe:	6078      	str	r0, [r7, #4]
+20000e00:	6039      	str	r1, [r7, #0]
+20000e02:	4c13      	ldr	r4, [pc, #76]	@ (20000e50 <_free_r+0x58>)
+20000e04:	447c      	add	r4, pc
+    (void) r;
+    if (ptr) {
+20000e06:	683b      	ldr	r3, [r7, #0]
+20000e08:	2b00      	cmp	r3, #0
+20000e0a:	d01c      	beq.n	20000e46 <_free_r+0x4e>
+        kernel->app.log("free   0x%08X\n", ptr);
+20000e0c:	4b11      	ldr	r3, [pc, #68]	@ (20000e54 <_free_r+0x5c>)
+20000e0e:	58e3      	ldr	r3, [r4, r3]
+20000e10:	681b      	ldr	r3, [r3, #0]
+20000e12:	6a1b      	ldr	r3, [r3, #32]
+20000e14:	681b      	ldr	r3, [r3, #0]
+20000e16:	332c      	adds	r3, #44	@ 0x2c
+20000e18:	681b      	ldr	r3, [r3, #0]
+20000e1a:	4a0e      	ldr	r2, [pc, #56]	@ (20000e54 <_free_r+0x5c>)
+20000e1c:	58a2      	ldr	r2, [r4, r2]
+20000e1e:	6812      	ldr	r2, [r2, #0]
+20000e20:	6a10      	ldr	r0, [r2, #32]
+20000e22:	683a      	ldr	r2, [r7, #0]
+20000e24:	490c      	ldr	r1, [pc, #48]	@ (20000e58 <_free_r+0x60>)
+20000e26:	4479      	add	r1, pc
+20000e28:	4798      	blx	r3
+        kernel->mem.free(ptr);
+20000e2a:	4b0a      	ldr	r3, [pc, #40]	@ (20000e54 <_free_r+0x5c>)
+20000e2c:	58e3      	ldr	r3, [r4, r3]
+20000e2e:	681b      	ldr	r3, [r3, #0]
+20000e30:	699b      	ldr	r3, [r3, #24]
+20000e32:	681b      	ldr	r3, [r3, #0]
+20000e34:	3304      	adds	r3, #4
+20000e36:	681b      	ldr	r3, [r3, #0]
+20000e38:	4a06      	ldr	r2, [pc, #24]	@ (20000e54 <_free_r+0x5c>)
+20000e3a:	58a2      	ldr	r2, [r4, r2]
+20000e3c:	6812      	ldr	r2, [r2, #0]
+20000e3e:	6992      	ldr	r2, [r2, #24]
+20000e40:	6839      	ldr	r1, [r7, #0]
+20000e42:	4610      	mov	r0, r2
+20000e44:	4798      	blx	r3
+    }
+}
+20000e46:	bf00      	nop
+20000e48:	370c      	adds	r7, #12
+20000e4a:	46bd      	mov	sp, r7
+20000e4c:	bd90      	pop	{r4, r7, pc}
+20000e4e:	bf00      	nop
+20000e50:	00000640 	.word	0x00000640
+20000e54:	00000024 	.word	0x00000024
+20000e58:	0000046e 	.word	0x0000046e
+
+20000e5c <_realloc_r>:
+    }
+    return ptr;
+}
+
+extern "C" void* _realloc_r(struct _reent *r, void *ptr, size_t new_size)
+{
+20000e5c:	b580      	push	{r7, lr}
+20000e5e:	b086      	sub	sp, #24
+20000e60:	af00      	add	r7, sp, #0
+20000e62:	60f8      	str	r0, [r7, #12]
+20000e64:	60b9      	str	r1, [r7, #8]
+20000e66:	607a      	str	r2, [r7, #4]
+    // If ptr == NULL, realloc behaves like malloc.
+    if (ptr == NULL) {
+20000e68:	68bb      	ldr	r3, [r7, #8]
+20000e6a:	2b00      	cmp	r3, #0
+20000e6c:	d105      	bne.n	20000e7a <_realloc_r+0x1e>
+        return _malloc_r(r, new_size);
+20000e6e:	6879      	ldr	r1, [r7, #4]
+20000e70:	68f8      	ldr	r0, [r7, #12]
+20000e72:	f7ff ff91 	bl	20000d98 <_malloc_r>
+20000e76:	4603      	mov	r3, r0
+20000e78:	e01c      	b.n	20000eb4 <_realloc_r+0x58>
+    }
+
+    // If new_size == 0, release the block and return NULL.
+    if (new_size == 0) {
+20000e7a:	687b      	ldr	r3, [r7, #4]
+20000e7c:	2b00      	cmp	r3, #0
+20000e7e:	d105      	bne.n	20000e8c <_realloc_r+0x30>
+        _free_r(r, ptr);
+20000e80:	68b9      	ldr	r1, [r7, #8]
+20000e82:	68f8      	ldr	r0, [r7, #12]
+20000e84:	f7ff ffb8 	bl	20000df8 <_free_r>
+        return NULL;
+20000e88:	2300      	movs	r3, #0
+20000e8a:	e013      	b.n	20000eb4 <_realloc_r+0x58>
+    }
+
+    // Allocate a new block of memory.
+    void *new_ptr = _malloc_r(r, new_size);
+20000e8c:	6879      	ldr	r1, [r7, #4]
+20000e8e:	68f8      	ldr	r0, [r7, #12]
+20000e90:	f7ff ff82 	bl	20000d98 <_malloc_r>
+20000e94:	6178      	str	r0, [r7, #20]
+    if (new_ptr == NULL) {
+20000e96:	697b      	ldr	r3, [r7, #20]
+20000e98:	2b00      	cmp	r3, #0
+20000e9a:	d101      	bne.n	20000ea0 <_realloc_r+0x44>
+        // Selection failed, return NULL.
+        return NULL;
+20000e9c:	2300      	movs	r3, #0
+20000e9e:	e009      	b.n	20000eb4 <_realloc_r+0x58>
+    }
+
+    // We copy the data from the old block to the new one (we copy the smaller of the two sizes).
+    // Assume the old block contains at least new_size bytes for simplicity.
+    // If exact copying is required, block size should be stored separately.
+    memcpy(new_ptr, ptr, new_size);
+20000ea0:	687a      	ldr	r2, [r7, #4]
+20000ea2:	68b9      	ldr	r1, [r7, #8]
+20000ea4:	6978      	ldr	r0, [r7, #20]
+20000ea6:	f000 f857 	bl	20000f58 <__memcpy_veneer>
+
+    // Free the old block.
+    _free_r(r, ptr);
+20000eaa:	68b9      	ldr	r1, [r7, #8]
+20000eac:	68f8      	ldr	r0, [r7, #12]
+20000eae:	f7ff ffa3 	bl	20000df8 <_free_r>
+
+    return new_ptr;
+20000eb2:	697b      	ldr	r3, [r7, #20]
+}
+20000eb4:	4618      	mov	r0, r3
+20000eb6:	3718      	adds	r7, #24
+20000eb8:	46bd      	mov	sp, r7
+20000eba:	bd80      	pop	{r7, pc}
+
+20000ebc <_ZdlPv>:
+{
+    return _malloc_r(nullptr, size);
+}
+
+void operator delete(void *ptr) noexcept
+{
+20000ebc:	b580      	push	{r7, lr}
+20000ebe:	b082      	sub	sp, #8
+20000ec0:	af00      	add	r7, sp, #0
+20000ec2:	6078      	str	r0, [r7, #4]
+    _free_r(nullptr, ptr);
+20000ec4:	6879      	ldr	r1, [r7, #4]
+20000ec6:	2000      	movs	r0, #0
+20000ec8:	f7ff ff96 	bl	20000df8 <_free_r>
+}
+20000ecc:	bf00      	nop
+20000ece:	3708      	adds	r7, #8
+20000ed0:	46bd      	mov	sp, r7
+20000ed2:	bd80      	pop	{r7, pc}
+
+20000ed4 <_ZdlPvj>:
+{
+    operator delete(ptr);
+}
+
+void operator delete(void* ptr, std::size_t) noexcept
+{
+20000ed4:	b580      	push	{r7, lr}
+20000ed6:	b082      	sub	sp, #8
+20000ed8:	af00      	add	r7, sp, #0
+20000eda:	6078      	str	r0, [r7, #4]
+20000edc:	6039      	str	r1, [r7, #0]
+    operator delete(ptr);
+20000ede:	6878      	ldr	r0, [r7, #4]
+20000ee0:	f7ff ffec 	bl	20000ebc <_ZdlPv>
+}
+20000ee4:	bf00      	nop
+20000ee6:	3708      	adds	r7, #8
+20000ee8:	46bd      	mov	sp, r7
+20000eea:	bd80      	pop	{r7, pc}
+
+20000eec <exit>:
+    kernel->app.log("assert: %s %d %s %s\n", file, line, func, failedexpr);
+    exit(-1);
+}
+
+extern "C" void exit(int status)
+{
+20000eec:	b590      	push	{r4, r7, lr}
+20000eee:	b083      	sub	sp, #12
+20000ef0:	af00      	add	r7, sp, #0
+20000ef2:	6078      	str	r0, [r7, #4]
+20000ef4:	4c11      	ldr	r4, [pc, #68]	@ (20000f3c <exit+0x50>)
+20000ef6:	447c      	add	r4, pc
+    kernel->app.log("exit %d\n", status);
+20000ef8:	4b11      	ldr	r3, [pc, #68]	@ (20000f40 <exit+0x54>)
+20000efa:	58e3      	ldr	r3, [r4, r3]
+20000efc:	681b      	ldr	r3, [r3, #0]
+20000efe:	6a1b      	ldr	r3, [r3, #32]
+20000f00:	681b      	ldr	r3, [r3, #0]
+20000f02:	332c      	adds	r3, #44	@ 0x2c
+20000f04:	681b      	ldr	r3, [r3, #0]
+20000f06:	4a0e      	ldr	r2, [pc, #56]	@ (20000f40 <exit+0x54>)
+20000f08:	58a2      	ldr	r2, [r4, r2]
+20000f0a:	6812      	ldr	r2, [r2, #0]
+20000f0c:	6a10      	ldr	r0, [r2, #32]
+20000f0e:	687a      	ldr	r2, [r7, #4]
+20000f10:	490c      	ldr	r1, [pc, #48]	@ (20000f44 <exit+0x58>)
+20000f12:	4479      	add	r1, pc
+20000f14:	4798      	blx	r3
+
+    __una_fini_array();
+20000f16:	f7ff feb7 	bl	20000c88 <__una_fini_array>
+
+    kernel->app.exit(status);
+20000f1a:	4b09      	ldr	r3, [pc, #36]	@ (20000f40 <exit+0x54>)
+20000f1c:	58e3      	ldr	r3, [r4, r3]
+20000f1e:	681b      	ldr	r3, [r3, #0]
+20000f20:	6a1b      	ldr	r3, [r3, #32]
+20000f22:	681b      	ldr	r3, [r3, #0]
+20000f24:	3318      	adds	r3, #24
+20000f26:	681b      	ldr	r3, [r3, #0]
+20000f28:	4a05      	ldr	r2, [pc, #20]	@ (20000f40 <exit+0x54>)
+20000f2a:	58a2      	ldr	r2, [r4, r2]
+20000f2c:	6812      	ldr	r2, [r2, #0]
+20000f2e:	6a12      	ldr	r2, [r2, #32]
+20000f30:	6879      	ldr	r1, [r7, #4]
+20000f32:	4610      	mov	r0, r2
+20000f34:	4798      	blx	r3
+
+    while (1) {}    /* Make sure we hang here */
+20000f36:	bf00      	nop
+20000f38:	e7fd      	b.n	20000f36 <exit+0x4a>
+20000f3a:	bf00      	nop
+20000f3c:	0000054e 	.word	0x0000054e
+20000f40:	00000024 	.word	0x00000024
+20000f44:	000003aa 	.word	0x000003aa
+
+20000f48 <__puts_veneer>:
+20000f48:	f85f f000 	ldr.w	pc, [pc]	@ 20000f4c <__puts_veneer+0x4>
+20000f4c:	081b23b1 	.word	0x081b23b1
+
+20000f50 <__memset_veneer>:
+20000f50:	f85f f000 	ldr.w	pc, [pc]	@ 20000f54 <__memset_veneer+0x4>
+20000f54:	081b2c91 	.word	0x081b2c91
+
+20000f58 <__memcpy_veneer>:
+20000f58:	f85f f000 	ldr.w	pc, [pc]	@ 20000f5c <__memcpy_veneer+0x4>
+20000f5c:	081b4705 	.word	0x081b4705
+
+20000f60 <__putchar_veneer>:
+20000f60:	f85f f000 	ldr.w	pc, [pc]	@ 20000f64 <__putchar_veneer+0x4>
+20000f64:	081b230d 	.word	0x081b230d
+
+20000f68 <____aeabi_f2d_veneer>:
+20000f68:	f85f f000 	ldr.w	pc, [pc]	@ 20000f6c <____aeabi_f2d_veneer+0x4>
+20000f6c:	081d0d35 	.word	0x081d0d35
+
+20000f70 <__printf_veneer>:
+20000f70:	f85f f000 	ldr.w	pc, [pc]	@ 20000f74 <__printf_veneer+0x4>
+20000f74:	081b2269 	.word	0x081b2269
+
+20000f78 <__exidx_end>:
+20000f78:	74617473 	.word	0x74617473
+20000f7c:	64206369 	.word	0x64206369
+20000f80:	72747365 	.word	0x72747365
+20000f84:	6f746375 	.word	0x6f746375
+20000f88:	00000072 	.word	0x00000072
+20000f8c:	20495547 	.word	0x20495547
+20000f90:	6144202d 	.word	0x6144202d
+20000f94:	48796c69 	.word	0x48796c69
+20000f98:	746c6165 	.word	0x746c6165
+20000f9c:	76652068 	.word	0x76652068
+20000fa0:	3a746e65 	.word	0x3a746e65
+20000fa4:	00000000 	.word	0x00000000
+20000fa8:	70657473 	.word	0x70657473
+20000fac:	20202073 	.word	0x20202073
+20000fb0:	20202020 	.word	0x20202020
+20000fb4:	20202020 	.word	0x20202020
+20000fb8:	25203d20 	.word	0x25203d20
+20000fbc:	000a646c 	.word	0x000a646c
+20000fc0:	6f6f6c66 	.word	0x6f6f6c66
+20000fc4:	20207372 	.word	0x20207372
+20000fc8:	20202020 	.word	0x20202020
+20000fcc:	20202020 	.word	0x20202020
+20000fd0:	25203d20 	.word	0x25203d20
+20000fd4:	000a646c 	.word	0x000a646c
+20000fd8:	69746361 	.word	0x69746361
+20000fdc:	79746976 	.word	0x79746976
+20000fe0:	756e694d 	.word	0x756e694d
+20000fe4:	20736574 	.word	0x20736574
+20000fe8:	25203d20 	.word	0x25203d20
+20000fec:	000a646c 	.word	0x000a646c
+20000ff0:	74736572 	.word	0x74736572
+20000ff4:	48676e69 	.word	0x48676e69
+20000ff8:	74726165 	.word	0x74726165
+20000ffc:	65746152 	.word	0x65746152
+20001000:	25203d20 	.word	0x25203d20
+20001004:	000a646c 	.word	0x000a646c
+20001008:	72657661 	.word	0x72657661
+2000100c:	48656761 	.word	0x48656761
+20001010:	74726165 	.word	0x74726165
+20001014:	65746152 	.word	0x65746152
+20001018:	25203d20 	.word	0x25203d20
+2000101c:	000a646c 	.word	0x000a646c
+20001020:	4955470a 	.word	0x4955470a
+20001024:	20736920 	.word	0x20736920
+20001028:	72617473 	.word	0x72617473
+2000102c:	00646574 	.word	0x00646574
+20001030:	72646461 	.word	0x72646461
+20001034:	69727020 	.word	0x69727020
+20001038:	2020666e 	.word	0x2020666e
+2000103c:	20202020 	.word	0x20202020
+20001040:	7830203a 	.word	0x7830203a
+20001044:	6c383025 	.word	0x6c383025
+20001048:	00000a58 	.word	0x00000a58
+2000104c:	72646461 	.word	0x72646461
+20001050:	6c616d20 	.word	0x6c616d20
+20001054:	20636f6c 	.word	0x20636f6c
+20001058:	20202020 	.word	0x20202020
+2000105c:	7830203a 	.word	0x7830203a
+20001060:	6c383025 	.word	0x6c383025
+20001064:	00000a58 	.word	0x00000a58
+20001068:	72646461 	.word	0x72646461
+2000106c:	6c616d20 	.word	0x6c616d20
+20001070:	5f636f6c 	.word	0x5f636f6c
+20001074:	20202072 	.word	0x20202072
+20001078:	7830203a 	.word	0x7830203a
+2000107c:	6c383025 	.word	0x6c383025
+20001080:	00000a58 	.word	0x00000a58
+20001084:	72646461 	.word	0x72646461
+20001088:	65726620 	.word	0x65726620
+2000108c:	20202065 	.word	0x20202065
+20001090:	20202020 	.word	0x20202020
+20001094:	7830203a 	.word	0x7830203a
+20001098:	6c383025 	.word	0x6c383025
+2000109c:	00000a58 	.word	0x00000a58
+200010a0:	72646461 	.word	0x72646461
+200010a4:	6c616320 	.word	0x6c616320
+200010a8:	20636f6c 	.word	0x20636f6c
+200010ac:	20202020 	.word	0x20202020
+200010b0:	7830203a 	.word	0x7830203a
+200010b4:	6c383025 	.word	0x6c383025
+200010b8:	00000a58 	.word	0x00000a58
+200010bc:	72646461 	.word	0x72646461
+200010c0:	61657220 	.word	0x61657220
+200010c4:	636f6c6c 	.word	0x636f6c6c
+200010c8:	20202020 	.word	0x20202020
+200010cc:	7830203a 	.word	0x7830203a
+200010d0:	6c383025 	.word	0x6c383025
+200010d4:	00000a58 	.word	0x00000a58
+200010d8:	6e72656b 	.word	0x6e72656b
+200010dc:	20206c65 	.word	0x20206c65
+200010e0:	20202020 	.word	0x20202020
+200010e4:	20202020 	.word	0x20202020
+200010e8:	7830203a 	.word	0x7830203a
+200010ec:	6c383025 	.word	0x6c383025
+200010f0:	00000a58 	.word	0x00000a58
+200010f4:	6e72656b 	.word	0x6e72656b
+200010f8:	6d2e6c65 	.word	0x6d2e6c65
+200010fc:	20206d65 	.word	0x20206d65
+20001100:	20202020 	.word	0x20202020
+20001104:	7830203a 	.word	0x7830203a
+20001108:	6c383025 	.word	0x6c383025
+2000110c:	00000a58 	.word	0x00000a58
+20001110:	286e6973 	.word	0x286e6973
+20001114:	20293039 	.word	0x20293039
+20001118:	20202020 	.word	0x20202020
+2000111c:	20202020 	.word	0x20202020
+20001120:	6625203a 	.word	0x6625203a
+20001124:	0000000a 	.word	0x0000000a
+20001128:	2f2f2f2f 	.word	0x2f2f2f2f
+2000112c:	2f2f2f2f 	.word	0x2f2f2f2f
+20001130:	2f2f2f2f 	.word	0x2f2f2f2f
+20001134:	2f2f2f2f 	.word	0x2f2f2f2f
+20001138:	2f2f2f2f 	.word	0x2f2f2f2f
+2000113c:	2f2f2f2f 	.word	0x2f2f2f2f
+20001140:	2f2f2f2f 	.word	0x2f2f2f2f
+20001144:	00000000 	.word	0x00000000
+20001148:	2f2f2f2f 	.word	0x2f2f2f2f
+2000114c:	6c616d20 	.word	0x6c616d20
+20001150:	20636f6c 	.word	0x20636f6c
+20001154:	74736574 	.word	0x74736574
+20001158:	00000000 	.word	0x00000000
+2000115c:	72646461 	.word	0x72646461
+20001160:	73657420 	.word	0x73657420
+20001164:	20202074 	.word	0x20202074
+20001168:	20202020 	.word	0x20202020
+2000116c:	7830203a 	.word	0x7830203a
+20001170:	6c383025 	.word	0x6c383025
+20001174:	00000a58 	.word	0x00000a58
+20001178:	756c6176 	.word	0x756c6176
+2000117c:	65742065 	.word	0x65742065
+20001180:	20207473 	.word	0x20207473
+20001184:	20202020 	.word	0x20202020
+20001188:	7830203a 	.word	0x7830203a
+2000118c:	6c383025 	.word	0x6c383025
+20001190:	00000a58 	.word	0x00000a58
+20001194:	2f2f2f2f 	.word	0x2f2f2f2f
+20001198:	61657220 	.word	0x61657220
+2000119c:	636f6c6c 	.word	0x636f6c6c
+200011a0:	73657420 	.word	0x73657420
+200011a4:	00000074 	.word	0x00000074
+200011a8:	756c6176 	.word	0x756c6176
+200011ac:	65742065 	.word	0x65742065
+200011b0:	305b7473 	.word	0x305b7473
+200011b4:	2020205d 	.word	0x2020205d
+200011b8:	7830203a 	.word	0x7830203a
+200011bc:	6c383025 	.word	0x6c383025
+200011c0:	00000a58 	.word	0x00000a58
+200011c4:	756c6176 	.word	0x756c6176
+200011c8:	65742065 	.word	0x65742065
+200011cc:	315b7473 	.word	0x315b7473
+200011d0:	2020205d 	.word	0x2020205d
+200011d4:	7830203a 	.word	0x7830203a
+200011d8:	6c383025 	.word	0x6c383025
+200011dc:	00000a58 	.word	0x00000a58
+200011e0:	2f2f2f2f 	.word	0x2f2f2f2f
+200011e4:	6c616320 	.word	0x6c616320
+200011e8:	20636f6c 	.word	0x20636f6c
+200011ec:	74736574 	.word	0x74736574
+200011f0:	00000000 	.word	0x00000000
+200011f4:	756c6176 	.word	0x756c6176
+200011f8:	65742065 	.word	0x65742065
+200011fc:	325b7473 	.word	0x325b7473
+20001200:	2020205d 	.word	0x2020205d
+20001204:	7830203a 	.word	0x7830203a
+20001208:	6c383025 	.word	0x6c383025
+2000120c:	00000a58 	.word	0x00000a58
+20001210:	756c6176 	.word	0x756c6176
+20001214:	65742065 	.word	0x65742065
+20001218:	335b7473 	.word	0x335b7473
+2000121c:	2020205d 	.word	0x2020205d
+20001220:	7830203a 	.word	0x7830203a
+20001224:	6c383025 	.word	0x6c383025
+20001228:	00000a58 	.word	0x00000a58
+2000122c:	20656874 	.word	0x20656874
+20001230:	65646f6d 	.word	0x65646f6d
+20001234:	7369206c 	.word	0x7369206c
+20001238:	4c554e20 	.word	0x4c554e20
+2000123c:	0000004c 	.word	0x0000004c
+20001240:	0000000a 	.word	0x0000000a
+20001244:	7262735f 	.word	0x7262735f
+20001248:	6425206b 	.word	0x6425206b
+2000124c:	0000000a 	.word	0x0000000a
+20001250:	00000030 	.word	0x00000030
+20001254:	64696f76 	.word	0x64696f76
+20001258:	735f202a 	.word	0x735f202a
+2000125c:	286b7262 	.word	0x286b7262
+20001260:	64727470 	.word	0x64727470
+20001264:	5f666669 	.word	0x5f666669
+20001268:	00002974 	.word	0x00002974
+2000126c:	432f2e2e 	.word	0x432f2e2e
+20001270:	2f65726f 	.word	0x2f65726f
+20001274:	2f637253 	.word	0x2f637253
+20001278:	6d737973 	.word	0x6d737973
+2000127c:	632e6d65 	.word	0x632e6d65
+20001280:	00007070 	.word	0x00007070
+20001284:	6c6c616d 	.word	0x6c6c616d
+20001288:	3020636f 	.word	0x3020636f
+2000128c:	38302578 	.word	0x38302578
+20001290:	75252058 	.word	0x75252058
+20001294:	000a6220 	.word	0x000a6220
+20001298:	65657266 	.word	0x65657266
+2000129c:	30202020 	.word	0x30202020
+200012a0:	38302578 	.word	0x38302578
+200012a4:	00000a58 	.word	0x00000a58
+200012a8:	65737361 	.word	0x65737361
+200012ac:	203a7472 	.word	0x203a7472
+200012b0:	25207325 	.word	0x25207325
+200012b4:	73252064 	.word	0x73252064
+200012b8:	0a732520 	.word	0x0a732520
+200012bc:	00000000 	.word	0x00000000
+200012c0:	74697865 	.word	0x74697865
+200012c4:	0a642520 	.word	0x0a642520
+200012c8:	00000000 	.word	0x00000000

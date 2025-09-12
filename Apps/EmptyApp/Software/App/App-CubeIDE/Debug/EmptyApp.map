@@ -1,0 +1,1559 @@
+Archive member included to satisfy reference by file (symbol)
+
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o)
+                              ./Core/Src/sysmem.o (_impure_ptr)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o) (__sf)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fwalk.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o) (_fwalk_sglue)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o) (__sread)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o) (_close_r)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o) (errno)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lseekr.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o) (_lseek_r)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-readr.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o) (_read_r)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-writer.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o) (_write_r)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o) (__retarget_lock_init_recursive)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o) (_fclose_r)
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+                              C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o) (__sflush_r)
+
+Discarded input sections
+
+ .group         0x00000000        0x8 ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/main.o
+ .text          0x00000000        0x0 ./Core/Src/main.o
+ .data          0x00000000        0x0 ./Core/Src/main.o
+ .bss           0x00000000        0x0 ./Core/Src/main.o
+ .rodata._ZStL19piecewise_construct
+                0x00000000        0x1 ./Core/Src/main.o
+ .rodata._ZStL13allocator_arg
+                0x00000000        0x1 ./Core/Src/main.o
+ .rodata._ZStL6ignore
+                0x00000000        0x1 ./Core/Src/main.o
+ .text._ZL20__gthread_key_deletei
+                0x00000000       0x16 ./Core/Src/main.o
+ .rodata._ZN9__gnu_cxxL21__default_lock_policyE
+                0x00000000        0x1 ./Core/Src/main.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .group         0x00000000        0xc ./Core/Src/sysmem.o
+ .text          0x00000000        0x0 ./Core/Src/sysmem.o
+ .data          0x00000000        0x0 ./Core/Src/sysmem.o
+ .bss           0x00000000        0x0 ./Core/Src/sysmem.o
+ .rodata._ZStL19piecewise_construct
+                0x00000000        0x1 ./Core/Src/sysmem.o
+ .rodata._ZStL13allocator_arg
+                0x00000000        0x1 ./Core/Src/sysmem.o
+ .rodata._ZStL6ignore
+                0x00000000        0x1 ./Core/Src/sysmem.o
+ .text._ZL20__gthread_key_deletei
+                0x00000000       0x16 ./Core/Src/sysmem.o
+ .rodata._ZN9__gnu_cxxL21__default_lock_policyE
+                0x00000000        0x1 ./Core/Src/sysmem.o
+ .text._sbrk    0x00000000       0x54 ./Core/Src/sysmem.o
+ .text._calloc_r
+                0x00000000       0x40 ./Core/Src/sysmem.o
+ .text._Znwj    0x00000000       0x1a ./Core/Src/sysmem.o
+ .text._ZdlPv   0x00000000       0x18 ./Core/Src/sysmem.o
+ .text._Znaj    0x00000000       0x18 ./Core/Src/sysmem.o
+ .text._ZdaPv   0x00000000       0x16 ./Core/Src/sysmem.o
+ .text.__assert_func
+                0x00000000       0x50 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0xbb6 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x22 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x2a ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x3c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x34 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x197 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x38c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x4a ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x34 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x58 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x1e5 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x1c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x103 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x6a ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x1df ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x1f2 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x409 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x3c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x29 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x20 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x8e ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x28 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x1c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x52 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x22 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x52 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x1c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x3d ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x35 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x40 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x1c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x41 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x19 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x2c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x28 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x2e ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x18 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x27 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x18 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x19 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x88 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x19 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x22 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x43 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x173 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x22 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x2f ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x11 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x46 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x1f ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x34 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x1c ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000      0x11d ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00000000       0x10 ./Core/Src/sysmem.o
+ .text          0x00000000        0x0 ./Core/Startup/startup_user_app.o
+ .data          0x00000000        0x0 ./Core/Startup/startup_user_app.o
+ .bss           0x00000000        0x0 ./Core/Startup/startup_user_app.o
+ .ARM.attributes
+                0x00000000       0x24 ./Core/Startup/startup_user_app.o
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.std      0x00000000       0x6c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.stdio_exit_handler
+                0x00000000       0x18 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.cleanup_stdio
+                0x00000000       0x40 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__fp_lock
+                0x00000000       0x18 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__fp_unlock
+                0x00000000       0x18 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.global_stdio_init.part.0
+                0x00000000       0x3c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__sfp_lock_acquire
+                0x00000000        0xc C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__sfp_lock_release
+                0x00000000        0xc C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__sfp    0x00000000       0xa4 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__sinit  0x00000000       0x30 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__fp_lock_all
+                0x00000000       0x1c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text.__fp_unlock_all
+                0x00000000       0x1c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .data.__sglue  0x00000000        0xc C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .bss.__stdio_exit_handler
+                0x00000000        0x4 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .debug_frame   0x00000000      0x144 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fwalk.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fwalk.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fwalk.o)
+ .text._fwalk_sglue
+                0x00000000       0x3c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fwalk.o)
+ .debug_frame   0x00000000       0x34 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fwalk.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fwalk.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .text.__sread  0x00000000       0x22 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .text.__seofread
+                0x00000000        0x4 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .text.__swrite
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .text.__sseek  0x00000000       0x24 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .text.__sclose
+                0x00000000        0x8 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .debug_frame   0x00000000       0x88 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-stdio.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o)
+ .text._close_r
+                0x00000000       0x20 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o)
+ .debug_frame   0x00000000       0x2c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-closer.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+ .text._reclaim_reent
+                0x00000000       0x68 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+ .bss.errno     0x00000000        0x4 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+ .debug_frame   0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-reent.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lseekr.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lseekr.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lseekr.o)
+ .text._lseek_r
+                0x00000000       0x24 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lseekr.o)
+ .debug_frame   0x00000000       0x2c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lseekr.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lseekr.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-readr.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-readr.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-readr.o)
+ .text._read_r  0x00000000       0x24 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-readr.o)
+ .debug_frame   0x00000000       0x2c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-readr.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-readr.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-writer.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-writer.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-writer.o)
+ .text._write_r
+                0x00000000       0x24 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-writer.o)
+ .debug_frame   0x00000000       0x2c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-writer.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-writer.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_init
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_init_recursive
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_close
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_close_recursive
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_acquire
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_acquire_recursive
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_try_acquire
+                0x00000000        0x4 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_try_acquire_recursive
+                0x00000000        0x4 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_release
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text.__retarget_lock_release_recursive
+                0x00000000        0x2 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___arc4random_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___dd_hash_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___tz_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___env_recursive_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___malloc_recursive_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___at_quick_exit_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___atexit_recursive_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .bss.__lock___sfp_recursive_mutex
+                0x00000000        0x1 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .debug_frame   0x00000000       0xb0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-lock.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+ .text._fclose_r
+                0x00000000       0xac C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+ .text.fclose   0x00000000       0x10 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+ .debug_frame   0x00000000       0x3c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fclose.o)
+ .text          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+ .data          0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+ .bss           0x00000000        0x0 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+ .text.__sflush_r
+                0x00000000      0x110 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+ .text._fflush_r
+                0x00000000       0x4a C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+ .text.fflush   0x00000000       0x28 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+ .debug_frame   0x00000000       0x5c C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+ .ARM.attributes
+                0x00000000       0x38 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-fflush.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x20000000         0x0007d000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./Core/Src/main.o
+LOAD ./Core/Src/sysmem.o
+LOAD ./Core/Startup/startup_user_app.o
+                [!provide]                        PROVIDE (LibcIM_init = 0x81d2158)
+                [!provide]                        PROVIDE (LibcIM_syscallsInit = 0x81d21c0)
+                [!provide]                        PROVIDE (Reset_Handler = 0x81d24cc)
+                [!provide]                        PROVIDE (__adddf3 = 0x81d0a78)
+                [!provide]                        PROVIDE (__aeabi_cdcmpeq = 0x81d12a4)
+                [!provide]                        PROVIDE (__aeabi_cdcmple = 0x81d12a4)
+                [!provide]                        PROVIDE (__aeabi_cdrcmple = 0x81d1294)
+                [!provide]                        PROVIDE (__aeabi_d2f = 0x81d13d4)
+                [!provide]                        PROVIDE (__aeabi_d2iz = 0x81d1344)
+                [!provide]                        PROVIDE (__aeabi_d2lz = 0x81d1d60)
+                [!provide]                        PROVIDE (__aeabi_d2uiz = 0x81d1394)
+                [!provide]                        PROVIDE (__aeabi_d2ulz = 0x81d1dd0)
+                [!provide]                        PROVIDE (__aeabi_dadd = 0x81d0a78)
+                [!provide]                        PROVIDE (__aeabi_dcmpeq = 0x81d12b4)
+                [!provide]                        PROVIDE (__aeabi_dcmpge = 0x81d12f0)
+                [!provide]                        PROVIDE (__aeabi_dcmpgt = 0x81d1304)
+                [!provide]                        PROVIDE (__aeabi_dcmple = 0x81d12dc)
+                [!provide]                        PROVIDE (__aeabi_dcmplt = 0x81d12c8)
+                [!provide]                        PROVIDE (__aeabi_dcmpun = 0x81d1318)
+                [!provide]                        PROVIDE (__aeabi_ddiv = 0x81d1038)
+                [!provide]                        PROVIDE (__aeabi_dmul = 0x81d0de4)
+                [!provide]                        PROVIDE (__aeabi_drsub = 0x81d0a6c)
+                [!provide]                        PROVIDE (__aeabi_dsub = 0x81d0a74)
+                0x081d0d34                        PROVIDE (__aeabi_f2d = 0x81d0d34)
+                [!provide]                        PROVIDE (__aeabi_f2lz = 0x81d1d38)
+                [!provide]                        PROVIDE (__aeabi_f2ulz = 0x81d1d90)
+                [!provide]                        PROVIDE (__aeabi_i2d = 0x81d0d10)
+                [!provide]                        PROVIDE (__aeabi_idiv0 = 0x81d2154)
+                [!provide]                        PROVIDE (__aeabi_l2d = 0x81d0d88)
+                [!provide]                        PROVIDE (__aeabi_ldiv0 = 0x81d2154)
+                [!provide]                        PROVIDE (__aeabi_ldivmod = 0x81d1474)
+                [!provide]                        PROVIDE (__aeabi_ui2d = 0x81d0cf0)
+                [!provide]                        PROVIDE (__aeabi_ul2d = 0x81d0d78)
+                [!provide]                        PROVIDE (__aeabi_uldivmod = 0x81d1514)
+                [!provide]                        PROVIDE (__any_on = 0x81b580a)
+                [!provide]                        PROVIDE (__ascii_mbtowc = 0x81b4f1c)
+                [!provide]                        PROVIDE (__ascii_wctomb = 0x81b5984)
+                [!provide]                        PROVIDE (__b2d = 0x81b55d8)
+                [!provide]                        PROVIDE (__call_exitprocs = 0x81b47c8)
+                [!provide]                        PROVIDE (__cmpdf2 = 0x81d1218)
+                [!provide]                        PROVIDE (__copybits = 0x81b57c4)
+                [!provide]                        PROVIDE (__d2b = 0x81b5674)
+                [!provide]                        PROVIDE (__divdf3 = 0x81d1038)
+                [!provide]                        PROVIDE (__eqdf2 = 0x81d1218)
+                [!provide]                        PROVIDE (__errno = 0x81b459c)
+                [!provide]                        PROVIDE (__exidx_end = 0x81d2514)
+                [!provide]                        PROVIDE (__exidx_start = 0x81d250c)
+                [!provide]                        PROVIDE (__extendsfdf2 = 0x81d0d34)
+                [!provide]                        PROVIDE (__fixdfdi = 0x81d1d60)
+                [!provide]                        PROVIDE (__fixdfsi = 0x81d1344)
+                [!provide]                        PROVIDE (__fixsfdi = 0x81d1d38)
+                [!provide]                        PROVIDE (__fixunsdfdi = 0x81d1dd0)
+                [!provide]                        PROVIDE (__fixunsdfsi = 0x81d1394)
+                [!provide]                        PROVIDE (__fixunssfdi = 0x81d1d90)
+                [!provide]                        PROVIDE (__floatdidf = 0x81d0d88)
+                [!provide]                        PROVIDE (__floatsidf = 0x81d0d10)
+                [!provide]                        PROVIDE (__floatundidf = 0x81d0d78)
+                [!provide]                        PROVIDE (__floatunsidf = 0x81d0cf0)
+                [!provide]                        PROVIDE (__fp_lock_all = 0x81b1a80)
+                [!provide]                        PROVIDE (__fp_unlock_all = 0x81b1a9c)
+                [!provide]                        PROVIDE (__fpclassifyd = 0x81cb2b4)
+                [!provide]                        PROVIDE (__fpclassifyf = 0x81cc4d0)
+                [!provide]                        PROVIDE (__gedf2 = 0x81d1208)
+                [!provide]                        PROVIDE (__gethex = 0x81b4968)
+                [!provide]                        PROVIDE (__gettzinfo = 0x81ba110)
+                [!provide]                        PROVIDE (__gtdf2 = 0x81d1208)
+                [!provide]                        PROVIDE (__hexdig_fun = 0x81b493e)
+                [!provide]                        PROVIDE (__hexnan = 0x81b4dd0)
+                [!provide]                        PROVIDE (__hi0bits = 0x81b50c0)
+                [!provide]                        PROVIDE (__i2b = 0x81b5158)
+                [!provide]                        PROVIDE (__ieee754_acos = 0x81bcc00)
+                [!provide]                        PROVIDE (__ieee754_acosf = 0x81c5b44)
+                [!provide]                        PROVIDE (__ieee754_acosh = 0x81bd0b8)
+                [!provide]                        PROVIDE (__ieee754_acoshf = 0x81c5d30)
+                [!provide]                        PROVIDE (__ieee754_asin = 0x81bd1f0)
+                [!provide]                        PROVIDE (__ieee754_asinf = 0x81c5dd8)
+                [!provide]                        PROVIDE (__ieee754_atan2 = 0x81bd5f8)
+                [!provide]                        PROVIDE (__ieee754_atan2f = 0x81c5fa0)
+                [!provide]                        PROVIDE (__ieee754_atanh = 0x81bd7b8)
+                [!provide]                        PROVIDE (__ieee754_atanhf = 0x81c60f4)
+                [!provide]                        PROVIDE (__ieee754_cosh = 0x81bd8d0)
+                [!provide]                        PROVIDE (__ieee754_coshf = 0x81c6188)
+                [!provide]                        PROVIDE (__ieee754_exp = 0x81bda10)
+                [!provide]                        PROVIDE (__ieee754_expf = 0x81c6248)
+                [!provide]                        PROVIDE (__ieee754_fmod = 0x81bdd30)
+                [!provide]                        PROVIDE (__ieee754_fmodf = 0x81c63fc)
+                [!provide]                        PROVIDE (__ieee754_hypot = 0x81bdf78)
+                [!provide]                        PROVIDE (__ieee754_hypotf = 0x81c6528)
+                [!provide]                        PROVIDE (__ieee754_hypotl = 0x81ca308)
+                [!provide]                        PROVIDE (__ieee754_j0 = 0x81be5a0)
+                [!provide]                        PROVIDE (__ieee754_j0f = 0x81c687c)
+                [!provide]                        PROVIDE (__ieee754_j1 = 0x81bf2d8)
+                [!provide]                        PROVIDE (__ieee754_j1f = 0x81c6f1c)
+                [!provide]                        PROVIDE (__ieee754_jn = 0x81bfba8)
+                [!provide]                        PROVIDE (__ieee754_jnf = 0x81c7348)
+                [!provide]                        PROVIDE (__ieee754_lgamma_r = 0x81c0280)
+                [!provide]                        PROVIDE (__ieee754_lgammaf_r = 0x81c765c)
+                [!provide]                        PROVIDE (__ieee754_log = 0x81c0e70)
+                [!provide]                        PROVIDE (__ieee754_log10 = 0x81c11d8)
+                [!provide]                        PROVIDE (__ieee754_log10f = 0x81c7e4c)
+                [!provide]                        PROVIDE (__ieee754_logf = 0x81c7c6c)
+                [!provide]                        PROVIDE (__ieee754_pow = 0x81c12f0)
+                [!provide]                        PROVIDE (__ieee754_powf = 0x81c7efc)
+                [!provide]                        PROVIDE (__ieee754_rem_pio2 = 0x81c1db8)
+                [!provide]                        PROVIDE (__ieee754_rem_pio2f = 0x81c84b4)
+                [!provide]                        PROVIDE (__ieee754_remainder = 0x81c2338)
+                [!provide]                        PROVIDE (__ieee754_remainderf = 0x81c8aa8)
+                [!provide]                        PROVIDE (__ieee754_scalb = 0x81c2498)
+                [!provide]                        PROVIDE (__ieee754_scalbf = 0x81c8b78)
+                [!provide]                        PROVIDE (__ieee754_sinh = 0x81c2570)
+                [!provide]                        PROVIDE (__ieee754_sinhf = 0x81c8c1c)
+                [!provide]                        PROVIDE (__ieee754_sqrt = 0x81d0368)
+                [!provide]                        PROVIDE (__ieee754_sqrtf = 0x81d0530)
+                [!provide]                        PROVIDE (__ieee754_tgamma = 0x81bdf50)
+                [!provide]                        PROVIDE (__ieee754_tgammaf = 0x81c650c)
+                [!provide]                        PROVIDE (__ieee754_y0 = 0x81be8c0)
+                [!provide]                        PROVIDE (__ieee754_y0f = 0x81c6a18)
+                [!provide]                        PROVIDE (__ieee754_y1 = 0x81bf5b8)
+                [!provide]                        PROVIDE (__ieee754_y1f = 0x81c7094)
+                [!provide]                        PROVIDE (__ieee754_yn = 0x81c0068)
+                [!provide]                        PROVIDE (__ieee754_ynf = 0x81c7574)
+                [!provide]                        PROVIDE (__isinfd = 0x81cab72)
+                [!provide]                        PROVIDE (__isinff = 0x81cc0ee)
+                [!provide]                        PROVIDE (__isnand = 0x81cabba)
+                [!provide]                        PROVIDE (__isnanf = 0x81cc114)
+                [!provide]                        PROVIDE (__kernel_cos = 0x81bc4f0)
+                [!provide]                        PROVIDE (__kernel_cosf = 0x81c5844)
+                [!provide]                        PROVIDE (__kernel_rem_pio2 = 0x81bbe00)
+                [!provide]                        PROVIDE (__kernel_rem_pio2f = 0x81c5338)
+                [!provide]                        PROVIDE (__kernel_sin = 0x81bc680)
+                [!provide]                        PROVIDE (__kernel_sinf = 0x81c58f4)
+                [!provide]                        PROVIDE (__kernel_standard = 0x81bbc40)
+                [!provide]                        PROVIDE (__kernel_tan = 0x81bc7f8)
+                [!provide]                        PROVIDE (__kernel_tanf = 0x81c5984)
+                [!provide]                        PROVIDE (__ledf2 = 0x81d1210)
+                [!provide]                        PROVIDE (__lo0bits = 0x81b50fe)
+                [!provide]                        PROVIDE (__locale_mb_cur_max = 0x81b43dc)
+                [!provide]                        PROVIDE (__localeconv_l = 0x81b43f8)
+                [!provide]                        PROVIDE (__lshift = 0x81b534c)
+                [!provide]                        PROVIDE (__ltdf2 = 0x81d1210)
+                [!provide]                        PROVIDE (__match = 0x81b4da8)
+                [!provide]                        PROVIDE (__math_check_oflow = 0x81cbbb0)
+                [!provide]                        PROVIDE (__math_check_uflow = 0x81cbb70)
+                [!provide]                        PROVIDE (__math_divzero = 0x81cbae8)
+                [!provide]                        PROVIDE (__math_divzerof = 0x81cc9b0)
+                [!provide]                        PROVIDE (__math_invalid = 0x81cbb1c)
+                [!provide]                        PROVIDE (__math_invalidf = 0x81cc9d4)
+                [!provide]                        PROVIDE (__math_may_uflow = 0x81cbac8)
+                [!provide]                        PROVIDE (__math_oflow = 0x81cbad8)
+                [!provide]                        PROVIDE (__math_oflowf = 0x81cc9a4)
+                [!provide]                        PROVIDE (__math_uflow = 0x81cbab8)
+                [!provide]                        PROVIDE (__math_uflowf = 0x81cc998)
+                [!provide]                        PROVIDE (__mcmp = 0x81b5424)
+                [!provide]                        PROVIDE (__mdiff = 0x81b545c)
+                [!provide]                        PROVIDE (__month_lengths = 0x81b3d00)
+                [!provide]                        PROVIDE (__mprec_bigtens = 0x81b5880)
+                [!provide]                        PROVIDE (__mprec_tens = 0x81b58a8)
+                [!provide]                        PROVIDE (__mprec_tinytens = 0x81b5858)
+                [!provide]                        PROVIDE (__muldc3 = 0x81d17fc)
+                [!provide]                        PROVIDE (__muldf3 = 0x81d0de4)
+                [!provide]                        PROVIDE (__mulsc3 = 0x81d1544)
+                [!provide]                        PROVIDE (__multadd = 0x81b4f9c)
+                [!provide]                        PROVIDE (__multiply = 0x81b5184)
+                [!provide]                        PROVIDE (__nedf2 = 0x81d1218)
+                [!provide]                        PROVIDE (__pow5mult = 0x81b52cc)
+                [!provide]                        PROVIDE (__ratio = 0x81b5724)
+                [!provide]                        PROVIDE (__register_exitproc = 0x81b4730)
+                [!provide]                        PROVIDE (__retarget_lock_acquire = 0x81b45f8)
+                [!provide]                        PROVIDE (__retarget_lock_acquire_recursive = 0x81b45fa)
+                [!provide]                        PROVIDE (__retarget_lock_close = 0x81b45f4)
+                [!provide]                        PROVIDE (__retarget_lock_close_recursive = 0x81b45f6)
+                [!provide]                        PROVIDE (__retarget_lock_init = 0x81b45f0)
+                [!provide]                        PROVIDE (__retarget_lock_init_recursive = 0x81b45f2)
+                [!provide]                        PROVIDE (__retarget_lock_release = 0x81b4604)
+                [!provide]                        PROVIDE (__retarget_lock_release_recursive = 0x81b4606)
+                [!provide]                        PROVIDE (__retarget_lock_try_acquire = 0x81b45fc)
+                [!provide]                        PROVIDE (__retarget_lock_try_acquire_recursive = 0x81b4600)
+                [!provide]                        PROVIDE (__s2b = 0x81b502c)
+                [!provide]                        PROVIDE (__sccl = 0x81b9f20)
+                [!provide]                        PROVIDE (__sclose = 0x81b271e)
+                [!provide]                        PROVIDE (__seofread = 0x81b26be)
+                [!provide]                        PROVIDE (__sflags = 0x81b9d34)
+                [!provide]                        PROVIDE (__sflush_r = 0x81b1594)
+                [!provide]                        PROVIDE (__sfp = 0x81b19ac)
+                [!provide]                        PROVIDE (__sfp_lock_acquire = 0x81b1994)
+                [!provide]                        PROVIDE (__sfp_lock_release = 0x81b19a0)
+                [!provide]                        PROVIDE (__sfvwrite_r = 0x81b1d7c)
+                [!provide]                        PROVIDE (__signbitd = 0x81cba54)
+                [!provide]                        PROVIDE (__signbitf = 0x81cba4c)
+                [!provide]                        PROVIDE (__signgam = 0x81c3a9c)
+                [!provide]                        PROVIDE (__sigtramp = 0x81b3350)
+                [!provide]                        PROVIDE (__sigtramp_r = 0x81b32d8)
+                [!provide]                        PROVIDE (__sinit = 0x81b1a50)
+                [!provide]                        PROVIDE (__smakebuf_r = 0x81b9ea8)
+                [!provide]                        PROVIDE (__sprint_r = 0x81b9c78)
+                [!provide]                        PROVIDE (__sread = 0x81b269c)
+                [!provide]                        PROVIDE (__srefill_r = 0x81b23dc)
+                [!provide]                        PROVIDE (__srget = 0x81b253c)
+                [!provide]                        PROVIDE (__srget_r = 0x81b24ec)
+                [!provide]                        PROVIDE (__sseek = 0x81b26fa)
+                [!provide]                        PROVIDE (__ssprint_r = 0x81b9c92)
+                [!provide]                        PROVIDE (__ssputs_r = 0x81bbb84)
+                [!provide]                        PROVIDE (__ssrefill_r = 0x81b63fa)
+                [!provide]                        PROVIDE (__ssvfiscanf_r = 0x81b64a8)
+                [!provide]                        PROVIDE (__strtok_r = 0x81b31a0)
+                [!provide]                        PROVIDE (__subdf3 = 0x81d0a74)
+                [!provide]                        PROVIDE (__submore = 0x81b9f92)
+                [!provide]                        PROVIDE (__swbuf = 0x81b2838)
+                [!provide]                        PROVIDE (__swbuf_r = 0x81b27a0)
+                [!provide]                        PROVIDE (__swhatbuf_r = 0x81b9e58)
+                [!provide]                        PROVIDE (__swrite = 0x81b26c2)
+                [!provide]                        PROVIDE (__swsetup_r = 0x81b2848)
+                [!provide]                        PROVIDE (__truncdfsf2 = 0x81d13d4)
+                [!provide]                        PROVIDE (__udivmoddi4 = 0x81d1e0c)
+                [!provide]                        PROVIDE (__ulp = 0x81b558c)
+                [!provide]                        PROVIDE (__unorddf2 = 0x81d1318)
+                [!provide]                        PROVIDE (_cchsh = 0x81cd36c)
+                [!provide]                        PROVIDE (_cchshf = 0x81ce978)
+                [!provide]                        PROVIDE (_cchshl = 0x81cf578)
+                0x081d2288                        PROVIDE (_close = 0x81d2288)
+                [!provide]                        PROVIDE (_close_r = 0x81b440c)
+                [!provide]                        PROVIDE (_ctans = 0x81cd4d0)
+                [!provide]                        PROVIDE (_ctansf = 0x81ceaa0)
+                [!provide]                        PROVIDE (_ctansl = 0x81cf6d0)
+                [!provide]                        PROVIDE (_ctype_ = 0x81b136c)
+                [!provide]                        PROVIDE (_dtoa_r = 0x81ba308)
+                [!provide]                        PROVIDE (_etext = 0x81d250c)
+                [!provide]                        PROVIDE (_exit = 0x81d221c)
+                [!provide]                        PROVIDE (_fclose_r = 0x81b14d8)
+                [!provide]                        PROVIDE (_fflush_r = 0x81b16a4)
+                [!provide]                        PROVIDE (_fgetc_r = 0x81b1718)
+                [!provide]                        PROVIDE (_fgets_r = 0x81b1780)
+                [!provide]                        PROVIDE (_findenv = 0x81b0050)
+                [!provide]                        PROVIDE (_findenv_r = 0x81b0078)
+                [!provide]                        PROVIDE (_fini = 0x81d24be)
+                [!provide]                        PROVIDE (_fiprintf_r = 0x81bb180)
+                [!provide]                        PROVIDE (_fopen_r = 0x81b1ab8)
+                [!provide]                        PROVIDE (_fputc_r = 0x81b1b70)
+                [!provide]                        PROVIDE (_fputs_r = 0x81b1bc8)
+                [!provide]                        PROVIDE (_fread_r = 0x81b1c58)
+                [!provide]                        PROVIDE (_fseek_r = 0x81b1d50)
+                [!provide]                        PROVIDE (_fseeko_r = 0x81b28f4)
+                [!provide]                        PROVIDE (_fstat = 0x81d22a8)
+                [!provide]                        PROVIDE (_fstat_r = 0x81b4494)
+                [!provide]                        PROVIDE (_ftell_r = 0x81b1d68)
+                [!provide]                        PROVIDE (_ftello_r = 0x81b2b94)
+                [!provide]                        PROVIDE (_fwalk_sglue = 0x81b2014)
+                [!provide]                        PROVIDE (_fwrite_r = 0x81b2050)
+                [!provide]                        PROVIDE (_getc_r = 0x81b9da0)
+                [!provide]                        PROVIDE (_getchar_r = 0x81b2118)
+                [!provide]                        PROVIDE (_getenv_r = 0x81b00f0)
+                [!provide]                        PROVIDE (_getpid = 0x81d21e0)
+                [!provide]                        PROVIDE (_getpid_r = 0x81b456c)
+                [!provide]                        PROVIDE (_gettimeofday = 0x81d2498)
+                [!provide]                        PROVIDE (_gettimeofday_r = 0x81b44b8)
+                [!provide]                        PROVIDE (_init = 0x81d24b0)
+                [!provide]                        PROVIDE (_init_signal = 0x81b3344)
+                [!provide]                        PROVIDE (_init_signal_r = 0x81b3226)
+                [!provide]                        PROVIDE (_isatty = 0x81d22cc)
+                [!provide]                        PROVIDE (_isatty_r = 0x81ba118)
+                [!provide]                        PROVIDE (_kill = 0x81d21f8)
+                [!provide]                        PROVIDE (_kill_r = 0x81b4548)
+                [!provide]                        PROVIDE (_localeconv_r = 0x81b43fc)
+                0x081d22ec                        PROVIDE (_lseek = 0x81d22ec)
+                [!provide]                        PROVIDE (_lseek_r = 0x81b44dc)
+                [!provide]                        PROVIDE (_mbrtowc_r = 0x81bb114)
+                [!provide]                        PROVIDE (_mbtowc_r = 0x81b4f08)
+                [!provide]                        PROVIDE (_mprec_log10 = 0x81b5788)
+                [!provide]                        PROVIDE (_open = 0x81d2314)
+                [!provide]                        PROVIDE (_open_r = 0x81b4500)
+                [!provide]                        PROVIDE (_perror_r = 0x81b2130)
+                [!provide]                        PROVIDE (_printf_r = 0x81b224c)
+                [!provide]                        PROVIDE (_putc_r = 0x81b228c)
+                [!provide]                        PROVIDE (_putchar_r = 0x81b2304)
+                [!provide]                        PROVIDE (_putenv_r = 0x81b1170)
+                [!provide]                        PROVIDE (_puts_r = 0x81b231c)
+                [!provide]                        PROVIDE (_raise_r = 0x81b3286)
+                0x081d2238                        PROVIDE (_read = 0x81d2238)
+                [!provide]                        PROVIDE (_read_r = 0x81b4524)
+                [!provide]                        PROVIDE (_reclaim_reent = 0x81b442c)
+                [!provide]                        PROVIDE (_redupi = 0x81cd408)
+                [!provide]                        PROVIDE (_redupif = 0x81ce9d8)
+                [!provide]                        PROVIDE (_redupil = 0x81cf610)
+                [!provide]                        PROVIDE (_rewind_r = 0x81b24c4)
+                [!provide]                        PROVIDE (_setenv_r = 0x81b11d4)
+                [!provide]                        PROVIDE (_setlocale_r = 0x81b43a0)
+                [!provide]                        PROVIDE (_sfread_r = 0x81b6434)
+                [!provide]                        PROVIDE (_signal_r = 0x81b3252)
+                [!provide]                        PROVIDE (_siprintf_r = 0x81b59a0)
+                [!provide]                        PROVIDE (_siscanf_r = 0x81b5a78)
+                [!provide]                        PROVIDE (_snprintf_r = 0x81b254c)
+                [!provide]                        PROVIDE (_sprintf_r = 0x81b261c)
+                [!provide]                        PROVIDE (_stat = 0x81d2388)
+                [!provide]                        PROVIDE (_stat_r = 0x81ba138)
+                [!provide]                        PROVIDE (_strdup_r = 0x81b2cd8)
+                [!provide]                        PROVIDE (_strerror_r = 0x81b2d00)
+                [!provide]                        PROVIDE (_strtod_l = 0x81b0170)
+                [!provide]                        PROVIDE (_strtod_r = 0x81b0d38)
+                [!provide]                        PROVIDE (_strtol_r = 0x81b102c)
+                [!provide]                        PROVIDE (_strtoll_r = 0x81baf90)
+                [!provide]                        PROVIDE (_strtoul_r = 0x81b1134)
+                [!provide]                        PROVIDE (_strtoull_r = 0x81bb0e8)
+                [!provide]                        PROVIDE (_sungetc_r = 0x81b6380)
+                [!provide]                        PROVIDE (_svfiprintf_r = 0x81b5acc)
+                [!provide]                        PROVIDE (_svfprintf_r = 0x81b7388)
+                [!provide]                        PROVIDE (_times = 0x81d2368)
+                [!provide]                        PROVIDE (_times_r = 0x81b4570)
+                [!provide]                        PROVIDE (_tzset_r = 0x81b4388)
+                [!provide]                        PROVIDE (_tzset_unlocked = 0x81b3f18)
+                [!provide]                        PROVIDE (_tzset_unlocked_r = 0x81b3f40)
+                [!provide]                        PROVIDE (_ungetc_r = 0x81ba000)
+                [!provide]                        PROVIDE (_unlink = 0x81d2348)
+                [!provide]                        PROVIDE (_unlink_r = 0x81ba15c)
+                [!provide]                        PROVIDE (_unsetenv_r = 0x81b1308)
+                [!provide]                        PROVIDE (_user_strerror = 0x81b3222)
+                [!provide]                        PROVIDE (_vfiprintf_r = 0x81bb1c0)
+                [!provide]                        PROVIDE (_vfprintf_r = 0x81b8758)
+                [!provide]                        PROVIDE (_vsnprintf_r = 0x81b2726)
+                [!provide]                        PROVIDE (_wctomb_r = 0x81b5970)
+                0x081d2260                        PROVIDE (_write = 0x81d2260)
+                [!provide]                        PROVIDE (abort = 0x81b0008)
+                [!provide]                        PROVIDE (acos = 0x81c2f98)
+                [!provide]                        PROVIDE (acosf = 0x81c8cf4)
+                [!provide]                        PROVIDE (acosh = 0x81c3000)
+                [!provide]                        PROVIDE (acoshf = 0x81c8d4c)
+                [!provide]                        PROVIDE (acoshl = 0x81ccad0)
+                [!provide]                        PROVIDE (acosl = 0x81cca2e)
+                [!provide]                        PROVIDE (asctime = 0x81b3360)
+                [!provide]                        PROVIDE (asctime_r = 0x81b3370)
+                [!provide]                        PROVIDE (asin = 0x81c305c)
+                [!provide]                        PROVIDE (asinf = 0x81c8d8c)
+                [!provide]                        PROVIDE (asinh = 0x81c3aa8)
+                [!provide]                        PROVIDE (asinhf = 0x81c9550)
+                [!provide]                        PROVIDE (asinhl = 0x81cca80)
+                [!provide]                        PROVIDE (asinl = 0x81cca32)
+                [!provide]                        PROVIDE (atan = 0x81c3c08)
+                [!provide]                        PROVIDE (atan2 = 0x81c30c4)
+                [!provide]                        PROVIDE (atan2f = 0x81c8de4)
+                [!provide]                        PROVIDE (atan2l = 0x81cca36)
+                [!provide]                        PROVIDE (atanf = 0x81c9620)
+                [!provide]                        PROVIDE (atanh = 0x81c30c8)
+                [!provide]                        PROVIDE (atanhf = 0x81c8de8)
+                [!provide]                        PROVIDE (atanhl = 0x81ccad4)
+                [!provide]                        PROVIDE (atanl = 0x81cc9f2)
+                [!provide]                        PROVIDE (atexit = 0x81b0016)
+                [!provide]                        PROVIDE (cabs = 0x81ccc30)
+                [!provide]                        PROVIDE (cabsf = 0x81ce254)
+                [!provide]                        PROVIDE (cabsl = 0x81cee94)
+                [!provide]                        PROVIDE (cacos = 0x81ccc88)
+                [!provide]                        PROVIDE (cacosf = 0x81ce5dc)
+                [!provide]                        PROVIDE (cacosh = 0x81ccd18)
+                [!provide]                        PROVIDE (cacoshf = 0x81ce85c)
+                [!provide]                        PROVIDE (cacoshl = 0x81cef64)
+                [!provide]                        PROVIDE (cacosl = 0x81cf8c8)
+                [!provide]                        PROVIDE (carg = 0x81ccdd4)
+                [!provide]                        PROVIDE (cargf = 0x81cec80)
+                [!provide]                        PROVIDE (cargl = 0x81cf3d8)
+                [!provide]                        PROVIDE (casin = 0x81cce28)
+                [!provide]                        PROVIDE (casinf = 0x81ce28c)
+                [!provide]                        PROVIDE (casinh = 0x81ccfc8)
+                [!provide]                        PROVIDE (casinhf = 0x81ce628)
+                [!provide]                        PROVIDE (casinhl = 0x81d0010)
+                [!provide]                        PROVIDE (casinl = 0x81cf9f0)
+                [!provide]                        PROVIDE (catan = 0x81cd010)
+                [!provide]                        PROVIDE (catanf = 0x81ce8b4)
+                [!provide]                        PROVIDE (catanh = 0x81cd1c0)
+                [!provide]                        PROVIDE (catanhf = 0x81cecb8)
+                [!provide]                        PROVIDE (catanhl = 0x81cfb90)
+                [!provide]                        PROVIDE (catanl = 0x81d01b8)
+                [!provide]                        PROVIDE (cbrt = 0x81ca4e0)
+                [!provide]                        PROVIDE (cbrtf = 0x81cbd78)
+                [!provide]                        PROVIDE (cbrtl = 0x81cca84)
+                [!provide]                        PROVIDE (ccos = 0x81cd208)
+                [!provide]                        PROVIDE (ccosf = 0x81ce348)
+                [!provide]                        PROVIDE (ccosh = 0x81cd2aa)
+                [!provide]                        PROVIDE (ccoshf = 0x81ce654)
+                [!provide]                        PROVIDE (ccoshl = 0x81ceea4)
+                [!provide]                        PROVIDE (ccosl = 0x81cf948)
+                [!provide]                        PROVIDE (ceil = 0x81d0538)
+                [!provide]                        PROVIDE (ceilf = 0x81d0958)
+                [!provide]                        PROVIDE (ceill = 0x81cca0e)
+                [!provide]                        PROVIDE (cexp = 0x81cd6c4)
+                [!provide]                        PROVIDE (cexpf = 0x81cece4)
+                [!provide]                        PROVIDE (cexpl = 0x81cf4c8)
+                [!provide]                        PROVIDE (cimag = 0x81cd774)
+                [!provide]                        PROVIDE (cimagf = 0x81ce3b8)
+                [!provide]                        PROVIDE (cimagl = 0x81cee9a)
+                [!provide]                        PROVIDE (clock = 0x81b33f8)
+                [!provide]                        PROVIDE (clog = 0x81cd77e)
+                [!provide]                        PROVIDE (clog10 = 0x81cd818)
+                [!provide]                        PROVIDE (clog10f = 0x81ce728)
+                [!provide]                        PROVIDE (clogf = 0x81ce6c8)
+                [!provide]                        PROVIDE (clogl = 0x81cf020)
+                [!provide]                        PROVIDE (close = 0x81b4608)
+                [!provide]                        PROVIDE (conj = 0x81cd8c0)
+                [!provide]                        PROVIDE (conjf = 0x81ceb84)
+                [!provide]                        PROVIDE (conjl = 0x81cfbd8)
+                [!provide]                        PROVIDE (copysign = 0x81ca322)
+                [!provide]                        PROVIDE (copysignf = 0x81cbc28)
+                [!provide]                        PROVIDE (copysignl = 0x81cca62)
+                [!provide]                        PROVIDE (cos = 0x81c3f78)
+                [!provide]                        PROVIDE (cosf = 0x81c97e8)
+                [!provide]                        PROVIDE (cosh = 0x81c3150)
+                [!provide]                        PROVIDE (coshf = 0x81c8e48)
+                [!provide]                        PROVIDE (coshl = 0x81cca3a)
+                [!provide]                        PROVIDE (cosl = 0x81cc9f6)
+                [!provide]                        PROVIDE (cpow = 0x81cd8e0)
+                [!provide]                        PROVIDE (cpowf = 0x81ced4c)
+                [!provide]                        PROVIDE (cpowl = 0x81cfbf8)
+                [!provide]                        PROVIDE (cproj = 0x81cda90)
+                [!provide]                        PROVIDE (cprojf = 0x81ce3c0)
+                [!provide]                        PROVIDE (cprojl = 0x81cf3e0)
+                [!provide]                        PROVIDE (creal = 0x81cdb78)
+                [!provide]                        PROVIDE (crealf = 0x81ce790)
+                [!provide]                        PROVIDE (creall = 0x81cee98)
+                [!provide]                        PROVIDE (csin = 0x81cdb7a)
+                [!provide]                        PROVIDE (csinf = 0x81ceb98)
+                [!provide]                        PROVIDE (csinh = 0x81cdc16)
+                [!provide]                        PROVIDE (csinhf = 0x81cee20)
+                [!provide]                        PROVIDE (csinhl = 0x81d0058)
+                [!provide]                        PROVIDE (csinl = 0x81d0118)
+                [!provide]                        PROVIDE (csqrt = 0x81cdcd8)
+                [!provide]                        PROVIDE (csqrtf = 0x81ce448)
+                [!provide]                        PROVIDE (csqrtl = 0x81cf0b8)
+                [!provide]                        PROVIDE (ctan = 0x81cdff0)
+                [!provide]                        PROVIDE (ctanf = 0x81ce794)
+                [!provide]                        PROVIDE (ctanh = 0x81ce170)
+                [!provide]                        PROVIDE (ctanhf = 0x81cec08)
+                [!provide]                        PROVIDE (ctanhl = 0x81cfda8)
+                [!provide]                        PROVIDE (ctanl = 0x81cfe90)
+                [!provide]                        PROVIDE (ctime = 0x81b3420)
+                [!provide]                        PROVIDE (difftime = 0x81b342e)
+                [!provide]                        PROVIDE (div = 0x81b4874)
+                [!provide]                        PROVIDE (drem = 0x81c3a98)
+                [!provide]                        PROVIDE (dremf = 0x81c954c)
+                [!provide]                        PROVIDE (erf = 0x81c4020)
+                [!provide]                        PROVIDE (erfc = 0x81c47b8)
+                [!provide]                        PROVIDE (erfcf = 0x81c9c1c)
+                [!provide]                        PROVIDE (erfcl = 0x81ccae4)
+                [!provide]                        PROVIDE (erff = 0x81c9870)
+                [!provide]                        PROVIDE (erfl = 0x81ccae0)
+                [!provide]                        PROVIDE (exit = 0x81b0034)
+                [!provide]                        PROVIDE (exp = 0x81c31b8)
+                [!provide]                        PROVIDE (exp10 = 0x81ca668)
+                [!provide]                        PROVIDE (exp10f = 0x81cbe34)
+                [!provide]                        PROVIDE (exp2 = 0x81c52a8)
+                [!provide]                        PROVIDE (exp2f = 0x81ca27c)
+                [!provide]                        PROVIDE (exp2l = 0x81cca94)
+                [!provide]                        PROVIDE (expf = 0x81c8e98)
+                [!provide]                        PROVIDE (expl = 0x81cca42)
+                [!provide]                        PROVIDE (expm1 = 0x81ca680)
+                [!provide]                        PROVIDE (expm1f = 0x81cbe40)
+                [!provide]                        PROVIDE (expm1l = 0x81cca2a)
+                [!provide]                        PROVIDE (fabs = 0x81c4f40)
+                [!provide]                        PROVIDE (fabsf = 0x81c9fe0)
+                [!provide]                        PROVIDE (fabsl = 0x81cca12)
+                [!provide]                        PROVIDE (fclose = 0x81b1584)
+                [!provide]                        PROVIDE (fdim = 0x81cb1a0)
+                [!provide]                        PROVIDE (fdimf = 0x81cc414)
+                [!provide]                        PROVIDE (fdiml = 0x81ccac0)
+                [!provide]                        PROVIDE (feclearexcept = 0x81d0982)
+                [!provide]                        PROVIDE (fedisableexcept = 0x81d0a52)
+                [!provide]                        PROVIDE (feenableexcept = 0x81d0a3a)
+                [!provide]                        PROVIDE (fegetenv = 0x81d0992)
+                [!provide]                        PROVIDE (fegetexcept = 0x81d09cc)
+                [!provide]                        PROVIDE (fegetexceptflag = 0x81d099c)
+                [!provide]                        PROVIDE (fegetround = 0x81d09b0)
+                [!provide]                        PROVIDE (feholdexcept = 0x81d09ba)
+                [!provide]                        PROVIDE (feraiseexcept = 0x81d09d6)
+                [!provide]                        PROVIDE (fesetenv = 0x81d09ea)
+                [!provide]                        PROVIDE (fesetexceptflag = 0x81d09f4)
+                [!provide]                        PROVIDE (fesetround = 0x81d0a08)
+                [!provide]                        PROVIDE (fetestexcept = 0x81d0a1a)
+                [!provide]                        PROVIDE (feupdateenv = 0x81d0a22)
+                [!provide]                        PROVIDE (fflush = 0x81b16f0)
+                [!provide]                        PROVIDE (fgetc = 0x81b1770)
+                [!provide]                        PROVIDE (fgets = 0x81b1850)
+                [!provide]                        PROVIDE (fileno = 0x81b9ce0)
+                [!provide]                        PROVIDE (finite = 0x81ca30c)
+                [!provide]                        PROVIDE (finitef = 0x81cbc14)
+                [!provide]                        PROVIDE (finitel = 0x81ccbf0)
+                [!provide]                        PROVIDE (fiprintf = 0x81bb19c)
+                [!provide]                        PROVIDE (floor = 0x81d0630)
+                [!provide]                        PROVIDE (floorf = 0x81d095e)
+                [!provide]                        PROVIDE (floorl = 0x81cca22)
+                [!provide]                        PROVIDE (fma = 0x81cb1ea)
+                [!provide]                        PROVIDE (fmaf = 0x81d0964)
+                [!provide]                        PROVIDE (fmal = 0x81ccacc)
+                [!provide]                        PROVIDE (fmax = 0x81cb20a)
+                [!provide]                        PROVIDE (fmaxf = 0x81cc45c)
+                [!provide]                        PROVIDE (fmaxl = 0x81ccac4)
+                [!provide]                        PROVIDE (fmin = 0x81cb25e)
+                [!provide]                        PROVIDE (fminf = 0x81cc496)
+                [!provide]                        PROVIDE (fminl = 0x81ccac8)
+                [!provide]                        PROVIDE (fmod = 0x81c3248)
+                [!provide]                        PROVIDE (fmodf = 0x81c8f04)
+                [!provide]                        PROVIDE (fmodl = 0x81cca5a)
+                [!provide]                        PROVIDE (fopen = 0x81b1b60)
+                [!provide]                        PROVIDE (fputc = 0x81b1bb8)
+                [!provide]                        PROVIDE (fputs = 0x81b1c48)
+                [!provide]                        PROVIDE (fread = 0x81b1d34)
+                [!provide]                        PROVIDE (frexp = 0x81c4f50)
+                [!provide]                        PROVIDE (frexpf = 0x81c9ff0)
+                [!provide]                        PROVIDE (frexpl = 0x81cca06)
+                [!provide]                        PROVIDE (fseek = 0x81b1d54)
+                [!provide]                        PROVIDE (fseeko = 0x81b2b80)
+                [!provide]                        PROVIDE (fstat = 0x81b4618)
+                [!provide]                        PROVIDE (ftell = 0x81b1d6c)
+                [!provide]                        PROVIDE (ftello = 0x81b2c4c)
+                [!provide]                        PROVIDE (fwrite = 0x81b20fc)
+                [!provide]                        PROVIDE (g_pfnVectors = 0x81b0000)
+                [!provide]                        PROVIDE (gamma = 0x81c32a4)
+                [!provide]                        PROVIDE (gamma_r = 0x81c32a8)
+                [!provide]                        PROVIDE (gammaf = 0x81c8f44)
+                [!provide]                        PROVIDE (gammaf_r = 0x81c8f48)
+                [!provide]                        PROVIDE (getc = 0x81b9df8)
+                [!provide]                        PROVIDE (getchar = 0x81b2120)
+                [!provide]                        PROVIDE (gmtime = 0x81b3440)
+                [!provide]                        PROVIDE (gmtime_r = 0x81b3450)
+                [!provide]                        PROVIDE (hypot = 0x81c32b0)
+                [!provide]                        PROVIDE (hypotf = 0x81c8f4c)
+                [!provide]                        PROVIDE (hypotl = 0x81cca5e)
+                [!provide]                        PROVIDE (ilogb = 0x81caad4)
+                [!provide]                        PROVIDE (ilogbf = 0x81cc08c)
+                [!provide]                        PROVIDE (ilogbl = 0x81cca7c)
+                [!provide]                        PROVIDE (infinity = 0x81cab38)
+                [!provide]                        PROVIDE (infinityf = 0x81cc0d0)
+                [!provide]                        PROVIDE (isalnum = 0x81b1470)
+                [!provide]                        PROVIDE (isalpha = 0x81b1480)
+                [!provide]                        PROVIDE (isdigit = 0x81b1490)
+                [!provide]                        PROVIDE (isinf = 0x81cab48)
+                [!provide]                        PROVIDE (isinff = 0x81cc0dc)
+                [!provide]                        PROVIDE (isnan = 0x81cab9c)
+                [!provide]                        PROVIDE (isnanf = 0x81cc100)
+                [!provide]                        PROVIDE (isspace = 0x81b14a0)
+                [!provide]                        PROVIDE (iswspace = 0x81bb164)
+                [!provide]                        PROVIDE (iswspace_l = 0x81bb16c)
+                [!provide]                        PROVIDE (j0 = 0x81c3318)
+                [!provide]                        PROVIDE (j0f = 0x81c8f98)
+                [!provide]                        PROVIDE (j1 = 0x81c3400)
+                [!provide]                        PROVIDE (j1f = 0x81c9040)
+                [!provide]                        PROVIDE (jn = 0x81c34e8)
+                [!provide]                        PROVIDE (jnf = 0x81c90f0)
+                [!provide]                        PROVIDE (ldexp = 0x81c4fb8)
+                [!provide]                        PROVIDE (ldexpf = 0x81ca044)
+                [!provide]                        PROVIDE (ldexpl = 0x81cca46)
+                [!provide]                        PROVIDE (lgamma = 0x81c35d0)
+                [!provide]                        PROVIDE (lgamma_r = 0x81c3620)
+                [!provide]                        PROVIDE (lgammaf = 0x81c9198)
+                [!provide]                        PROVIDE (lgammaf_r = 0x81c91d8)
+                [!provide]                        PROVIDE (lgammal = 0x81ccadc)
+                [!provide]                        PROVIDE (llrint = 0x81cb3d0)
+                [!provide]                        PROVIDE (llrintf = 0x81cc590)
+                [!provide]                        PROVIDE (llrintl = 0x81ccaa8)
+                [!provide]                        PROVIDE (llround = 0x81cb594)
+                [!provide]                        PROVIDE (llroundf = 0x81cc68c)
+                [!provide]                        PROVIDE (llroundl = 0x81ccab4)
+                [!provide]                        PROVIDE (localeconv = 0x81b4404)
+                [!provide]                        PROVIDE (localtime = 0x81b3598)
+                [!provide]                        PROVIDE (localtime_r = 0x81b35a8)
+                [!provide]                        PROVIDE (log = 0x81c3698)
+                [!provide]                        PROVIDE (log10 = 0x81c3718)
+                [!provide]                        PROVIDE (log10f = 0x81c928c)
+                [!provide]                        PROVIDE (log10l = 0x81cca4e)
+                [!provide]                        PROVIDE (log1p = 0x81cabd8)
+                [!provide]                        PROVIDE (log1pf = 0x81cc128)
+                [!provide]                        PROVIDE (log1pl = 0x81cca26)
+                [!provide]                        PROVIDE (log2 = 0x81cb178)
+                [!provide]                        PROVIDE (log2f = 0x81ca2f4)
+                [!provide]                        PROVIDE (log2l = 0x81ccbc8)
+                [!provide]                        PROVIDE (logb = 0x81cb0f8)
+                [!provide]                        PROVIDE (logbf = 0x81cc3c0)
+                [!provide]                        PROVIDE (logbl = 0x81ccae8)
+                [!provide]                        PROVIDE (logf = 0x81c9230)
+                [!provide]                        PROVIDE (logl = 0x81cca4a)
+                [!provide]                        PROVIDE (lrint = 0x81cb2fc)
+                [!provide]                        PROVIDE (lrintf = 0x81cc508)
+                [!provide]                        PROVIDE (lrintl = 0x81ccaa4)
+                [!provide]                        PROVIDE (lround = 0x81cb518)
+                [!provide]                        PROVIDE (lroundf = 0x81cc634)
+                [!provide]                        PROVIDE (lroundl = 0x81ccab0)
+                [!provide]                        PROVIDE (lseek = 0x81b4628)
+                [!provide]                        PROVIDE (mbrtowc = 0x81bb148)
+                [!provide]                        PROVIDE (memchr = 0x81b46e8)
+                0x081b4704                        PROVIDE (memcpy = 0x81b4704)
+                [!provide]                        PROVIDE (memmove = 0x81b2c5c)
+                0x081b2c90                        PROVIDE (memset = 0x81b2c90)
+                [!provide]                        PROVIDE (mktime = 0x81b3930)
+                [!provide]                        PROVIDE (modf = 0x81ca340)
+                [!provide]                        PROVIDE (modff = 0x81cbc40)
+                [!provide]                        PROVIDE (modfl = 0x81cca0a)
+                [!provide]                        PROVIDE (nan = 0x81cafc0)
+                [!provide]                        PROVIDE (nanf = 0x81cc32c)
+                [!provide]                        PROVIDE (nanl = 0x81cca78)
+                [!provide]                        PROVIDE (nearbyint = 0x81d0730)
+                [!provide]                        PROVIDE (nearbyintf = 0x81d096a)
+                [!provide]                        PROVIDE (nearbyintl = 0x81ccaa0)
+                [!provide]                        PROVIDE (nextafter = 0x81cafd0)
+                [!provide]                        PROVIDE (nextafterf = 0x81cc338)
+                [!provide]                        PROVIDE (nextafterl = 0x81cca88)
+                [!provide]                        PROVIDE (nexttoward = 0x81ccbbc)
+                [!provide]                        PROVIDE (nexttowardf = 0x81ccaec)
+                [!provide]                        PROVIDE (nexttowardl = 0x81ccbc0)
+                [!provide]                        PROVIDE (open = 0x81b463c)
+                [!provide]                        PROVIDE (perror = 0x81b223c)
+                [!provide]                        PROVIDE (pow = 0x81c3794)
+                [!provide]                        PROVIDE (pow10 = 0x81cb0e0)
+                [!provide]                        PROVIDE (pow10f = 0x81cc3b2)
+                [!provide]                        PROVIDE (powf = 0x81c92e8)
+                [!provide]                        PROVIDE (powl = 0x81cca52)
+                0x081b2268                        PROVIDE (printf = 0x81b2268)
+                [!provide]                        PROVIDE (putc = 0x81b22f4)
+                0x081b230c                        PROVIDE (putchar = 0x81b230c)
+                [!provide]                        PROVIDE (putenv = 0x81b1160)
+                0x081b23b0                        PROVIDE (puts = 0x81b23b0)
+                [!provide]                        PROVIDE (raise = 0x81b3324)
+                [!provide]                        PROVIDE (remainder = 0x81c3874)
+                [!provide]                        PROVIDE (remainderf = 0x81c9398)
+                [!provide]                        PROVIDE (remainderl = 0x81ccad8)
+                [!provide]                        PROVIDE (remquo = 0x81cb650)
+                [!provide]                        PROVIDE (remquof = 0x81cc708)
+                [!provide]                        PROVIDE (remquol = 0x81ccabc)
+                [!provide]                        PROVIDE (rewind = 0x81b24dc)
+                [!provide]                        PROVIDE (rint = 0x81d0734)
+                [!provide]                        PROVIDE (rintf = 0x81d0970)
+                [!provide]                        PROVIDE (rintl = 0x81cca8c)
+                [!provide]                        PROVIDE (round = 0x81d0858)
+                [!provide]                        PROVIDE (roundf = 0x81d0976)
+                [!provide]                        PROVIDE (roundl = 0x81ccaac)
+                [!provide]                        PROVIDE (scalb = 0x81c38d0)
+                [!provide]                        PROVIDE (scalbf = 0x81c93d8)
+                [!provide]                        PROVIDE (scalbln = 0x81cb958)
+                [!provide]                        PROVIDE (scalblnf = 0x81cc8a8)
+                [!provide]                        PROVIDE (scalblnl = 0x81cca98)
+                [!provide]                        PROVIDE (scalbn = 0x81ca3e8)
+                [!provide]                        PROVIDE (scalbnf = 0x81cbcb0)
+                [!provide]                        PROVIDE (scalbnl = 0x81cca90)
+                [!provide]                        PROVIDE (setlocale = 0x81b43e8)
+                [!provide]                        PROVIDE (signal = 0x81b3334)
+                [!provide]                        PROVIDE (significand = 0x81c501c)
+                [!provide]                        PROVIDE (significandf = 0x81ca090)
+                [!provide]                        PROVIDE (sin = 0x81c5050)
+                [!provide]                        PROVIDE (sincos = 0x81c3a68)
+                [!provide]                        PROVIDE (sincosf = 0x81c9524)
+                [!provide]                        PROVIDE (sinf = 0x81ca0b8)
+                [!provide]                        PROVIDE (sinh = 0x81c39a0)
+                [!provide]                        PROVIDE (sinhf = 0x81c9498)
+                [!provide]                        PROVIDE (sinhl = 0x81cca3e)
+                [!provide]                        PROVIDE (sinl = 0x81cc9fa)
+                [!provide]                        PROVIDE (siprintf = 0x81b59dc)
+                [!provide]                        PROVIDE (siscanf = 0x81b5a20)
+                [!provide]                        PROVIDE (snprintf = 0x81b25b0)
+                [!provide]                        PROVIDE (sprintf = 0x81b2658)
+                [!provide]                        PROVIDE (sqrt = 0x81c3a10)
+                [!provide]                        PROVIDE (sqrtf = 0x81c94e8)
+                [!provide]                        PROVIDE (sqrtl = 0x81cca56)
+                [!provide]                        PROVIDE (stat = 0x81b4678)
+                [!provide]                        PROVIDE (strcat = 0x81b2ca0)
+                [!provide]                        PROVIDE (strchr = 0x81b2cbe)
+                [!provide]                        PROVIDE (strcmp = 0x81b46c4)
+                [!provide]                        PROVIDE (strcpy = 0x81b46d8)
+                [!provide]                        PROVIDE (strerror = 0x81b30cc)
+                [!provide]                        PROVIDE (strerror_l = 0x81b30e0)
+                [!provide]                        PROVIDE (strlen = 0x81b471e)
+                [!provide]                        PROVIDE (strncat = 0x81b30f4)
+                [!provide]                        PROVIDE (strncmp = 0x81b311a)
+                [!provide]                        PROVIDE (strncpy = 0x81b313e)
+                [!provide]                        PROVIDE (strrchr = 0x81b3164)
+                [!provide]                        PROVIDE (strstr = 0x81b31f6)
+                [!provide]                        PROVIDE (strtod = 0x81b0d58)
+                [!provide]                        PROVIDE (strtod_l = 0x81b0d44)
+                [!provide]                        PROVIDE (strtof = 0x81b0e20)
+                [!provide]                        PROVIDE (strtof_l = 0x81b0d70)
+                [!provide]                        PROVIDE (strtok = 0x81b3190)
+                [!provide]                        PROVIDE (strtok_r = 0x81b31f0)
+                [!provide]                        PROVIDE (strtol = 0x81b1044)
+                [!provide]                        PROVIDE (strtol_l = 0x81b1030)
+                [!provide]                        PROVIDE (strtoll = 0x81bafa8)
+                [!provide]                        PROVIDE (strtoll_l = 0x81baf94)
+                [!provide]                        PROVIDE (strtoul = 0x81b114c)
+                [!provide]                        PROVIDE (strtoul_l = 0x81b1138)
+                [!provide]                        PROVIDE (strtoull = 0x81bb100)
+                [!provide]                        PROVIDE (strtoull_l = 0x81bb0ec)
+                [!provide]                        PROVIDE (sysconf = 0x81b46ac)
+                [!provide]                        PROVIDE (tan = 0x81c50f8)
+                [!provide]                        PROVIDE (tanf = 0x81ca144)
+                [!provide]                        PROVIDE (tanh = 0x81c5160)
+                [!provide]                        PROVIDE (tanhf = 0x81ca19c)
+                [!provide]                        PROVIDE (tanhl = 0x81cca02)
+                [!provide]                        PROVIDE (tanl = 0x81cc9fe)
+                [!provide]                        PROVIDE (tgamma = 0x81c52c0)
+                [!provide]                        PROVIDE (tgammaf = 0x81ca288)
+                [!provide]                        PROVIDE (tgammal = 0x81cca9c)
+                [!provide]                        PROVIDE (time = 0x81b3d60)
+                [!provide]                        PROVIDE (tolower = 0x81b14b0)
+                [!provide]                        PROVIDE (toupper = 0x81b14c4)
+                [!provide]                        PROVIDE (trunc = 0x81d08e4)
+                [!provide]                        PROVIDE (truncf = 0x81d097c)
+                [!provide]                        PROVIDE (truncl = 0x81ccab8)
+                [!provide]                        PROVIDE (tzset = 0x81b3f24)
+                [!provide]                        PROVIDE (ungetc = 0x81ba100)
+                [!provide]                        PROVIDE (unlink = 0x81b4688)
+                [!provide]                        PROVIDE (vfiprintf = 0x81bbad0)
+                [!provide]                        PROVIDE (vfprintf = 0x81b9bc4)
+                [!provide]                        PROVIDE (vsnprintf = 0x81b2784)
+                [!provide]                        PROVIDE (y0 = 0x81c3380)
+                [!provide]                        PROVIDE (y0f = 0x81c8fe0)
+                [!provide]                        PROVIDE (y1 = 0x81c3468)
+                [!provide]                        PROVIDE (y1f = 0x81c9090)
+                [!provide]                        PROVIDE (yn = 0x81c3550)
+                [!provide]                        PROVIDE (ynf = 0x81c9138)
+                0x00002800                        _Max_Stack_Size = 0x2800
+
+.text           0x20000000      0x9e4
+                0x20000000                        . = ALIGN (0x4)
+ *(.AppStart)
+ .AppStart      0x20000000       0x34 ./Core/Startup/startup_user_app.o
+                0x20000000                AppStart
+ *(.text)
+ *(.text*)
+ .text._ZN4TestC2Ev
+                0x20000034       0x1e ./Core/Src/main.o
+                0x20000034                Test::Test()
+                0x20000034                Test::Test()
+ *fill*         0x20000052        0x2 
+ .text._ZN4TestD2Ev
+                0x20000054       0x20 ./Core/Src/main.o
+                0x20000054                Test::~Test()
+                0x20000054                Test::~Test()
+ .text.main     0x20000074      0x2e0 ./Core/Src/main.o
+                0x20000074                main
+ .text._Z41__static_initialization_and_destruction_0v
+                0x20000354       0x18 ./Core/Src/main.o
+ .text._Z41__static_initialization_and_destruction_1v
+                0x2000036c       0x18 ./Core/Src/main.o
+ .text._GLOBAL__sub_I_main.cpp
+                0x20000384        0xa ./Core/Src/main.o
+ .text._GLOBAL__sub_D_main.cpp
+                0x2000038e        0xa ./Core/Src/main.o
+ .text.__una_init_kernel
+                0x20000398       0x50 ./Core/Src/sysmem.o
+                0x20000398                __una_init_kernel
+ .text.__una_init_array
+                0x200003e8       0x88 ./Core/Src/sysmem.o
+                0x200003e8                __una_init_array
+ .text.__una_fini_array
+                0x20000470       0x50 ./Core/Src/sysmem.o
+                0x20000470                __una_fini_array
+ .text.malloc   0x200004c0       0x2c ./Core/Src/sysmem.o
+                0x200004c0                malloc
+ .text.free     0x200004ec       0x2c ./Core/Src/sysmem.o
+                0x200004ec                free
+ .text.calloc   0x20000518       0x38 ./Core/Src/sysmem.o
+                0x20000518                calloc
+ .text.realloc  0x20000550       0x30 ./Core/Src/sysmem.o
+                0x20000550                realloc
+ .text._malloc_r
+                0x20000580       0x60 ./Core/Src/sysmem.o
+                0x20000580                _malloc_r
+ .text._free_r  0x200005e0       0x64 ./Core/Src/sysmem.o
+                0x200005e0                _free_r
+ .text._realloc_r
+                0x20000644       0x60 ./Core/Src/sysmem.o
+                0x20000644                _realloc_r
+ .text.exit     0x200006a4       0x5c ./Core/Src/sysmem.o
+                0x200006a4                exit
+ .text.exit.__stub
+                0x20000700       0x30 linker stubs
+ *(.glue_7)
+ .glue_7        0x20000730        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x20000730        0x0 linker stubs
+ *(.eh_frame)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x20000730                        __exidx_start = .
+ *(.ARM.exidx)
+                0x20000730                        __exidx_end = .
+ *(.RamFunc)
+ *(.RamFunc*)
+ *(.init)
+ *(.fini)
+ *(.rodata)
+ .rodata        0x20000730      0x223 ./Core/Src/main.o
+ *fill*         0x20000953        0x1 
+ .rodata        0x20000954       0x8d ./Core/Src/sysmem.o
+ *(.rodata*)
+ *(FontFlashSection)
+ *(FontSearchFlashSection)
+ *(TextFlashSection)
+ *(IntFlashSection)
+                0x200009e4                        . = ALIGN (0x4)
+ *fill*         0x200009e1        0x3 
+                0x200009e4                        _etext = .
+
+.vfp11_veneer   0x200009e4        0x0
+ .vfp11_veneer  0x200009e4        0x0 linker stubs
+
+.v4_bx          0x200009e4        0x0
+ .v4_bx         0x200009e4        0x0 linker stubs
+
+.iplt           0x200009e4        0x0
+ .iplt          0x200009e4        0x0 ./Core/Src/main.o
+
+.preinit_array  0x200009e4        0x0
+                0x200009e4                        . = ALIGN (0x4)
+                0x200009e4                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array*)
+                0x200009e4                        PROVIDE (__preinit_array_end = .)
+                0x200009e4                        . = ALIGN (0x4)
+
+.init_array     0x200009e4        0x4
+                0x200009e4                        . = ALIGN (0x4)
+                0x200009e4                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array*)
+ .init_array    0x200009e4        0x4 ./Core/Src/main.o
+                0x200009e8                        PROVIDE (__init_array_end = .)
+                0x200009e8                        . = ALIGN (0x4)
+
+.fini_array     0x200009e8        0x4
+                0x200009e8                        . = ALIGN (0x4)
+                0x200009e8                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array*)
+ .fini_array    0x200009e8        0x4 ./Core/Src/main.o
+                0x200009ec                        PROVIDE (__fini_array_end = .)
+                0x200009ec                        . = ALIGN (0x4)
+
+.rel.dyn        0x200009ec        0x0
+ .rel.iplt      0x200009ec        0x0 ./Core/Src/main.o
+ .rel.got       0x200009ec        0x0 ./Core/Src/main.o
+
+.plt            0x200009ec        0x0
+                0x200009ec                        . = ALIGN (0x4)
+ *(.plt)
+                0x200009ec                        . = ALIGN (0x4)
+                0x200009f0                        _sidata = LOADADDR (.data)
+
+.data           0x200009f0      0x148
+                0x200009f0                        . = ALIGN (0x4)
+                0x200009f0                        _sdata = .
+ *(.sys_calls)
+ .sys_calls     0x200009f0        0x4 ./Core/Src/sysmem.o
+                0x200009f0                kernel
+ *(.data)
+ *(.data*)
+ .data._impure_ptr
+                0x200009f4        0x4 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o)
+                0x200009f4                _impure_ptr
+ .data._impure_data
+                0x200009f8      0x140 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-impure.o)
+                0x200009f8                _impure_data
+                0x20000b38                        . = ALIGN (0x4)
+                0x20000b38                        _edata = .
+
+.igot.plt       0x20000b38        0x0
+ .igot.plt      0x20000b38        0x0 ./Core/Src/main.o
+
+.got            0x20000b38       0x44
+                0x20000b38                        . = ALIGN (0x4)
+                0x20000b38                        _sgot = .
+ *(.got)
+ .got           0x20000b38       0x38 ./Core/Src/main.o
+ *(.got.plt)
+ .got.plt       0x20000b70        0xc ./Core/Src/main.o
+                0x20000b70                _GLOBAL_OFFSET_TABLE_
+                0x20000b7c                        . = ALIGN (0x4)
+                0x20000b7c                        _egot = .
+
+.bss            0x20000b7c      0x13c
+                0x20000b7c                        . = ALIGN (0x4)
+                0x20000b7c                        _sbss = .
+                0x20000b7c                        __bss_start__ = _sbss
+ *(.bss)
+ *(.bss*)
+ .bss._ZL5mTest
+                0x20000b7c        0x4 ./Core/Src/main.o
+ .bss.__sf      0x20000b80      0x138 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a(libc_a-findfp.o)
+                0x20000b80                __sf
+ *(COMMON)
+                0x20000cb8                        . = ALIGN (0x4)
+                0x20000cb8                        _ebss = .
+                0x20000cb8                        __bss_end__ = _ebss
+
+.stack          0x20000cb8     0x2800
+                0x20000cb8                        . = ALIGN (0x4)
+                [!provide]                        PROVIDE (end = .)
+                [!provide]                        PROVIDE (_end = .)
+                0x200034b8                        . = (. + _Max_Stack_Size)
+ *fill*         0x20000cb8     0x2800 
+                0x200034b8                        . = ALIGN (0x4)
+                0x200034b8                        _estack = .
+
+/DISCARD/
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+
+.ARM.attributes
+                0x00000000       0x38
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x3a ./Core/Src/main.o
+ .ARM.attributes
+                0x0000003a       0x3a ./Core/Src/sysmem.o
+OUTPUT(EmptyApp.elf elf32-littlearm)
+LOAD linker stubs
+LOAD C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libc.a
+LOAD C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main+fp/hard\libm.a
+LOAD C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v8-m.main+fp/hard\libgcc.a
+
+.debug_info     0x00000000     0x5e13
+ .debug_info    0x00000000     0x35fa ./Core/Src/main.o
+ .debug_info    0x000035fa     0x2819 ./Core/Src/sysmem.o
+
+.debug_abbrev   0x00000000      0xb7b
+ .debug_abbrev  0x00000000      0x5a5 ./Core/Src/main.o
+ .debug_abbrev  0x000005a5      0x5d6 ./Core/Src/sysmem.o
+
+.debug_aranges  0x00000000      0x108
+ .debug_aranges
+                0x00000000       0x58 ./Core/Src/main.o
+ .debug_aranges
+                0x00000058       0xb0 ./Core/Src/sysmem.o
+
+.debug_rnglists
+                0x00000000       0xbe
+ .debug_rnglists
+                0x00000000       0x3e ./Core/Src/main.o
+ .debug_rnglists
+                0x0000003e       0x80 ./Core/Src/sysmem.o
+
+.debug_macro    0x00000000     0x45bf
+ .debug_macro   0x00000000      0x651 ./Core/Src/main.o
+ .debug_macro   0x00000651      0xbb6 ./Core/Src/main.o
+ .debug_macro   0x00001207      0x1f2 ./Core/Src/main.o
+ .debug_macro   0x000013f9       0x10 ./Core/Src/main.o
+ .debug_macro   0x00001409      0x409 ./Core/Src/main.o
+ .debug_macro   0x00001812       0x1c ./Core/Src/main.o
+ .debug_macro   0x0000182e       0x22 ./Core/Src/main.o
+ .debug_macro   0x00001850       0x8e ./Core/Src/main.o
+ .debug_macro   0x000018de       0x51 ./Core/Src/main.o
+ .debug_macro   0x0000192f      0x103 ./Core/Src/main.o
+ .debug_macro   0x00001a32       0x6a ./Core/Src/main.o
+ .debug_macro   0x00001a9c      0x1df ./Core/Src/main.o
+ .debug_macro   0x00001c7b       0x74 ./Core/Src/main.o
+ .debug_macro   0x00001cef       0x2a ./Core/Src/main.o
+ .debug_macro   0x00001d19       0x3c ./Core/Src/main.o
+ .debug_macro   0x00001d55       0x34 ./Core/Src/main.o
+ .debug_macro   0x00001d89      0x197 ./Core/Src/main.o
+ .debug_macro   0x00001f20      0x38c ./Core/Src/main.o
+ .debug_macro   0x000022ac       0x16 ./Core/Src/main.o
+ .debug_macro   0x000022c2       0x4a ./Core/Src/main.o
+ .debug_macro   0x0000230c       0x34 ./Core/Src/main.o
+ .debug_macro   0x00002340       0x10 ./Core/Src/main.o
+ .debug_macro   0x00002350       0x58 ./Core/Src/main.o
+ .debug_macro   0x000023a8      0x1e5 ./Core/Src/main.o
+ .debug_macro   0x0000258d       0x10 ./Core/Src/main.o
+ .debug_macro   0x0000259d       0x3c ./Core/Src/main.o
+ .debug_macro   0x000025d9       0x20 ./Core/Src/main.o
+ .debug_macro   0x000025f9       0x8e ./Core/Src/main.o
+ .debug_macro   0x00002687       0x16 ./Core/Src/main.o
+ .debug_macro   0x0000269d       0x18 ./Core/Src/main.o
+ .debug_macro   0x000026b5      0x194 ./Core/Src/main.o
+ .debug_macro   0x00002849       0x10 ./Core/Src/main.o
+ .debug_macro   0x00002859       0x16 ./Core/Src/main.o
+ .debug_macro   0x0000286f       0x16 ./Core/Src/main.o
+ .debug_macro   0x00002885       0x29 ./Core/Src/main.o
+ .debug_macro   0x000028ae       0x10 ./Core/Src/main.o
+ .debug_macro   0x000028be      0x3c7 ./Core/Src/main.o
+ .debug_macro   0x00002c85       0x1c ./Core/Src/main.o
+ .debug_macro   0x00002ca1       0x10 ./Core/Src/main.o
+ .debug_macro   0x00002cb1       0x1c ./Core/Src/main.o
+ .debug_macro   0x00002ccd       0x16 ./Core/Src/main.o
+ .debug_macro   0x00002ce3      0x138 ./Core/Src/main.o
+ .debug_macro   0x00002e1b       0x28 ./Core/Src/main.o
+ .debug_macro   0x00002e43       0x16 ./Core/Src/main.o
+ .debug_macro   0x00002e59       0x10 ./Core/Src/main.o
+ .debug_macro   0x00002e69       0x10 ./Core/Src/main.o
+ .debug_macro   0x00002e79       0x10 ./Core/Src/main.o
+ .debug_macro   0x00002e89       0x1c ./Core/Src/main.o
+ .debug_macro   0x00002ea5       0x52 ./Core/Src/main.o
+ .debug_macro   0x00002ef7       0x22 ./Core/Src/main.o
+ .debug_macro   0x00002f19       0x10 ./Core/Src/main.o
+ .debug_macro   0x00002f29       0x52 ./Core/Src/main.o
+ .debug_macro   0x00002f7b       0xc1 ./Core/Src/main.o
+ .debug_macro   0x0000303c       0x1c ./Core/Src/main.o
+ .debug_macro   0x00003058       0x3d ./Core/Src/main.o
+ .debug_macro   0x00003095       0x35 ./Core/Src/main.o
+ .debug_macro   0x000030ca       0x40 ./Core/Src/main.o
+ .debug_macro   0x0000310a       0x1c ./Core/Src/main.o
+ .debug_macro   0x00003126       0x41 ./Core/Src/main.o
+ .debug_macro   0x00003167       0x19 ./Core/Src/main.o
+ .debug_macro   0x00003180       0x2c ./Core/Src/main.o
+ .debug_macro   0x000031ac       0x11 ./Core/Src/main.o
+ .debug_macro   0x000031bd       0x28 ./Core/Src/main.o
+ .debug_macro   0x000031e5       0x2e ./Core/Src/main.o
+ .debug_macro   0x00003213       0x18 ./Core/Src/main.o
+ .debug_macro   0x0000322b       0x27 ./Core/Src/main.o
+ .debug_macro   0x00003252       0x4f ./Core/Src/main.o
+ .debug_macro   0x000032a1       0x19 ./Core/Src/main.o
+ .debug_macro   0x000032ba       0x88 ./Core/Src/main.o
+ .debug_macro   0x00003342       0x19 ./Core/Src/main.o
+ .debug_macro   0x0000335b       0x10 ./Core/Src/main.o
+ .debug_macro   0x0000336b       0x11 ./Core/Src/main.o
+ .debug_macro   0x0000337c       0x11 ./Core/Src/main.o
+ .debug_macro   0x0000338d       0x11 ./Core/Src/main.o
+ .debug_macro   0x0000339e       0x22 ./Core/Src/main.o
+ .debug_macro   0x000033c0       0x43 ./Core/Src/main.o
+ .debug_macro   0x00003403       0x2c ./Core/Src/main.o
+ .debug_macro   0x0000342f      0x173 ./Core/Src/main.o
+ .debug_macro   0x000035a2       0x10 ./Core/Src/main.o
+ .debug_macro   0x000035b2       0x22 ./Core/Src/main.o
+ .debug_macro   0x000035d4       0x11 ./Core/Src/main.o
+ .debug_macro   0x000035e5       0x2f ./Core/Src/main.o
+ .debug_macro   0x00003614       0x16 ./Core/Src/main.o
+ .debug_macro   0x0000362a       0x10 ./Core/Src/main.o
+ .debug_macro   0x0000363a       0x10 ./Core/Src/main.o
+ .debug_macro   0x0000364a       0x11 ./Core/Src/main.o
+ .debug_macro   0x0000365b       0x46 ./Core/Src/main.o
+ .debug_macro   0x000036a1       0x1f ./Core/Src/main.o
+ .debug_macro   0x000036c0       0x34 ./Core/Src/main.o
+ .debug_macro   0x000036f4      0x11d ./Core/Src/main.o
+ .debug_macro   0x00003811       0x16 ./Core/Src/main.o
+ .debug_macro   0x00003827       0x10 ./Core/Src/main.o
+ .debug_macro   0x00003837      0x63b ./Core/Src/sysmem.o
+ .debug_macro   0x00003e72       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00003e82       0x6e ./Core/Src/sysmem.o
+ .debug_macro   0x00003ef0       0x94 ./Core/Src/sysmem.o
+ .debug_macro   0x00003f84       0x57 ./Core/Src/sysmem.o
+ .debug_macro   0x00003fdb      0x23c ./Core/Src/sysmem.o
+ .debug_macro   0x00004217       0x10 ./Core/Src/sysmem.o
+ .debug_macro   0x00004227       0x1c ./Core/Src/sysmem.o
+ .debug_macro   0x00004243       0xde ./Core/Src/sysmem.o
+ .debug_macro   0x00004321       0x16 ./Core/Src/sysmem.o
+ .debug_macro   0x00004337       0xcf ./Core/Src/sysmem.o
+ .debug_macro   0x00004406       0x49 ./Core/Src/sysmem.o
+ .debug_macro   0x0000444f       0x3f ./Core/Src/sysmem.o
+ .debug_macro   0x0000448e      0x131 ./Core/Src/sysmem.o
+
+.debug_line     0x00000000     0x2849
+ .debug_line    0x00000000     0x136a ./Core/Src/main.o
+ .debug_line    0x0000136a     0x14df ./Core/Src/sysmem.o
+
+.debug_str      0x00000000     0xe84d
+ .debug_str     0x00000000     0xe84d ./Core/Src/main.o
+                               0xe762 (size before relaxing)
+ .debug_str     0x0000e84d     0xd9f5 ./Core/Src/sysmem.o
+
+.comment        0x00000000       0x43
+ .comment       0x00000000       0x43 ./Core/Src/main.o
+                                 0x44 (size before relaxing)
+ .comment       0x00000043       0x44 ./Core/Src/sysmem.o
+
+.debug_frame    0x00000000      0x3d4
+ .debug_frame   0x00000000      0x114 ./Core/Src/main.o
+ .debug_frame   0x00000114      0x2c0 ./Core/Src/sysmem.o

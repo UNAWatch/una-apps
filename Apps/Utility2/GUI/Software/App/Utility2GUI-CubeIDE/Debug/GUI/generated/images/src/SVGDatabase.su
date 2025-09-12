@@ -1,0 +1,2 @@
+C:/DT/Solutions/Una/una-watch/Apps/Utility2/GUI/Software/App/TouchGFX-GUI/generated/images/src/SVGDatabase.cpp:10:27:const touchgfx::VGObject* SVGDatabase::getInstance()	4	static
+C:/DT/Solutions/Una/una-watch/Apps/Utility2/GUI/Software/App/TouchGFX-GUI/generated/images/src/SVGDatabase.cpp:15:10:uint16_t SVGDatabase::getInstanceSize()	4	static

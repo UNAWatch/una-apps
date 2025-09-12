@@ -1,0 +1,29 @@
+C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344\tools\arm-none-eabi\include\c++\13.3.1\arm-none-eabi\thumb\v8-m.main+fp\hard\bits\gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	1
+../Core/Src/sysmem.cpp:48:10:void __una_init_array()	3
+../Core/Src/sysmem.cpp:68:10:void __una_fini_array()	2
+../Core/Src/sysmem.cpp:90:11:void* _sbrk(ptrdiff_t)	0
+../Core/Src/sysmem.cpp:98:11:void* malloc(size_t)	1
+../Core/Src/sysmem.cpp:103:10:void free(void*)	1
+../Core/Src/sysmem.cpp:108:11:void* calloc(size_t, size_t)	1
+../Core/Src/sysmem.cpp:117:11:void* realloc(void*, size_t)	1
+../Core/Src/sysmem.cpp:122:11:void* _malloc_r(_reent*, size_t)	1
+../Core/Src/sysmem.cpp:130:10:void _free_r(_reent*, void*)	2
+../Core/Src/sysmem.cpp:139:11:void* _calloc_r(_reent*, size_t, size_t)	2
+../Core/Src/sysmem.cpp:149:11:void* _realloc_r(_reent*, void*, size_t)	4
+../Core/Src/sysmem.cpp:180:10:void __cxa_pure_virtual()	0
+../Core/Src/sysmem.cpp:185:9:int __cxa_guard_acquire(uint64_t*)	1
+../Core/Src/sysmem.cpp:190:10:void __cxa_guard_release(uint64_t*)	1
+../Core/Src/sysmem.cpp:195:10:void __cxa_guard_abort(uint64_t*)	1
+../Core/Src/sysmem.cpp:199:9:int __cxa_atexit(void (*)(void*), void*, void*)	1
+../Core/Src/sysmem.cpp:204:10:void __assert_func(const char*, int, const char*, const char*)	0
+../Core/Src/sysmem.cpp:213:10:void exitA(int)	1
+../Core/Src/sysmem.cpp:221:10:void exit(int)	1
+../Core/Src/sysmem.cpp:234:10:void std::__throw_bad_alloc()	0
+../Core/Src/sysmem.cpp:239:10:void std::__throw_bad_array_new_length()	0
+../Core/Src/sysmem.cpp:244:10:void std::__throw_length_error(const char*)	0
+../Core/Src/sysmem.cpp:252:7:void* operator new(std::size_t)	1
+../Core/Src/sysmem.cpp:257:6:void operator delete(void*)	1
+../Core/Src/sysmem.cpp:262:7:void* operator new [](std::size_t)	1
+../Core/Src/sysmem.cpp:267:6:void operator delete [](void*)	1
+../Core/Src/sysmem.cpp:272:6:void operator delete(void*, std::size_t)	1
+../Core/Src/sysmem.cpp:277:6:void operator delete [](void*, std::size_t)	1

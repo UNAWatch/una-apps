@@ -1,0 +1,8 @@
+../../TouchGFX-GUI/touchgfx/framework/include/touchgfx/Font.hpp:169:13:touchgfx::Font::~Font()	1
+../../TouchGFX-GUI/touchgfx/framework/include/touchgfx/Font.hpp:169:13:virtual touchgfx::Font::~Font()	1
+../../TouchGFX-GUI/touchgfx/framework/include/touchgfx/ConstFont.hpp:35:7:touchgfx::ConstFont::~ConstFont()	1
+../../TouchGFX-GUI/touchgfx/framework/include/touchgfx/ConstFont.hpp:35:7:virtual touchgfx::ConstFont::~ConstFont()	1
+../../TouchGFX-GUI/generated/fonts/include/fonts/GeneratedFont.hpp:11:7:touchgfx::GeneratedFont::~GeneratedFont()	1
+../../TouchGFX-GUI/generated/fonts/include/fonts/GeneratedFont.hpp:11:7:virtual touchgfx::GeneratedFont::~GeneratedFont()	1
+C:/DT/Solutions/Una/una-watch/Apps/Utility2/GUI/Software/App/TouchGFX-GUI/generated/fonts/src/Table_Poppins_Italic_18_2bpp.cpp:128:199:void __tcf_0()	1
+C:/DT/Solutions/Una/una-watch/Apps/Utility2/GUI/Software/App/TouchGFX-GUI/generated/fonts/src/Table_Poppins_Italic_18_2bpp.cpp:126:26:touchgfx::GeneratedFont& getFont_Poppins_Italic_18_2bpp()	3

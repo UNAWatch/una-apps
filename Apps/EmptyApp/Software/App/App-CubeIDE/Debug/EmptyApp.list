@@ -1,0 +1,1254 @@
+
+EmptyApp.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000009e4  20000000  20000000  00001000  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .preinit_array 00000000  200009e4  20000b7c  00001b7c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .init_array   00000004  200009e4  200009e4  000019e4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+  3 .fini_array   00000004  200009e8  200009e8  000019e8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+  4 .plt          00000000  200009ec  20000b7c  00001b7c  2**0
+                  CONTENTS, ALLOC, LOAD, CODE
+  5 .data         00000148  200009f0  200009f0  000019f0  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  6 .got          00000044  20000b38  20000b38  00001b38  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  7 .bss          0000013c  20000b7c  20000b7c  00001b7c  2**2
+                  ALLOC
+  8 .stack        00002800  20000cb8  20000cb8  00001b7c  2**0
+                  ALLOC
+  9 .ARM.attributes 00000038  00000000  00000000  00001b7c  2**0
+                  CONTENTS, READONLY
+ 10 .debug_info   00005e13  00000000  00000000  00001bb4  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 11 .debug_abbrev 00000b7b  00000000  00000000  000079c7  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_aranges 00000108  00000000  00000000  00008542  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 13 .debug_rnglists 000000be  00000000  00000000  0000864a  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 14 .debug_macro  000045bf  00000000  00000000  00008708  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 15 .debug_line   00002849  00000000  00000000  0000ccc7  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+ 16 .debug_str    0000e84d  00000000  00000000  0000f510  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .comment      00000043  00000000  00000000  0001dd5d  2**0
+                  CONTENTS, READONLY
+ 18 .debug_frame  000003d4  00000000  00000000  0001dda0  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+20000000 <AppStart>:
+20000000:	4681      	mov	r9, r0
+20000002:	4a0a      	ldr	r2, [pc, #40]	@ (2000002c <LoopFillZerobss+0x20>)
+20000004:	e002      	b.n	2000000c <LoopFillZerobss>
+
+20000006 <FillZerobss>:
+20000006:	2300      	movs	r3, #0
+20000008:	f842 3b04 	str.w	r3, [r2], #4
+
+2000000c <LoopFillZerobss>:
+2000000c:	4b08      	ldr	r3, [pc, #32]	@ (20000030 <LoopFillZerobss+0x24>)
+2000000e:	429a      	cmp	r2, r3
+20000010:	d3f9      	bcc.n	20000006 <FillZerobss>
+20000012:	f000 f9c1 	bl	20000398 <__una_init_kernel>
+20000016:	f000 f9e7 	bl	200003e8 <__una_init_array>
+2000001a:	f000 f82b 	bl	20000074 <main>
+2000001e:	f000 fa27 	bl	20000470 <__una_fini_array>
+20000022:	f05f 30ff 	movs.w	r0, #4294967295
+20000026:	f000 fb3d 	bl	200006a4 <exit>
+2000002a:	4770      	bx	lr
+2000002c:	20000b7c 	.word	0x20000b7c
+20000030:	20000cb8 	.word	0x20000cb8
+
+20000034 <_ZN4TestC1Ev>:
+
+#include "IKernel.hpp"
+
+class Test {
+public:
+    Test() : value(sin(90 * M_PI / 180.0))
+20000034:	b480      	push	{r7}
+20000036:	b083      	sub	sp, #12
+20000038:	af00      	add	r7, sp, #0
+2000003a:	6078      	str	r0, [r7, #4]
+2000003c:	687b      	ldr	r3, [r7, #4]
+2000003e:	f04f 527e 	mov.w	r2, #1065353216	@ 0x3f800000
+20000042:	601a      	str	r2, [r3, #0]
+    {
+        // printf("static constructor\n");
+    }
+20000044:	687b      	ldr	r3, [r7, #4]
+20000046:	4618      	mov	r0, r3
+20000048:	370c      	adds	r7, #12
+2000004a:	46bd      	mov	sp, r7
+2000004c:	f85d 7b04 	ldr.w	r7, [sp], #4
+20000050:	4770      	bx	lr
+	...
+
+20000054 <_ZN4TestD1Ev>:
+
+    ~Test()
+20000054:	b580      	push	{r7, lr}
+20000056:	b082      	sub	sp, #8
+20000058:	af00      	add	r7, sp, #0
+2000005a:	6078      	str	r0, [r7, #4]
+    {
+        printf("static destructor\n");
+2000005c:	4b04      	ldr	r3, [pc, #16]	@ (20000070 <_ZN4TestD1Ev+0x1c>)
+2000005e:	447b      	add	r3, pc
+20000060:	4618      	mov	r0, r3
+20000062:	f000 fb5d 	bl	20000720 <__puts_veneer>
+    }
+20000066:	687b      	ldr	r3, [r7, #4]
+20000068:	4618      	mov	r0, r3
+2000006a:	3708      	adds	r7, #8
+2000006c:	46bd      	mov	sp, r7
+2000006e:	bd80      	pop	{r7, pc}
+20000070:	000006ce 	.word	0x000006ce
+
+20000074 <main>:
+/**
+ * @brief   The application entry point.
+ * @retval  int
+ */
+int main()
+{
+20000074:	b590      	push	{r4, r7, lr}
+20000076:	b083      	sub	sp, #12
+20000078:	af00      	add	r7, sp, #0
+2000007a:	4c90      	ldr	r4, [pc, #576]	@ (200002bc <main+0x248>)
+2000007c:	447c      	add	r4, pc
+    printf("\nuser app started\n");
+2000007e:	4b90      	ldr	r3, [pc, #576]	@ (200002c0 <main+0x24c>)
+20000080:	447b      	add	r3, pc
+20000082:	4618      	mov	r0, r3
+20000084:	f000 fb4c 	bl	20000720 <__puts_veneer>
+
+    printf("addr prinf      : 0x%08lX\n", (uint32_t)printf);
+20000088:	4b8e      	ldr	r3, [pc, #568]	@ (200002c4 <main+0x250>)
+2000008a:	58e3      	ldr	r3, [r4, r3]
+2000008c:	4619      	mov	r1, r3
+2000008e:	4b8e      	ldr	r3, [pc, #568]	@ (200002c8 <main+0x254>)
+20000090:	447b      	add	r3, pc
+20000092:	4618      	mov	r0, r3
+20000094:	f000 fb34 	bl	20000700 <__printf_veneer>
+    printf("addr malloc     : 0x%08lX\n", (uint32_t)malloc);
+20000098:	4b8c      	ldr	r3, [pc, #560]	@ (200002cc <main+0x258>)
+2000009a:	58e3      	ldr	r3, [r4, r3]
+2000009c:	4619      	mov	r1, r3
+2000009e:	4b8c      	ldr	r3, [pc, #560]	@ (200002d0 <main+0x25c>)
+200000a0:	447b      	add	r3, pc
+200000a2:	4618      	mov	r0, r3
+200000a4:	f000 fb2c 	bl	20000700 <__printf_veneer>
+    printf("addr malloc_r   : 0x%08lX\n", (uint32_t)_malloc_r);
+200000a8:	4b8a      	ldr	r3, [pc, #552]	@ (200002d4 <main+0x260>)
+200000aa:	58e3      	ldr	r3, [r4, r3]
+200000ac:	4619      	mov	r1, r3
+200000ae:	4b8a      	ldr	r3, [pc, #552]	@ (200002d8 <main+0x264>)
+200000b0:	447b      	add	r3, pc
+200000b2:	4618      	mov	r0, r3
+200000b4:	f000 fb24 	bl	20000700 <__printf_veneer>
+    printf("addr free       : 0x%08lX\n", (uint32_t)free);
+200000b8:	4b88      	ldr	r3, [pc, #544]	@ (200002dc <main+0x268>)
+200000ba:	58e3      	ldr	r3, [r4, r3]
+200000bc:	4619      	mov	r1, r3
+200000be:	4b88      	ldr	r3, [pc, #544]	@ (200002e0 <main+0x26c>)
+200000c0:	447b      	add	r3, pc
+200000c2:	4618      	mov	r0, r3
+200000c4:	f000 fb1c 	bl	20000700 <__printf_veneer>
+    printf("addr calloc     : 0x%08lX\n", (uint32_t)calloc);
+200000c8:	4b86      	ldr	r3, [pc, #536]	@ (200002e4 <main+0x270>)
+200000ca:	58e3      	ldr	r3, [r4, r3]
+200000cc:	4619      	mov	r1, r3
+200000ce:	4b86      	ldr	r3, [pc, #536]	@ (200002e8 <main+0x274>)
+200000d0:	447b      	add	r3, pc
+200000d2:	4618      	mov	r0, r3
+200000d4:	f000 fb14 	bl	20000700 <__printf_veneer>
+    printf("addr realloc    : 0x%08lX\n", (uint32_t)realloc);
+200000d8:	4b84      	ldr	r3, [pc, #528]	@ (200002ec <main+0x278>)
+200000da:	58e3      	ldr	r3, [r4, r3]
+200000dc:	4619      	mov	r1, r3
+200000de:	4b84      	ldr	r3, [pc, #528]	@ (200002f0 <main+0x27c>)
+200000e0:	447b      	add	r3, pc
+200000e2:	4618      	mov	r0, r3
+200000e4:	f000 fb0c 	bl	20000700 <__printf_veneer>
+    printf("kernel          : 0x%08lX\n", (uint32_t)kernel);
+200000e8:	4b82      	ldr	r3, [pc, #520]	@ (200002f4 <main+0x280>)
+200000ea:	58e3      	ldr	r3, [r4, r3]
+200000ec:	681b      	ldr	r3, [r3, #0]
+200000ee:	4619      	mov	r1, r3
+200000f0:	4b81      	ldr	r3, [pc, #516]	@ (200002f8 <main+0x284>)
+200000f2:	447b      	add	r3, pc
+200000f4:	4618      	mov	r0, r3
+200000f6:	f000 fb03 	bl	20000700 <__printf_veneer>
+    printf("kernel.mem      : 0x%08lX\n", (uint32_t)&kernel->mem);
+200000fa:	4b7e      	ldr	r3, [pc, #504]	@ (200002f4 <main+0x280>)
+200000fc:	58e3      	ldr	r3, [r4, r3]
+200000fe:	681b      	ldr	r3, [r3, #0]
+20000100:	699b      	ldr	r3, [r3, #24]
+20000102:	4619      	mov	r1, r3
+20000104:	4b7d      	ldr	r3, [pc, #500]	@ (200002fc <main+0x288>)
+20000106:	447b      	add	r3, pc
+20000108:	4618      	mov	r0, r3
+2000010a:	f000 faf9 	bl	20000700 <__printf_veneer>
+    printf("sin(90)         : %f\n", mTest.value);
+2000010e:	4b7c      	ldr	r3, [pc, #496]	@ (20000300 <main+0x28c>)
+20000110:	447b      	add	r3, pc
+20000112:	681b      	ldr	r3, [r3, #0]
+20000114:	4618      	mov	r0, r3
+20000116:	f000 fb07 	bl	20000728 <____aeabi_f2d_veneer>
+2000011a:	4602      	mov	r2, r0
+2000011c:	460b      	mov	r3, r1
+2000011e:	4979      	ldr	r1, [pc, #484]	@ (20000304 <main+0x290>)
+20000120:	4479      	add	r1, pc
+20000122:	4608      	mov	r0, r1
+20000124:	f000 faec 	bl	20000700 <__printf_veneer>
+
+    printf("\n");
+20000128:	200a      	movs	r0, #10
+2000012a:	f000 faf5 	bl	20000718 <__putchar_veneer>
+    printf("////////////////////////////\n");
+2000012e:	4b76      	ldr	r3, [pc, #472]	@ (20000308 <main+0x294>)
+20000130:	447b      	add	r3, pc
+20000132:	4618      	mov	r0, r3
+20000134:	f000 faf4 	bl	20000720 <__puts_veneer>
+    printf("//// malloc test\n");
+20000138:	4b74      	ldr	r3, [pc, #464]	@ (2000030c <main+0x298>)
+2000013a:	447b      	add	r3, pc
+2000013c:	4618      	mov	r0, r3
+2000013e:	f000 faef 	bl	20000720 <__puts_veneer>
+    printf("////////////////////////////\n");
+20000142:	4b73      	ldr	r3, [pc, #460]	@ (20000310 <main+0x29c>)
+20000144:	447b      	add	r3, pc
+20000146:	4618      	mov	r0, r3
+20000148:	f000 faea 	bl	20000720 <__puts_veneer>
+    uint32_t* test = (uint32_t*) malloc(sizeof(uint32_t));
+2000014c:	2004      	movs	r0, #4
+2000014e:	f000 f9b7 	bl	200004c0 <malloc>
+20000152:	4603      	mov	r3, r0
+20000154:	603b      	str	r3, [r7, #0]
+    *test = 0x00C0FFEE;
+20000156:	683b      	ldr	r3, [r7, #0]
+20000158:	4a57      	ldr	r2, [pc, #348]	@ (200002b8 <main+0x244>)
+2000015a:	601a      	str	r2, [r3, #0]
+    printf("addr test       : 0x%08lX\n", (uint32_t)test);
+2000015c:	683b      	ldr	r3, [r7, #0]
+2000015e:	4619      	mov	r1, r3
+20000160:	4b6c      	ldr	r3, [pc, #432]	@ (20000314 <main+0x2a0>)
+20000162:	447b      	add	r3, pc
+20000164:	4618      	mov	r0, r3
+20000166:	f000 facb 	bl	20000700 <__printf_veneer>
+    printf("value test      : 0x%08lX\n", test[0]);
+2000016a:	683b      	ldr	r3, [r7, #0]
+2000016c:	681b      	ldr	r3, [r3, #0]
+2000016e:	4619      	mov	r1, r3
+20000170:	4b69      	ldr	r3, [pc, #420]	@ (20000318 <main+0x2a4>)
+20000172:	447b      	add	r3, pc
+20000174:	4618      	mov	r0, r3
+20000176:	f000 fac3 	bl	20000700 <__printf_veneer>
+
+    printf("\n");
+2000017a:	200a      	movs	r0, #10
+2000017c:	f000 facc 	bl	20000718 <__putchar_veneer>
+    printf("////////////////////////////\n");
+20000180:	4b66      	ldr	r3, [pc, #408]	@ (2000031c <main+0x2a8>)
+20000182:	447b      	add	r3, pc
+20000184:	4618      	mov	r0, r3
+20000186:	f000 facb 	bl	20000720 <__puts_veneer>
+    printf("//// realloc test\n");
+2000018a:	4b65      	ldr	r3, [pc, #404]	@ (20000320 <main+0x2ac>)
+2000018c:	447b      	add	r3, pc
+2000018e:	4618      	mov	r0, r3
+20000190:	f000 fac6 	bl	20000720 <__puts_veneer>
+    printf("////////////////////////////\n");
+20000194:	4b63      	ldr	r3, [pc, #396]	@ (20000324 <main+0x2b0>)
+20000196:	447b      	add	r3, pc
+20000198:	4618      	mov	r0, r3
+2000019a:	f000 fac1 	bl	20000720 <__puts_veneer>
+    test = (uint32_t*) realloc(test, sizeof(uint32_t) * 2);
+2000019e:	2108      	movs	r1, #8
+200001a0:	6838      	ldr	r0, [r7, #0]
+200001a2:	f000 f9d5 	bl	20000550 <realloc>
+200001a6:	6038      	str	r0, [r7, #0]
+    test[0] = 0x55555555;
+200001a8:	683b      	ldr	r3, [r7, #0]
+200001aa:	f04f 3255 	mov.w	r2, #1431655765	@ 0x55555555
+200001ae:	601a      	str	r2, [r3, #0]
+    test[1] = 0xAAAAAAAA;
+200001b0:	683b      	ldr	r3, [r7, #0]
+200001b2:	3304      	adds	r3, #4
+200001b4:	f04f 32aa 	mov.w	r2, #2863311530	@ 0xaaaaaaaa
+200001b8:	601a      	str	r2, [r3, #0]
+    printf("addr test       : 0x%08lX\n", (uint32_t)test);
+200001ba:	683b      	ldr	r3, [r7, #0]
+200001bc:	4619      	mov	r1, r3
+200001be:	4b5a      	ldr	r3, [pc, #360]	@ (20000328 <main+0x2b4>)
+200001c0:	447b      	add	r3, pc
+200001c2:	4618      	mov	r0, r3
+200001c4:	f000 fa9c 	bl	20000700 <__printf_veneer>
+    printf("value test[0]   : 0x%08lX\n", test[0]);
+200001c8:	683b      	ldr	r3, [r7, #0]
+200001ca:	681b      	ldr	r3, [r3, #0]
+200001cc:	4619      	mov	r1, r3
+200001ce:	4b57      	ldr	r3, [pc, #348]	@ (2000032c <main+0x2b8>)
+200001d0:	447b      	add	r3, pc
+200001d2:	4618      	mov	r0, r3
+200001d4:	f000 fa94 	bl	20000700 <__printf_veneer>
+    printf("value test[1]   : 0x%08lX\n", test[1]);
+200001d8:	683b      	ldr	r3, [r7, #0]
+200001da:	3304      	adds	r3, #4
+200001dc:	681b      	ldr	r3, [r3, #0]
+200001de:	4619      	mov	r1, r3
+200001e0:	4b53      	ldr	r3, [pc, #332]	@ (20000330 <main+0x2bc>)
+200001e2:	447b      	add	r3, pc
+200001e4:	4618      	mov	r0, r3
+200001e6:	f000 fa8b 	bl	20000700 <__printf_veneer>
+
+    printf("\n");
+200001ea:	200a      	movs	r0, #10
+200001ec:	f000 fa94 	bl	20000718 <__putchar_veneer>
+    printf("////////////////////////////\n");
+200001f0:	4b50      	ldr	r3, [pc, #320]	@ (20000334 <main+0x2c0>)
+200001f2:	447b      	add	r3, pc
+200001f4:	4618      	mov	r0, r3
+200001f6:	f000 fa93 	bl	20000720 <__puts_veneer>
+    printf("//// calloc test\n");
+200001fa:	4b4f      	ldr	r3, [pc, #316]	@ (20000338 <main+0x2c4>)
+200001fc:	447b      	add	r3, pc
+200001fe:	4618      	mov	r0, r3
+20000200:	f000 fa8e 	bl	20000720 <__puts_veneer>
+    printf("////////////////////////////\n");
+20000204:	4b4d      	ldr	r3, [pc, #308]	@ (2000033c <main+0x2c8>)
+20000206:	447b      	add	r3, pc
+20000208:	4618      	mov	r0, r3
+2000020a:	f000 fa89 	bl	20000720 <__puts_veneer>
+    test = (uint32_t*) calloc(sizeof(uint32_t), 4);
+2000020e:	2104      	movs	r1, #4
+20000210:	2004      	movs	r0, #4
+20000212:	f000 f981 	bl	20000518 <calloc>
+20000216:	4603      	mov	r3, r0
+20000218:	603b      	str	r3, [r7, #0]
+    printf("addr test       : 0x%08lX\n", (uint32_t)test);
+2000021a:	683b      	ldr	r3, [r7, #0]
+2000021c:	4619      	mov	r1, r3
+2000021e:	4b48      	ldr	r3, [pc, #288]	@ (20000340 <main+0x2cc>)
+20000220:	447b      	add	r3, pc
+20000222:	4618      	mov	r0, r3
+20000224:	f000 fa6c 	bl	20000700 <__printf_veneer>
+    printf("value test[0]   : 0x%08lX\n", test[0]);
+20000228:	683b      	ldr	r3, [r7, #0]
+2000022a:	681b      	ldr	r3, [r3, #0]
+2000022c:	4619      	mov	r1, r3
+2000022e:	4b45      	ldr	r3, [pc, #276]	@ (20000344 <main+0x2d0>)
+20000230:	447b      	add	r3, pc
+20000232:	4618      	mov	r0, r3
+20000234:	f000 fa64 	bl	20000700 <__printf_veneer>
+    printf("value test[1]   : 0x%08lX\n", test[1]);
+20000238:	683b      	ldr	r3, [r7, #0]
+2000023a:	3304      	adds	r3, #4
+2000023c:	681b      	ldr	r3, [r3, #0]
+2000023e:	4619      	mov	r1, r3
+20000240:	4b41      	ldr	r3, [pc, #260]	@ (20000348 <main+0x2d4>)
+20000242:	447b      	add	r3, pc
+20000244:	4618      	mov	r0, r3
+20000246:	f000 fa5b 	bl	20000700 <__printf_veneer>
+    printf("value test[2]   : 0x%08lX\n", test[2]);
+2000024a:	683b      	ldr	r3, [r7, #0]
+2000024c:	3308      	adds	r3, #8
+2000024e:	681b      	ldr	r3, [r3, #0]
+20000250:	4619      	mov	r1, r3
+20000252:	4b3e      	ldr	r3, [pc, #248]	@ (2000034c <main+0x2d8>)
+20000254:	447b      	add	r3, pc
+20000256:	4618      	mov	r0, r3
+20000258:	f000 fa52 	bl	20000700 <__printf_veneer>
+    printf("value test[3]   : 0x%08lX\n", test[3]);
+2000025c:	683b      	ldr	r3, [r7, #0]
+2000025e:	330c      	adds	r3, #12
+20000260:	681b      	ldr	r3, [r3, #0]
+20000262:	4619      	mov	r1, r3
+20000264:	4b3a      	ldr	r3, [pc, #232]	@ (20000350 <main+0x2dc>)
+20000266:	447b      	add	r3, pc
+20000268:	4618      	mov	r0, r3
+2000026a:	f000 fa49 	bl	20000700 <__printf_veneer>
+
+    printf("\n");
+2000026e:	200a      	movs	r0, #10
+20000270:	f000 fa52 	bl	20000718 <__putchar_veneer>
+    free(test);
+20000274:	6838      	ldr	r0, [r7, #0]
+20000276:	f000 f939 	bl	200004ec <free>
+
+    // This is FreeRTOS thread context
+    uint32_t cycles = 10;
+2000027a:	230a      	movs	r3, #10
+2000027c:	607b      	str	r3, [r7, #4]
+    for (;;) {
+        // Some delay function
+        kernel->app.delay(1000);
+2000027e:	4b1d      	ldr	r3, [pc, #116]	@ (200002f4 <main+0x280>)
+20000280:	58e3      	ldr	r3, [r4, r3]
+20000282:	681b      	ldr	r3, [r3, #0]
+20000284:	69da      	ldr	r2, [r3, #28]
+20000286:	4b1b      	ldr	r3, [pc, #108]	@ (200002f4 <main+0x280>)
+20000288:	58e3      	ldr	r3, [r4, r3]
+2000028a:	681b      	ldr	r3, [r3, #0]
+2000028c:	69db      	ldr	r3, [r3, #28]
+2000028e:	681b      	ldr	r3, [r3, #0]
+20000290:	3334      	adds	r3, #52	@ 0x34
+20000292:	681b      	ldr	r3, [r3, #0]
+20000294:	f44f 717a 	mov.w	r1, #1000	@ 0x3e8
+20000298:	4610      	mov	r0, r2
+2000029a:	4798      	blx	r3
+
+        if (--cycles == 0) {
+2000029c:	687b      	ldr	r3, [r7, #4]
+2000029e:	3b01      	subs	r3, #1
+200002a0:	607b      	str	r3, [r7, #4]
+200002a2:	687b      	ldr	r3, [r7, #4]
+200002a4:	2b00      	cmp	r3, #0
+200002a6:	bf0c      	ite	eq
+200002a8:	2301      	moveq	r3, #1
+200002aa:	2300      	movne	r3, #0
+200002ac:	b2db      	uxtb	r3, r3
+200002ae:	2b00      	cmp	r3, #0
+200002b0:	d0e5      	beq.n	2000027e <main+0x20a>
+            exit(0);
+200002b2:	2000      	movs	r0, #0
+200002b4:	f000 f9f6 	bl	200006a4 <exit>
+200002b8:	00c0ffee 	.word	0x00c0ffee
+200002bc:	00000ab8 	.word	0x00000ab8
+200002c0:	000006c0 	.word	0x000006c0
+200002c4:	00000000 	.word	0x00000000
+200002c8:	000006c4 	.word	0x000006c4
+200002cc:	00000008 	.word	0x00000008
+200002d0:	000006d0 	.word	0x000006d0
+200002d4:	0000001c 	.word	0x0000001c
+200002d8:	000006dc 	.word	0x000006dc
+200002dc:	00000034 	.word	0x00000034
+200002e0:	000006e8 	.word	0x000006e8
+200002e4:	0000000c 	.word	0x0000000c
+200002e8:	000006f4 	.word	0x000006f4
+200002ec:	00000010 	.word	0x00000010
+200002f0:	00000700 	.word	0x00000700
+200002f4:	00000020 	.word	0x00000020
+200002f8:	0000070a 	.word	0x0000070a
+200002fc:	00000712 	.word	0x00000712
+20000300:	00000a68 	.word	0x00000a68
+20000304:	00000714 	.word	0x00000714
+20000308:	0000071c 	.word	0x0000071c
+2000030c:	00000732 	.word	0x00000732
+20000310:	00000708 	.word	0x00000708
+20000314:	0000071e 	.word	0x0000071e
+20000318:	0000072a 	.word	0x0000072a
+2000031c:	000006ca 	.word	0x000006ca
+20000320:	0000072c 	.word	0x0000072c
+20000324:	000006b6 	.word	0x000006b6
+20000328:	000006c0 	.word	0x000006c0
+2000032c:	000006fc 	.word	0x000006fc
+20000330:	00000706 	.word	0x00000706
+20000334:	0000065a 	.word	0x0000065a
+20000338:	00000708 	.word	0x00000708
+2000033c:	00000646 	.word	0x00000646
+20000340:	00000660 	.word	0x00000660
+20000344:	0000069c 	.word	0x0000069c
+20000348:	000006a6 	.word	0x000006a6
+2000034c:	000006c4 	.word	0x000006c4
+20000350:	000006ce 	.word	0x000006ce
+
+20000354 <_Z41__static_initialization_and_destruction_0v>:
+        }
+    }
+
+    return 0;
+}
+20000354:	b580      	push	{r7, lr}
+20000356:	af00      	add	r7, sp, #0
+static Test mTest;
+20000358:	4b03      	ldr	r3, [pc, #12]	@ (20000368 <_Z41__static_initialization_and_destruction_0v+0x14>)
+2000035a:	447b      	add	r3, pc
+2000035c:	4618      	mov	r0, r3
+2000035e:	f7ff fe69 	bl	20000034 <_ZN4TestC1Ev>
+}
+20000362:	bf00      	nop
+20000364:	bd80      	pop	{r7, pc}
+20000366:	bf00      	nop
+20000368:	0000081e 	.word	0x0000081e
+
+2000036c <_Z41__static_initialization_and_destruction_1v>:
+2000036c:	b580      	push	{r7, lr}
+2000036e:	af00      	add	r7, sp, #0
+static Test mTest;
+20000370:	4b03      	ldr	r3, [pc, #12]	@ (20000380 <_Z41__static_initialization_and_destruction_1v+0x14>)
+20000372:	447b      	add	r3, pc
+20000374:	4618      	mov	r0, r3
+20000376:	f7ff fe6d 	bl	20000054 <_ZN4TestD1Ev>
+}
+2000037a:	bf00      	nop
+2000037c:	bd80      	pop	{r7, pc}
+2000037e:	bf00      	nop
+20000380:	00000806 	.word	0x00000806
+
+20000384 <_GLOBAL__sub_I_main.cpp>:
+20000384:	b580      	push	{r7, lr}
+20000386:	af00      	add	r7, sp, #0
+20000388:	f7ff ffe4 	bl	20000354 <_Z41__static_initialization_and_destruction_0v>
+2000038c:	bd80      	pop	{r7, pc}
+
+2000038e <_GLOBAL__sub_D_main.cpp>:
+2000038e:	b580      	push	{r7, lr}
+20000390:	af00      	add	r7, sp, #0
+20000392:	f7ff ffeb 	bl	2000036c <_Z41__static_initialization_and_destruction_1v>
+20000396:	bd80      	pop	{r7, pc}
+
+20000398 <__una_init_kernel>:
+extern void (*__fini_array_start[])     (void) __attribute__((weak));
+extern void (*__fini_array_end[])       (void) __attribute__((weak));
+
+extern "C" {
+    void __una_init_kernel (void)
+    {
+20000398:	b598      	push	{r3, r4, r7, lr}
+2000039a:	af00      	add	r7, sp, #0
+2000039c:	4c0f      	ldr	r4, [pc, #60]	@ (200003dc <__una_init_kernel+0x44>)
+2000039e:	447c      	add	r4, pc
+        kernel->app.initialized();
+200003a0:	4b0f      	ldr	r3, [pc, #60]	@ (200003e0 <__una_init_kernel+0x48>)
+200003a2:	58e3      	ldr	r3, [r4, r3]
+200003a4:	681b      	ldr	r3, [r3, #0]
+200003a6:	69da      	ldr	r2, [r3, #28]
+200003a8:	4b0d      	ldr	r3, [pc, #52]	@ (200003e0 <__una_init_kernel+0x48>)
+200003aa:	58e3      	ldr	r3, [r4, r3]
+200003ac:	681b      	ldr	r3, [r3, #0]
+200003ae:	69db      	ldr	r3, [r3, #28]
+200003b0:	681b      	ldr	r3, [r3, #0]
+200003b2:	3304      	adds	r3, #4
+200003b4:	681b      	ldr	r3, [r3, #0]
+200003b6:	4610      	mov	r0, r2
+200003b8:	4798      	blx	r3
+        kernel->app.log("hello\n");
+200003ba:	4b09      	ldr	r3, [pc, #36]	@ (200003e0 <__una_init_kernel+0x48>)
+200003bc:	58e3      	ldr	r3, [r4, r3]
+200003be:	681b      	ldr	r3, [r3, #0]
+200003c0:	69da      	ldr	r2, [r3, #28]
+200003c2:	4b07      	ldr	r3, [pc, #28]	@ (200003e0 <__una_init_kernel+0x48>)
+200003c4:	58e3      	ldr	r3, [r4, r3]
+200003c6:	681b      	ldr	r3, [r3, #0]
+200003c8:	69db      	ldr	r3, [r3, #28]
+200003ca:	681b      	ldr	r3, [r3, #0]
+200003cc:	332c      	adds	r3, #44	@ 0x2c
+200003ce:	681b      	ldr	r3, [r3, #0]
+200003d0:	4904      	ldr	r1, [pc, #16]	@ (200003e4 <__una_init_kernel+0x4c>)
+200003d2:	4479      	add	r1, pc
+200003d4:	4610      	mov	r0, r2
+200003d6:	4798      	blx	r3
+    }
+200003d8:	bf00      	nop
+200003da:	bd98      	pop	{r3, r4, r7, pc}
+200003dc:	00000796 	.word	0x00000796
+200003e0:	00000020 	.word	0x00000020
+200003e4:	0000057e 	.word	0x0000057e
+
+200003e8 <__una_init_array>:
+
+    /* Iterate over all the init routines.  */
+    void __una_init_array (void)
+    {
+200003e8:	b590      	push	{r4, r7, lr}
+200003ea:	b083      	sub	sp, #12
+200003ec:	af00      	add	r7, sp, #0
+200003ee:	4c1b      	ldr	r4, [pc, #108]	@ (2000045c <__una_init_array+0x74>)
+200003f0:	447c      	add	r4, pc
+        size_t count;
+        size_t i;
+
+        count = __preinit_array_end - __preinit_array_start;
+200003f2:	4b1b      	ldr	r3, [pc, #108]	@ (20000460 <__una_init_array+0x78>)
+200003f4:	58e3      	ldr	r3, [r4, r3]
+200003f6:	461a      	mov	r2, r3
+200003f8:	4b1a      	ldr	r3, [pc, #104]	@ (20000464 <__una_init_array+0x7c>)
+200003fa:	58e3      	ldr	r3, [r4, r3]
+200003fc:	1ad3      	subs	r3, r2, r3
+200003fe:	109b      	asrs	r3, r3, #2
+20000400:	603b      	str	r3, [r7, #0]
+        for (i = 0; i < count; ++i) {
+20000402:	2300      	movs	r3, #0
+20000404:	607b      	str	r3, [r7, #4]
+20000406:	e008      	b.n	2000041a <__una_init_array+0x32>
+            __preinit_array_start[i] ();
+20000408:	4b16      	ldr	r3, [pc, #88]	@ (20000464 <__una_init_array+0x7c>)
+2000040a:	58e3      	ldr	r3, [r4, r3]
+2000040c:	687a      	ldr	r2, [r7, #4]
+2000040e:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+20000412:	4798      	blx	r3
+        for (i = 0; i < count; ++i) {
+20000414:	687b      	ldr	r3, [r7, #4]
+20000416:	3301      	adds	r3, #1
+20000418:	607b      	str	r3, [r7, #4]
+2000041a:	687a      	ldr	r2, [r7, #4]
+2000041c:	683b      	ldr	r3, [r7, #0]
+2000041e:	429a      	cmp	r2, r3
+20000420:	d3f2      	bcc.n	20000408 <__una_init_array+0x20>
+
+        #ifdef _HAVE_INIT_FINI
+          _init ();
+        #endif
+
+        count = __init_array_end - __init_array_start;
+20000422:	4b11      	ldr	r3, [pc, #68]	@ (20000468 <__una_init_array+0x80>)
+20000424:	58e3      	ldr	r3, [r4, r3]
+20000426:	461a      	mov	r2, r3
+20000428:	4b10      	ldr	r3, [pc, #64]	@ (2000046c <__una_init_array+0x84>)
+2000042a:	58e3      	ldr	r3, [r4, r3]
+2000042c:	1ad3      	subs	r3, r2, r3
+2000042e:	109b      	asrs	r3, r3, #2
+20000430:	603b      	str	r3, [r7, #0]
+        for (i = 0; i < count; ++i) {
+20000432:	2300      	movs	r3, #0
+20000434:	607b      	str	r3, [r7, #4]
+20000436:	e008      	b.n	2000044a <__una_init_array+0x62>
+           __init_array_start[i] ();
+20000438:	4b0c      	ldr	r3, [pc, #48]	@ (2000046c <__una_init_array+0x84>)
+2000043a:	58e3      	ldr	r3, [r4, r3]
+2000043c:	687a      	ldr	r2, [r7, #4]
+2000043e:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+20000442:	4798      	blx	r3
+        for (i = 0; i < count; ++i) {
+20000444:	687b      	ldr	r3, [r7, #4]
+20000446:	3301      	adds	r3, #1
+20000448:	607b      	str	r3, [r7, #4]
+2000044a:	687a      	ldr	r2, [r7, #4]
+2000044c:	683b      	ldr	r3, [r7, #0]
+2000044e:	429a      	cmp	r2, r3
+20000450:	d3f2      	bcc.n	20000438 <__una_init_array+0x50>
+        }
+   }
+20000452:	bf00      	nop
+20000454:	bf00      	nop
+20000456:	370c      	adds	r7, #12
+20000458:	46bd      	mov	sp, r7
+2000045a:	bd90      	pop	{r4, r7, pc}
+2000045c:	00000744 	.word	0x00000744
+20000460:	00000028 	.word	0x00000028
+20000464:	00000030 	.word	0x00000030
+20000468:	00000018 	.word	0x00000018
+2000046c:	0000002c 	.word	0x0000002c
+
+20000470 <__una_fini_array>:
+
+    void __una_fini_array(void)
+    {
+20000470:	b590      	push	{r4, r7, lr}
+20000472:	b083      	sub	sp, #12
+20000474:	af00      	add	r7, sp, #0
+20000476:	4c0f      	ldr	r4, [pc, #60]	@ (200004b4 <__una_fini_array+0x44>)
+20000478:	447c      	add	r4, pc
+        int count = __fini_array_end - __fini_array_start;
+2000047a:	4b0f      	ldr	r3, [pc, #60]	@ (200004b8 <__una_fini_array+0x48>)
+2000047c:	58e3      	ldr	r3, [r4, r3]
+2000047e:	461a      	mov	r2, r3
+20000480:	4b0e      	ldr	r3, [pc, #56]	@ (200004bc <__una_fini_array+0x4c>)
+20000482:	58e3      	ldr	r3, [r4, r3]
+20000484:	1ad3      	subs	r3, r2, r3
+20000486:	109b      	asrs	r3, r3, #2
+20000488:	603b      	str	r3, [r7, #0]
+        for (int i = 0; i < count; ++i) {
+2000048a:	2300      	movs	r3, #0
+2000048c:	607b      	str	r3, [r7, #4]
+2000048e:	e008      	b.n	200004a2 <__una_fini_array+0x32>
+            __fini_array_start[i] ();
+20000490:	4b0a      	ldr	r3, [pc, #40]	@ (200004bc <__una_fini_array+0x4c>)
+20000492:	58e3      	ldr	r3, [r4, r3]
+20000494:	687a      	ldr	r2, [r7, #4]
+20000496:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+2000049a:	4798      	blx	r3
+        for (int i = 0; i < count; ++i) {
+2000049c:	687b      	ldr	r3, [r7, #4]
+2000049e:	3301      	adds	r3, #1
+200004a0:	607b      	str	r3, [r7, #4]
+200004a2:	687a      	ldr	r2, [r7, #4]
+200004a4:	683b      	ldr	r3, [r7, #0]
+200004a6:	429a      	cmp	r2, r3
+200004a8:	dbf2      	blt.n	20000490 <__una_fini_array+0x20>
+        }
+    }
+200004aa:	bf00      	nop
+200004ac:	bf00      	nop
+200004ae:	370c      	adds	r7, #12
+200004b0:	46bd      	mov	sp, r7
+200004b2:	bd90      	pop	{r4, r7, pc}
+200004b4:	000006bc 	.word	0x000006bc
+200004b8:	00000004 	.word	0x00000004
+200004bc:	00000014 	.word	0x00000014
+
+200004c0 <malloc>:
+    errno = ENOMEM;
+    return (void*) -1;
+}
+
+extern "C" void* malloc(size_t size)
+{
+200004c0:	b580      	push	{r7, lr}
+200004c2:	b082      	sub	sp, #8
+200004c4:	af00      	add	r7, sp, #0
+200004c6:	6078      	str	r0, [r7, #4]
+200004c8:	4a06      	ldr	r2, [pc, #24]	@ (200004e4 <malloc+0x24>)
+200004ca:	447a      	add	r2, pc
+    return _malloc_r(_REENT, size);
+200004cc:	4b06      	ldr	r3, [pc, #24]	@ (200004e8 <malloc+0x28>)
+200004ce:	58d3      	ldr	r3, [r2, r3]
+200004d0:	681b      	ldr	r3, [r3, #0]
+200004d2:	6879      	ldr	r1, [r7, #4]
+200004d4:	4618      	mov	r0, r3
+200004d6:	f000 f853 	bl	20000580 <_malloc_r>
+200004da:	4603      	mov	r3, r0
+}
+200004dc:	4618      	mov	r0, r3
+200004de:	3708      	adds	r7, #8
+200004e0:	46bd      	mov	sp, r7
+200004e2:	bd80      	pop	{r7, pc}
+200004e4:	0000066a 	.word	0x0000066a
+200004e8:	00000024 	.word	0x00000024
+
+200004ec <free>:
+
+extern "C" void free(void* ptr)
+{
+200004ec:	b580      	push	{r7, lr}
+200004ee:	b082      	sub	sp, #8
+200004f0:	af00      	add	r7, sp, #0
+200004f2:	6078      	str	r0, [r7, #4]
+200004f4:	4a06      	ldr	r2, [pc, #24]	@ (20000510 <free+0x24>)
+200004f6:	447a      	add	r2, pc
+    _free_r(_REENT, ptr);
+200004f8:	4b06      	ldr	r3, [pc, #24]	@ (20000514 <free+0x28>)
+200004fa:	58d3      	ldr	r3, [r2, r3]
+200004fc:	681b      	ldr	r3, [r3, #0]
+200004fe:	6879      	ldr	r1, [r7, #4]
+20000500:	4618      	mov	r0, r3
+20000502:	f000 f86d 	bl	200005e0 <_free_r>
+}
+20000506:	bf00      	nop
+20000508:	3708      	adds	r7, #8
+2000050a:	46bd      	mov	sp, r7
+2000050c:	bd80      	pop	{r7, pc}
+2000050e:	bf00      	nop
+20000510:	0000063e 	.word	0x0000063e
+20000514:	00000024 	.word	0x00000024
+
+20000518 <calloc>:
+
+extern "C" void* calloc(size_t __nmemb, size_t __size)
+{
+20000518:	b580      	push	{r7, lr}
+2000051a:	b084      	sub	sp, #16
+2000051c:	af00      	add	r7, sp, #0
+2000051e:	6078      	str	r0, [r7, #4]
+20000520:	6039      	str	r1, [r7, #0]
+    void* res = malloc(__nmemb * __size);
+20000522:	687b      	ldr	r3, [r7, #4]
+20000524:	683a      	ldr	r2, [r7, #0]
+20000526:	fb02 f303 	mul.w	r3, r2, r3
+2000052a:	4618      	mov	r0, r3
+2000052c:	f7ff ffc8 	bl	200004c0 <malloc>
+20000530:	4603      	mov	r3, r0
+20000532:	60fb      	str	r3, [r7, #12]
+
+    memset(res, 0, __nmemb * __size);
+20000534:	687b      	ldr	r3, [r7, #4]
+20000536:	683a      	ldr	r2, [r7, #0]
+20000538:	fb02 f303 	mul.w	r3, r2, r3
+2000053c:	461a      	mov	r2, r3
+2000053e:	2100      	movs	r1, #0
+20000540:	68f8      	ldr	r0, [r7, #12]
+20000542:	f000 f8e1 	bl	20000708 <__memset_veneer>
+
+    return res;
+20000546:	68fb      	ldr	r3, [r7, #12]
+}
+20000548:	4618      	mov	r0, r3
+2000054a:	3710      	adds	r7, #16
+2000054c:	46bd      	mov	sp, r7
+2000054e:	bd80      	pop	{r7, pc}
+
+20000550 <realloc>:
+
+extern "C" void* realloc(void* ptr, size_t __size)
+{
+20000550:	b580      	push	{r7, lr}
+20000552:	b082      	sub	sp, #8
+20000554:	af00      	add	r7, sp, #0
+20000556:	6078      	str	r0, [r7, #4]
+20000558:	6039      	str	r1, [r7, #0]
+2000055a:	4a07      	ldr	r2, [pc, #28]	@ (20000578 <realloc+0x28>)
+2000055c:	447a      	add	r2, pc
+    return _realloc_r(_REENT, ptr, __size);
+2000055e:	4b07      	ldr	r3, [pc, #28]	@ (2000057c <realloc+0x2c>)
+20000560:	58d3      	ldr	r3, [r2, r3]
+20000562:	681b      	ldr	r3, [r3, #0]
+20000564:	683a      	ldr	r2, [r7, #0]
+20000566:	6879      	ldr	r1, [r7, #4]
+20000568:	4618      	mov	r0, r3
+2000056a:	f000 f86b 	bl	20000644 <_realloc_r>
+2000056e:	4603      	mov	r3, r0
+}
+20000570:	4618      	mov	r0, r3
+20000572:	3708      	adds	r7, #8
+20000574:	46bd      	mov	sp, r7
+20000576:	bd80      	pop	{r7, pc}
+20000578:	000005d8 	.word	0x000005d8
+2000057c:	00000024 	.word	0x00000024
+
+20000580 <_malloc_r>:
+
+extern "C" void* _malloc_r(struct _reent *r, size_t size)
+{
+20000580:	b590      	push	{r4, r7, lr}
+20000582:	b085      	sub	sp, #20
+20000584:	af00      	add	r7, sp, #0
+20000586:	6078      	str	r0, [r7, #4]
+20000588:	6039      	str	r1, [r7, #0]
+2000058a:	4c12      	ldr	r4, [pc, #72]	@ (200005d4 <_malloc_r+0x54>)
+2000058c:	447c      	add	r4, pc
+    (void) r;
+    void *ptr = kernel->mem.malloc(size);
+2000058e:	4b12      	ldr	r3, [pc, #72]	@ (200005d8 <_malloc_r+0x58>)
+20000590:	58e3      	ldr	r3, [r4, r3]
+20000592:	681b      	ldr	r3, [r3, #0]
+20000594:	699a      	ldr	r2, [r3, #24]
+20000596:	4b10      	ldr	r3, [pc, #64]	@ (200005d8 <_malloc_r+0x58>)
+20000598:	58e3      	ldr	r3, [r4, r3]
+2000059a:	681b      	ldr	r3, [r3, #0]
+2000059c:	699b      	ldr	r3, [r3, #24]
+2000059e:	681b      	ldr	r3, [r3, #0]
+200005a0:	681b      	ldr	r3, [r3, #0]
+200005a2:	6839      	ldr	r1, [r7, #0]
+200005a4:	4610      	mov	r0, r2
+200005a6:	4798      	blx	r3
+200005a8:	60f8      	str	r0, [r7, #12]
+    kernel->app.log("malloc 0x%08X %u b\n", ptr, size);
+200005aa:	4b0b      	ldr	r3, [pc, #44]	@ (200005d8 <_malloc_r+0x58>)
+200005ac:	58e3      	ldr	r3, [r4, r3]
+200005ae:	681b      	ldr	r3, [r3, #0]
+200005b0:	69d8      	ldr	r0, [r3, #28]
+200005b2:	4b09      	ldr	r3, [pc, #36]	@ (200005d8 <_malloc_r+0x58>)
+200005b4:	58e3      	ldr	r3, [r4, r3]
+200005b6:	681b      	ldr	r3, [r3, #0]
+200005b8:	69db      	ldr	r3, [r3, #28]
+200005ba:	681b      	ldr	r3, [r3, #0]
+200005bc:	332c      	adds	r3, #44	@ 0x2c
+200005be:	681c      	ldr	r4, [r3, #0]
+200005c0:	683b      	ldr	r3, [r7, #0]
+200005c2:	68fa      	ldr	r2, [r7, #12]
+200005c4:	4905      	ldr	r1, [pc, #20]	@ (200005dc <_malloc_r+0x5c>)
+200005c6:	4479      	add	r1, pc
+200005c8:	47a0      	blx	r4
+    return ptr;
+200005ca:	68fb      	ldr	r3, [r7, #12]
+}
+200005cc:	4618      	mov	r0, r3
+200005ce:	3714      	adds	r7, #20
+200005d0:	46bd      	mov	sp, r7
+200005d2:	bd90      	pop	{r4, r7, pc}
+200005d4:	000005a8 	.word	0x000005a8
+200005d8:	00000020 	.word	0x00000020
+200005dc:	000003d2 	.word	0x000003d2
+
+200005e0 <_free_r>:
+
+extern "C" void _free_r(struct _reent *r, void *ptr)
+{
+200005e0:	b590      	push	{r4, r7, lr}
+200005e2:	b083      	sub	sp, #12
+200005e4:	af00      	add	r7, sp, #0
+200005e6:	6078      	str	r0, [r7, #4]
+200005e8:	6039      	str	r1, [r7, #0]
+200005ea:	4c13      	ldr	r4, [pc, #76]	@ (20000638 <_free_r+0x58>)
+200005ec:	447c      	add	r4, pc
+    (void) r;
+    if (ptr) {
+200005ee:	683b      	ldr	r3, [r7, #0]
+200005f0:	2b00      	cmp	r3, #0
+200005f2:	d01c      	beq.n	2000062e <_free_r+0x4e>
+        kernel->app.log("free   0x%08X\n", ptr);
+200005f4:	4b11      	ldr	r3, [pc, #68]	@ (2000063c <_free_r+0x5c>)
+200005f6:	58e3      	ldr	r3, [r4, r3]
+200005f8:	681b      	ldr	r3, [r3, #0]
+200005fa:	69d8      	ldr	r0, [r3, #28]
+200005fc:	4b0f      	ldr	r3, [pc, #60]	@ (2000063c <_free_r+0x5c>)
+200005fe:	58e3      	ldr	r3, [r4, r3]
+20000600:	681b      	ldr	r3, [r3, #0]
+20000602:	69db      	ldr	r3, [r3, #28]
+20000604:	681b      	ldr	r3, [r3, #0]
+20000606:	332c      	adds	r3, #44	@ 0x2c
+20000608:	681b      	ldr	r3, [r3, #0]
+2000060a:	683a      	ldr	r2, [r7, #0]
+2000060c:	490c      	ldr	r1, [pc, #48]	@ (20000640 <_free_r+0x60>)
+2000060e:	4479      	add	r1, pc
+20000610:	4798      	blx	r3
+        kernel->mem.free(ptr);
+20000612:	4b0a      	ldr	r3, [pc, #40]	@ (2000063c <_free_r+0x5c>)
+20000614:	58e3      	ldr	r3, [r4, r3]
+20000616:	681b      	ldr	r3, [r3, #0]
+20000618:	699a      	ldr	r2, [r3, #24]
+2000061a:	4b08      	ldr	r3, [pc, #32]	@ (2000063c <_free_r+0x5c>)
+2000061c:	58e3      	ldr	r3, [r4, r3]
+2000061e:	681b      	ldr	r3, [r3, #0]
+20000620:	699b      	ldr	r3, [r3, #24]
+20000622:	681b      	ldr	r3, [r3, #0]
+20000624:	3304      	adds	r3, #4
+20000626:	681b      	ldr	r3, [r3, #0]
+20000628:	6839      	ldr	r1, [r7, #0]
+2000062a:	4610      	mov	r0, r2
+2000062c:	4798      	blx	r3
+    }
+}
+2000062e:	bf00      	nop
+20000630:	370c      	adds	r7, #12
+20000632:	46bd      	mov	sp, r7
+20000634:	bd90      	pop	{r4, r7, pc}
+20000636:	bf00      	nop
+20000638:	00000548 	.word	0x00000548
+2000063c:	00000020 	.word	0x00000020
+20000640:	0000039e 	.word	0x0000039e
+
+20000644 <_realloc_r>:
+    }
+    return ptr;
+}
+
+extern "C" void* _realloc_r(struct _reent *r, void *ptr, size_t new_size)
+{
+20000644:	b580      	push	{r7, lr}
+20000646:	b086      	sub	sp, #24
+20000648:	af00      	add	r7, sp, #0
+2000064a:	60f8      	str	r0, [r7, #12]
+2000064c:	60b9      	str	r1, [r7, #8]
+2000064e:	607a      	str	r2, [r7, #4]
+    // If ptr == NULL, realloc behaves like malloc.
+    if (ptr == NULL) {
+20000650:	68bb      	ldr	r3, [r7, #8]
+20000652:	2b00      	cmp	r3, #0
+20000654:	d105      	bne.n	20000662 <_realloc_r+0x1e>
+        return _malloc_r(r, new_size);
+20000656:	6879      	ldr	r1, [r7, #4]
+20000658:	68f8      	ldr	r0, [r7, #12]
+2000065a:	f7ff ff91 	bl	20000580 <_malloc_r>
+2000065e:	4603      	mov	r3, r0
+20000660:	e01c      	b.n	2000069c <_realloc_r+0x58>
+    }
+
+    // If new_size == 0, release the block and return NULL.
+    if (new_size == 0) {
+20000662:	687b      	ldr	r3, [r7, #4]
+20000664:	2b00      	cmp	r3, #0
+20000666:	d105      	bne.n	20000674 <_realloc_r+0x30>
+        _free_r(r, ptr);
+20000668:	68b9      	ldr	r1, [r7, #8]
+2000066a:	68f8      	ldr	r0, [r7, #12]
+2000066c:	f7ff ffb8 	bl	200005e0 <_free_r>
+        return NULL;
+20000670:	2300      	movs	r3, #0
+20000672:	e013      	b.n	2000069c <_realloc_r+0x58>
+    }
+
+    // Allocate a new block of memory.
+    void *new_ptr = _malloc_r(r, new_size);
+20000674:	6879      	ldr	r1, [r7, #4]
+20000676:	68f8      	ldr	r0, [r7, #12]
+20000678:	f7ff ff82 	bl	20000580 <_malloc_r>
+2000067c:	6178      	str	r0, [r7, #20]
+    if (new_ptr == NULL) {
+2000067e:	697b      	ldr	r3, [r7, #20]
+20000680:	2b00      	cmp	r3, #0
+20000682:	d101      	bne.n	20000688 <_realloc_r+0x44>
+        // Selection failed, return NULL.
+        return NULL;
+20000684:	2300      	movs	r3, #0
+20000686:	e009      	b.n	2000069c <_realloc_r+0x58>
+    }
+
+    // We copy the data from the old block to the new one (we copy the smaller of the two sizes).
+    // Assume the old block contains at least new_size bytes for simplicity.
+    // If exact copying is required, block size should be stored separately.
+    memcpy(new_ptr, ptr, new_size);
+20000688:	687a      	ldr	r2, [r7, #4]
+2000068a:	68b9      	ldr	r1, [r7, #8]
+2000068c:	6978      	ldr	r0, [r7, #20]
+2000068e:	f000 f83f 	bl	20000710 <__memcpy_veneer>
+
+    // Free the old block.
+    _free_r(r, ptr);
+20000692:	68b9      	ldr	r1, [r7, #8]
+20000694:	68f8      	ldr	r0, [r7, #12]
+20000696:	f7ff ffa3 	bl	200005e0 <_free_r>
+
+    return new_ptr;
+2000069a:	697b      	ldr	r3, [r7, #20]
+}
+2000069c:	4618      	mov	r0, r3
+2000069e:	3718      	adds	r7, #24
+200006a0:	46bd      	mov	sp, r7
+200006a2:	bd80      	pop	{r7, pc}
+
+200006a4 <exit>:
+    kernel->app.log("assert: %s %d %s %s\n", file, line, func, failedexpr);
+    exit(-1);
+}
+
+extern "C" void exit(int status)
+{
+200006a4:	b590      	push	{r4, r7, lr}
+200006a6:	b083      	sub	sp, #12
+200006a8:	af00      	add	r7, sp, #0
+200006aa:	6078      	str	r0, [r7, #4]
+200006ac:	4c11      	ldr	r4, [pc, #68]	@ (200006f4 <exit+0x50>)
+200006ae:	447c      	add	r4, pc
+    kernel->app.log("exit %d\n", status);
+200006b0:	4b11      	ldr	r3, [pc, #68]	@ (200006f8 <exit+0x54>)
+200006b2:	58e3      	ldr	r3, [r4, r3]
+200006b4:	681b      	ldr	r3, [r3, #0]
+200006b6:	69d8      	ldr	r0, [r3, #28]
+200006b8:	4b0f      	ldr	r3, [pc, #60]	@ (200006f8 <exit+0x54>)
+200006ba:	58e3      	ldr	r3, [r4, r3]
+200006bc:	681b      	ldr	r3, [r3, #0]
+200006be:	69db      	ldr	r3, [r3, #28]
+200006c0:	681b      	ldr	r3, [r3, #0]
+200006c2:	332c      	adds	r3, #44	@ 0x2c
+200006c4:	681b      	ldr	r3, [r3, #0]
+200006c6:	687a      	ldr	r2, [r7, #4]
+200006c8:	490c      	ldr	r1, [pc, #48]	@ (200006fc <exit+0x58>)
+200006ca:	4479      	add	r1, pc
+200006cc:	4798      	blx	r3
+
+    __una_fini_array();
+200006ce:	f7ff fecf 	bl	20000470 <__una_fini_array>
+
+    kernel->app.exit(status);
+200006d2:	4b09      	ldr	r3, [pc, #36]	@ (200006f8 <exit+0x54>)
+200006d4:	58e3      	ldr	r3, [r4, r3]
+200006d6:	681b      	ldr	r3, [r3, #0]
+200006d8:	69da      	ldr	r2, [r3, #28]
+200006da:	4b07      	ldr	r3, [pc, #28]	@ (200006f8 <exit+0x54>)
+200006dc:	58e3      	ldr	r3, [r4, r3]
+200006de:	681b      	ldr	r3, [r3, #0]
+200006e0:	69db      	ldr	r3, [r3, #28]
+200006e2:	681b      	ldr	r3, [r3, #0]
+200006e4:	3318      	adds	r3, #24
+200006e6:	681b      	ldr	r3, [r3, #0]
+200006e8:	6879      	ldr	r1, [r7, #4]
+200006ea:	4610      	mov	r0, r2
+200006ec:	4798      	blx	r3
+
+    while (1) {}    /* Make sure we hang here */
+200006ee:	bf00      	nop
+200006f0:	e7fd      	b.n	200006ee <exit+0x4a>
+200006f2:	bf00      	nop
+200006f4:	00000486 	.word	0x00000486
+200006f8:	00000020 	.word	0x00000020
+200006fc:	0000030a 	.word	0x0000030a
+
+20000700 <__printf_veneer>:
+20000700:	f85f f000 	ldr.w	pc, [pc]	@ 20000704 <__printf_veneer+0x4>
+20000704:	081b2269 	.word	0x081b2269
+
+20000708 <__memset_veneer>:
+20000708:	f85f f000 	ldr.w	pc, [pc]	@ 2000070c <__memset_veneer+0x4>
+2000070c:	081b2c91 	.word	0x081b2c91
+
+20000710 <__memcpy_veneer>:
+20000710:	f85f f000 	ldr.w	pc, [pc]	@ 20000714 <__memcpy_veneer+0x4>
+20000714:	081b4705 	.word	0x081b4705
+
+20000718 <__putchar_veneer>:
+20000718:	f85f f000 	ldr.w	pc, [pc]	@ 2000071c <__putchar_veneer+0x4>
+2000071c:	081b230d 	.word	0x081b230d
+
+20000720 <__puts_veneer>:
+20000720:	f85f f000 	ldr.w	pc, [pc]	@ 20000724 <__puts_veneer+0x4>
+20000724:	081b23b1 	.word	0x081b23b1
+
+20000728 <____aeabi_f2d_veneer>:
+20000728:	f85f f000 	ldr.w	pc, [pc]	@ 2000072c <____aeabi_f2d_veneer+0x4>
+2000072c:	081d0d35 	.word	0x081d0d35
+
+20000730 <__exidx_end>:
+20000730:	74617473 	.word	0x74617473
+20000734:	64206369 	.word	0x64206369
+20000738:	72747365 	.word	0x72747365
+2000073c:	6f746375 	.word	0x6f746375
+20000740:	00000072 	.word	0x00000072
+20000744:	6573750a 	.word	0x6573750a
+20000748:	70612072 	.word	0x70612072
+2000074c:	74732070 	.word	0x74732070
+20000750:	65747261 	.word	0x65747261
+20000754:	00000064 	.word	0x00000064
+20000758:	72646461 	.word	0x72646461
+2000075c:	69727020 	.word	0x69727020
+20000760:	2020666e 	.word	0x2020666e
+20000764:	20202020 	.word	0x20202020
+20000768:	7830203a 	.word	0x7830203a
+2000076c:	6c383025 	.word	0x6c383025
+20000770:	00000a58 	.word	0x00000a58
+20000774:	72646461 	.word	0x72646461
+20000778:	6c616d20 	.word	0x6c616d20
+2000077c:	20636f6c 	.word	0x20636f6c
+20000780:	20202020 	.word	0x20202020
+20000784:	7830203a 	.word	0x7830203a
+20000788:	6c383025 	.word	0x6c383025
+2000078c:	00000a58 	.word	0x00000a58
+20000790:	72646461 	.word	0x72646461
+20000794:	6c616d20 	.word	0x6c616d20
+20000798:	5f636f6c 	.word	0x5f636f6c
+2000079c:	20202072 	.word	0x20202072
+200007a0:	7830203a 	.word	0x7830203a
+200007a4:	6c383025 	.word	0x6c383025
+200007a8:	00000a58 	.word	0x00000a58
+200007ac:	72646461 	.word	0x72646461
+200007b0:	65726620 	.word	0x65726620
+200007b4:	20202065 	.word	0x20202065
+200007b8:	20202020 	.word	0x20202020
+200007bc:	7830203a 	.word	0x7830203a
+200007c0:	6c383025 	.word	0x6c383025
+200007c4:	00000a58 	.word	0x00000a58
+200007c8:	72646461 	.word	0x72646461
+200007cc:	6c616320 	.word	0x6c616320
+200007d0:	20636f6c 	.word	0x20636f6c
+200007d4:	20202020 	.word	0x20202020
+200007d8:	7830203a 	.word	0x7830203a
+200007dc:	6c383025 	.word	0x6c383025
+200007e0:	00000a58 	.word	0x00000a58
+200007e4:	72646461 	.word	0x72646461
+200007e8:	61657220 	.word	0x61657220
+200007ec:	636f6c6c 	.word	0x636f6c6c
+200007f0:	20202020 	.word	0x20202020
+200007f4:	7830203a 	.word	0x7830203a
+200007f8:	6c383025 	.word	0x6c383025
+200007fc:	00000a58 	.word	0x00000a58
+20000800:	6e72656b 	.word	0x6e72656b
+20000804:	20206c65 	.word	0x20206c65
+20000808:	20202020 	.word	0x20202020
+2000080c:	20202020 	.word	0x20202020
+20000810:	7830203a 	.word	0x7830203a
+20000814:	6c383025 	.word	0x6c383025
+20000818:	00000a58 	.word	0x00000a58
+2000081c:	6e72656b 	.word	0x6e72656b
+20000820:	6d2e6c65 	.word	0x6d2e6c65
+20000824:	20206d65 	.word	0x20206d65
+20000828:	20202020 	.word	0x20202020
+2000082c:	7830203a 	.word	0x7830203a
+20000830:	6c383025 	.word	0x6c383025
+20000834:	00000a58 	.word	0x00000a58
+20000838:	286e6973 	.word	0x286e6973
+2000083c:	20293039 	.word	0x20293039
+20000840:	20202020 	.word	0x20202020
+20000844:	20202020 	.word	0x20202020
+20000848:	6625203a 	.word	0x6625203a
+2000084c:	0000000a 	.word	0x0000000a
+20000850:	2f2f2f2f 	.word	0x2f2f2f2f
+20000854:	2f2f2f2f 	.word	0x2f2f2f2f
+20000858:	2f2f2f2f 	.word	0x2f2f2f2f
+2000085c:	2f2f2f2f 	.word	0x2f2f2f2f
+20000860:	2f2f2f2f 	.word	0x2f2f2f2f
+20000864:	2f2f2f2f 	.word	0x2f2f2f2f
+20000868:	2f2f2f2f 	.word	0x2f2f2f2f
+2000086c:	00000000 	.word	0x00000000
+20000870:	2f2f2f2f 	.word	0x2f2f2f2f
+20000874:	6c616d20 	.word	0x6c616d20
+20000878:	20636f6c 	.word	0x20636f6c
+2000087c:	74736574 	.word	0x74736574
+20000880:	00000000 	.word	0x00000000
+20000884:	72646461 	.word	0x72646461
+20000888:	73657420 	.word	0x73657420
+2000088c:	20202074 	.word	0x20202074
+20000890:	20202020 	.word	0x20202020
+20000894:	7830203a 	.word	0x7830203a
+20000898:	6c383025 	.word	0x6c383025
+2000089c:	00000a58 	.word	0x00000a58
+200008a0:	756c6176 	.word	0x756c6176
+200008a4:	65742065 	.word	0x65742065
+200008a8:	20207473 	.word	0x20207473
+200008ac:	20202020 	.word	0x20202020
+200008b0:	7830203a 	.word	0x7830203a
+200008b4:	6c383025 	.word	0x6c383025
+200008b8:	00000a58 	.word	0x00000a58
+200008bc:	2f2f2f2f 	.word	0x2f2f2f2f
+200008c0:	61657220 	.word	0x61657220
+200008c4:	636f6c6c 	.word	0x636f6c6c
+200008c8:	73657420 	.word	0x73657420
+200008cc:	00000074 	.word	0x00000074
+200008d0:	756c6176 	.word	0x756c6176
+200008d4:	65742065 	.word	0x65742065
+200008d8:	305b7473 	.word	0x305b7473
+200008dc:	2020205d 	.word	0x2020205d
+200008e0:	7830203a 	.word	0x7830203a
+200008e4:	6c383025 	.word	0x6c383025
+200008e8:	00000a58 	.word	0x00000a58
+200008ec:	756c6176 	.word	0x756c6176
+200008f0:	65742065 	.word	0x65742065
+200008f4:	315b7473 	.word	0x315b7473
+200008f8:	2020205d 	.word	0x2020205d
+200008fc:	7830203a 	.word	0x7830203a
+20000900:	6c383025 	.word	0x6c383025
+20000904:	00000a58 	.word	0x00000a58
+20000908:	2f2f2f2f 	.word	0x2f2f2f2f
+2000090c:	6c616320 	.word	0x6c616320
+20000910:	20636f6c 	.word	0x20636f6c
+20000914:	74736574 	.word	0x74736574
+20000918:	00000000 	.word	0x00000000
+2000091c:	756c6176 	.word	0x756c6176
+20000920:	65742065 	.word	0x65742065
+20000924:	325b7473 	.word	0x325b7473
+20000928:	2020205d 	.word	0x2020205d
+2000092c:	7830203a 	.word	0x7830203a
+20000930:	6c383025 	.word	0x6c383025
+20000934:	00000a58 	.word	0x00000a58
+20000938:	756c6176 	.word	0x756c6176
+2000093c:	65742065 	.word	0x65742065
+20000940:	335b7473 	.word	0x335b7473
+20000944:	2020205d 	.word	0x2020205d
+20000948:	7830203a 	.word	0x7830203a
+2000094c:	6c383025 	.word	0x6c383025
+20000950:	00000a58 	.word	0x00000a58
+20000954:	6c6c6568 	.word	0x6c6c6568
+20000958:	00000a6f 	.word	0x00000a6f
+2000095c:	7262735f 	.word	0x7262735f
+20000960:	6425206b 	.word	0x6425206b
+20000964:	0000000a 	.word	0x0000000a
+20000968:	00000030 	.word	0x00000030
+2000096c:	64696f76 	.word	0x64696f76
+20000970:	735f202a 	.word	0x735f202a
+20000974:	286b7262 	.word	0x286b7262
+20000978:	64727470 	.word	0x64727470
+2000097c:	5f666669 	.word	0x5f666669
+20000980:	00002974 	.word	0x00002974
+20000984:	432f2e2e 	.word	0x432f2e2e
+20000988:	2f65726f 	.word	0x2f65726f
+2000098c:	2f637253 	.word	0x2f637253
+20000990:	6d737973 	.word	0x6d737973
+20000994:	632e6d65 	.word	0x632e6d65
+20000998:	00007070 	.word	0x00007070
+2000099c:	6c6c616d 	.word	0x6c6c616d
+200009a0:	3020636f 	.word	0x3020636f
+200009a4:	38302578 	.word	0x38302578
+200009a8:	75252058 	.word	0x75252058
+200009ac:	000a6220 	.word	0x000a6220
+200009b0:	65657266 	.word	0x65657266
+200009b4:	30202020 	.word	0x30202020
+200009b8:	38302578 	.word	0x38302578
+200009bc:	00000a58 	.word	0x00000a58
+200009c0:	65737361 	.word	0x65737361
+200009c4:	203a7472 	.word	0x203a7472
+200009c8:	25207325 	.word	0x25207325
+200009cc:	73252064 	.word	0x73252064
+200009d0:	0a732520 	.word	0x0a732520
+200009d4:	00000000 	.word	0x00000000
+200009d8:	74697865 	.word	0x74697865
+200009dc:	0a642520 	.word	0x0a642520
+200009e0:	00000000 	.word	0x00000000
