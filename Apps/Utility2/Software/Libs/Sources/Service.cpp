@@ -2,10 +2,9 @@
 
 #include <stdio.h>
 
-#define TAG                 "Service2"
-#define LOG_MODULE_PRX      TAG"::"
+#define LOG_MODULE_PRX      "Service::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 Service::Service(const IKernel& kernel)
         : mKernel(kernel)

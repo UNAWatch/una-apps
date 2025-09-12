@@ -4,10 +4,9 @@
 #include "SDK/KernelManager.hpp"
 
 
-#define TAG                 "App::Alarm[G]"
-#define LOG_MODULE_PRX      TAG"::"
+#define LOG_MODULE_PRX      "Model::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 #if defined(SIMULATOR)
     #include "touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp"
