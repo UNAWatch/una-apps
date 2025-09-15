@@ -34,7 +34,7 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Common</name>
+			<name>Libs</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -44,79 +44,89 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header</name>
+			<name>Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header</name>
+			<name>Libs/Source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Source</name>
+			<name>SDK/Libs</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/GSModelEvents</name>
+			<name>Libs/Header/GSModelEvents</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/GSModel</name>
+			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/Interfaces</name>
+			<name>SDK/Libs/Source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Source/AppSystem</name>
+			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/GSModel</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/GSModelEvents/G2SEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/GSModelEvents/G2SEvents.hpp</locationURI>
+			<name>SDK/Libs/Header/Interfaces</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/GSModelEvents/S2GEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/GSModelEvents/S2GEvents.hpp</locationURI>
+			<name>SDK/Libs/Source/AppSystem</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/GSModel/GSModel.hpp</name>
+			<name>SDK/Libs/Header/GSModel/GSModel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/GSModel/GSModel.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/GSModel/GSModel.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/GSModel/IGUIModel.hpp</name>
+			<name>SDK/Libs/Header/GSModel/IGUIModel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/GSModel/IGUIModel.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/GSModel/IGUIModel.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/Interfaces/IKernel.hpp</name>
+			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Source/AppSystem/startup_user_app.s</name>
+			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
-			<locationURI>SDK_SRC_LOC/AppSystem/startup_user_app.s</locationURI>
+			<locationURI>SDK_LOC/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
-			<name>SDK/Source/AppSystem/sysmem.cpp</name>
+			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_SRC_LOC/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
-			<name>SDK_SRC_LOC</name>
+			<name>SDK_LOC</name>
 			<value>$%7BPARENT-5-PROJECT_LOC%7D/SDK/Libs/Source</value>
 		</variable>
 	</variableList>

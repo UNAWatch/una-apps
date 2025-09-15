@@ -12,9 +12,9 @@
 #include <stdio.h>
 #include "SDK/KernelManager.hpp"
 
-#define LOG_MODULE_PRX      LOG_TAG"main::"
+#define LOG_MODULE_PRX      "main::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 extern "C" void touchgfx_init(void);
 extern "C" void touchgfx_components_init(void);

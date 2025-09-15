@@ -36,7 +36,7 @@
 		<link>
 			<name>Libs</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK</name>
@@ -44,9 +44,34 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/GSModelEvents</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/Service.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/Service.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/Service.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header</name>
@@ -59,9 +84,14 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Interfaces</name>
@@ -74,124 +104,39 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/AppSystem</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/API/Backlight.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Backlight.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/API/Buzzer.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Buzzer.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/API/FileSystem.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/FileSystem.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/API/Power.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Power.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/API/Settings.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Settings.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/API/Time.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Time.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/API/Vibro.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/API/Vibro.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IFileSystem.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IFileSystem.hpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IKernel.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IMutex.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IMutex.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IPower.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IPower.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISemaphore.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISemaphore.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISensorCore.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISensorCore.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISensorManager.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISensorManager.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISensors.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISensors.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISettings.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISettings.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ISynchManager.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ISynchManager.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/ITime.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/ITime.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IUserApp.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IUserApp.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IUserAppControl.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IUserAppControl.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Interfaces/IUserAppMemAllocator.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/Interfaces/IUserAppMemAllocator.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/UnaLogger/Logger.h</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/AppSystem/startup_user_app.s</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/AppSystem/sysmem.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/UnaLogger/Logger.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

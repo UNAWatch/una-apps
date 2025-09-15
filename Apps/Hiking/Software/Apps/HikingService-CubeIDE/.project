@@ -34,14 +34,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Common</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>Libs</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK</name>
@@ -49,17 +44,17 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header</name>
+			<name>Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header</name>
+			<name>Libs/Sources</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Source</name>
+			<name>SDK/Libs</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -69,87 +64,72 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/ActivitySummary.hpp</name>
+			<name>Libs/Header/ActivitySummary.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/ActivitySummary.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/ActivitySummary.hpp</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/GSModelEvents</name>
+			<name>Libs/Header/ActivitySummarySerializer.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/ActivitySummarySerializer.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/ActivityWriter.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/ActivityWriter.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/GSModelEvents</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/Settings.hpp</name>
+			<name>Libs/Header/Service.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/Settings.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/TrackInfo.hpp</name>
+			<name>Libs/Header/Settings.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/TrackInfo.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Settings.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/API</name>
+			<name>Libs/Header/SettingsSerializer.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/SettingsSerializer.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/TrackInfo.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/TrackInfo.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/ActivitySummarySerializer.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/ActivitySummarySerializer.cpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/ActivityWriter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/ActivityWriter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/Service.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/Service.cpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/SettingsSerializer.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/SettingsSerializer.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/Interfaces</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/JsonStreamReader.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/JsonStreamReader.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/JsonStreamWriter.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/JsonStreamWriter.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/KernelManager.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/KernelManager.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/TrackMapBuilder.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/TrackMapBuilder.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/TrackMapScreen.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/TrackMapScreen.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/UnaLogger</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/AppSystem</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/JsonStreamReader.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_SRC_LOC/JsonStreamReader.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/JsonStreamWriter.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_SRC_LOC/JsonStreamWriter.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/TrackMapBuilder.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_SRC_LOC/TrackMapBuilder.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/UnaLogger</name>
+			<name>SDK/Libs/Source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -164,115 +144,160 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/GSModelEvents/G2SEvents.hpp</name>
+			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/GSModelEvents/G2SEvents.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
 		</link>
 		<link>
-			<name>Common/Header/GSModelEvents/S2GEvents.hpp</name>
+			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Common/Header/GSModelEvents/S2GEvents.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Header/API/Backlight.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/API/Backlight.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/API/Buzzer.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/API/Buzzer.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/API/FileSystem.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/API/FileSystem.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/API/Power.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/API/Power.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/API/Settings.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/API/Settings.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/API/Time.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/API/Time.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/API/Vibro.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/API/Vibro.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/Interfaces/IKernel.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Header/UnaLogger/Logger.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_SRC_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/AppSystem/startup_user_app.s</name>
-			<type>1</type>
-			<locationURI>SDK_SRC_LOC/AppSystem/startup_user_app.s</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/AppSystem/sysmem.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_SRC_LOC/AppSystem/sysmem.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Source/UnaLogger/Logger.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_SRC_LOC/UnaLogger/Logger.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_SRC_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit.c</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_convert.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_SRC_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_convert.c</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_crc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_SRC_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_crc.c</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/FitSDK/fit_product.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_SRC_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_product.c</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/core_json.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_SRC_LOC/ThirdParty/coreJSON/source/core_json.c</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/include</name>
+			<name>SDK/Libs/Header/Interfaces</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/ThirdParty/coreJSON/include/core_json.h</name>
+			<name>SDK/Libs/Header/JSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/TrackMap</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/UnaLogger</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/JSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/TrackMap</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/UnaLogger</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit.c</name>
 			<type>1</type>
-			<locationURI>PARENT-2-SDK_SRC_LOC/ThirdParty/coreJSON/source/include/core_json.h</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit_convert.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_convert.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit_crc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_crc.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit_product.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_product.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/JSON/JsonStreamReader.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JSON/JsonStreamReader.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/JSON/JsonStreamWriter.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JSON/JsonStreamWriter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/TrackMap/TrackMapBuilder.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/TrackMap/TrackMapBuilder.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/TrackMap/TrackMapScreen.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/TrackMap/TrackMapScreen.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/startup_user_app.s</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/JSON/JsonStreamReader.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/JSON/JsonStreamReader.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/JSON/JsonStreamWriter.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/JSON/JsonStreamWriter.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/TrackMap/TrackMapBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/TrackMap/TrackMapBuilder.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/UnaLogger/Logger.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/source/core_json.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/core_json.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/source/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/coreJSON/source/include/core_json.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/include/core_json.h</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
-			<name>SDK_SRC_LOC</name>
-			<value>$%7BPARENT-6-PROJECT_LOC%7D/SDK/Libs/Source</value>
+			<name>SDK_LOC</name>
+			<value>$%7BPARENT-5-PROJECT_LOC%7D/SDK/Libs/Source</value>
 		</variable>
 	</variableList>
 </projectDescription>

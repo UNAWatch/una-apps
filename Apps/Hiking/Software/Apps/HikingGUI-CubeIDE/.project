@@ -89,6 +89,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Interfaces</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -106,32 +111,32 @@
 		<link>
 			<name>SDK/Port/TouchGFX/STM32TouchController.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/STM32TouchController.cpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/STM32TouchController.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/STM32TouchController.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/STM32TouchController.hpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/STM32TouchController.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/TouchGFXGPIO.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/TouchGFXGPIO.cpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/TouchGFXGPIO.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/TouchGFXHAL.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/TouchGFXHAL.cpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/TouchGFXHAL.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/TouchGFXHAL.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/TouchGFXHAL.hpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/TouchGFXHAL.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/app_touchgfx.h</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/app_touchgfx.h</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/app_touchgfx.h</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/generated</name>
@@ -139,60 +144,65 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/SDK/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/AppSystem/startup_user_app.s</locationURI>
+			<locationURI>SDK_LOC/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+			<locationURI>SDK_LOC/UnaLogger/Logger.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/generated/OSWrappers.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/generated/OSWrappers.cpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/generated/OSWrappers.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/generated/STM32DMA.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/generated/STM32DMA.cpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/generated/STM32DMA.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/generated/STM32DMA.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/generated/STM32DMA.hpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/generated/STM32DMA.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/generated/TouchGFXConfiguration.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/generated/TouchGFXConfiguration.cpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/generated/TouchGFXConfiguration.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.cpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/generated/TouchGFXGeneratedHAL.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-3-SDK_SRC_LOC/una-watch-feature-develop2-hiking/SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</locationURI>
+			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
-			<name>SDK_SRC_LOC</name>
-			<value>$%7BPARENT-6-PROJECT_LOC%7D/SDK/Libs/Source</value>
+			<name>SDK_LOC</name>
+			<value>$%7BPARENT-5-PROJECT_LOC%7D/SDK/Libs/Source</value>
 		</variable>
 	</variableList>
 </projectDescription>

@@ -79,11 +79,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AppTypes.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/Interfaces</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -99,12 +94,12 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/Interfaces/IModel.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Interfaces/IModel.hpp</locationURI>
+			<name>SDK/Libs/Header/Interfaces</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/SDK</name>
+			<name>SDK/Libs/Header/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -154,9 +149,14 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/SDK/UnaLogger</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
@@ -202,11 +202,6 @@
 			<name>SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-SDK_LOC/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/SDK/UnaLogger/Logger.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

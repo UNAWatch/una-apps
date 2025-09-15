@@ -32,7 +32,7 @@ void Service::run()
 //    mKernel.app.enablePhoneNotification(true);
 //    mKernel.app.enableUsbCharging(true);
 
-    uint8_t stage = 0;
+//    uint8_t stage = 0;
 
     mAltimeter = mKernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::ALTIMETER);
     if (mAltimeter) {

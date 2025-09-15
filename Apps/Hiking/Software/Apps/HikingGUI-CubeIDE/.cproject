@@ -69,7 +69,6 @@
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
 									<listOptionValue builtIn="false" value="../../../Libs/Header"/>
 									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Libs/Header&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Libs/Header/SDK/UnaLogger&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Port/TouchGFX&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Port/TouchGFX/generated&quot;"/>
 									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/touchgfx/framework/include"/>

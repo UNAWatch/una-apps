@@ -36,10 +36,20 @@
 		<link>
 			<name>Libs</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs</locationURI>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -52,6 +62,36 @@
 			<name>SDK/ThirdParty</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/AlarmManager.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AlarmManager.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/AppTypes.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AppTypes.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/GSModelEvents</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/Service.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/AlarmManager.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/AlarmManager.cpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/Service.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/Service.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header</name>
@@ -69,7 +109,27 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/SDK</name>
+			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Interfaces</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/JSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -79,14 +139,9 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/JsonStreamReader.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/JsonStreamReader.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Source/JsonStreamWriter.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/JsonStreamWriter.cpp</locationURI>
+			<name>SDK/Libs/Source/JSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger</name>
@@ -94,54 +149,29 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.gitignore</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.gitignore</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.gitmodules</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.gitmodules</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.lgtm.yml</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.lgtm.yml</locationURI>
-		</link>
-		<link>
 			<name>SDK/ThirdParty/coreJSON/source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/SDK/AppSystem</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/SDK/JsonStreamReader.hpp</name>
+			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JsonStreamReader.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/SDK/JsonStreamWriter.hpp</name>
+			<name>SDK/Libs/Header/JSON/JsonStreamReader.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JsonStreamWriter.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JSON/JsonStreamReader.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/SDK/UnaLogger</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<name>SDK/Libs/Header/JSON/JsonStreamWriter.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/JSON/JsonStreamWriter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
@@ -154,64 +184,19 @@
 			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/JSON/JsonStreamReader.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/JSON/JsonStreamReader.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/JSON/JsonStreamWriter.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/JSON/JsonStreamWriter.cpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/UnaLogger/Logger.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/Dockerfile</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/Dockerfile</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/README.md</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/README.md</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/build.sh</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/build.sh</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/project.yaml</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/project.yaml</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.clusterfuzzlite/validate_fuzzer.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.clusterfuzzlite/validate_fuzzer.c</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/.cSpellWords.txt</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/.cSpellWords.txt</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/CODEOWNERS</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/CODEOWNERS</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/CONTRIBUTING.md</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/CONTRIBUTING.md</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/memory_statistics_config.json</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/memory_statistics_config.json</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/pull_request_template.md</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/pull_request_template.md</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/workflows</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/ThirdParty/coreJSON/source/core_json.c</name>
@@ -224,44 +209,9 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/SDK/UnaLogger/Logger.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/workflows/cflite_pr.yml</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/cflite_pr.yml</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/workflows/ci.yml</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/ci.yml</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/workflows/doxygen.yml</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/doxygen.yml</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/.github/workflows/release.yml</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/.github/workflows/release.yml</locationURI>
-		</link>
-		<link>
 			<name>SDK/ThirdParty/coreJSON/source/include/core_json.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/include/core_json.h</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/source/include/stdbool.readme</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/include/stdbool.readme</locationURI>
-		</link>
-		<link>
-			<name>SDK/ThirdParty/coreJSON/source/include/stdint.readme</name>
-			<type>1</type>
-			<locationURI>PARENT-2-SDK_LOC/ThirdParty/coreJSON/source/include/stdint.readme</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
