@@ -1,5 +1,0 @@
-../../TouchGFX-GUI/touchgfx/framework/include/touchgfx/FontManager.hpp:43:13:touchgfx::FontProvider::~FontProvider()	1
-../../TouchGFX-GUI/touchgfx/framework/include/touchgfx/FontManager.hpp:43:13:virtual touchgfx::FontProvider::~FontProvider()	1
-C:/DT/Solutions/Una/una-watch/Apps/Utility2/GUI/Software/App/TouchGFX-GUI/generated/fonts/src/ApplicationFontProvider.cpp:8:17:virtual touchgfx::Font* ApplicationFontProvider::getFont(touchgfx::FontId)	18
-../../TouchGFX-GUI/generated/fonts/include/fonts/ApplicationFontProvider.hpp:57:7:ApplicationFontProvider::~ApplicationFontProvider()	1
-../../TouchGFX-GUI/generated/fonts/include/fonts/ApplicationFontProvider.hpp:57:7:virtual ApplicationFontProvider::~ApplicationFontProvider()	1

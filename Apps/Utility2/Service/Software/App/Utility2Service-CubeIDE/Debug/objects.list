@@ -1,6 +1,0 @@
-"./Core/Src/main.o"
-"./Core/Src/sysmem.o"
-"./Core/Startup/startup_user_app.o"
-"./Libs/Sources/GSModel.o"
-"./Libs/Sources/Service.o"
-"./SDK/Logger/Logger.o"
