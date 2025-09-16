@@ -1,0 +1,223 @@
+/**
+ ******************************************************************************
+ * @file    main.сpp
+ * @date    05-07-2024
+ * @author  Denys Saienko <denys.saienko@droid-technologies.com>
+ * @brief   Main program body.
+ ******************************************************************************
+ *
+ ******************************************************************************
+ */
+
+#include <cstdint>
+#include <cstring>
+#include <cassert>
+#include <math.h>
+#include <stdio.h>
+#include <memory>
+
+#include "SDK/GSModel/GSModelHelper.hpp"
+#include "SDK/Interfaces/ISensorDriver.hpp"
+#include "SDK/Interfaces/ISensorDataListener.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserStepDetector.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserMotionDetect.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserActivityRecognition.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserGPS.hpp"
+
+#define LOG_MODULE_PRX      "main::"
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#include "SDK/UnaLogger/Logger.h"
+
+static const char* mName = "Service::Utility#3";
+
+class Service : public IServiceModelHandler,
+                public SDK::Interface::IUserApp::Callback,
+                public SDK::Interface::ISensorDataListener
+{
+public:
+    Service(const IKernel& kernel)
+        : mKernel(kernel)
+        , mGSModel(std::make_shared<GSModelService>(mKernel, *this))
+        , mTerminate(false)
+        , mCounter(0)
+        , mGUIStarted(false)
+        , mSensorStepCounter(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::STEP_COUNTER))
+        , mSensorStepDetector(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::STEP_DETECTOR))
+        , mSensorMotionDetect(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::MOTION_DETECT))
+        , mSensorActivityRecognition(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::ACTIVITY_RECOGNITION))
+        , mSensorAltimeter(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::ALTIMETER))
+        , mSensorFloorCounter(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::FLOOR_COUNTER))
+        , mSensorGPS(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::GPS))
+    {
+        mKernel.app.registerApp(this);
+        mKernel.sctrl.setContext(mGSModel);
+        mKernel.app.initialized();
+//        mKernel.app.unLock();
+    }
+
+    virtual ~Service() = default;
+
+    void run()
+    {
+        mSensorStepCounter->connect(this, &mKernel.app);
+        mSensorStepDetector->connect(this, &mKernel.app);
+        mSensorMotionDetect->connect(this, &mKernel.app);
+        mSensorActivityRecognition->connect(this, &mKernel.app);
+        mSensorAltimeter->connect(this, &mKernel.app);
+        mSensorFloorCounter->connect(this, &mKernel.app);
+        mSensorGPS->connect(this, &mKernel.app);
+
+        while (!mTerminate) {
+            mGSModel->checkG2SEvents();
+
+            mCounter += 1;
+
+            if (mGUIStarted) {
+                S2GEvent::Counter counter = {
+                    .value = mCounter
+                };
+
+                mGSModel->sendToGUI(counter);
+            }
+        }
+
+        mSensorStepCounter->disconnect(this);
+        mSensorStepDetector->disconnect(this);
+        mSensorMotionDetect->disconnect(this);
+        mSensorActivityRecognition->disconnect(this);
+        mSensorAltimeter->disconnect(this);
+        mSensorFloorCounter->disconnect(this);
+    }
+
+    void sdlNewData(const SDK::Interface::ISensorDriver*             sensor,
+                    const std::vector<SDK::Interface::ISensorData*>& data,
+                    bool                                             first) override
+    {
+        const  SDK::Interface::ISensorData& sample = *data[0];
+
+        if (sensor->getType() == SDK::Sensor::Type::STEP_COUNTER) {
+            SDK::SensorDataParser::StepCounter p(data[0]);
+            if (p.isDataValid()) {
+                LOG_INFO("step counts : %8ld - %ld\n", p.getTimestamp(), p.getStepCount());
+            }
+        } else if (sensor->getType() == SDK::Sensor::Type::STEP_DETECTOR) {
+            SDK::SensorDataParser::StepDetector p(data[0]);
+            if (p.isDataValid()) {
+                LOG_INFO("step detect : %8ld\n", p.getTimestamp());
+            }
+        } else if (sensor->getType() == SDK::Sensor::Type::MOTION_DETECT) {
+            SDK::SensorDataParser::MotionDetect p(data[0]);
+            if (p.isDataValid()) {
+                switch (p.getID()) {
+                    case SDK::SensorDataParser::MotionDetect::Motion::NO_MOTION:  LOG_INFO("motion      : %8ld - no motion\n",  p.getTimestamp()); break;
+                    case SDK::SensorDataParser::MotionDetect::Motion::MOTION:     LOG_INFO("motion      : %8ld - motion\n",     p.getTimestamp()); break;
+                    case SDK::SensorDataParser::MotionDetect::Motion::SIG_MOTION: LOG_INFO("motion      : %8ld - sig motion\n", p.getTimestamp()); break;
+                    default:                                                      LOG_INFO("motion      : ERROR\n");
+                }
+            }
+        } else if (sensor->getType() == SDK::Sensor::Type::ACTIVITY_RECOGNITION) {
+            SDK::SensorDataParser::ActivityRecognition p(data[0]);
+            if (p.isDataValid()) {
+                switch (p.getID()) {
+                    case SDK::SensorDataParser::ActivityRecognition::Activity::STILL:   LOG_INFO("activity    : %8ld - still\n",   p.getTimestamp()); break;
+                    case SDK::SensorDataParser::ActivityRecognition::Activity::WALKING: LOG_INFO("activity    : %8ld - walking\n", p.getTimestamp()); break;
+                    case SDK::SensorDataParser::ActivityRecognition::Activity::RUNNING: LOG_INFO("activity    : %8ld - running\n", p.getTimestamp()); break;
+                    case SDK::SensorDataParser::ActivityRecognition::Activity::UNKNOWN: LOG_INFO("activity    : %8ld - unknown\n", p.getTimestamp()); break;
+                    default:                                                            LOG_INFO("activity    : ERROR\n");
+                }
+            }
+        } else if (sensor->getType() == SDK::Sensor::Type::ALTIMETER) {
+            SDK::SensorDataParser::Altimeter p(sample);
+            if (p.isDataValid()) {
+                LOG_INFO("altimeter   : %8ld - %.2f\n", p.getTimestamp(), p.getAltitude());
+            }
+        } else if (sensor->getType() == SDK::Sensor::Type::FLOOR_COUNTER) {
+            SDK::SensorDataParser::FloorCounter p(data[0]);
+            if (p.isDataValid()) {
+                LOG_INFO("up/down     : %8ld - %d / %d\n", p.getTimestamp(), p.getFloorsUp(), p.getFloorsDown());
+            }
+        } else if (sensor->getType() == SDK::Sensor::Type::GPS) {
+            SDK::SensorDataParser::GPS p(sample);
+            if (p.isDataValid()) {
+                LOG_INFO("mask  = %ld\n",  p.getMask());
+                LOG_INFO("time  = %ld\n",  p.getTime());
+                LOG_INFO("lat   = %f\n",   p.getLatitude());
+                LOG_INFO("lon   = %f\n",   p.getLongitude());
+                LOG_INFO("alt   = %f\n",   p.getAltitude());
+                LOG_INFO("speed = %.1f\n", p.getSpeed());
+            }
+        }
+    }
+
+    void handleEvent(const G2SEvent::Run& event)
+    {
+        (void) event;
+
+        printf("%s::G2SEvent::Run\n", mName);
+
+        mGUIStarted = true;
+    }
+
+    void handleEvent(const G2SEvent::Stop& event)
+    {
+        (void) event;
+
+        printf("%s::G2SEvent::Stop\n", mName);
+
+        mGUIStarted = false;
+    }
+
+private:
+    void onDestroy() override
+    {
+        mTerminate = true;
+    }
+
+    const IKernel&                  mKernel;
+
+    std::shared_ptr<GSModelService> mGSModel;
+    bool                            mTerminate;
+    uint32_t                        mCounter;
+    bool                            mGUIStarted;
+
+    SDK::Interface::ISensorDriver* mSensorStepCounter;
+    SDK::Interface::ISensorDriver* mSensorStepDetector;
+    SDK::Interface::ISensorDriver* mSensorMotionDetect;
+    SDK::Interface::ISensorDriver* mSensorActivityRecognition;
+    SDK::Interface::ISensorDriver* mSensorAltimeter;
+    SDK::Interface::ISensorDriver* mSensorFloorCounter;
+    SDK::Interface::ISensorDriver* mSensorGPS;
+};
+
+extern const IKernel* kernel;
+
+static uint32_t LoggerGetTicks()
+{
+    return kernel->app.getTimeMs();
+}
+
+static void LoggerPrint(const char* str)
+{
+    kernel->app.log(str);
+}
+
+/**
+ * @brief   The application entry point.
+ * @retval  int
+ */
+int main()
+{
+    Logger_init(LoggerPrint);
+    Logger_setTimeFunc(LoggerGetTicks);
+
+    LOG_INFO("%s is started\n", mName);
+
+    Service service(*kernel);
+    service.run();
+
+    return 0;
+}
+
