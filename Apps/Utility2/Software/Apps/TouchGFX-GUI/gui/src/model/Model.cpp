@@ -4,8 +4,7 @@
 #include "SDK/KernelManager.hpp"
 
 
-#define TAG                 "Model"
-#define LOG_MODULE_PRX      TAG"::"
+#define LOG_MODULE_PRX      "Model::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 

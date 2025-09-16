@@ -4,9 +4,9 @@
 
 #define ARRAY_SIZE(a)   (sizeof(a) / sizeof(a[0]))
 
-#define LOG_MODULE_PRX      LOG_TAG "Service"
+#define LOG_MODULE_PRX      "Service::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 #include <stdio.h>
 

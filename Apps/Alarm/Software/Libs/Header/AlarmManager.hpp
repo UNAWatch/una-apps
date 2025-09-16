@@ -20,9 +20,10 @@
 #include <string_view>
 
 #include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/JSON/JsonStreamReader.hpp"
+#include "SDK/JSON/JsonStreamWriter.hpp"
+
 #include "AppTypes.hpp"
-#include "SDK/JsonStreamReader.hpp"
-#include "SDK/JsonStreamWriter.hpp"
 
  /**
   * @class AlarmManager

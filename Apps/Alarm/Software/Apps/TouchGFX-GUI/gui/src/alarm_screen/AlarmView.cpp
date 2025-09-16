@@ -1,5 +1,4 @@
 #include <gui/alarm_screen/AlarmView.hpp>
-#include "Logger.h"
 
 AlarmView::AlarmView()
 {
@@ -9,7 +8,6 @@ AlarmView::AlarmView()
 void AlarmView::setupScreen()
 {
     AlarmViewBase::setupScreen();
-    LOG_DEBUG("AlarmView::setupScreen()\n");
 }
 
 void AlarmView::tearDownScreen()

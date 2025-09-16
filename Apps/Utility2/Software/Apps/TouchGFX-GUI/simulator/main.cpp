@@ -8,13 +8,14 @@
 #include <simulator/mainBase.hpp>
 #include "touchgfx/Utils.hpp"
 
-#include "gui/common/GuiConfig.hpp"
 #include "SDK/Simulator/Kernel/KernelBase.hpp"
-#include "Service.hpp"
 #include "SDK/KernelManager.hpp"
 #include "SDK/Platform/OS/OS.hpp"
 #include "SDK/Simulator/Sensors/SensorCore.hpp"
 #include "SDK/Simulator/Kernel/Mock/MockServiceControl.hpp"
+
+#include "gui/common/GuiConfig.hpp"
+#include "Service.hpp"
 
 #include <stdlib.h>
 #include <thread>
@@ -25,10 +26,9 @@
 #include "Windows.h"
 #endif
 
-#define TAG                 "Main"
-#define LOG_MODULE_PRX      TAG"::"
+#define LOG_MODULE_PRX      "main::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
 using namespace touchgfx;
 

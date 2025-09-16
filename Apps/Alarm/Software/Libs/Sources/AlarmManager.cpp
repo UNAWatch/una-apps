@@ -11,12 +11,12 @@
 
 #include "AlarmManager.hpp"
 
-#define LOG_MODULE_PRX      LOG_TAG"AlarmManager"
+#define LOG_MODULE_PRX      "AlarmManager::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "Logger.h"
+#include "SDK/UnaLogger/Logger.h"
 
-#include "SDK/JsonStreamReader.hpp"
-#include "SDK/JsonStreamWriter.hpp"
+#include "SDK/JSON/JsonStreamReader.hpp"
+#include "SDK/JSON/JsonStreamWriter.hpp"
 
 #include <algorithm>
 

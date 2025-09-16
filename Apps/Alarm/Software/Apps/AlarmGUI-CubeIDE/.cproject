@@ -47,11 +47,8 @@
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.1598154713" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.value.g3" valueType="enumerated"/>
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.1812003970" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.value.os" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols.1106855523" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="BUILD_VERSION=&quot;${__BUILD_VERSION__}&quot;"/>
 									<listOptionValue builtIn="false" value="LOG_LEVEL=LOG_LEVEL_DEBUG"/>
 									<listOptionValue builtIn="false" value="LOG_FORMAT=5"/>
-									<listOptionValue builtIn="false" value="APP_NAME=&quot;${__APP_NAME__}&quot;"/>
-									<listOptionValue builtIn="false" value="LOG_TAG=&quot;App::${__APP_NAME__}[G]::&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.465341785" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
@@ -65,19 +62,15 @@
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.1663538437" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.value.g3" valueType="enumerated"/>
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.1457605256" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.value.os" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.77923702" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="BUILD_VERSION=&quot;${__BUILD_VERSION__}&quot;"/>
 									<listOptionValue builtIn="false" value="LOG_LEVEL=LOG_LEVEL_DEBUG"/>
 									<listOptionValue builtIn="false" value="LOG_FORMAT=5"/>
-									<listOptionValue builtIn="false" value="APP_NAME=&quot;${__APP_NAME__}&quot;"/>
-									<listOptionValue builtIn="false" value="LOG_TAG=&quot;App::${__APP_NAME__}[G]::&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths.1179591174" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
 									<listOptionValue builtIn="false" value="../../../Libs/Header"/>
 									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Libs/Header&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Libs/Header/SDK/UnaLogger&quot;"/>
-									<listOptionValue builtIn="false" value="${PATH_SDK}/Port/TouchGFX"/>
-									<listOptionValue builtIn="false" value="${PATH_SDK}/Port/TouchGFX/generated"/>
+									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Port/TouchGFX&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PATH_SDK}/Port/TouchGFX/generated&quot;"/>
 									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/touchgfx/framework/include"/>
 									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/generated/fonts/include"/>
 									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/generated/gui_generated/include"/>

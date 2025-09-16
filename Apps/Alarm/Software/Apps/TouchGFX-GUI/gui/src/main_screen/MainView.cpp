@@ -1,5 +1,4 @@
 #include <gui/main_screen/MainView.hpp>
-#include "Logger.h"
 
 MainView::MainView()
 {
@@ -9,7 +8,6 @@ MainView::MainView()
 void MainView::setupScreen()
 {
     MainViewBase::setupScreen();
-    LOG_DEBUG("MainView::setupScreen()\n");
 
     buttons.setL1(Buttons::NONE);
     buttons.setL2(Buttons::NONE);
