@@ -104,6 +104,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/SensorLayer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/SwTimer</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -139,9 +144,19 @@
 			<locationURI>SDK_LOC/UnaLogger/Logger.cpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/SensorLayer/SensorDriverConnection.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/SensorLayer/SensorDriverConnection.cpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/SwTimer/SwTimer.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/SwTimer/SwTimer.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/SwTimer/SwTimerPort.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/SwTimer/SwTimerPort.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

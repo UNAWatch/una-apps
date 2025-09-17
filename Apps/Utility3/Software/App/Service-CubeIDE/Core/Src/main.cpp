@@ -18,6 +18,7 @@
 
 #include "SDK/GSModel/GSModelHelper.hpp"
 #include "SDK/Interfaces/ISensorDriver.hpp"
+#include "SDK/SensorLayer/SensorDriverConnection.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserStepDetector.hpp"
@@ -49,14 +50,13 @@ public:
         , mSensorStepDetector(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::STEP_DETECTOR))
         , mSensorMotionDetect(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::MOTION_DETECT))
         , mSensorActivityRecognition(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::ACTIVITY_RECOGNITION))
-        , mSensorAltimeter(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::ALTIMETER))
+        , mAltimeter(SDK::Sensor::Type::ALTIMETER, this)
         , mSensorFloorCounter(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::FLOOR_COUNTER))
-        , mSensorGPS(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::GPS))
+        , mGPS(SDK::Sensor::Type::GPS, this)
     {
         mKernel.app.registerApp(this);
         mKernel.sctrl.setContext(mGSModel);
         mKernel.app.initialized();
-//        mKernel.app.unLock();
     }
 
     virtual ~Service() = default;
@@ -67,9 +67,9 @@ public:
         mSensorStepDetector->connect(this, &mKernel.app);
         mSensorMotionDetect->connect(this, &mKernel.app);
         mSensorActivityRecognition->connect(this, &mKernel.app);
-        mSensorAltimeter->connect(this, &mKernel.app);
+        mAltimeter.connect(2000, 4000);
         mSensorFloorCounter->connect(this, &mKernel.app);
-        mSensorGPS->connect(this, &mKernel.app);
+        mGPS.connect();
 
         SDK::SwTimer timer(SDK::SwTimer::minutes(2) + SDK::SwTimer::seconds(20));
         while (!mTerminate && !timer.expired()) {
@@ -80,14 +80,13 @@ public:
         mSensorStepDetector->disconnect(this);
         mSensorMotionDetect->disconnect(this);
         mSensorActivityRecognition->disconnect(this);
-        mSensorAltimeter->disconnect(this);
+        mAltimeter.disconnect();
         mSensorFloorCounter->disconnect(this);
-        mSensorGPS->disconnect(this);
+        mGPS.disconnect();
     }
 
     void run()
     {
-
         SDK::SwTimer timer(SDK::SwTimer::minutes(2) + SDK::SwTimer::seconds(30));
         bool startSensors = true;
 
@@ -153,9 +152,11 @@ public:
                 }
             }
         } else if (sensor->getType() == SDK::Sensor::Type::ALTIMETER) {
-            SDK::SensorDataParser::Altimeter p(sample);
-            if (p.isDataValid()) {
-                LOG_INFO("altimeter   : %8ld - %.2f\n", p.getTimestamp(), p.getAltitude());
+            for (auto item : data) {
+                SDK::SensorDataParser::Altimeter p(item);
+                if (p.isDataValid()) {
+                    LOG_INFO("altimeter   : %8ld - %.2f\n", p.getTimestamp(), p.getAltitude());
+                }
             }
         } else if (sensor->getType() == SDK::Sensor::Type::FLOOR_COUNTER) {
             SDK::SensorDataParser::FloorCounter p(data[0]);
@@ -210,9 +211,9 @@ private:
     SDK::Interface::ISensorDriver* mSensorStepDetector;
     SDK::Interface::ISensorDriver* mSensorMotionDetect;
     SDK::Interface::ISensorDriver* mSensorActivityRecognition;
-    SDK::Interface::ISensorDriver* mSensorAltimeter;
+    SDK::Sensors::DriverConnection mAltimeter;
     SDK::Interface::ISensorDriver* mSensorFloorCounter;
-    SDK::Interface::ISensorDriver* mSensorGPS;
+    SDK::Sensors::DriverConnection mGPS;
 };
 
 extern const IKernel* kernel;
