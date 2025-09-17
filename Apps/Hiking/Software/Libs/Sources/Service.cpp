@@ -33,6 +33,7 @@ Service::Service(const IKernel& kernel)
 {
     mKernel.app.registerApp(this);
     mKernel.sctrl.setContext(mGSModel);
+    mKernel.app.unLock();
 }
 
 void Service::run()
@@ -157,7 +158,7 @@ void Service::onDestroy()
     LOG_DEBUG("called\n");
 }
 
-void Service::onNewSensorData(const SDK::Interface::ISensorDriver* sensor,
+void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
     const std::vector< SDK::Interface::ISensorData*>& data, bool first)
 {
     // We are only interested in the last sample
@@ -178,8 +179,10 @@ void Service::onNewSensorData(const SDK::Interface::ISensorDriver* sensor,
 
             if (mGps.fix) { // Do not change position if no fix
                 gps.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
-                //LOG_DEBUG("lat %f, lon %f\n", mGps.latitude, mGps.longitude);
+                LOG_DEBUG("lat %f, lon %f\n", mGps.latitude, mGps.longitude);
             }
+        } else {
+            LOG_DEBUG("GPS INVALID\n");
         }
     } else if (sensor == mStepCounterSensor) {
         SDK::SensorDataParser::StepCounter sc {sample};
@@ -189,27 +192,29 @@ void Service::onNewSensorData(const SDK::Interface::ISensorDriver* sensor,
             }
             mStepCounter.steps = sc.getStepCount();
             mStepCounter.timestamp = sample.getTimestamp();
-            //LOG_DEBUG("steps %u\n", mStepCounter.steps);
+            LOG_DEBUG("steps %u\n", mStepCounter.steps);
         }
     } else if (sensor == mFloorCounterSensor) {
         SDK::SensorDataParser::FloorCounter fc {sample};
         if (fc.isDataValid()) {
             if (mFloorsCounter.initialFloors == 0) {
-                mFloorsCounter.initialFloors = fc.getFloorCount();
+                mFloorsCounter.initialFloors = fc.getFloorsUp() + fc.getFloorsDown();
             }
-            mFloorsCounter.floors = fc.getFloorCount();
+            mFloorsCounter.floors = fc.getFloorsUp() + fc.getFloorsDown();
             mFloorsCounter.timestamp = sample.getTimestamp();
-            //LOG_DEBUG("floors %u\n", mFloorsCounter.floors);
+            LOG_DEBUG("floors %u\n", mFloorsCounter.floors);
         }
     } else if (sensor == mAltimeterSensor) {
-        SDK::SensorDataParser::Altimeter alt {sample};
+        SDK::SensorDataParser::Altimeter alt {data[0]};
         if (alt.isDataValid()) {
             if (std::abs(mAltimeter.initialAltitude) < 0.01) {
                 mAltimeter.initialAltitude = alt.getAltitude();
             }
             mAltimeter.altitude = alt.getAltitude();
-            mAltimeter.timestamp = sample.getTimestamp();
-            //LOG_DEBUG("altitude %f\n", mAltimeter.altitude);
+            mAltimeter.timestamp = alt.getTimestamp();
+            LOG_DEBUG("altitude %f\n", mAltimeter.altitude);
+        } else {
+            LOG_DEBUG("altitude INVALID\n");
         }
     } else if (sensor == mHrSensor) {
         SDK::SensorDataParser::HeartRate hr {sample};
