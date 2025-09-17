@@ -104,6 +104,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/SwTimer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/GSModel/GSModel.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-SDK_LOC/Header/SDK/GSModel/GSModel.hpp</locationURI>
@@ -132,6 +137,11 @@
 			<name>SDK/Libs/Source/Logger/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/UnaLogger/Logger.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/SwTimer/SwTimer.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/SwTimer/SwTimer.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

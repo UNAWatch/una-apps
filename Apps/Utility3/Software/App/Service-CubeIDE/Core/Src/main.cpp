@@ -71,7 +71,7 @@ public:
         mSensorFloorCounter->connect(this, &mKernel.app);
         mSensorGPS->connect(this, &mKernel.app);
 
-        SDK::SwTimer timer(SW_TIMER_MINUTES(2) + SW_TIMER_SECONDS(20));
+        SDK::SwTimer timer(SDK::SwTimer::minutes(2) + SDK::SwTimer::seconds(20));
         while (!mTerminate && !timer.expired()) {
             mGSModel->checkG2SEvents();
         }
@@ -88,7 +88,7 @@ public:
     void run()
     {
 
-        SDK::SwTimer timer(SW_TIMER_MINUTES(2) + SW_TIMER_SECONDS(30));
+        SDK::SwTimer timer(SDK::SwTimer::minutes(2) + SDK::SwTimer::seconds(30));
         bool startSensors = true;
 
         while (!mTerminate) {
