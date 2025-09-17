@@ -190,7 +190,7 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
             }
             mStepCounter.steps = sc.getStepCount();
             mStepCounter.timestamp = sample.getTimestamp();
-            LOG_DEBUG("steps %u\n", mStepCounter.steps);
+            //LOG_DEBUG("steps %u\n", mStepCounter.steps);
         }
     } else if (sensor == mFloorCounterSensor) {
         SDK::SensorDataParser::FloorCounter fc {sample};
@@ -200,7 +200,7 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
             }
             mFloorsCounter.floors = fc.getFloorsUp() + fc.getFloorsDown();
             mFloorsCounter.timestamp = sample.getTimestamp();
-            LOG_DEBUG("floors %u\n", mFloorsCounter.floors);
+            //LOG_DEBUG("floors %u\n", mFloorsCounter.floors);
         }
     } else if (sensor == mAltimeterSensor) {
         SDK::SensorDataParser::Altimeter alt {sample};
@@ -209,8 +209,9 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
                 mAltimeter.initialAltitude = alt.getAltitude();
             }
             mAltimeter.altitude = alt.getAltitude();
-            mAltimeter.timestamp = sample.getTimestamp();
-            LOG_DEBUG("altitude %f\n", mAltimeter.altitude);
+
+            mAltimeter.timestamp = alt.getTimestamp();
+            //LOG_DEBUG("altitude %f\n", mAltimeter.altitude);
         }
     } else if (sensor == mHrSensor) {
         SDK::SensorDataParser::HeartRate hr {sample};

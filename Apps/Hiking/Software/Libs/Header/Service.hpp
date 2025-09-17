@@ -71,8 +71,8 @@ private:
     SDK::Interface::ISensorDriver* mHrSensor = nullptr;
 
     static constexpr uint32_t skInitialSamplePeriod = 1000;
-    static constexpr uint32_t skSamplePeriod = 10000;
-    static constexpr uint32_t skSampleLatency = 0;
+    static constexpr uint32_t skSamplePeriod        = 10000;
+    static constexpr uint32_t skSampleLatency       = 1000;
 
     static constexpr float skMapDistanceThreshold = 10.0f; // meters
 
