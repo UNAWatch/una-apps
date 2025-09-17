@@ -26,6 +26,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGPS.hpp"
+#include "SDK/SwTimer/SwTimer.hpp"
 
 #define LOG_MODULE_PRX      "main::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
@@ -60,7 +61,7 @@ public:
 
     virtual ~Service() = default;
 
-    void run()
+    void testSesnors()
     {
         mSensorStepCounter->connect(this, &mKernel.app);
         mSensorStepDetector->connect(this, &mKernel.app);
@@ -69,6 +70,26 @@ public:
         mSensorAltimeter->connect(this, &mKernel.app);
         mSensorFloorCounter->connect(this, &mKernel.app);
         mSensorGPS->connect(this, &mKernel.app);
+
+        SDK::SwTimer timer(SW_TIMER_MINUTES(2) + SW_TIMER_SECONDS(20));
+        while (!mTerminate && !timer.expired()) {
+            mGSModel->checkG2SEvents();
+        }
+
+        mSensorStepCounter->disconnect(this);
+        mSensorStepDetector->disconnect(this);
+        mSensorMotionDetect->disconnect(this);
+        mSensorActivityRecognition->disconnect(this);
+        mSensorAltimeter->disconnect(this);
+        mSensorFloorCounter->disconnect(this);
+        mSensorGPS->disconnect(this);
+    }
+
+    void run()
+    {
+
+        SDK::SwTimer timer(SW_TIMER_MINUTES(2) + SW_TIMER_SECONDS(30));
+        bool startSensors = true;
 
         while (!mTerminate) {
             mGSModel->checkG2SEvents();
@@ -82,14 +103,16 @@ public:
 
                 mGSModel->sendToGUI(counter);
             }
-        }
 
-        mSensorStepCounter->disconnect(this);
-        mSensorStepDetector->disconnect(this);
-        mSensorMotionDetect->disconnect(this);
-        mSensorActivityRecognition->disconnect(this);
-        mSensorAltimeter->disconnect(this);
-        mSensorFloorCounter->disconnect(this);
+            if (startSensors) {
+                startSensors = false;
+                testSesnors();
+            }
+
+            if (timer.check()) {
+                startSensors = true;
+            }
+        }
     }
 
     void sdlNewData(const SDK::Interface::ISensorDriver*             sensor,
