@@ -32,7 +32,7 @@ private:
     virtual void onPause()   override;
     virtual void onDestroy() override;
 
-    virtual void onNewSensorData(const SDK::Interface::ISensorDriver* sensor,
+    virtual void sdlNewData(const SDK::Interface::ISensorDriver* sensor,
         const std::vector<SDK::Interface::ISensorData*>& data, bool first) override;
 
     virtual void handleEvent(const G2SEvent::GuiRun& event) override;
