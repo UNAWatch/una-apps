@@ -59,9 +59,19 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/Clock24.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Clock24.h</locationURI>
+		</link>
+		<link>
 			<name>Libs/Header/GSModelEvents</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/Service.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Source/Service.cpp</name>

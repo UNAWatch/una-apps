@@ -1,4 +1,5 @@
 #include "Service.hpp"
+#include "Clock24.h"
 
 #include <stdio.h>
 #include <time.h>
@@ -115,16 +116,14 @@ void Service::createUI()
                           GlanceColor_t::GLANCE_COLOR_BLUE,
                           GlanceColor_t::GLANCE_COLOR_GREEN);
 
-    GlanceSize_t  clockImageSize = {20, 20};
+    GlanceSize_t  clockImageSize = {CLOCK24_WIDTH, CLOCK24_HEIGHT};
     GlancePoint_t clockImagePos  = SDK::Glance::Align::placeWithin(panelClock.pos(),
                                                                    panelClock.size(),
                                                                    clockImageSize,
                                                                    GlanceAlignH_t::GLANCE_ALIGN_H_CENTER,
                                                                    GlanceAlignV_t::GLANCE_ALIGN_V_CENTER);
 
-    uint8_t clockImage[clockImageSize.w * clockImageSize.h];
-
-    mUI.createImage().init(clockImagePos, clockImageSize, clockImage);
+    mUI.createImage().init(clockImagePos, clockImageSize, CLOCK24_ABGR2222);
 
     mUI.createText().init({25, 75},
                           "Temp, °C:",
