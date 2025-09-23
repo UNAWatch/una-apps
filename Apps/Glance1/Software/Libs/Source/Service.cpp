@@ -18,14 +18,14 @@ Service::Service(const IKernel& kernel)
         , mUpdateTimer(1000)
 {
     mKernel.app.registerApp(this);
+    mKernel.app.registerGlance(this);
+    mKernel.app.initialized();
 
     createUI();
 }
 
 void Service::run()
 {
-    mKernel.app.initialized();
-
     while (!mTerminate) {
         mKernel.app.delay(1000);
     }
