@@ -26,12 +26,12 @@ extern const IKernel* kernel;
 
 static uint32_t LoggerGetTicks()
 {
-    return kernel->app.getTimeMs();
+    return SDK::Kernel::GetInstance().app.getTimeMs();
 }
 
 static void LoggerPrint(const char* str)
 {
-    kernel->app.log(str);
+    SDK::Kernel::GetInstance().app.log(str);
 }
 
 /**
@@ -45,7 +45,7 @@ int main()
 
     LOG_INFO("the glance is started\n");
 
-    Service service(*kernel);
+    Service service;
     service.run();
 
     return 0;

@@ -99,6 +99,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/AppSystem</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/GSModel</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -129,6 +134,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/AppSystem/AppKernel.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Header/SDK/AppSystem/AppKernel.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/GSModel/GSModel.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-SDK_LOC/Header/SDK/GSModel/GSModel.hpp</locationURI>
@@ -142,6 +152,11 @@
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/AppKernel.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/AppKernel.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>

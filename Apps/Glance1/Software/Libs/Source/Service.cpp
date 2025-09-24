@@ -8,8 +8,8 @@
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-Service::Service(const IKernel& kernel)
-        : mKernel(kernel)
+Service::Service()
+        : mKernel(SDK::Kernel::GetInstance())
         , mTerminate(false)
         , mUI(mKernel.app.getGlanceArea().w, mKernel.app.getGlanceArea().h)
         , mTextTime()
