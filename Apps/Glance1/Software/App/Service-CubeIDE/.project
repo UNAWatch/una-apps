@@ -64,11 +64,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Clock24.h</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/GSModelEvents</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>Libs/Header/Service.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
@@ -79,6 +74,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Source/Service.cpp</locationURI>
 		</link>
 		<link>
+			<name>Libs/Source/UserAppEntry.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Source/UserAppEntry.cpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -87,16 +87,6 @@
 			<name>SDK/Libs/Source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/AppSystem</name>
@@ -157,6 +147,16 @@
 			<name>SDK/Libs/Source/AppSystem/AppKernel.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/AppSystem/AppKernel.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/AtExitImpl.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/main.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/main.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
