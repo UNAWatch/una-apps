@@ -2,7 +2,7 @@
 #define MODEL_HPP
 
 #include "SDK/GSModel/GSModelHelper.hpp"
-#include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/AppSystem/AppKernel.hpp"
 #include "touchgfx/UIEventListener.hpp"
 #include "gui/common/GuiConfig.hpp"
 
@@ -63,7 +63,7 @@ protected:
     // IGUIModelHandler implementation
     void handleEvent(const S2GEvent::Counter& event) override;
 
-    const IKernel*              mKernel;
+    const SDK::Kernel*          mKernel;
     ModelListener*              modelListener;
     std::shared_ptr<GSModelGUI> mGSModel;
 

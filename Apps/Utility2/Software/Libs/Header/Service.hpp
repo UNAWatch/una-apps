@@ -3,9 +3,9 @@
 
 #include "SDK/GSModel/GSModelHelper.hpp"
 
-#include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/AppSystem/AppKernel.hpp"
 #include "SDK/GSModel/GSModelHelper.hpp"
-#include "SDK/Interfaces/ISensorDriver.hpp"
+#include "SDK/SensorLayer/SensorDriverConnection.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
 
 class Service : public IServiceModelHandler,
@@ -13,7 +13,7 @@ class Service : public IServiceModelHandler,
                 public SDK::Interface::ISensorDataListener
 {
 public:
-    Service(const IKernel& kernel);
+    Service();
 
     virtual ~Service() = default;
 
@@ -29,19 +29,18 @@ private:
     void onPause()   override;
     void onDestroy() override;
 
-    void onNewSensorData(const SDK::Interface::ISensorDriver*             sensor,
-                         const std::vector<SDK::Interface::ISensorData*>& data,
-                         bool                                             first) override;
+    void sdlNewData(const SDK::Interface::ISensorDriver*             sensor,
+                    const std::vector<SDK::Interface::ISensorData*>& data,
+                    bool                                             first) override;
 
-    const IKernel&                  mKernel;
+    const SDK::Kernel&              mKernel;
     std::shared_ptr<GSModelService> mGSModel;
     bool                            mTerminate;
     uint32_t                        mCounter;
     bool                            mGUIStarted;
-    SDK::Interface::ISensorDriver*  mDS;
-    SDK::Interface::ISensorDriver*  mBMETemp;
-    SDK::Interface::ISensorDriver*  mBMEPressure;
-    SDK::Interface::ISensorDriver*  mAltimeter;
+    SDK::Sensors::DriverConnection  mBMETemp;
+    SDK::Sensors::DriverConnection  mBMEPressure;
+    SDK::Sensors::DriverConnection  mAltimeter;
 };
 
 #endif

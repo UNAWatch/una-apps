@@ -124,6 +124,21 @@
 			<locationURI>PARENT-1-SDK_LOC/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/AppSystem/AppKernel.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/AppKernel.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/AtExitImpl.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/mainTouchGFX.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/mainTouchGFX.cpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/AppSystem/startup_user_app.s</locationURI>
