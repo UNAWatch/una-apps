@@ -9,7 +9,8 @@
 #include "touchgfx/Utils.hpp"
 
 #include "SDK/Simulator/Kernel/KernelBase.hpp"
-#include "SDK/KernelManager.hpp"
+#include "SDK/Kernel/KernelProviderGUI.hpp"
+#include "SDK/Kernel/KernelProviderService.hpp"
 #include "SDK/Platform/OS/OS.hpp"
 #include "SDK/Simulator/Sensors/SensorCore.hpp"
 #include "SDK/Simulator/Kernel/Mock/MockServiceControl.hpp"
@@ -61,10 +62,11 @@ static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBa
 {
     // Init KernelHolder and KernelManager
     Simulator::KernelHolder::Create(guiKernel);
-    KernelManager::CreateInstance(guiKernel.getIKernel());
+    SDK::KernelProviderGUI::CreateInstance(guiKernel.getKernel());
 
     // Create a service app object and call approproate callbacks
-    Service service(*serviceKernel.getIKernel());
+    SDK::KernelProviderService::CreateInstance(serviceKernel.getKernel());
+    Service service;
 
     //For windows/linux, DMA transfers are simulated
     touchgfx::NoDMA dma;
