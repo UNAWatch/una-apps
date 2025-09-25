@@ -1,11 +1,12 @@
 #include "Service.hpp"
+#include "SDK/Kernel/KernelProviderService.hpp"
 
 #define LOG_MODULE_PRX      "Service::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service()
-    : mKernel(SDK::Kernel::GetInstance())
+    : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
     , mGSModel(std::make_shared<GSModelService>(*this))
     , mTerminate(false)
     , mCounter(0)

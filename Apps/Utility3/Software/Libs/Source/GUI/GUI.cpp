@@ -1,16 +1,18 @@
 #include "GUI.hpp"
+#include "SDK/Kernel/KernelProviderGUI.hpp"
 
 #define LOG_MODULE_PRX      "GUI::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 GUI::GUI()
-    : mGSModel(std::static_pointer_cast<GSModelGUI>(SDK::Kernel::GetInstance().gctrl.getContext()))
+    : mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
+    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel.gctrl.getContext()))
     , mTerminate(false)
 {
-    SDK::Kernel::GetInstance().app.registerApp(this);
-    mGSModel->setGUIHandler(&SDK::Kernel::GetInstance(), this);
-    SDK::Kernel::GetInstance().app.initialized();
+    mKernel.app.registerApp(this);
+    mGSModel->setGUIHandler(&mKernel, this);
+    mKernel.app.initialized();
 }
 
 GUI::~GUI()

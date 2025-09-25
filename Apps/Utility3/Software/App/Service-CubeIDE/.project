@@ -114,6 +114,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/Logger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -144,11 +149,6 @@
 			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/AppKernel.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/AppSystem/AppKernel.cpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/AppSystem/AtExitImpl.cpp</locationURI>
@@ -167,6 +167,11 @@
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/Logger/Logger.cpp</name>

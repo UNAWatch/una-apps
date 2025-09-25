@@ -3,7 +3,7 @@
 
 #include "SDK/GSModel/GSModelHelper.hpp"
 
-#include "SDK/AppSystem/AppKernel.hpp"
+#include "SDK/Kernel/KernelProviderService.hpp"
 #include "SDK/GSModel/GSModelHelper.hpp"
 #include "SDK/SensorLayer/SensorDriverConnection.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"

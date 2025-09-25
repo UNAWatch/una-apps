@@ -114,6 +114,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/SensorLayer</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -134,11 +139,6 @@
 			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/AppKernel.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/AppKernel.cpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/AtExitImpl.cpp</locationURI>
@@ -157,6 +157,11 @@
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/SensorLayer/SensorDriverConnection.cpp</name>

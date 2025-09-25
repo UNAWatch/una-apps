@@ -1,7 +1,7 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 #include <gui/common/FrontendApplication.hpp>
-#include "SDK/KernelManager.hpp"
+#include "SDK/Kernel/KernelProviderGUI.hpp"
 
 
 #define LOG_MODULE_PRX      "Model::"
@@ -16,13 +16,13 @@
 #endif
 
 Model::Model()
-    : mKernel(KernelManager::GetInstance().getKernel())
+    : mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
     , modelListener(0)
-    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel->gctrl.getContext()))
+    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel.gctrl.getContext()))
     , mCounter(0)
 {
-    mKernel->app.registerApp(this);
-    mGSModel->setGUIHandler(mKernel, this);
+    mKernel.app.registerApp(this);
+    mGSModel->setGUIHandler(&mKernel, this);
 
     LOG_INFO("GUI [Utility #2] is initialized\n");
 
@@ -95,7 +95,7 @@ void Model::exitApp()
     LOG_INFO("exit from Utility2 GUI\n");
     mGSModel->sendToService(G2SEvent::Stop{});
     mGSModel->setGUIHandler(nullptr, nullptr);
-    mKernel->app.exit();
+    mKernel.app.exit();
 }
 
 void Model::handleEvent(const S2GEvent::Counter& event)
@@ -128,7 +128,7 @@ void Model::onStart()
 {
     LOG_INFO("called\n");
 
-    mGSModel->setGUIHandler(mKernel, this);
+    mGSModel->setGUIHandler(&mKernel, this);
     mGSModel->sendToService(G2SEvent::Run {});
 }
 

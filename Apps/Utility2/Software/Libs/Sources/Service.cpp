@@ -7,7 +7,7 @@
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service()
-        : mKernel(SDK::Kernel::GetInstance())
+        : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
         , mGSModel(std::make_shared<GSModelService>(*this))
         , mTerminate(false)
         , mCounter(0)
