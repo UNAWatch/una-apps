@@ -68,7 +68,7 @@ void TrackView::setTrackData(const Track::Data &data, bool isImperial, const std
     trackFace1.setDistance(data.totalDistance, isImperial);
     trackFace1.setTimer(data.totalTime);
 
-    trackFace2.setHR(data.HR, data.trustLevel, hrth);
+    trackFace2.setHR(data.HR, data.hrTrustLevel, hrth);
     trackFace2.setAvgPace(data.avgPace, isImperial);
     trackFace2.setElevation(data.elevation, isImperial);
 

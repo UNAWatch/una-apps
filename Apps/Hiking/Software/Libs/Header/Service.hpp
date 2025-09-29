@@ -159,8 +159,8 @@ private:
     
     struct {
         // Last sensor data
-        uint8_t  hr;        // bpm
-        uint8_t  trustLevel; // trust level: 0, 1, 2, 3...
+        float  hr;        // bpm
+        float  trustLevel; // trust level: 0, 1, 2, 3...
         uint32_t timestamp; // ms
 
         // Working data
@@ -172,7 +172,7 @@ private:
 
         void reset()
         {
-            hr = 0;
+            hr = 0.0f;
             timestamp = 0;
             totalSum = 0.0f;
             totalCnt = 0;

@@ -222,13 +222,13 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
     } else if (sensor == mHrSensor) {
         SDK::SensorDataParser::HeartRate hr {sample};
         if (hr.isDataValid()) {
-            mHr.hr = static_cast<uint8_t>(hr.getBpm());
-            mHr.trustLevel = 3;
+            mHr.hr = hr.getBpm();
+            mHr.trustLevel = hr.getTrustLevel();
             mHr.timestamp = sample.getTimestamp();
 
             mHr.totalSum += mHr.hr;
             mHr.totalCnt++;
-            //LOG_DEBUG("hr %u\n", mHr.hr);
+            LOG_DEBUG("hr %.1f, tl %.1f\n", mHr.hr, mHr.trustLevel);
         }
     }
 }
@@ -376,7 +376,7 @@ void Service::processTrack(std::time_t utc)
 
     // HR
     mTrackData.HR = mHr.hr;
-    mTrackData.trustLevel = mHr.trustLevel;
+    mTrackData.hrTrustLevel = mHr.trustLevel;
     if (mHr.totalSum > 1 && mHr.totalCnt > 1) {
         mTrackData.avgHR = mHr.totalSum / mHr.totalCnt;
     } else {
@@ -466,7 +466,7 @@ void Service::processTrack(std::time_t utc)
     fitRecord.timestamp = utc;
     fitRecord.latitude = mGps.latitude;
     fitRecord.longitude = mGps.longitude;
-    fitRecord.heartRate = static_cast<uint8_t>(mTrackData.HR);
+    fitRecord.heartRate = mTrackData.hrTrustLevel >= 1.0 ? static_cast<uint8_t>(mTrackData.HR) : 0;
     fitRecord.altitude = mAltimeter.altitude;
     mActivityWriter.addRecord(fitRecord);
 
