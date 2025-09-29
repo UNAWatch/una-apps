@@ -223,6 +223,7 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
         SDK::SensorDataParser::HeartRate hr {sample};
         if (hr.isDataValid()) {
             mHr.hr = static_cast<uint8_t>(hr.getBpm());
+            mHr.trustLevel = 3;
             mHr.timestamp = sample.getTimestamp();
 
             mHr.totalSum += mHr.hr;
@@ -358,7 +359,7 @@ void Service::processTrack(std::time_t utc)
 
     mTrackData.totalTime = trackTime;
     mTrackData.lapTime += trackTimeDiff;
-#if 1
+#if 0
     std::time_t timeDiff = static_cast<std::time_t>(std::difftime(utc, mTrackProcessTimestamp));
     if (timeDiff < (skSamplePeriod / 1000)) { // in seconds
         if (trackTimeDiff > 0) {
@@ -375,6 +376,7 @@ void Service::processTrack(std::time_t utc)
 
     // HR
     mTrackData.HR = mHr.hr;
+    mTrackData.trustLevel = mHr.trustLevel;
     if (mHr.totalSum > 1 && mHr.totalCnt > 1) {
         mTrackData.avgHR = mHr.totalSum / mHr.totalCnt;
     } else {

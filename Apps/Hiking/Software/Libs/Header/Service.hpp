@@ -160,6 +160,7 @@ private:
     struct {
         // Last sensor data
         uint8_t  hr;        // bpm
+        uint8_t  trustLevel; // trust level: 0, 1, 2, 3...
         uint32_t timestamp; // ms
 
         // Working data

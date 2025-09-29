@@ -10,10 +10,22 @@ void TrackFace2::initialize()
     TrackFace2Base::initialize();
 }
 
-void TrackFace2::setHR(float hr, const std::array<uint8_t, 4>& th)
+void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
 {
+#if 1   // debug option
+    Unicode::snprintfFloat(hrTextBuffer, HRTEXT_SIZE, "%.0f", tl);
+    hrText.invalidate();
+    if (tl >= 1.0 && hr >= 1.0) {
+        Unicode::snprintfFloat(hrValueBuffer, HRVALUE_SIZE, "%.0f", hr);
+    } else {
+        Unicode::snprintf(hrValueBuffer, HRVALUE_SIZE, "--");
+    }
+    hrValue.invalidate();
+#else
     Unicode::snprintfFloat(hrValueBuffer, HRVALUE_SIZE, "%.0f", hr);
     hrValue.invalidate();
+#endif
+
 
     hrBar.setHR(hr, th);
 }

@@ -11,7 +11,7 @@ public:
 
     virtual void initialize();
 
-    void setHR(float hr, const std::array<uint8_t, 4>& th);
+    void setHR(float hr, float tl, const std::array<uint8_t, 4>& th);
     void setAvgPace(int32_t sec, bool isImperial);
     void setElevation(float elevation, bool isImperial);
 

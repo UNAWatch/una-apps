@@ -50,6 +50,7 @@ struct Data {
     uint32_t lapNum;
 
     float HR;
+    float trustLevel;
     float avgHR;
     float maxHR;
     float avgLapHR;
