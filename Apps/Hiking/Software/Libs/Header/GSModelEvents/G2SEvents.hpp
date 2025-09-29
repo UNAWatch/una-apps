@@ -18,7 +18,7 @@ namespace G2SEvent
         bool discard;   // If true, tarck will be discarded, otherwise saved
     };
     struct SettingsSave {
-        Settings settings;
+        Settings settings;  // Only app settings
     };
 
     struct InternalRefresh {};

@@ -29,7 +29,7 @@ void TrackSummaryPresenter::deactivate()
 
 void TrackSummaryPresenter::exitApp()
 {
-    if (model->getMenuPosEnterMenu() == Gui::Menu::ID_LAST_ACTIVITY) {
+    if (model->getMenuPosEnterMenu() == App::Menu::ID_LAST_ACTIVITY) {
         model->application().gotoEnterMenuScreenNoTransition();
     } else {
         model->exitApp();

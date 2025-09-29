@@ -20,7 +20,7 @@ void TrackFace1::setSteps(int32_t v)
 void TrackFace1::setDistance(float km, bool isImperial)
 {
     if (isImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", Gui::Utils::km2mi(km));
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(km));
         Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
     } else {
         Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", km);
@@ -32,6 +32,6 @@ void TrackFace1::setDistance(float km, bool isImperial)
 void TrackFace1::setTimer(std::time_t sec)
 {
     Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%d:%02d:%02d",
-        Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
+        App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
     timerValue.invalidate();
 }

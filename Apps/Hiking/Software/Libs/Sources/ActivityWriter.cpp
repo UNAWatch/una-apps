@@ -16,6 +16,7 @@
 #include <cstring>
 
 #include "SDK/Interfaces/IFileSystem.hpp"
+#include "SDK/JSON/JsonStreamWriter.hpp"
 
 extern "C" {
 #include "fit_product.h"
@@ -126,10 +127,11 @@ void ActivityWriter::start(const AppInfo& info)
     dev_field_def[1].size = sizeof(FIT_UINT32);
     dev_field_def[1].dev_index = 0;
 
-    WriteMessageDefinitionWithDevFields(skRecordMsgNum, fit_mesg_defs[FIT_MESG_RECORD], FIT_RECORD_MESG_DEF_SIZE, 2, dev_field_def, fp);
     WriteMessageDefinitionWithDevFields(skLapMsgNum, fit_mesg_defs[FIT_MESG_LAP], FIT_LAP_MESG_DEF_SIZE, 2, dev_field_def, fp);
     WriteMessageDefinitionWithDevFields(skSessionMsgNum, fit_mesg_defs[FIT_MESG_SESSION], FIT_SESSION_MESG_DEF_SIZE, 2, dev_field_def, fp);
     WriteMessageDefinition(skEventMsgNum, fit_mesg_defs[FIT_MESG_EVENT], FIT_EVENT_MESG_DEF_SIZE, fp);
+    WriteMessageDefinition(skRecordMsgNum, fit_mesg_defs[FIT_MESG_RECORD], FIT_RECORD_MESG_DEF_SIZE, fp);
+
 
 
     // Write Event message - START Event
@@ -199,16 +201,10 @@ void ActivityWriter::addRecord(const RecordData& record)
     record_mesg.timestamp = unixToFitTimestamp(record.timestamp);
     record_mesg.position_lat = ConvertDegreesToSemicircles(record.latitude);
     record_mesg.position_long = ConvertDegreesToSemicircles(record.longitude);
+    record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude * 5) + 500);   // 5 * m + 500
     record_mesg.heart_rate = record.heartRate;
 
     WriteMessage(skRecordMsgNum, &record_mesg, FIT_RECORD_MESG_SIZE, fp);
-
-    FIT_UINT32 steps = record.steps;
-    WriteDeveloperField(&steps, sizeof(steps), fp);
-
-    FIT_UINT32 floors = record.floors;
-    WriteDeveloperField(&floors, sizeof(floors), fp);
-
 }
 
 void ActivityWriter::addLap(const LapData& lap)
@@ -327,6 +323,8 @@ void ActivityWriter::stop(const TrackData& track)
     WriteFileHeader(fp);
 
     saveFile();
+
+    saveSummary(track);
 }
 
 void ActivityWriter::discard()
@@ -390,6 +388,37 @@ void ActivityWriter::deleteFile()
     mFile.reset();
 }
 
+void ActivityWriter::saveSummary(const TrackData& track)
+{
+    char buff[256]{};
+    // Create name
+    size_t nameLen = strlen(mFile->getPath());
+    snprintf(buff, sizeof(buff), "%.*s%s", nameLen - 3, mFile->getPath(), "json");
+
+    mFile->setPath(buff);
+
+    if (!mFile->open(true, true)) {
+        mFile.reset();
+        return;
+    }
+
+    SDK::JsonStreamWriter writer(mFile.get());
+
+    writer.startMap();
+
+    writer.add("time_start", static_cast<uint32_t>(track.timeStart));
+    writer.add("duration", static_cast<uint32_t>(track.duration));
+    writer.add("distance", track.totalDistance);
+    writer.add("hr_avg", track.hrAvg);
+    writer.add("elevation", track.ascent - track.descent);
+    writer.add("activity_type", "hiking");
+
+    writer.endMap();
+
+    mFile->flush();
+    mFile->close();
+}
+
 
 std::time_t ActivityWriter::tm2epoch(const struct tm* tm)
 {
@@ -448,19 +477,19 @@ void ActivityWriter::WriteFileHeader(SDK::Interface::IFile* fp)
     file_header.protocol_version = FIT_PROTOCOL_VERSION_20;
     memcpy((FIT_UINT8*)&file_header.data_type, ".FIT", 4);
     
-    // fseek(fp, 0, SEEK_END);
     fp->flush();
     size_t fileSize = fp->size();
 
-    // file_header.data_size = ftell(fp) - FIT_FILE_HDR_SIZE - sizeof(FIT_UINT16);
-    file_header.data_size = static_cast<FIT_UINT32>(fileSize - FIT_FILE_HDR_SIZE - sizeof(FIT_UINT16));
-
+    if (fileSize > FIT_FILE_HDR_SIZE - sizeof(FIT_UINT16)) {
+        file_header.data_size = static_cast<FIT_UINT32>(fileSize - FIT_FILE_HDR_SIZE - sizeof(FIT_UINT16));
+    } else {
+        file_header.data_size = 0;
+    }
+    
     file_header.crc = FitCRC_Calc16(&file_header, FIT_STRUCT_OFFSET(crc, FIT_FILE_HDR));
 
-    // fseek(fp, 0, SEEK_SET);
     fp->seek(0);  
     
-    // fwrite((void*)&file_header, 1, FIT_FILE_HDR_SIZE, fp);
     size_t bw;
     fp->write(reinterpret_cast<const char*>(&file_header), FIT_FILE_HDR_SIZE, bw);  
 
@@ -477,9 +506,9 @@ void ActivityWriter::WriteData(const void* data, FIT_UINT16 data_size, SDK::Inte
 {
     FIT_UINT16 offset;
 
-    //fwrite(data, 1, data_size, fp);
     size_t bw;
     fp->write(reinterpret_cast<const char*>(data), static_cast<size_t>(data_size), bw);
+    fp->flush();
 
     for (offset = 0; offset < data_size; offset++) {
         mDataCRC = FitCRC_Get16(mDataCRC, *((FIT_UINT8*)data + offset));
@@ -488,9 +517,9 @@ void ActivityWriter::WriteData(const void* data, FIT_UINT16 data_size, SDK::Inte
 
 void ActivityWriter::WriteCRC(SDK::Interface::IFile* fp)
 {
-    //fwrite(&mDataCRC, 1, sizeof(FIT_UINT16), fp);
     size_t bw;
     fp->write(reinterpret_cast<const char*>(&mDataCRC), sizeof(FIT_UINT16), bw);
+    fp->flush();
 }
 
 void ActivityWriter::WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size, SDK::Interface::IFile* fp)

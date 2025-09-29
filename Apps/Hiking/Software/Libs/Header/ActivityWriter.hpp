@@ -41,9 +41,8 @@ public:
         std::time_t timestamp;  // UTC
         float latitude;         // degrees
         float longitude;        // degrees
+        float altitude;         // absolute altitude in m
         uint8_t heartRate;      // Heart rate in beats per minute.
-        uint32_t steps;
-        uint32_t floors;
     };
 
     struct LapData {
@@ -116,6 +115,8 @@ private:
     bool createAndOpenFile(std::time_t utc);
     void saveFile();
     void deleteFile();
+
+    void saveSummary(const TrackData& track);
 
     static time_t tm2epoch(const struct tm* tm);
     static time_t epochToLocal(time_t utc);

@@ -14,7 +14,7 @@ public:
 
     void setPositionId(uint16_t id);
     uint16_t getPositionId();
-    void setTrackData(const Track::Data &data, bool isImperial);
+    void setTrackData(const Track::Data &data, bool isImperial, const std::array<uint8_t, 4>& hrth);
     void setTime(uint8_t h, uint8_t m);
     void setBatteryLevel(uint8_t level);
     void setCharging(bool state);

@@ -52,7 +52,7 @@ void TrackLapView::setSteps(int32_t steps)
 void TrackLapView::setDistance(float km)
 {
     if (mUnitsImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", Gui::Utils::km2mi(km));
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(km));
     } else {
         Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", km);
     }
@@ -63,7 +63,7 @@ void TrackLapView::setDistance(float km)
 void TrackLapView::setTimer(std::time_t sec)
 {
     Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d",
-        Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec));
+        App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec));
     timeValue.invalidate();
 }
 

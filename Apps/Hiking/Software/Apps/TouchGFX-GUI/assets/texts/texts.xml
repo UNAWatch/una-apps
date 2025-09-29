@@ -295,6 +295,12 @@
       <Text Id="TEXT_CALORIES_UC" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">CALORIES</Translation>
       </Text>
+      <Text Id="TEXT_FLOORS" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">Floors</Translation>
+      </Text>
+      <Text Id="TEXT_FLOORS_UC" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">FLOORS</Translation>
+      </Text>
       <Text Id="TEXT_KCAL" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Kcal</Translation>
       </Text>

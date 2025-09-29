@@ -58,6 +58,10 @@ static void runService(Service* service)
     LOG_INFO("service thread is started\n");
 
     service->run();
+
+    LOG_INFO("service thread is stopped\n");
+
+    exit(0);
 }
 
 static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBase& guiKernel, int argc, char** argv)

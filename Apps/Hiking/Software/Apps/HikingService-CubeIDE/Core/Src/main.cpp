@@ -47,7 +47,7 @@ int main()
 
     Service service(*kernel);
     service.run();
-
+    exit(0);
     return 0;
 }
 

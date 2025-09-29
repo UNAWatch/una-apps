@@ -10,7 +10,7 @@ void MenuDistanceView::setupScreen()
     MenuDistanceViewBase::setupScreen();
 
     menu.setTitle(T_TEXT_DISTANCE_UC);
-    menu.setNumberOfItems(Gui::Menu::Settings::Alerts::Distance::ID_COUNT);
+    menu.setNumberOfItems(App::Menu::Settings::Alerts::Distance::ID_COUNT);
 
     update();
 }
@@ -26,9 +26,9 @@ void MenuDistanceView::setDistanceUnits(float km, bool isImperial)
 
     update();
 
-    float distance = isImperial ? Gui::Utils::km2mi(km) : km;
-    uint32_t distanceId = Gui::Utils::RoundToNearestIndex(Gui::kDistanceList,
-        Gui::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
+    float distance = isImperial ? App::Utils::km2mi(km) : km;
+    uint32_t distanceId = App::Menu::RoundToNearestIndex(App::Menu::kDistanceList,
+        App::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
 
     menu.selectItem(distanceId);
 }
@@ -46,9 +46,9 @@ void MenuDistanceView::handleKeyEvent(uint8_t key)
     if (key == Gui::Config::Button::R1) {
         uint16_t id = menu.getSelectedItem();
         if (mUnitsImperial) {
-            presenter->saveDistance(Gui::Utils::mi2km(Gui::kDistanceList[id]));
+            presenter->saveDistance(App::Utils::mi2km(App::Menu::kDistanceList[id]));
         } else { 
-            presenter->saveDistance(Gui::kDistanceList[id]);
+            presenter->saveDistance(App::Menu::kDistanceList[id]);
         }
         application().gotoMenuDistanceSavedScreenNoTransition();
     }
@@ -66,7 +66,7 @@ void MenuDistanceView::update()
     const uint16_t kBuffSize = 32;
     touchgfx::Unicode::UnicodeChar buffer[kBuffSize] { };
 
-    for (int i = 0; i < Gui::Menu::Settings::Alerts::Distance::ID_COUNT; i++) {
+    for (int i = 0; i < App::Menu::Settings::Alerts::Distance::ID_COUNT; i++) {
         pS = menu.getSelectedItem(i);
         pN = menu.getNotSelectedItem(i);
 
@@ -74,16 +74,16 @@ void MenuDistanceView::update()
             Unicode::snprintf(buffer, kBuffSize, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
         } else {
             if (mUnitsImperial) {
-                touchgfx::TypedTextId txt = Gui::kDistanceList[i] > 1 ? 
+                touchgfx::TypedTextId txt = App::Menu::kDistanceList[i] > 1 ?
                     T_TEXT_MILES : T_TEXT_MILE;
 
                 Unicode::snprintf(buffer, kBuffSize, "%d %s",
-                    Gui::kDistanceList[i],
+                    App::Menu::kDistanceList[i],
                     touchgfx::TypedText(txt).getText());
 
             } else {
                 Unicode::snprintf(buffer, kBuffSize, "%d %s",
-                    Gui::kDistanceList[i],
+                    App::Menu::kDistanceList[i],
                     touchgfx::TypedText(T_TEXT_KM).getText());
             }
         }

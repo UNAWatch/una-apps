@@ -200,6 +200,11 @@ bool Model::isUnitsImperial()
     return mUnitsImperial;
 }
 
+const std::array<uint8_t, 4>& Model::getHrThresholds() const
+{
+    return mHrThresholds;
+}
+
 const Settings& Model::getSettings() const
 {
     return mSettings;

@@ -16,7 +16,7 @@ void TrackSummary::initialize()
 void TrackSummary::setDistance(float km, bool isImperial)
 {
     if (isImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", Gui::Utils::km2mi(km));
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(km));
         Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
     } else {
         Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", km);
@@ -37,7 +37,7 @@ void TrackSummary::setSteps(uint32_t v)
 void TrackSummary::setElevation(int32_t m, bool isImperial)
 {
     if (isImperial) {
-        m = static_cast<int32_t>(Gui::Utils::m2ft(static_cast<float>(m)));
+        m = static_cast<int32_t>(App::Utils::m2ft(static_cast<float>(m)));
     }
     Unicode::snprintf(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%d", m);
     elevationValue.invalidate();
@@ -47,7 +47,7 @@ void TrackSummary::setElevation(int32_t m, bool isImperial)
 void TrackSummary::setTimer(uint32_t sec)
 {
     Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%d:%02d:%02d",
-        Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
+        App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
     timerValue.invalidate();
     timerText.invalidate();
 }

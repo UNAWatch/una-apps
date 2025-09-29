@@ -19,10 +19,10 @@ void MenuStepsSavedView::tearDownScreen()
 
 void MenuStepsSavedView::setSteps(uint32_t steps)
 {
-    uint32_t stepsId = Gui::Utils::RoundToNearestIndex(Gui::kStepsList,
-        Gui::Menu::Settings::Alerts::Steps::ID_COUNT, static_cast<float>(steps));
+    uint32_t stepsId = App::Menu::RoundToNearestIndex(App::Menu::kStepsList,
+        App::Menu::Settings::Alerts::Steps::ID_COUNT, static_cast<float>(steps));
 
-    if (stepsId == Gui::Menu::Settings::Alerts::Steps::ID_OFF) {
+    if (stepsId == App::Menu::Settings::Alerts::Steps::ID_OFF) {
         Unicode::snprintf(msgBuffer, MSG_SIZE, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
     } else {
         Unicode::snprintf(msgBuffer, MSG_SIZE, "%d", steps);

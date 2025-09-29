@@ -33,7 +33,7 @@ void TrackPresenter::deactivate()
 
 void TrackPresenter::onTrackData(const Track::Data& data)
 {
-    view.setTrackData(data, model->isUnitsImperial());
+    view.setTrackData(data, model->isUnitsImperial(), model->getHrThresholds());
 }
 
 void TrackPresenter::onBatteryLevel(uint8_t lvl)
