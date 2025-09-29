@@ -74,11 +74,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/Service.cpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Sources/UserAppEntry.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/UserAppEntry.cpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -144,9 +139,9 @@
 			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/AtExitImpl.cpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/main.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/main.cpp</locationURI>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
@@ -172,6 +167,11 @@
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint/main.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/EntryPoint/Service/main.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

@@ -21,7 +21,6 @@ Service::Service()
 {
     mKernel.app.registerApp(this);
     mKernel.sctrl.setContext(mGSModel);
-    mKernel.app.initialized();
 }
 
 void Service::testSesnors()
@@ -50,6 +49,8 @@ void Service::testSesnors()
 
 void Service::run()
 {
+    mKernel.app.initialized();
+
     SDK::SwTimer timer(SDK::SwTimer::minutes(2) + SDK::SwTimer::seconds(30));
     bool startSensors = true;
 

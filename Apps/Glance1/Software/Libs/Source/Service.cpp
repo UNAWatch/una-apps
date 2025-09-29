@@ -1,4 +1,5 @@
 #include "Service.hpp"
+#include "SDK/Kernel/KernelProviderService.hpp"
 #include "Clock24.h"
 
 #include <stdio.h>
@@ -9,7 +10,7 @@
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service()
-        : mKernel(SDK::Kernel::GetInstance())
+        : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
         , mTerminate(false)
         , mUI(mKernel.app.getGlanceArea().w, mKernel.app.getGlanceArea().h)
         , mTextTime()

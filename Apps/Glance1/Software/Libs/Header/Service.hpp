@@ -1,8 +1,7 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "SDK/AppSystem/AppKernel.hpp"
-
+#include "SDK/Kernel/Kernel.hpp"
 #include "SDK/Interfaces/IGlance.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
 

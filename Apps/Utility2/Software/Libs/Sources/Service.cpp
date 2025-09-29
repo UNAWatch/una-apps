@@ -18,11 +18,12 @@ Service::Service()
 {
     mKernel.app.registerApp(this);
     mKernel.sctrl.setContext(mGSModel);
-    mKernel.app.initialized();
 }
 
 void Service::run()
 {
+    mKernel.app.initialized();
+
     mBMETemp.connect();
     mBMEPressure.connect();
     mAltimeter.connect();

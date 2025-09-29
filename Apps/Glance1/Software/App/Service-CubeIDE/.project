@@ -74,11 +74,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Source/Service.cpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Source/UserAppEntry.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Source/UserAppEntry.cpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -105,6 +100,11 @@
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -144,19 +144,14 @@
 			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/AppKernel.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/AppSystem/AppKernel.cpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/AppSystem/AtExitImpl.cpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/main.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/AppSystem/main.cpp</locationURI>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
@@ -167,6 +162,11 @@
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/Logger/Logger.cpp</name>
@@ -187,6 +187,11 @@
 			<name>SDK/Libs/Source/SwTimer/SwTimerPort.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/SwTimer/SwTimerPort.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint/main.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/EntryPoint/Service/main.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>GUI-CubeIDE</name>
+	<name>Utility3-GUI-CubeIDE</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -124,9 +124,9 @@
 			<locationURI>SDK_LOC/AppSystem/AtExitImpl.cpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/mainGUI.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/AppSystem/mainGUI.cpp</locationURI>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
@@ -147,6 +147,11 @@
 			<name>SDK/Libs/Source/Logger/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/UnaLogger/Logger.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint/main.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/EntryPoint/CustomGUI/main.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
