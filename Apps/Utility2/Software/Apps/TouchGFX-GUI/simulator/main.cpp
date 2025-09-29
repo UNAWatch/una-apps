@@ -14,6 +14,7 @@
 #include "SDK/Platform/OS/OS.hpp"
 #include "SDK/Simulator/Sensors/SensorCore.hpp"
 #include "SDK/Simulator/Kernel/Mock/MockServiceControl.hpp"
+#include "SDK/AppSystem/SvcBootstrap.hpp"
 
 #include "gui/common/GuiConfig.hpp"
 #include "Service.hpp"
@@ -51,11 +52,11 @@ static void LoggerPrint(const char* str)
 }
 
 // Service thread function
-static void runService(Service* service)
+static void runService(SDK::Service::Bootstrap* bootstrap)
 {
     LOG_INFO("service thread is started\n");
 
-    service->run();
+    bootstrap->run();
 }
 
 static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBase& guiKernel, int argc, char** argv)
@@ -66,7 +67,8 @@ static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBa
 
     // Create a service app object and call approproate callbacks
     SDK::KernelProviderService::CreateInstance(serviceKernel.getKernel());
-    Service service;
+    //Service service;
+    SDK::Service::Bootstrap bootstrap;
 
     //For windows/linux, DMA transfers are simulated
     touchgfx::NoDMA dma;
@@ -89,7 +91,7 @@ static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBa
 
     // Start service thread
     serviceKernel.startApp();
-    std::thread serviceThread(runService, &service);
+    std::thread serviceThread(runService, &bootstrap);
 
     guiKernel.startApp();                           // Start GUI kernel simulator
     touchgfx::HAL::getInstance()->taskEntry();      // Main GUI loop

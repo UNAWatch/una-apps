@@ -1,8 +1,10 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include "SDK/GSModel/GSModelHelper.hpp"
+#include "SDK/GSModel/IGUIModel.hpp"
 #include "SDK/Kernel/Kernel.hpp"
+#include "GSModelEvents/G2SEvents.hpp"
+#include "GSModelEvents/S2GEvents.hpp"
 #include "touchgfx/UIEventListener.hpp"
 #include "gui/common/GuiConfig.hpp"
 
@@ -63,13 +65,13 @@ protected:
     // IGUIModelHandler implementation
     void handleEvent(const S2GEvent::Counter& event) override;
 
-    const SDK::Kernel&          mKernel;
-    ModelListener*              modelListener;
-    std::shared_ptr<GSModelGUI> mGSModel;
+    const SDK::Kernel&         mKernel;
+    ModelListener*             modelListener;
+    std::shared_ptr<IGUIModel> mGSModel;
 
     // User data
-    uint32_t                    mIdleTimer = 0;
-    uint32_t                    mCounter;
+    uint32_t                   mIdleTimer = 0;
+    uint32_t                   mCounter;
 };
 
 #endif // MODEL_HPP

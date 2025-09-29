@@ -8,7 +8,7 @@
 
 Service::Service()
         : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
-        , mGSModel(std::make_shared<GSModelService>(*this))
+        , mGSModel(*this)
         , mTerminate(false)
         , mCounter(0)
         , mGUIStarted(false)
@@ -16,27 +16,23 @@ Service::Service()
         , mBMEPressure(SDK::Sensor::Type::PRESSURE, this)
         , mAltimeter(SDK::Sensor::Type::ALTIMETER, this)
 {
-    mKernel.app.registerApp(this);
-    mKernel.sctrl.setContext(mGSModel);
 }
 
 void Service::run()
 {
-    mKernel.app.initialized();
-
     mBMETemp.connect();
     mBMEPressure.connect();
     mAltimeter.connect();
 
     while (!mTerminate) {
-        mGSModel->checkG2SEvents(1000);
+        mGSModel.process();
 
         mCounter += 10;
 
         if (mGUIStarted) {
             S2GEvent::Counter counter = { mCounter };
 
-            mGSModel->sendToGUI(counter);
+            mGSModel.post(counter);
         }
     }
 
@@ -90,9 +86,9 @@ void Service::onDestroy()
     LOG_INFO("called\n");
 }
 
-void Service::sdlNewData(const SDK::Interface::ISensorDriver*             sensor,
-                         const std::vector<SDK::Interface::ISensorData*>& data,
-                         bool                                             first)
+void Service::onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
+                           const std::vector<SDK::Interface::ISensorData*>& data,
+                           bool                                             first)
 {
     if (sensor->getType() == SDK::Sensor::Type::AMBIENT_TEMPERATURE) {
         LOG_INFO("BME.T     = %.2f\n", data[0]->getAsFloat(0));

@@ -3,7 +3,6 @@
 #include <gui/common/FrontendApplication.hpp>
 #include "SDK/Kernel/KernelProviderGUI.hpp"
 
-
 #define LOG_MODULE_PRX      "Model::"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
@@ -18,7 +17,7 @@
 Model::Model()
     : mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
     , modelListener(0)
-    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel.gctrl.getContext()))
+    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel.gctrl.getContext()))
     , mCounter(0)
 {
     mKernel.app.registerApp(this);
@@ -60,7 +59,7 @@ void Model::tick()
 #endif
     }
 
-    mGSModel->checkS2GEvents(0);
+    mGSModel->process(0);
 }
 
 void Model::handleKeyEvent(uint8_t key)
@@ -93,7 +92,7 @@ void Model::resetIdleTimer()
 void Model::exitApp()
 {
     LOG_INFO("exit from Utility2 GUI\n");
-    mGSModel->sendToService(G2SEvent::Stop{});
+    mGSModel->post(G2SEvent::Stop{});
     mGSModel->setGUIHandler(nullptr, nullptr);
     mKernel.app.exit();
 }
@@ -105,8 +104,6 @@ void Model::handleEvent(const S2GEvent::Counter& event)
 
     ++mCounter;
 }
-
-
 
 void Model::decIdleTimer()
 {
@@ -129,7 +126,7 @@ void Model::onStart()
     LOG_INFO("called\n");
 
     mGSModel->setGUIHandler(&mKernel, this);
-    mGSModel->sendToService(G2SEvent::Run {});
+    mGSModel->post(G2SEvent::Run {});
 }
 
 void Model::onResume()
@@ -151,7 +148,7 @@ void Model::onStop()
 {
     LOG_INFO("called\n");
 
-    mGSModel->sendToService(G2SEvent::Stop {});
+    mGSModel->post(G2SEvent::Stop {});
     mGSModel->setGUIHandler(nullptr, nullptr);
 }
 
