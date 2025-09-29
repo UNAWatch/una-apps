@@ -67,7 +67,6 @@ static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBa
 
     // Create a service app object and call approproate callbacks
     SDK::KernelProviderService::CreateInstance(serviceKernel.getKernel());
-    //Service service;
     SDK::Service::Bootstrap bootstrap;
 
     //For windows/linux, DMA transfers are simulated
