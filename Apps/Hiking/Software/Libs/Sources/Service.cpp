@@ -66,7 +66,7 @@ void Service::run()
         mGpsSensor->connect(this, &mKernel.app, skInitialSamplePeriod, skSampleLatency);
     }
 
-#if defined(SIMULATOR) || 0
+#if defined(SIMULATOR) || 1
     mGps.fix = true;
 //    mSettings.alertTime = 1;
 #endif
@@ -228,7 +228,7 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
 
             mHr.totalSum += mHr.hr;
             mHr.totalCnt++;
-            LOG_DEBUG("hr %.1f, tl %.1f\n", mHr.hr, mHr.trustLevel);
+            //LOG_DEBUG("hr %.1f, tl %.1f\n", mHr.hr, mHr.trustLevel);
         }
     }
 }

@@ -347,6 +347,7 @@ void Model::handleEvent(const S2GEvent::SettingsUpd& event)
     LOG_DEBUG("S2GEvent::SettingsUpd\n");
     mSettings = event.settings;
     mUnitsImperial = event.unitsImperial;
+    mHrThresholds = event.hrThresholds;
 }
 
 void Model::handleEvent(const S2GEvent::Battery& event)
