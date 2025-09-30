@@ -66,7 +66,7 @@ void Service::run()
         mGpsSensor->connect(this, &mKernel.app, skInitialSamplePeriod, skSampleLatency);
     }
 
-#if defined(SIMULATOR) || 1
+#if defined(SIMULATOR) || 0
     mGps.fix = true;
 //    mSettings.alertTime = 1;
 #endif
@@ -359,7 +359,7 @@ void Service::processTrack(std::time_t utc)
 
     mTrackData.totalTime = trackTime;
     mTrackData.lapTime += trackTimeDiff;
-#if 0
+#if 1
     std::time_t timeDiff = static_cast<std::time_t>(std::difftime(utc, mTrackProcessTimestamp));
     if (timeDiff < (skSamplePeriod / 1000)) { // in seconds
         if (trackTimeDiff > 0) {

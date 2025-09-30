@@ -12,7 +12,7 @@ void TrackFace2::initialize()
 
 void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
 {
-#if 1   // debug option
+#if 0   // debug option
     Unicode::snprintfFloat(hrTextBuffer, HRTEXT_SIZE, "%.0f", tl);
     hrText.invalidate();
     if (tl >= 1.0 && hr >= 1.0) {
