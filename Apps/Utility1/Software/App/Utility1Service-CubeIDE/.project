@@ -101,33 +101,33 @@
 		<link>
 			<name>SDK/Libs/Header/GSModel/GSModel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/Header/SDK/GSModel/GSModel.hpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/GSModel/GSModel.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/GSModel/IGUIModel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/Header/SDK/GSModel/IGUIModel.hpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/GSModel/IGUIModel.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/AppSystem/startup_user_app.s</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>SDK_LOC</name>
-			<value>$%7BPARENT-5-PROJECT_LOC%7D/SDK/Libs/Source</value>
+			<value>$%7BPARENT-5-PROJECT_LOC%7D/SDK</value>
 		</variable>
 	</variableList>
 </projectDescription>
