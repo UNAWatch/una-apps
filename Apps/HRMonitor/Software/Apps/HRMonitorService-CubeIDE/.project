@@ -59,6 +59,16 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/ThirdParty</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/ActivityWriter.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Apps/HRMonitor/Software/Libs/Header/ActivityWriter.hpp</locationURI>
+		</link>
+		<link>
 			<name>Libs/Header/GSModelEvents</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -67,6 +77,11 @@
 			<name>Libs/Header/Service.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/ActivityWriter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/Apps/HRMonitor/Software/Libs/Sources/ActivityWriter.cpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Sources/Service.cpp</name>
@@ -80,6 +95,11 @@
 		</link>
 		<link>
 			<name>SDK/Libs/Source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -112,6 +132,26 @@
 			<name>SDK/Libs/Source/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit.c</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit_convert.c</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_convert.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit_crc.c</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_crc.c</locationURI>
+		</link>
+		<link>
+			<name>SDK/ThirdParty/FitSDK/fit_product.c</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/ThirdParty/FitSDKRelease_21.171.00/c/fit_product.c</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>

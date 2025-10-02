@@ -6,6 +6,8 @@
 #include "SDK/Interfaces/ISensorDriver.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
 
+#include "ActivityWriter.hpp"
+
 class Service : public IServiceModelHandler,
                 public SDK::Interface::IUserApp::Callback,
                 public SDK::Interface::ISensorDataListener
@@ -25,12 +27,19 @@ private:
 
     void sdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first) override;
 
+
     const IKernel&                  mKernel;
     std::shared_ptr<GSModelService> mGSModel;
     bool                            mTerminate;
     bool                            mGUIStarted;
 
     SDK::Interface::ISensorDriver*  mHRSensor;
+
+    float mHR = 0;
+    float mHRTL = 0;
+    ActivityWriter mActivityWriter;
+
+    static uint32_t ParseVersion(const char* str);
 };
 
 #endif
