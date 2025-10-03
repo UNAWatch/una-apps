@@ -32,11 +32,13 @@ void Service::run()
     }
 }
 
-GlanceControl_t* Service::glanceGetControls(uint8_t& count)
+SDK::Interface::IGlance::Info Service::glanceGetInfo()
 {
-    count = mUI.size();
-
-    return mUI.data();
+    IGlance::Info info{};
+    info.altname = "glance1";
+    info.count = static_cast<uint8_t>(mUI.size());
+    info.ctrls = mUI.data();
+    return info;
 }
 
 void Service::glanceUpdate()
@@ -50,7 +52,7 @@ void Service::glanceUpdate()
         mTemperature = 23.5;
     }
 
-    mTextTemperature.print("%.2f", mTemperature);
+    mTextTemperature.print("%.1f", mTemperature);
 
     std::time_t t = time(NULL);
     struct tm tm;
@@ -97,47 +99,49 @@ void Service::onDestroy()
 
 void Service::createUI()
 {
-    SDK::Glance::ControlRectangle panelClock = mUI.createRect().init({0,   0},
-                                                                     {25, 25},
-                                                                     GlanceColor_t::GLANCE_COLOR_BLUE,
-                                                                     GlanceColor_t::GLANCE_COLOR_BLACK);
+    // first row
+    mUI.createRect().init( {50, 0}, {140, 30},
+            GlanceColor_t::GLANCE_COLOR_BLUE,
+            GlanceColor_t::GLANCE_COLOR_BLACK);
 
-    mUI.createRect().init({25,  0},
-                          {75, 25},
-                          GlanceColor_t::GLANCE_COLOR_BLUE,
-                          GlanceColor_t::GLANCE_COLOR_BLACK);
+    SDK::Glance::ControlRectangle panelClock = mUI.createRect().init(
+            {50, 0}, {30, 30},
+            GlanceColor_t::GLANCE_COLOR_BLUE,
+            GlanceColor_t::GLANCE_COLOR_BLACK);
 
-    mUI.createRect().init({0,  25},
-                          {50, 25},
-                          GlanceColor_t::GLANCE_COLOR_BLUE,
-                          GlanceColor_t::GLANCE_COLOR_RED);
-
-    mUI.createRect().init({50, 25},
-                          {50, 25},
-                          GlanceColor_t::GLANCE_COLOR_BLUE,
-                          GlanceColor_t::GLANCE_COLOR_GREEN);
-
-    GlanceSize_t  clockImageSize = {CLOCK24_WIDTH, CLOCK24_HEIGHT};
-    GlancePoint_t clockImagePos  = SDK::Glance::Align::placeWithin(panelClock.pos(),
-                                                                   panelClock.size(),
-                                                                   clockImageSize,
-                                                                   GlanceAlignH_t::GLANCE_ALIGN_H_CENTER,
-                                                                   GlanceAlignV_t::GLANCE_ALIGN_V_CENTER);
+    GlanceSize_t clockImageSize = {CLOCK24_WIDTH, CLOCK24_HEIGHT};
+    GlancePoint_t clockImagePos = SDK::Glance::Align::placeWithin(
+            panelClock.pos(),
+            panelClock.size(),
+            clockImageSize,
+            GlanceAlignH_t::GLANCE_ALIGN_H_CENTER,
+            GlanceAlignV_t::GLANCE_ALIGN_V_CENTER);
 
     mUI.createImage().init(clockImagePos, clockImageSize, CLOCK24_ABGR2222);
 
-    mUI.createText().init({25, 75},
-                          "Temp, °C:",
-                          GlanceFont_t::GLANCE_FONT_POPPINS_REGULAR_18,
-                          GlanceColor_t::GLANCE_COLOR_WHITE);
-
     mTextTime = mUI.createText();
-    mTextTime.pos({5, 30})
-             .color(GlanceColor_t::GLANCE_COLOR_YELLOW_DARK)
-             .setText("00:00:00");
+    mTextTime.pos( {80, 2}, {110, 26})
+            .color(GlanceColor_t::GLANCE_COLOR_YELLOW_DARK)
+            .setText("00:00:00")
+            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
+
+    // second row
+    mUI.createRect().init( {50, 30}, {95, 30},
+            GlanceColor_t::GLANCE_COLOR_BLUE, GlanceColor_t::GLANCE_COLOR_RED);
+
+    mUI.createText().init( {50, 32}, {90, 26},
+            "Temp, C:",
+            GlanceFont_t::GLANCE_FONT_POPPINS_REGULAR_18,
+            GlanceColor_t::GLANCE_COLOR_WHITE,
+            GlanceAlignH_t::GLANCE_ALIGN_H_RIGHT);
+
+    mUI.createRect().init( {145, 30}, {45, 30},
+            GlanceColor_t::GLANCE_COLOR_BLUE,
+            GlanceColor_t::GLANCE_COLOR_GREEN);
 
     mTextTemperature = mUI.createText();
-    mTextTemperature.pos({60, 30})
-                    .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-                    .setText("23.5");
+    mTextTemperature.pos( {150, 32}, {40, 26})
+            .color(GlanceColor_t::GLANCE_COLOR_WHITE)
+            .setText("23.5")
+            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }

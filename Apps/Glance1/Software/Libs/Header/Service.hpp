@@ -20,9 +20,9 @@ public:
 
     void run();
 
-    GlanceControl_t* glanceGetControls(uint8_t& count) override;
-    void             glanceUpdate()                    override;
-    void             glanceClose()                     override;
+    virtual IGlance::Info glanceGetInfo() override;
+    virtual void glanceUpdate() override;
+    virtual void glanceClose() override;
 
 private:
     void onCreate()  override;
