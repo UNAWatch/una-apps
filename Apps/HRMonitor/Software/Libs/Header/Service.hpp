@@ -1,10 +1,10 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "SDK/Interfaces/IKernel.hpp"
-#include "SDK/GSModel/GSModelHelper.hpp"
-#include "SDK/Interfaces/ISensorDriver.hpp"
+#include "SDK/GSModel/GSModel.hpp"
+#include "SDK/Kernel/KernelProviderService.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
+#include "SDK/SensorLayer/SensorDriverConnection.hpp"
 
 #include "ActivityWriter.hpp"
 
@@ -13,7 +13,7 @@ class Service : public IServiceModelHandler,
                 public SDK::Interface::ISensorDataListener
 {
 public:
-    Service(const IKernel& kernel);
+    Service();
 
     virtual ~Service() = default;
 
@@ -22,18 +22,18 @@ public:
     void handleEvent(const G2SEvent::Stop& event);
 
 private:
+    void onStop() override;
 
-    void onStop()    override;
+    void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
+                      const std::vector<SDK::Interface::ISensorData*>& data,
+                      bool                                             first) override;
 
-    void sdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first) override;
+    const SDK::Kernel& mKernel;
+    GSModel            mGSModel;
+    bool               mTerminate;
+    bool               mGUIStarted;
 
-
-    const IKernel&                  mKernel;
-    std::shared_ptr<GSModelService> mGSModel;
-    bool                            mTerminate;
-    bool                            mGUIStarted;
-
-    SDK::Interface::ISensorDriver*  mHRSensor;
+    SDK::Sensors::DriverConnection mHRSensor;
 
     float mHR = 0;
     float mHRTL = 0;

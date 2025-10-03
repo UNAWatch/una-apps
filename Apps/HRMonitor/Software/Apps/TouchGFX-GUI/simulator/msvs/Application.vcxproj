@@ -27,6 +27,7 @@
     <ClCompile Include="$(SdkPath)\Libs\Source\SynchManager\SynchManager.cpp" />
     <ClCompile Include="$(SdkPath)\Libs\Source\UnaLogger\Logger.cpp" />
     <ClCompile Include="$(SdkPath)\Libs\Source\Wrappers\StdLibWrappers.c" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorDriverConnection.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit.c" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_convert.c" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_crc.c" />

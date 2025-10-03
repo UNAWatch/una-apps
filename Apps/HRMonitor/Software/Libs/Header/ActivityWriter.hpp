@@ -16,7 +16,7 @@
 #include <cstdbool>
 #include <string>
 
-#include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/Kernel/Kernel.hpp"
 
 extern "C" {
 #include "fit_example.h"
@@ -61,7 +61,7 @@ public:
     };
 
 
-    ActivityWriter(const IKernel& kernel, const char* pathToDir);
+    ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir);
 
 
     void start(const AppInfo& info);
@@ -74,8 +74,8 @@ public:
 
     
 private:
-    /// A constant reference to an IKernel object.
-    const IKernel& mKernel;
+    /// A constant reference to a Kernel object.
+    const SDK::Kernel& mKernel;
 
     /// Path to FIT file
     const char* mPath = nullptr;

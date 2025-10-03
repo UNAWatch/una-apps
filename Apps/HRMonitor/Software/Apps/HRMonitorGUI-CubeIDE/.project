@@ -104,6 +104,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -154,6 +159,16 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/AtExitImpl.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/main.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/EntryPoint/TouchGFX/main.cpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
@@ -162,6 +177,11 @@
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>

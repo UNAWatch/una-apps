@@ -29,7 +29,7 @@ extern "C" {
 
 
 
-ActivityWriter::ActivityWriter(const IKernel& kernel, const char* pathToDir) :
+ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir) :
     mKernel(kernel), mPath(pathToDir)
 {
     assert(pathToDir != nullptr);

@@ -5,28 +5,20 @@
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-Service::Service(const IKernel& kernel)
-        : mKernel(kernel)
-        , mGSModel(std::make_shared<GSModelService>(kernel, *this))
-        , mTerminate(false)
-        , mGUIStarted(false)
-        , mHRSensor(nullptr)
-        , mActivityWriter(mKernel, "Activity")
-{
-    mKernel.app.registerApp(this);
-    mKernel.sctrl.setContext(mGSModel);
-}
+Service::Service()
+    : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
+    , mGSModel(*this)
+    , mTerminate(false)
+    , mGUIStarted(false)
+    , mHRSensor(SDK::Sensor::Type::HEART_RATE, this)
+    , mActivityWriter(mKernel, "Activity")
+{}
 
 void Service::run()
 {
-    mKernel.app.initialized();
-
     LOG_INFO("started\n");
 
-    mHRSensor = mKernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::HEART_RATE);
-    if (mHRSensor) {
-        mHRSensor->connect(this, &mKernel.app, 1000, 2000);
-    }
+    mHRSensor.connect(1000, 2000);
 
     ActivityWriter::AppInfo info{};
     info.timestamp = std::time(nullptr);
@@ -46,7 +38,7 @@ void Service::run()
 
     while (!mTerminate) {
 
-        mGSModel->checkG2SEvents(1000);
+        mGSModel.process(1000);
 
         if (mGUIStarted) {
             // Save record to the FIT file
@@ -97,9 +89,7 @@ void Service::run()
 
     mActivityWriter.stop(fitTrack);
 
-    if (mHRSensor) {
-        mHRSensor->disconnect(this);
-    }
+    mHRSensor.disconnect();
 
     LOG_INFO("stopped\n");
 
@@ -110,7 +100,7 @@ void Service::handleEvent(const G2SEvent::Run& event)
 {
     (void) event;
     mGUIStarted = true;
-    mGSModel->sendToGUI(S2GEvent::HeartRate{0, 0});
+    mGSModel.post(S2GEvent::HeartRate{0, 0});
 }
 
 void Service::handleEvent(const G2SEvent::Stop& event)
@@ -124,16 +114,16 @@ void Service::onStop()
     mTerminate = true;
 }
 
-void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first)
+void Service::onSdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first)
 {
-    if (sensor == mHRSensor) {
+    if (sensor->getType() == SDK::Sensor::Type::HEART_RATE) {
         if (mGUIStarted) {
             SDK::SensorDataParser::HeartRate hrp { data[0]};
             if (hrp.isDataValid()) {
                 mHR = hrp.getBpm();
                 mHRTL = hrp.getTrustLevel();
 
-                mGSModel->sendToGUI(S2GEvent::HeartRate{mHR, mHRTL});
+                mGSModel.post(S2GEvent::HeartRate{mHR, mHRTL});
             }
         }
     }

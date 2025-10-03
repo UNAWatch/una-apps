@@ -1,7 +1,7 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 #include <gui/common/FrontendApplication.hpp>
-#include "SDK/KernelManager.hpp"
+#include "SDK/Kernel/KernelProviderGUI.hpp"
 
 
 #define LOG_MODULE_PRX      "Model::"
@@ -16,12 +16,12 @@
 #endif
 
 Model::Model()
-    : mKernel(KernelManager::GetInstance().getKernel())
+    : mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
     , modelListener(0)
-    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel->gctrl.getContext()))
+    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel.gctrl.getContext()))
 {
-    mKernel->app.registerApp(this);
-    mGSModel->setGUIHandler(mKernel, this);
+    mKernel.app.registerApp(this);
+    mGSModel->setGUIHandler(&mKernel, this);
 
 #if defined(SIMULATOR)
     LOG_DEBUG("Application is running through simulator! \n");
@@ -48,14 +48,14 @@ FrontendApplication& Model::application()
 
 void Model::tick()
 {
-    mGSModel->checkS2GEvents(0);
+    mGSModel->process(0);
 }
 
 void Model::exitApp()
 {
-    mGSModel->sendToService(G2SEvent::Stop{});
+    mGSModel->post(G2SEvent::Stop{});
     mGSModel->setGUIHandler(nullptr, nullptr);
-    mKernel->app.exit();
+    mKernel.app.exit();
 }
 
 void Model::handleEvent(const S2GEvent::HeartRate& event)
@@ -67,12 +67,12 @@ void Model::handleEvent(const S2GEvent::HeartRate& event)
 // IUserApp implementation
 void Model::onStart()
 {
-    mGSModel->setGUIHandler(mKernel, this);
-    mGSModel->sendToService(G2SEvent::Run {});
+    mGSModel->setGUIHandler(&mKernel, this);
+    mGSModel->post(G2SEvent::Run {});
 }
 
 void Model::onStop()
 {
-    mGSModel->sendToService(G2SEvent::Stop {});
+    mGSModel->post(G2SEvent::Stop {});
     mGSModel->setGUIHandler(nullptr, nullptr);
 }
