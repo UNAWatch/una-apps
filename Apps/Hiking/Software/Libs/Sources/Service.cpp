@@ -179,10 +179,8 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
 
             if (mGps.fix) { // Do not change position if no fix
                 gps.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
-                LOG_DEBUG("lat %f, lon %f\n", mGps.latitude, mGps.longitude);
+                //LOG_DEBUG("lat %f, lon %f\n", mGps.latitude, mGps.longitude);
             }
-        } else {
-            LOG_DEBUG("GPS INVALID\n");
         }
     } else if (sensor == mStepCounterSensor) {
         SDK::SensorDataParser::StepCounter sc {sample};
@@ -192,7 +190,7 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
             }
             mStepCounter.steps = sc.getStepCount();
             mStepCounter.timestamp = sample.getTimestamp();
-            LOG_DEBUG("steps %u\n", mStepCounter.steps);
+            //LOG_DEBUG("steps %u\n", mStepCounter.steps);
         }
     } else if (sensor == mFloorCounterSensor) {
         SDK::SensorDataParser::FloorCounter fc {sample};
@@ -202,19 +200,18 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
             }
             mFloorsCounter.floors = fc.getFloorsUp() + fc.getFloorsDown();
             mFloorsCounter.timestamp = sample.getTimestamp();
-            LOG_DEBUG("floors %u\n", mFloorsCounter.floors);
+            //LOG_DEBUG("floors %u\n", mFloorsCounter.floors);
         }
     } else if (sensor == mAltimeterSensor) {
-        SDK::SensorDataParser::Altimeter alt {data[0]};
+        SDK::SensorDataParser::Altimeter alt {sample};
         if (alt.isDataValid()) {
             if (std::abs(mAltimeter.initialAltitude) < 0.01) {
                 mAltimeter.initialAltitude = alt.getAltitude();
             }
             mAltimeter.altitude = alt.getAltitude();
+
             mAltimeter.timestamp = alt.getTimestamp();
-            LOG_DEBUG("altitude %f\n", mAltimeter.altitude);
-        } else {
-            LOG_DEBUG("altitude INVALID\n");
+            //LOG_DEBUG("altitude %f\n", mAltimeter.altitude);
         }
     } else if (sensor == mHrSensor) {
         SDK::SensorDataParser::HeartRate hr {sample};

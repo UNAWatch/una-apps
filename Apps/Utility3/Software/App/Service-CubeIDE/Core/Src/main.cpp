@@ -27,6 +27,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGPS.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 #include "SDK/SwTimer/SwTimer.hpp"
 
 #define LOG_MODULE_PRX      "main::"
@@ -53,6 +54,7 @@ public:
         , mAltimeter(SDK::Sensor::Type::ALTIMETER, this)
         , mSensorFloorCounter(kernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::FLOOR_COUNTER))
         , mGPS(SDK::Sensor::Type::GPS, this)
+        , mHeartRate(SDK::Sensor::Type::HEART_RATE, this)
     {
         mKernel.app.registerApp(this);
         mKernel.sctrl.setContext(mGSModel);
@@ -63,26 +65,28 @@ public:
 
     void testSesnors()
     {
-        mSensorStepCounter->connect(this, &mKernel.app);
-        mSensorStepDetector->connect(this, &mKernel.app);
-        mSensorMotionDetect->connect(this, &mKernel.app);
-        mSensorActivityRecognition->connect(this, &mKernel.app);
+//        mSensorStepCounter->connect(this, &mKernel.app);
+//        mSensorStepDetector->connect(this, &mKernel.app);
+//        mSensorMotionDetect->connect(this, &mKernel.app);
+//        mSensorActivityRecognition->connect(this, &mKernel.app);
         mAltimeter.connect(2000, 4000);
-        mSensorFloorCounter->connect(this, &mKernel.app);
-        mGPS.connect();
+//        mSensorFloorCounter->connect(this, &mKernel.app);
+//        mGPS.connect();
+        mHeartRate.connect();
 
         SDK::SwTimer timer(SDK::SwTimer::minutes(2) + SDK::SwTimer::seconds(20));
         while (!mTerminate && !timer.expired()) {
             mGSModel->checkG2SEvents();
         }
 
-        mSensorStepCounter->disconnect(this);
-        mSensorStepDetector->disconnect(this);
-        mSensorMotionDetect->disconnect(this);
-        mSensorActivityRecognition->disconnect(this);
+//        mSensorStepCounter->disconnect(this);
+//        mSensorStepDetector->disconnect(this);
+//        mSensorMotionDetect->disconnect(this);
+//        mSensorActivityRecognition->disconnect(this);
         mAltimeter.disconnect();
-        mSensorFloorCounter->disconnect(this);
-        mGPS.disconnect();
+//        mSensorFloorCounter->disconnect(this);
+//        mGPS.disconnect();
+        mHeartRate.disconnect();
     }
 
     void run()
@@ -173,6 +177,12 @@ public:
                 LOG_INFO("alt   = %f\n",   p.getAltitude());
                 LOG_INFO("speed = %.1f\n", p.getSpeed());
             }
+        } else if (sensor->getType() == SDK::Sensor::Type::HEART_RATE) {
+            SDK::SensorDataParser::HeartRate p(sample);
+            if (p.isDataValid()) {
+                LOG_INFO("bpm  = %ld\n",  p.getBpm());
+                LOG_INFO("time = %ld\n",  p.getTimestamp());
+            }
         }
     }
 
@@ -214,6 +224,7 @@ private:
     SDK::Sensors::DriverConnection mAltimeter;
     SDK::Interface::ISensorDriver* mSensorFloorCounter;
     SDK::Sensors::DriverConnection mGPS;
+    SDK::Sensors::DriverConnection mHeartRate;
 };
 
 extern const IKernel* kernel;

@@ -116,33 +116,33 @@
 		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/AppSystem/startup_user_app.s</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-SDK_LOC/una-watch-feature-develop2-hiking/SDK/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/UnaLogger/Logger.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>SDK_LOC</name>
-			<value>$%7BPARENT-6-PROJECT_LOC%7D/SDK</value>
+			<value>$%7BPARENT-5-PROJECT_LOC%7D/SDK</value>
 		</variable>
 	</variableList>
 </projectDescription>
