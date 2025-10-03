@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Service-CubeIDE</name>
+	<name>Utility3-Service-CubeIDE</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -64,6 +64,16 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/Service.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Source/Service.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Source/Service/Service.cpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -99,6 +109,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/Logger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -129,6 +144,16 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/AtExitImpl.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
@@ -137,6 +162,11 @@
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/Logger/Logger.cpp</name>
@@ -157,6 +187,11 @@
 			<name>SDK/Libs/Source/SwTimer/SwTimerPort.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/SwTimer/SwTimerPort.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint/main.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/AppSystem/EntryPoint/Service/main.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

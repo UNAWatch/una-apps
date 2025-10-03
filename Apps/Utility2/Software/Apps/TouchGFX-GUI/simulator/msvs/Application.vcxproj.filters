@@ -268,6 +268,9 @@
     <Filter Include="SDK\ThirdParty">
       <UniqueIdentifier>{9cd0adae-3b13-4746-856c-b082a0453afd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\Libs\Source\SensorLayer">
+      <UniqueIdentifier>{527bd56d-155a-4bf1-afb3-c1807d520ab0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -341,6 +344,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp">
       <Filter>Libs\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorDriverConnection.cpp">
+      <Filter>SDK\Libs\Source\SensorLayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -94,12 +94,12 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/Interfaces</name>
+			<name>SDK/Libs/Header/GSModel</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/UnaLogger</name>
+			<name>SDK/Libs/Header/Interfaces</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -109,34 +109,74 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/SensorLayer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
+			<name>SDK/Libs/Header/GSModel/GSBridge.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Header/SDK/GSModel/GSBridge.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
+			<name>SDK/Libs/Header/GSModel/GSModel.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Header/SDK/GSModel/GSModel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/GSModel/IGUIModel.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Header/SDK/GSModel/IGUIModel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/AtExitImpl.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/Kernel/KernelBuilder.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/SensorLayer/SensorDriverConnection.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/SensorLayer/SensorDriverConnection.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/EntryPoint/main.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-SDK_LOC/una-watch/SDK/Libs/Source/AppSystem/EntryPoint/Service/main.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

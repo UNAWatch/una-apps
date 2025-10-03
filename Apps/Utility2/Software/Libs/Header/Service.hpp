@@ -1,11 +1,9 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "SDK/GSModel/GSModelHelper.hpp"
-
-#include "SDK/Interfaces/IKernel.hpp"
-#include "SDK/GSModel/GSModelHelper.hpp"
-#include "SDK/Interfaces/ISensorDriver.hpp"
+#include "SDK/GSModel/GSModel.hpp"
+#include "SDK/Kernel/KernelProviderService.hpp"
+#include "SDK/SensorLayer/SensorDriverConnection.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
 
 class Service : public IServiceModelHandler,
@@ -13,9 +11,9 @@ class Service : public IServiceModelHandler,
                 public SDK::Interface::ISensorDataListener
 {
 public:
-    Service(const IKernel& kernel);
+    Service();
 
-    virtual ~Service() = default;
+    ~Service() override = default;
 
     void run();
     void handleEvent(const G2SEvent::Run& event);
@@ -29,19 +27,18 @@ private:
     void onPause()   override;
     void onDestroy() override;
 
-    void onNewSensorData(const SDK::Interface::ISensorDriver*             sensor,
-                         const std::vector<SDK::Interface::ISensorData*>& data,
-                         bool                                             first) override;
+    void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
+                      const std::vector<SDK::Interface::ISensorData*>& data,
+                      bool                                             first) override;
 
-    const IKernel&                  mKernel;
-    std::shared_ptr<GSModelService> mGSModel;
+    const SDK::Kernel&              mKernel;
+    GSModel                         mGSModel;
     bool                            mTerminate;
     uint32_t                        mCounter;
     bool                            mGUIStarted;
-    SDK::Interface::ISensorDriver*  mDS;
-    SDK::Interface::ISensorDriver*  mBMETemp;
-    SDK::Interface::ISensorDriver*  mBMEPressure;
-    SDK::Interface::ISensorDriver*  mAltimeter;
+    SDK::Sensors::DriverConnection  mBMETemp;
+    SDK::Sensors::DriverConnection  mBMEPressure;
+    SDK::Sensors::DriverConnection  mAltimeter;
 };
 
 #endif
