@@ -22,7 +22,7 @@ extern "C" {
 #include "fit_crc.h"
 }
 
-#define LOG_MODULE_PRX      "ActivityWriter::"
+#define LOG_MODULE_PRX      "ActivityWriter"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 

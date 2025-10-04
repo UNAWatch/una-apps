@@ -4,7 +4,7 @@
 #include "SDK/Kernel/KernelProviderGUI.hpp"
 
 
-#define LOG_MODULE_PRX      "Model::"
+#define LOG_MODULE_PRX      "Model"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
@@ -29,7 +29,7 @@ Model::Model()
     std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
     LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
 
-    LOG_DEBUG_WP("\n"
+    LOG_DEBUG("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
         "       1   L1,                     \n"
