@@ -1390,15 +1390,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISettings.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IUserApp.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IUserAppControl.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IUserAppMemAllocator.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IVibro.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
@@ -1428,6 +1419,18 @@
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\JSON\JsonStreamWriter.hpp">
       <Filter>SDK\Libs\Header\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IApp.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IAppCapabilities.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IAppControl.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IAppMemAllocator.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

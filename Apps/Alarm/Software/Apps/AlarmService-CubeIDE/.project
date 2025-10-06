@@ -194,9 +194,9 @@
 			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
+			<name>SDK/Libs/Source/AppSystem/system.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/system.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/JSON/JsonStreamReader.cpp</name>

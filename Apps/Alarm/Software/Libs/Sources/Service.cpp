@@ -6,11 +6,12 @@
 
 #define ARRAY_SIZE(a)   (sizeof(a) / sizeof(a[0]))
 
-#define LOG_MODULE_PRX      "Service::"
+#define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 #include <stdio.h>
+
 
 Service::Service()
         : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
@@ -36,13 +37,10 @@ void Service::run()
 #else
         localtime_r(&t, &tmNow);
 #endif
-
         uint32_t sleepTime = mAlarmManager.execute(tmNow);
         mGSModel.process(sleepTime);
 
-        if (mGUIStarted) {
-
-        } else {
+        if (!mGUIStarted) {
             // Just wait some time to see if GUI starts
             if (mKernel.app.getTimeMs() - startTime > 5000) {
                 if (!mAlarmManager.hasActiveAlarms()) {
@@ -71,14 +69,14 @@ void Service::onStartGUI()
     // Send current alarm list to GUI
     mGSModel.post(S2GEvent::AlarmList{ mAlarmManager.getAlarmList() });
 
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }
 
 void Service::onStopGUI()
 {
     LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }
 
 void Service::onStop()
@@ -91,15 +89,15 @@ void Service::onStop()
 // User-defined event handlers
 void Service::handleEvent(const G2SEvent::AlarmSaveList& event)
 {
-    LOG_INFO("AlarmSaveList\n");
+    LOG_DEBUG("AlarmSaveList\n");
     mAlarmManager.saveAlarmList(event.list);
 
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmActiveteEffect& event)
 {
-    LOG_INFO("AlarmActiveteEffect\n");
+    LOG_DEBUG("AlarmActiveteEffect\n");
 
     mKernel.backlight.on(3000);
 
@@ -109,7 +107,7 @@ void Service::handleEvent(const G2SEvent::AlarmActiveteEffect& event)
     bool isBuzzer = event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
             event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP;
 
-    LOG_INFO("isVibro isBuzzer : %d %d\n", (int)isVibro, (int)isBuzzer);
+    LOG_DEBUG("isVibro isBuzzer : %d %d\n", (int)isVibro, (int)isBuzzer);
 
     if (isVibro) {
         SDK::Interface::IVibro::Note vm[5]{};
@@ -141,35 +139,35 @@ void Service::handleEvent(const G2SEvent::AlarmActiveteEffect& event)
 
 void Service::handleEvent(const G2SEvent::AlarmStop& event)
 {
-    LOG_INFO("AlarmStop\n");
+    LOG_DEBUG("AlarmStop\n");
     mAlarmManager.disableAlarm(event.alarm);
 
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmStopAll& event)
 {
-    LOG_INFO("AlarmStopAll\n");
+    LOG_DEBUG("AlarmStopAll\n");
     mAlarmManager.disableAllActiveAlarm();
 
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmSnooze& event)
 {
-    LOG_INFO("AlarmSnooze\n");
+    LOG_DEBUG("AlarmSnooze\n");
     mAlarmManager.snoozeAlarm(event.alarm);
 
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmSnoozeAll& event)
@@ -180,7 +178,7 @@ void Service::handleEvent(const G2SEvent::AlarmSnoozeAll& event)
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }
 
 
@@ -189,7 +187,7 @@ void Service::handleEvent(const G2SEvent::AlarmSnoozeAll& event)
 
 void Service::onAlarm(const AppType::Alarm& alarm)
 {
-    //mKernel.sctrl.runGUI(mGSModel); // Make sure GUI is started
+    mKernel.sctrl.runGUI(); // Make sure GUI is started
     
     if (mGUIStarted) {
         mActiveAlarm = {}; // clear active alarm
@@ -206,5 +204,5 @@ void Service::onListChanged(const std::vector<AppType::Alarm>& list)
         mGSModel.post(S2GEvent::AlarmList{ list });
     }
 
-    mGSModel.refresh();
+    mGSModel.abortProcessWait();
 }

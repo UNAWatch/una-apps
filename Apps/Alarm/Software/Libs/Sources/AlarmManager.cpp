@@ -12,7 +12,7 @@
 #include "AlarmManager.hpp"
 
 #define LOG_MODULE_PRX      "AlarmManager"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 
@@ -117,6 +117,7 @@ void AlarmManager::disableAllActiveAlarm()
     for (const auto& snoozed : mSnoozedAlarms) {
         LOG_DEBUG("Removing snoozed alarm: %02d:%02d\n",
             snoozed.info.timeHours, snoozed.info.timeMinutes);
+        (void)snoozed;
     }
 
     // Clear all snoozed alarms
@@ -145,6 +146,7 @@ void AlarmManager::snoozeAllActiveAlarm()
         // All alarms are already snoozed, no additional action needed
         LOG_DEBUG("Alarm already snoozed: %02d:%02d\n",
             snoozed.info.timeHours, snoozed.info.timeMinutes);
+        (void)snoozed;
     }
 }
 
@@ -395,7 +397,7 @@ void AlarmManager::checkAlarms(uint8_t currentHour, uint8_t currentMinute, uint8
             && alarm.timeMinutes == currentMinute
             && isAlarmDueToday(alarm, currentDay)) {
             if (!isSnoozed(alarm)) {
-                LOG_DEBUG("Triggering new alarm: %02d:%02d\n", alarm.timeHours, alarm.timeMinutes);
+                LOG_INFO("Triggering new alarm: %02d:%02d\n", alarm.timeHours, alarm.timeMinutes);
                 if (mObserver) {
                     mObserver->onAlarm(alarm);
                 }
@@ -425,7 +427,7 @@ void AlarmManager::checkAlarms(uint8_t currentHour, uint8_t currentMinute, uint8
             it->snoozeCount--;
 
             if (it->snoozeCount > 0) {
-                LOG_DEBUG("Triggering snoozed alarm: %02d:%02d\n",
+                LOG_INFO("Triggering snoozed alarm: %02d:%02d\n",
                     it->info.timeHours, it->info.timeMinutes);
                 if (mObserver) {
                     mObserver->onAlarm(it->info);
@@ -434,7 +436,7 @@ void AlarmManager::checkAlarms(uint8_t currentHour, uint8_t currentMinute, uint8
                 ++it;
             } else {
                 // Snooze exhausted - remove from snoozed list
-                LOG_DEBUG("Snooze exhausted, removing alarm: %02d:%02d\n",
+                LOG_INFO("Snooze exhausted, removing alarm: %02d:%02d\n",
                     it->info.timeHours, it->info.timeMinutes);
 
                 it = mSnoozedAlarms.erase(it);  // Remove from snoozed list
