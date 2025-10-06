@@ -1,10 +1,14 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include "SDK/GSModel/GSModelHelper.hpp"
-#include "SDK/Interfaces/IKernel.hpp"
 #include "touchgfx/UIEventListener.hpp"
+
+#include "SDK/GSModel/IGUIModel.hpp"
+#include "SDK/Kernel/Kernel.hpp"
+
 #include "gui/common/GuiConfig.hpp"
+#include "GSModelEvents/G2SEvents.hpp"
+#include "GSModelEvents/S2GEvents.hpp"
 
 #include <vector>
 #include <memory>
@@ -13,7 +17,7 @@ class FrontendApplication;
 class ModelListener;
 
 class Model : public touchgfx::UIEventListener,
-              public SDK::Interface::IUserApp::Callback,
+              public SDK::Interface::IApp::Callback,
               public IGUIModelHandler
 {
 public:
@@ -83,19 +87,18 @@ public:
 
 
 protected:
-    // Fields required for for GUI <-> Service communication
-    const IKernel* mKernel;                 ///< Pointer to kernel interface
     ModelListener* modelListener;           ///< Pointer to model listener
-    std::shared_ptr<GSModelGUI> mGSModel;   ///< Pointer to GUI-Service model interface
+    
+    // Fields required for for GUI <-> Service communication
+    const SDK::Kernel& mKernel;             ///< Reference to kernel interface
+    std::shared_ptr<IGUIModel> mGSModel;    ///< Pointer to GUI-Service model interface
+
 
     // IUserApp implementation required methods for app lifecycle
-    virtual void onCreate()  override;
     virtual void onStart()   override;
     virtual void onResume()  override;
-    virtual void onFrame()   override;
     virtual void onPause()   override;
     virtual void onStop()    override;
-    virtual void onDestroy() override;
 
 
     // User application section

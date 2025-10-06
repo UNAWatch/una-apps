@@ -1,6 +1,8 @@
-#include "Service.hpp"
 #include "SDK/Interfaces/IBuzzer.hpp"
 #include "SDK/Interfaces/IVibro.hpp"
+
+#include "Service.hpp"
+#include "GSModelEvents/G2SEvents.hpp"
 
 #define ARRAY_SIZE(a)   (sizeof(a) / sizeof(a[0]))
 
@@ -10,21 +12,17 @@
 
 #include <stdio.h>
 
-Service::Service(const IKernel& kernel)
-        : mKernel(kernel)
-        , mGSModel(std::make_shared<GSModelService>(kernel, *this))
+Service::Service()
+        : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
+        , mGSModel(*this)
         , mTerminate(false)
         , mGUIStarted(false)
-        , mAlarmManager(kernel)
+        , mAlarmManager(mKernel)
         , mActiveAlarm()
-{
-    mKernel.app.registerApp(this);
-    mKernel.sctrl.setContext(mGSModel);
-}
+{}
 
 void Service::run()
 {
-    mKernel.app.initialized();
     mAlarmManager.attachCallback(this);
     mAlarmManager.load();
 
@@ -39,9 +37,8 @@ void Service::run()
         localtime_r(&t, &tmNow);
 #endif
 
-
         uint32_t sleepTime = mAlarmManager.execute(tmNow);
-        mGSModel->checkG2SEvents(sleepTime);
+        mGSModel.process(sleepTime);
 
         if (mGUIStarted) {
 
@@ -60,32 +57,36 @@ void Service::run()
     mAlarmManager.attachCallback(nullptr);
 }
 
-void Service::handleEvent(const G2SEvent::Run& event)
+void Service::onStartGUI()
 {
-    (void) event;
-
+    LOG_INFO("GUI started\n");
     mGUIStarted = true;
 
     // If there is an active alarm, send it to GUI first
     if (mActiveAlarm.on) {
-        mGSModel->sendToGUI(S2GEvent::Alarm{ mActiveAlarm });
+        mGSModel.post(S2GEvent::Alarm{ mActiveAlarm });
         mActiveAlarm = {}; // clear active alarm
     }
 
     // Send current alarm list to GUI
-    mGSModel->sendToGUI(S2GEvent::AlarmList{ mAlarmManager.getAlarmList() });
+    mGSModel.post(S2GEvent::AlarmList{ mAlarmManager.getAlarmList() });
 
-    refreshService();
+    mGSModel.refresh();
 }
 
-void Service::handleEvent(const G2SEvent::Stop& event)
+void Service::onStopGUI()
 {
-    (void) event;
-
+    LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
-
-    refreshService();
+    mGSModel.refresh();
 }
+
+void Service::onStop()
+{
+    LOG_INFO("called\n");
+    mTerminate = true;
+}
+
 
 // User-defined event handlers
 void Service::handleEvent(const G2SEvent::AlarmSaveList& event)
@@ -93,7 +94,7 @@ void Service::handleEvent(const G2SEvent::AlarmSaveList& event)
     LOG_INFO("AlarmSaveList\n");
     mAlarmManager.saveAlarmList(event.list);
 
-    refreshService();
+    mGSModel.refresh();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmActiveteEffect& event)
@@ -146,7 +147,7 @@ void Service::handleEvent(const G2SEvent::AlarmStop& event)
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    refreshService();
+    mGSModel.refresh();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmStopAll& event)
@@ -157,7 +158,7 @@ void Service::handleEvent(const G2SEvent::AlarmStopAll& event)
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    refreshService();
+    mGSModel.refresh();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmSnooze& event)
@@ -168,7 +169,7 @@ void Service::handleEvent(const G2SEvent::AlarmSnooze& event)
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    refreshService();
+    mGSModel.refresh();
 }
 
 void Service::handleEvent(const G2SEvent::AlarmSnoozeAll& event)
@@ -179,56 +180,20 @@ void Service::handleEvent(const G2SEvent::AlarmSnoozeAll& event)
     mKernel.buzzer.stop();
     mKernel.vibro.stop();
 
-    refreshService();
-}
-
-void Service::handleEvent(const G2SEvent::InternalRefresh& event)
-{
-    // do nothing
+    mGSModel.refresh();
 }
 
 
 
 
-
-void Service::onCreate()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onStart()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onResume()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onStop()
-{
-    LOG_INFO("called\n");
-    mTerminate = true;
-}
-
-void Service::onPause()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onDestroy()
-{
-    LOG_INFO("called\n");
-}
 
 void Service::onAlarm(const AppType::Alarm& alarm)
 {
-    mKernel.sctrl.runGUI(mGSModel); // Make sure GUI is started
+    //mKernel.sctrl.runGUI(mGSModel); // Make sure GUI is started
     
     if (mGUIStarted) {
         mActiveAlarm = {}; // clear active alarm
-        mGSModel->sendToGUI(S2GEvent::Alarm{ alarm });
+        mGSModel.post(S2GEvent::Alarm{ alarm });
     } else {
         mActiveAlarm = alarm; // save active alarm
     }
@@ -238,14 +203,8 @@ void Service::onAlarm(const AppType::Alarm& alarm)
 void Service::onListChanged(const std::vector<AppType::Alarm>& list)
 {
     if (mGUIStarted) {
-        mGSModel->sendToGUI(S2GEvent::AlarmList{ list });
+        mGSModel.post(S2GEvent::AlarmList{ list });
     }
 
-    refreshService();
-}
-
-
-void Service::refreshService()
-{
-    mGSModel->sendToService(G2SEvent::InternalRefresh{});
+    mGSModel.refresh();
 }

@@ -1,11 +1,12 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 #include <gui/common/FrontendApplication.hpp>
+
 #include "SDK/Kernel/KernelProviderGUI.hpp"
 
 
 #define LOG_MODULE_PRX      "Model"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 #if defined(SIMULATOR)
@@ -16,20 +17,21 @@
 #endif
 
 Model::Model()
-    : mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
-    , modelListener(0)
+    : modelListener(0)
+    , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
     , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel.gctrl.getContext()))
 {
     mKernel.app.registerApp(this);
     mGSModel->setGUIHandler(&mKernel, this);
 
 #if defined(SIMULATOR)
-    LOG_DEBUG("Application is running through simulator! \n");
+    LOG_INFO("Application is running through simulator! \n");
 
-    std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
-    LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
+    std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
+    LOG_INFO("Path to files created by app:\n"
+        "       [% s]\n", fileStoreDir.c_str());
 
-    LOG_DEBUG("\n"
+    LOG_INFO("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
         "       1   L1,                     \n"
@@ -53,7 +55,7 @@ void Model::tick()
 
 void Model::exitApp()
 {
-    mGSModel->post(G2SEvent::Stop{});
+    LOG_INFO("called\n");
     mGSModel->setGUIHandler(nullptr, nullptr);
     mKernel.app.exit();
 }
@@ -67,12 +69,11 @@ void Model::handleEvent(const S2GEvent::HeartRate& event)
 // IUserApp implementation
 void Model::onStart()
 {
-    mGSModel->setGUIHandler(&mKernel, this);
-    mGSModel->post(G2SEvent::Run {});
+    LOG_INFO("called\n");
 }
 
 void Model::onStop()
 {
-    mGSModel->post(G2SEvent::Stop {});
+    LOG_INFO("called\n");
     mGSModel->setGUIHandler(nullptr, nullptr);
 }

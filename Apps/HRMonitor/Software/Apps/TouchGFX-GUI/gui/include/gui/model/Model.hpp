@@ -1,12 +1,14 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
+#include "touchgfx/UIEventListener.hpp"
+
 #include "SDK/GSModel/IGUIModel.hpp"
 #include "SDK/Kernel/Kernel.hpp"
+
+#include "gui/common/GuiConfig.hpp"
 #include "GSModelEvents/G2SEvents.hpp"
 #include "GSModelEvents/S2GEvents.hpp"
-#include "touchgfx/UIEventListener.hpp"
-#include "gui/common/GuiConfig.hpp"
 
 #include <vector>
 #include <memory>
@@ -15,7 +17,7 @@ class FrontendApplication;
 class ModelListener;
 
 class Model : public touchgfx::UIEventListener,
-              public SDK::Interface::IUserApp::Callback,
+              public SDK::Interface::IApp::Callback,
               public IGUIModelHandler
 {
 public:
@@ -37,6 +39,11 @@ public:
     void exitApp();
 
 protected:
+    ModelListener* modelListener;           ///< Pointer to model listener
+
+    // Fields required for for GUI <-> Service communication
+    const SDK::Kernel& mKernel;             ///< Reference to kernel interface
+    std::shared_ptr<IGUIModel> mGSModel;    ///< Pointer to GUI-Service model interface
 
     // IUserApp implementation
     virtual void onStart()   override;
@@ -46,9 +53,6 @@ protected:
     // IGUIModelHandler implementation
     void handleEvent(const S2GEvent::HeartRate& event) override;
 
-    const SDK::Kernel&         mKernel;
-    ModelListener*             modelListener;
-    std::shared_ptr<IGUIModel> mGSModel;
 };
 
 #endif // MODEL_HPP

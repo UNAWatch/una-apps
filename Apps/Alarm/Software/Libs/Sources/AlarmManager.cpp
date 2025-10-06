@@ -11,16 +11,17 @@
 
 #include "AlarmManager.hpp"
 
-#define LOG_MODULE_PRX      "AlarmManager::"
+#define LOG_MODULE_PRX      "AlarmManager"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
+
 
 #include "SDK/JSON/JsonStreamReader.hpp"
 #include "SDK/JSON/JsonStreamWriter.hpp"
 
 #include <algorithm>
 
-AlarmManager::AlarmManager(const IKernel& kernel)
+AlarmManager::AlarmManager(const SDK::Kernel& kernel)
     : mKernel(kernel)
     , mObserver()
 {

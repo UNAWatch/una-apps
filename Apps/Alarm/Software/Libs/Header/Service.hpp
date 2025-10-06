@@ -1,23 +1,21 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "SDK/Interfaces/IKernel.hpp"
-#include "SDK/GSModel/GSModelHelper.hpp"
+#include "SDK/GSModel/GSModel.hpp"
+#include "SDK/Kernel/KernelProviderService.hpp"
+
 #include "AlarmManager.hpp"
 
 class Service : public IServiceModelHandler,
-                public SDK::Interface::IUserApp::Callback,
+    public SDK::Interface::IApp::Callback,
                 public AlarmManager::AlarmCallback
 {
 public:
-    Service(const IKernel& kernel);
+    Service();
 
     virtual ~Service() = default;
 
     void run();
-
-    virtual void handleEvent(const G2SEvent::Run& event);
-    virtual void handleEvent(const G2SEvent::Stop& event);
 
     // User-defined event handlers
     virtual void handleEvent(const G2SEvent::AlarmSaveList& event) override;
@@ -26,32 +24,25 @@ public:
     virtual void handleEvent(const G2SEvent::AlarmStopAll& event) override;
     virtual void handleEvent(const G2SEvent::AlarmSnooze& event) override;
     virtual void handleEvent(const G2SEvent::AlarmSnoozeAll& event) override;
-    virtual void handleEvent(const G2SEvent::InternalRefresh& event) override;
 
 private:
+    const SDK::Kernel&  mKernel;
+    GSModel             mGSModel;
+
+    bool                mTerminate;
+    bool                mGUIStarted;
+
     // IUserApp::Callback implementation
-    void onCreate()  override;
-    void onStart()   override;
-    void onResume()  override;
-    void onStop()    override;
-    void onPause()   override;
-    void onDestroy() override;
+    virtual void onStop()     override;
+    virtual void onStartGUI() override;
+    virtual void onStopGUI()  override;
 
     // AlarmManager::AlarmCallback implementation
     virtual void onAlarm(const AppType::Alarm& alarm) override;
     virtual void onListChanged(const std::vector<AppType::Alarm>& list) override;
 
-    
-    // Force refresh service state
-    void refreshService();
-
-
-    const IKernel&                  mKernel;
-    std::shared_ptr<GSModelService> mGSModel;
-    bool                            mTerminate;
-    bool                            mGUIStarted;
-    AlarmManager                    mAlarmManager;
-    AppType::Alarm                  mActiveAlarm;
+    AlarmManager        mAlarmManager;
+    AppType::Alarm      mActiveAlarm;
 };
 
 #endif

@@ -1,5 +1,6 @@
-#include "Service.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
+
+#include "Service.hpp"
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
@@ -16,7 +17,7 @@ Service::Service()
 
 void Service::run()
 {
-    LOG_INFO("started\n");
+    LOG_INFO("thread started\n");
 
     mHRSensor.connect(1000, 2000);
 
@@ -91,27 +92,28 @@ void Service::run()
 
     mHRSensor.disconnect();
 
-    LOG_INFO("stopped\n");
+    LOG_INFO("thread stopped\n");
 
     exit(0);
 }
 
-void Service::handleEvent(const G2SEvent::Run& event)
+void Service::onStop()
 {
-    (void) event;
+    LOG_INFO("called\n");
+    mTerminate = true;
+}
+
+void Service::onStartGUI()
+{
+    LOG_INFO("GUI started\n");
     mGUIStarted = true;
     mGSModel.post(S2GEvent::HeartRate{0, 0});
 }
 
-void Service::handleEvent(const G2SEvent::Stop& event)
+void Service::onStopGUI()
 {
-    (void) event;
+    LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
-}
-
-void Service::onStop()
-{
-    mTerminate = true;
 }
 
 void Service::onSdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first)

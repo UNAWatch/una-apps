@@ -6,12 +6,10 @@
 #include <variant>
 
 namespace G2SEvent {
-    struct Run {};
-    struct Stop {};
+    struct Dummy {};    // Change it to your event
 
     using Data = std::variant<
-            Run,
-            Stop
+            Dummy
     >;
 };
 
@@ -19,8 +17,7 @@ class IServiceModelHandler {
 public:
     virtual ~IServiceModelHandler() = default;
 
-    virtual void handleEvent(const G2SEvent::Run& event)  = 0;
-    virtual void handleEvent(const G2SEvent::Stop& event) = 0;
+    virtual void handleEvent(const G2SEvent::Dummy& event) {};
 };
 
 #endif

@@ -1,10 +1,11 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 #include <gui/common/FrontendApplication.hpp>
-#include "SDK/KernelManager.hpp"
+
+#include "SDK/Kernel/KernelProviderGUI.hpp"
 
 
-#define LOG_MODULE_PRX      "Model::"
+#define LOG_MODULE_PRX      "Model"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
@@ -16,27 +17,26 @@
 #endif
 
 Model::Model()
-    : mKernel(KernelManager::GetInstance().getKernel())
-    , modelListener(0)
-    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel->gctrl.getContext()))
+    : modelListener(0)
+    , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
+    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel.gctrl.getContext()))
 {
-    mKernel->app.registerApp(this);
-    mGSModel->setGUIHandler(mKernel, this);
+    mKernel.app.registerApp(this);
+    mGSModel->setGUIHandler(&mKernel, this);
 
     // Default values
-    mKernel->app.enableMusicControl(true);
-    mKernel->app.enablePhoneNotification(true);
-    mKernel->app.enableUsbCharging(true);
-
-    LOG_INFO("GUI [Alarm] is initialized\n");
+    mKernel.appapabilities.enableMusicControl(true);
+    mKernel.appapabilities.enablePhoneNotification(true);
+    mKernel.appapabilities.enableUsbCharging(true);
 
 #if defined(SIMULATOR)
-    LOG_DEBUG("Application is running through simulator! \n");
+    LOG_INFO("Application is running through simulator! \n");
 
-    std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
-    LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
+    std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
+    LOG_INFO("Path to files created by app:\n"
+        "       [% s]\n", fileStoreDir.c_str());
 
-    LOG_DEBUG_WP("\n"
+    LOG_INFO("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
         "       1   L1,                     \n"
@@ -62,7 +62,7 @@ void Model::tick()
 
     // Process events from Service only if app is in Resume state
     if (mIsRunning) {
-        mGSModel->checkS2GEvents(0);
+        mGSModel->process(0);
         
         decIdleTimer();
     }
@@ -70,7 +70,7 @@ void Model::tick()
 
 void Model::handleKeyEvent(uint8_t key)
 {
-    LOG_INFO("key = %c\n", static_cast<char>(key));
+    LOG_DEBUG("key = %c\n", static_cast<char>(key));
 
     if (isAnyKeyPressed(key)) {
 
@@ -92,9 +92,9 @@ void Model::resetIdleTimer()
 
 void Model::exitApp()
 {
-    LOG_INFO("exit from AlarmGUI\n");
+    mGSModel->setGUIHandler(nullptr, nullptr);
 
-    exit(0);
+    mKernel.app.exit();
     // This function only sets a flag. 
     // The current TouchGFX loop will be completed, meaning that depending 
     // on where this function was called, Model::tick(), Model::handleKeyEvent(), 
@@ -105,14 +105,11 @@ void Model::exitApp()
 
 void Model::switchToNextPriorityScreen()
 {
-    LOG_INFO("called\n");
-
     if (mActiveAlarm.on) {
         application().gotoAlarmScreenNoTransition();
         return;
     }
 
-    //
     if (mStayInApp) {
         mStayInApp = false;
         application().gotoMainScreenNoTransition();
@@ -130,21 +127,21 @@ const AppType::Alarm& Model::getActiveAlarm() const
 
 void Model::playAlarm()
 {
-    LOG_INFO("called\n");
-    mGSModel->sendToService(G2SEvent::AlarmActiveteEffect{ mActiveAlarm });
+    LOG_DEBUG("called\n");
+    mGSModel->post(G2SEvent::AlarmActiveteEffect{ mActiveAlarm });
 }
 
 void Model::stopAlarm()
 {
-    LOG_INFO("called\n");
-    mGSModel->sendToService(G2SEvent::AlarmStopAll {});
+    LOG_DEBUG("called\n");
+    mGSModel->post(G2SEvent::AlarmStopAll {});
     mActiveAlarm = {};  // clear active alarm
 }
 
 void Model::snoozeAlarm()
 {
-    LOG_INFO("called\n");
-    mGSModel->sendToService(G2SEvent::AlarmSnoozeAll {});
+    LOG_DEBUG("called\n");
+    mGSModel->post(G2SEvent::AlarmSnoozeAll {});
     mActiveAlarm = {};  // clear active alarm
 }
 
@@ -169,10 +166,10 @@ size_t Model::alarmGetEditId()
 
 void Model::saveAlarm(size_t id, AppType::Alarm alarm)
 {
-    LOG_INFO("called\n");
+    LOG_DEBUG("called\n");
     if (id < mAlarmList.size()) {
         mAlarmList[id] = alarm;
-        mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+        mGSModel->post(G2SEvent::AlarmSaveList{ mAlarmList });
         modelListener->onAlarmListUpdated(mAlarmList);
     } else if (id == mAlarmList.size()) {
         // Check if this alarm already exists, if so just overwrite it (avoid duplicates)
@@ -182,7 +179,7 @@ void Model::saveAlarm(size_t id, AppType::Alarm alarm)
             if (mAlarmList[i] == alarm) {
                 mEditAlarmId = i;
                 mAlarmList[i] = alarm;
-                mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+                mGSModel->post(G2SEvent::AlarmSaveList{ mAlarmList });
                 modelListener->onAlarmListUpdated(mAlarmList);
                 return;
             }
@@ -190,7 +187,7 @@ void Model::saveAlarm(size_t id, AppType::Alarm alarm)
 
         // New alarm
         mAlarmList.push_back(alarm);
-        mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+        mGSModel->post(G2SEvent::AlarmSaveList{ mAlarmList });
     }
 }
 
@@ -200,7 +197,7 @@ void Model::deleteAlarm(size_t id)
         return;
     }
     mAlarmList.erase(mAlarmList.begin() + id);
-    mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+    mGSModel->post(G2SEvent::AlarmSaveList{ mAlarmList });
     modelListener->onAlarmListUpdated(mAlarmList);
 }
 
@@ -225,28 +222,16 @@ bool Model::isAnyKeyPressed(uint8_t key) const
 }
 
 // IUserApp implementation
-void Model::onCreate()
-{
-    LOG_INFO("called\n");
-}
-
 void Model::onStart()
 {
     LOG_INFO("called\n");
-
-    mGSModel->setGUIHandler(mKernel, this); // re-set handler after stop
-    mGSModel->sendToService(G2SEvent::Run{});
+    mGSModel->setGUIHandler(&mKernel, this); // re-set handler after stop
 }
 
 void Model::onResume()
 {
     LOG_INFO("called\n");
     mIsRunning = true;
-}
-
-void Model::onFrame()
-{
-    //LOG_INFO("called\n");
 }
 
 void Model::onPause()
@@ -258,14 +243,7 @@ void Model::onPause()
 void Model::onStop()
 {
     LOG_INFO("called\n");
-
-    mGSModel->sendToService(G2SEvent::Stop {});
     mGSModel->setGUIHandler(nullptr, nullptr);  // clear handler after stop
-}
-
-void Model::onDestroy()
-{
-    LOG_INFO("called\n");
 }
 
 
@@ -279,10 +257,8 @@ void Model::handleEvent(const S2GEvent::AlarmList& event)
 void Model::handleEvent(const S2GEvent::Alarm& event)
 {
     LOG_INFO("Alarm\n");
-
     // Save active alarm
     mActiveAlarm = event.alarm;
-
     modelListener->onAlarmActivated(mActiveAlarm);
 }
 
