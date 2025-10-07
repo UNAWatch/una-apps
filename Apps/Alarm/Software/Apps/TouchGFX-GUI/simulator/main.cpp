@@ -8,6 +8,7 @@
 #include <simulator/mainBase.hpp>
 #include "touchgfx/Utils.hpp"
 
+#include "SDK/Kernel/KernelBuilder.hpp"
 #include "SDK/Simulator/Kernel/KernelBase.hpp"
 #include "SDK/Simulator/Sensors/SensorCore.hpp"
 #include "SDK/Simulator/Kernel/Mock/ServiceControl.hpp"
@@ -41,15 +42,27 @@ static void runService(SDK::Service::Bootstrap* bootstrap)
     bootstrap->run();
 }
 
-static int runTouchGFX(SDK::Simulator::KernelBase& serviceKernel, SDK::Simulator::KernelBase& guiKernel, int argc, char** argv)
+static int runTouchGFX(SDK::Simulator::KernelBase& isrvKernel, SDK::Simulator::KernelBase& iguiIKernel, int argc, char** argv)
 {
-    // Init KernelHolder and KernelManager
-    SDK::Simulator::KernelHolder::Create(guiKernel);
-    SDK::KernelProviderGUI::CreateInstance(guiKernel.getKernel());
+    // Make kernel facede for 'Service'
+    SDK::Kernel srvKernel = SDK::KernelBuilder::make(&isrvKernel);
 
-    // Create a service app object and call approproate callbacks
-    SDK::KernelProviderService::CreateInstance(serviceKernel.getKernel());
+
+    SDK::Interface::IServiceControl* s = &srvKernel.sctrl;
+    SDK::Interface::IGUIControl* g = &srvKernel.gctrl;
+
+    // Save Service's kernel for global access
+    SDK::KernelProviderService::CreateInstance(&srvKernel);
+
+    // Make kernel facede for 'GUI'
+    SDK::Kernel guiKernel = SDK::KernelBuilder::make(&iguiIKernel);
+
+    // Save GUI's kernel for global access
+    SDK::KernelProviderGUI::CreateInstance(&guiKernel);
+
+    // Create Bootstrap for run the 'Service' application
     SDK::Service::Bootstrap bootstrap;
+
 
     //For windows/linux, DMA transfers are simulated
     touchgfx::NoDMA dma;
@@ -70,16 +83,19 @@ static int runTouchGFX(SDK::Simulator::KernelBase& serviceKernel, SDK::Simulator
     //// to.
     touchgfx_enable_stdio();
 
+    // Initialize Logger with Service's kernel. In real app Service and GUI will have each its own kernel.
+    Logger_init(srvKernel.logger);
+
     // Start service thread
-    serviceKernel.startApp();
+    isrvKernel.startApp();
     std::thread serviceThread(runService, &bootstrap);
 
-    guiKernel.startApp();                           // Start GUI kernel simulator
-    touchgfx::HAL::getInstance()->taskEntry();      // Main GUI loop
-    guiKernel.stopApp();                            // Stop GUI kernel simulator
+    iguiIKernel.startApp();                     // Start GUI kernel simulator
+    touchgfx::HAL::getInstance()->taskEntry();  // Main GUI loop
+    iguiIKernel.stopApp();                      // Stop GUI kernel simulator
 
     // Stop service kernel simulator and stop its thread
-    serviceKernel.stopApp();
+    isrvKernel.stopApp();
     serviceThread.join();
 
     return EXIT_SUCCESS;
@@ -102,8 +118,14 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
     // Create kernel objects and service control
     SDK::Simulator::Sensors::Core        sensorCore;
     SDK::Simulator::Mock::ServiceControl serviceControl;
-    SDK::Simulator::KernelBase           serviceKernel(true, serviceControl);
-    SDK::Simulator::KernelBase           guiKernel(false, serviceControl, &sensorCore, &serviceKernel.getApp());
+
+    SDK::Simulator::KernelBase serviceKernel(serviceControl, nullptr, nullptr);
+
+    // GUI Kernel handle sensors as it has tick() from tiuchgfx
+    SDK::Simulator::KernelBase guiKernel(serviceControl, &sensorCore, &serviceKernel.getApp());
+
+    // Save GUI kernel for simulator
+    SDK::Simulator::KernelHolder::Create(guiKernel);
 
     return runTouchGFX(serviceKernel, guiKernel, argc, argv);
 }

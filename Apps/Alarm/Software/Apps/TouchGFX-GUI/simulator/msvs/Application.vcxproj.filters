@@ -361,6 +361,12 @@
     <Filter Include="SDK\Libs\Source\JSON">
       <UniqueIdentifier>{681f519e-2619-415d-b28b-2f31e2279e24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\Libs\Header\Kernel">
+      <UniqueIdentifier>{79298f4f-cf3b-4354-914e-e12f266456cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Kernel">
+      <UniqueIdentifier>{ffa96747-18e3-4b63-8b8e-225d98a1d656}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -732,6 +738,9 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ToggleBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp">
+      <Filter>SDK\Libs\Source\Kernel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml">
@@ -1312,39 +1321,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\KernelBase.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Backlight.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Buzzer.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\FileSystem.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockServiceControl.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockSynchManager.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockUserApp.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockUserAppMemAllocator.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\SensorCore.hpp">
       <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
     </ClInclude>
@@ -1420,17 +1396,77 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\JSON\JsonStreamWriter.hpp">
       <Filter>SDK\Libs\Header\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IApp.hpp">
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IApp.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IAppCapabilities.hpp">
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppCapabilities.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IAppControl.hpp">
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppControl.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Interfaces\IAppMemAllocator.hpp">
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISystem.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ITime.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\App.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppCapabilities.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppMemory.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Backlight.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Buzzer.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\FileSystem.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Logger.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\ServiceControl.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppMemory.hpp">
+      <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderGUI.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\Kernel.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\System.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Time.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,7 @@ private:
     bool                mGUIStarted;
 
     // IUserApp::Callback implementation
+    virtual void onStart()    override;
     virtual void onStop()     override;
     virtual void onStartGUI() override;
     virtual void onStopGUI()  override;

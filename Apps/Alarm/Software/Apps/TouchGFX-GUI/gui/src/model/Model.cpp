@@ -25,9 +25,9 @@ Model::Model()
     mGSModel->setGUIHandler(&mKernel, this);
 
     // Default values
-    mKernel.appapabilities.enableMusicControl(true);
-    mKernel.appapabilities.enablePhoneNotification(true);
-    mKernel.appapabilities.enableUsbCharging(true);
+    mKernel.appCapabilities.enableMusicControl(true);
+    mKernel.appCapabilities.enablePhoneNotification(true);
+    mKernel.appCapabilities.enableUsbCharging(true);
 
 #if defined(SIMULATOR)
     LOG_INFO("Application is running through simulator! \n");
@@ -94,7 +94,7 @@ void Model::exitApp()
 {
     mGSModel->setGUIHandler(nullptr, nullptr);
 
-    mKernel.app.exit();
+    mKernel.system.exit();
     // This function only sets a flag. 
     // The current TouchGFX loop will be completed, meaning that depending 
     // on where this function was called, Model::tick(), Model::handleKeyEvent(), 

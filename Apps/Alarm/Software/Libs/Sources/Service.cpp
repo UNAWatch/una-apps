@@ -27,7 +27,7 @@ void Service::run()
     mAlarmManager.attachCallback(this);
     mAlarmManager.load();
 
-    uint32_t startTime = mKernel.app.getTimeMs();
+    uint32_t startTime = mKernel.system.getTimeMs();
 
     while (!mTerminate) {
         std::tm tmNow{};
@@ -42,7 +42,7 @@ void Service::run()
 
         if (!mGUIStarted) {
             // Just wait some time to see if GUI starts
-            if (mKernel.app.getTimeMs() - startTime > 5000) {
+            if (mKernel.system.getTimeMs() - startTime > 5000) {
                 if (!mAlarmManager.hasActiveAlarms()) {
                     LOG_DEBUG("No active alarms and GUI not started, exiting service\n");
                     exit(0);
@@ -79,10 +79,16 @@ void Service::onStopGUI()
     mGSModel.abortProcessWait();
 }
 
+void Service::onStart()
+{
+    LOG_INFO("called\n");
+}
+
 void Service::onStop()
 {
     LOG_INFO("called\n");
     mTerminate = true;
+    mGSModel.abortProcessWait();
 }
 
 
@@ -91,7 +97,6 @@ void Service::handleEvent(const G2SEvent::AlarmSaveList& event)
 {
     LOG_DEBUG("AlarmSaveList\n");
     mAlarmManager.saveAlarmList(event.list);
-
     mGSModel.abortProcessWait();
 }
 
