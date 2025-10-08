@@ -12,7 +12,7 @@
  *
  * It **must** be included in every user application, even if no custom
  * event types are defined.
- * At least one event type — **std::monostate** — must always be present.
+ * At least one event type - **std::monostate** - must always be present.
  *
  * The 'std::monostate' event is used as a "dummy" signal, for example,
  * to abort waiting for a queue pop operation or to signal a timeout.
@@ -25,7 +25,7 @@
  *
  ******************************************************************************
  * @attention
- * Do not remove or rename this file — it is a required part of the framework.
+ * Do not remove or rename this file - it is a required part of the framework.
  * Even an empty application must include it, as it defines base event behavior.
  ******************************************************************************
  */

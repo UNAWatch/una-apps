@@ -2,25 +2,29 @@
 #include "SDK/Kernel/KernelProviderService.hpp"
 #include "Clock24.h"
 
-#include <stdio.h>
-#include <time.h>
-
-#define LOG_MODULE_PRX      "Service::"
+#define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service()
         : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
         , mTerminate(false)
-        , mUI(mKernel.app.getGlanceArea().w, mKernel.app.getGlanceArea().h)
+        , mUI()
         , mTextTime()
         , mTextTemperature()
         , mTemperature(23.5)
-        , mUpdateTimer(1000)
+        , mTime()
 {
-    mKernel.app.registerApp(this);
+    int16_t w;
+    int16_t h;
+    mKernel.app.getGlanceArea(w, h);
+    mUI.setWidth(w);
+    mUI.setHeight(h);
+
     mKernel.app.registerGlance(this);
-    mKernel.app.initialized();
+
+    std::time_t t = time(NULL);
+    localtime_r(&t, &mTime);
 
     createUI();
 }
@@ -28,7 +32,16 @@ Service::Service()
 void Service::run()
 {
     while (!mTerminate) {
-        mKernel.app.delay(1000);
+
+        mTemperature += 0.1;
+        if (mTemperature > 25) {
+            mTemperature = 23.5;
+        }
+
+        std::time_t t = time(NULL);
+        localtime_r(&t, &mTime);
+
+        mKernel.system.delay(1000);
     }
 }
 
@@ -43,27 +56,14 @@ SDK::Interface::IGlance::Info Service::glanceGetInfo()
 
 void Service::glanceUpdate()
 {
-    if (!mUpdateTimer.check()) {
-        return;
-    }
-
-    mTemperature += 0.1;
-    if (mTemperature > 25) {
-        mTemperature = 23.5;
-    }
-
     mTextTemperature.print("%.1f", mTemperature);
-
-    std::time_t t = time(NULL);
-    struct tm tm;
-    localtime_r(&t, &tm);
-
-    mTextTime.print("%02d:%02d:%02d", tm.tm_hour, tm.tm_min, tm.tm_sec);
+    mTextTime.print("%02d:%02d:%02d", mTime.tm_hour, mTime.tm_min, mTime.tm_sec);
 }
 
 void Service::glanceClose()
 {
-
+    LOG_INFO("called\n");
+    mTerminate = true;
 }
 
 void Service::onCreate()

@@ -1,16 +1,17 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "SDK/Kernel/Kernel.hpp"
+#include <ctime>
+
+#include "SDK/Kernel/KernelProviderService.hpp"
+
 #include "SDK/Interfaces/IGlance.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
 
-#include "SDK/GSModel/GSModelHelper.hpp"
 #include "SDK/Interfaces/ISensorDriver.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
-#include "SDK/SwTimer/SwTimer.hpp"
 
-class Service : public SDK::Interface::IUserApp::Callback,
+class Service : public SDK::Interface::IApp::Callback,
                 public SDK::Interface::IGlance
 {
 public:
@@ -20,27 +21,30 @@ public:
 
     void run();
 
-    virtual IGlance::Info glanceGetInfo() override;
-    virtual void glanceUpdate() override;
-    virtual void glanceClose() override;
-
 private:
-    void onCreate()  override;
-    void onStart()   override;
-    void onResume()  override;
-    void onStop()    override;
-    void onPause()   override;
-    void onDestroy() override;
+    const SDK::Kernel&  mKernel;
+    bool                mTerminate;
+
+    // IApp::Callback implementation
+    virtual void onCreate()  override;
+    virtual void onStart()   override;
+    virtual void onResume()  override;
+    virtual void onStop()    override;
+    virtual void onPause()   override;
+    virtual void onDestroy() override;
+
+    // IGlance implementation
+    virtual IGlance::Info glanceGetInfo() override;
+    virtual void glanceUpdate()           override;
+    virtual void glanceClose()            override;
 
     void createUI();
 
-    SDK::Kernel              mKernel;
-    bool                     mTerminate;
     SDK::Glance::Form        mUI;
     SDK::Glance::ControlText mTextTime;
     SDK::Glance::ControlText mTextTemperature;
     float                    mTemperature;
-    SDK::SwTimer             mUpdateTimer;
+    std::tm                  mTime;
 };
 
 #endif
