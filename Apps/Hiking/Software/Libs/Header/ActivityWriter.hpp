@@ -16,7 +16,7 @@
 #include <cstdbool>
 #include <string>
 
-#include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/Kernel/Kernel.hpp"
 
 extern "C" {
 #include "fit_example.h"
@@ -41,9 +41,8 @@ public:
         std::time_t timestamp;  // UTC
         float latitude;         // degrees
         float longitude;        // degrees
+        float altitude;         // absolute altitude in m
         uint8_t heartRate;      // Heart rate in beats per minute.
-        uint32_t steps;
-        uint32_t floors;
     };
 
     struct LapData {
@@ -78,7 +77,7 @@ public:
     };
 
 
-    ActivityWriter(const IKernel& kernel, const char* pathToDir);
+    ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir);
 
 
     void start(const AppInfo& info);
@@ -89,10 +88,10 @@ public:
     void stop(const TrackData& track);
     void discard();
 
-    
+
 private:
-    /// A constant reference to an IKernel object.
-    const IKernel& mKernel;
+    /// A constant reference to an Kernel object.
+    const SDK::Kernel& mKernel;
 
     /// Path to FIT file
     const char* mPath = nullptr;
@@ -117,13 +116,15 @@ private:
     void saveFile();
     void deleteFile();
 
+    void saveSummary(const TrackData& track);
+
     static time_t tm2epoch(const struct tm* tm);
     static time_t epochToLocal(time_t utc);
     static FIT_DATE_TIME unixToFitTimestamp(std::time_t unixTimestamp);
     static FIT_SINT32 ConvertDegreesToSemicircles(float degrees);
 
     void WriteFileHeader(SDK::Interface::IFile* fp);
-    void WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size, SDK::Interface::IFile* fp); 
+    void WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size, SDK::Interface::IFile* fp);
     void WriteMessageDefinitionWithDevFields(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size,
         FIT_UINT8 number_dev_fields, FIT_DEV_FIELD_DEF* dev_field_definitions, SDK::Interface::IFile* fp);
     void WriteMessage(FIT_UINT8 local_mesg_number, const void* mesg_pointer, FIT_UINT16 mesg_size, SDK::Interface::IFile* fp);

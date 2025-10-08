@@ -15,7 +15,7 @@
 #include "SDK/Kernel/KernelProviderGUI.hpp"
 #include "SDK/Kernel/KernelProviderService.hpp"
 #include "SDK/Platform/OS/OS.hpp"
-#include "SDK/AppSystem/SvcBootstrap.hpp"
+#include "SDK/AppSystem/SrvBootstrap.hpp"
 
 #include "gui/common/GuiConfig.hpp"
 #include "Service.hpp"

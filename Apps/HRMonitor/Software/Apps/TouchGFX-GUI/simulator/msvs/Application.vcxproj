@@ -32,6 +32,7 @@
     <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_convert.c" />
     <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_crc.c" />
     <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_product.c" />
+    <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivityWriter.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp" />
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp" />
@@ -231,6 +232,10 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserStepDetector.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\SensorDriverConnection.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\SensorTypes.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\Kernel.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderGUI.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\ActivityWriter.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\GSModelEvents\G2SEvents.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\GSModelEvents\S2GEvents.hpp" />

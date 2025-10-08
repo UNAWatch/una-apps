@@ -29,7 +29,7 @@ Model::Model()
 
     std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
     LOG_INFO("Path to files created by app:\n"
-        "       [% s]\n", fileStoreDir.c_str());
+        "       [%s]\n", fileStoreDir.c_str());
 
     LOG_INFO("\n"
         "       Keys:                       \n"
@@ -50,19 +50,25 @@ FrontendApplication& Model::application()
 
 void Model::tick()
 {
+    //LOG_DEBUG("called\n");
+
     mGSModel->process(0);
+
+    if (mInvalidate) {
+        mInvalidate = false;
+        application().invalidate();
+    }
 }
 
 void Model::exitApp()
 {
-    LOG_INFO("called\n");
     mGSModel->setGUIHandler(nullptr, nullptr);
-    mKernel.app.exit();
+    mKernel.system.exit();
 }
 
 void Model::handleEvent(const S2GEvent::HeartRate& event)
 {
-    //LOG_INFO("hr %.1f, tl %.1f\n", event.heartRate, event.trustLevel);
+    LOG_DEBUG("hr %.1f, tl %.1f\n", event.heartRate, event.trustLevel);
     modelListener->updateHR(event.heartRate, event.trustLevel);
 }
 
@@ -70,6 +76,13 @@ void Model::handleEvent(const S2GEvent::HeartRate& event)
 void Model::onStart()
 {
     LOG_INFO("called\n");
+}
+
+void Model::onResume()
+{
+    LOG_INFO("called\n");
+    // Redraw screen
+    mInvalidate = true;
 }
 
 void Model::onStop()

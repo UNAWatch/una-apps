@@ -128,6 +128,9 @@ protected:
     /// Is app running (between onResume and onPause)
     bool mIsRunning = false;
 
+    /// Request to redraw current screen
+    bool mInvalidate = false;
+
     /// Idle timer (in ticks)
     uint32_t mIdleTimer = 0;
 

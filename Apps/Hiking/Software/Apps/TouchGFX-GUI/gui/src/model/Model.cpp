@@ -1,16 +1,12 @@
 #include <gui/model/Model.hpp>
-
-#define LOG_MODULE_PRX      "Model::"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "SDK/UnaLogger/Logger.h"
-
-#include <memory>
-
 #include <gui/model/ModelListener.hpp>
 #include <gui/common/FrontendApplication.hpp>
 
-#include "SDK/KernelManager.hpp"
+#include "SDK/Kernel/KernelProviderGUI.hpp"
 
+#define LOG_MODULE_PRX      "Model"
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
+#include "SDK/UnaLogger/Logger.h"
 
 #if defined(SIMULATOR)
     #include "touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp"
@@ -20,22 +16,26 @@
 #endif
 
 Model::Model()
-    : mKernel(KernelManager::GetInstance().getKernel())
-    , modelListener(0)
-    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel->gctrl.getContext()))
+    : modelListener(0)
+    , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
+    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel.gctrl.getContext()))
 {
-    mKernel->app.registerApp(this);
-    mGSModel->setGUIHandler(mKernel, this);
+    mKernel.app.registerApp(this);
+    mGSModel->setGUIHandler(&mKernel, this);
 
-    LOG_INFO("GUI is initialized\n");
+    // Default values
+    mKernel.appCapabilities.enableMusicControl(true);
+    mKernel.appCapabilities.enablePhoneNotification(true);
+    mKernel.appCapabilities.enableUsbCharging(true);
 
 #if defined(SIMULATOR)
-    LOG_DEBUG("Application is running through simulator! \n");
+    LOG_INFO("Application is running through simulator! \n");
 
-    std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
-    LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
+    std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
+    LOG_INFO("Path to files created by app:\n"
+        "       [%s]\n", fileStoreDir.c_str());
 
-    LOG_DEBUG_WP("\n"
+    LOG_INFO("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
         "       1   L1,                     \n"
@@ -61,36 +61,25 @@ void Model::invalidate()
 
 void Model::tick()
 {
-//    LOG_INFO_WP("tick\n");
+    //LOG_DEBUG("tick\n");
 
+    mGSModel->process(0);
 
-    mGSModel->checkS2GEvents();
+    decIdleTimer();
 
     if (mInvalidate) {
         mInvalidate = false;
         application().invalidate();
     }
-
 }
 
 void Model::handleKeyEvent(uint8_t key)
 {
-    LOG_INFO("key = %c\n", static_cast<char>(key));
+    LOG_DEBUG("key = %c\n", static_cast<char>(key));
 
-    // Hardwaare buttons
-    if (Gui::Config::Button::L1 == key) {
-        resetIdleTimer();
-    }
+    if (isAnyKeyPressed(key)) {
 
-    if (Gui::Config::Button::L2 == key) {
-        resetIdleTimer();
-    }
-
-    if (Gui::Config::Button::R1 == key) {
-        resetIdleTimer();
-    }
-
-    if (Gui::Config::Button::R2 == key) {
+        // Reset idle timer on any key press
         resetIdleTimer();
     }
 }
@@ -102,11 +91,15 @@ void Model::resetIdleTimer()
 
 void Model::exitApp()
 {
-    LOG_INFO("exit from GUI\n");
-
-    mGSModel->sendToService(G2SEvent::GuiStop{});
     mGSModel->setGUIHandler(nullptr, nullptr);
-    mKernel->app.exit();
+
+    mKernel.system.exit();
+    // This function only sets a flag. 
+    // The current TouchGFX loop will be completed, meaning that depending 
+    // on where this function was called, Model::tick(), Model::handleKeyEvent(), 
+    // as well as handleTickEvent() and handleKeyEvent() for the 
+    // current screen will be called.
+    // After that, onPause() ->onStop() -> onDestroy() will be called.
 }
 
 
@@ -208,7 +201,7 @@ const Settings& Model::getSettings() const
 void Model::setSettings(const Settings& sett)
 {
     mSettings = sett;
-    mGSModel->sendToService(G2SEvent::SettingsSave{ mSettings });
+    mGSModel->post(G2SEvent::SettingsSave{ mSettings });
 }
 
 
@@ -222,7 +215,7 @@ bool Model::getGpsFix()
 // Track
 void Model::trackStart()
 {
-    mGSModel->sendToService(G2SEvent::TrackStart{});
+    mGSModel->post(G2SEvent::TrackStart{});
 }
 
 bool Model::trackIsActive()
@@ -242,12 +235,12 @@ const Track::Data& Model::getTrackData() const
 
 void Model::saveTrack()
 {
-    mGSModel->sendToService(G2SEvent::TrackStop{});
+    mGSModel->post(G2SEvent::TrackStop{});
 }
 
 void Model::discardTrack()
 {
-    mGSModel->sendToService(G2SEvent::TrackStop{ true });
+    mGSModel->post(G2SEvent::TrackStop{ true });
 }
 
 bool Model::trackIsSummaryAvailable()
@@ -272,18 +265,20 @@ void Model::decIdleTimer()
     }
 }
 
-// IUserApp implementation
-void Model::onCreate()
+bool Model::isAnyKeyPressed(uint8_t key) const
 {
-    LOG_INFO("called\n");
+    return (Gui::Config::Button::L1 == key) ||
+        (Gui::Config::Button::L2 == key) ||
+        (Gui::Config::Button::R1 == key) ||
+        (Gui::Config::Button::R2 == key);
 }
+
+// IUserApp implementation
 
 void Model::onStart()
 {
     LOG_INFO("called\n");
-
-    mGSModel->setGUIHandler(mKernel, this); // Start receiving events from service
-    mGSModel->sendToService(G2SEvent::GuiRun {});
+    mGSModel->setGUIHandler(&mKernel, this); // re-set handler after stop
 }
 
 void Model::onResume()
@@ -292,27 +287,10 @@ void Model::onResume()
     invalidate();   // Redraw screen
 }
 
-void Model::onFrame()
-{
-    //LOG_INFO("called\n");
-}
-
-void Model::onPause()
-{
-    LOG_INFO("called\n");
-}
-
 void Model::onStop()
 {
     LOG_INFO("called\n");
-
-    mGSModel->sendToService(G2SEvent::GuiStop {});
-    mGSModel->setGUIHandler(nullptr, nullptr);  // Stop receiving events from service
-}
-
-void Model::onDestroy()
-{
-    LOG_INFO("called\n");
+    mGSModel->setGUIHandler(nullptr, nullptr);  // clear handler after stop
 }
 
 void Model::handleEvent(const S2GEvent::Time& event)

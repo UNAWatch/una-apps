@@ -1,13 +1,13 @@
 ﻿#include "Service.hpp"
-
-#define LOG_MODULE_PRX      "Service::"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
-#include "SDK/UnaLogger/Logger.h"
+#include "GSModelEvents/G2SEvents.hpp"
 
 #include <ctime>
 #include <cmath>
 #include <memory>
 #include <cstring>
+
+#include "AppMenu.hpp"
+#include "AppUtils.hpp"
 
 #include "Settings.hpp"
 #include "ActivitySummary.hpp"
@@ -19,10 +19,13 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
+#define LOG_MODULE_PRX      "Service"
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#include "SDK/UnaLogger/Logger.h"
 
-Service::Service(const IKernel& kernel)
-        : mKernel(kernel)
-        , mGSModel(std::make_shared<GSModelService>(mKernel, *this))
+Service::Service()
+        : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
+        , mGSModel(*this)
         , mTerminate(false)
         , mGUIStarted(false)
         , mSettings{}
@@ -31,15 +34,10 @@ Service::Service(const IKernel& kernel)
         , mActivitySummarySerializer(mKernel, "Activity/summary.json")
         , mActivityWriter(mKernel, "Activity")
 {
-    mKernel.app.registerApp(this);
-    mKernel.sctrl.setContext(mGSModel);
-    mKernel.app.unLock();
 }
 
 void Service::run()
 {
-    mKernel.app.initialized();
-
     // Get settings
     if (!mSettingsSerializer.load(mSettings)) {
         LOG_ERROR("Failed to load settings\n");
@@ -62,10 +60,14 @@ void Service::run()
         mGpsSensor->connect(this, &mKernel.app, skInitialSamplePeriod, skSampleLatency);
     }
 
-    uint32_t startTime = mKernel.app.getTimeMs();
+#if defined(SIMULATOR) || 0
+    mGps.fix = true;
+#endif
+
+    uint32_t startTime = mKernel.system.getTimeMs();
 
     while (!mTerminate) {
-        mGSModel->checkG2SEvents(1000);
+        mGSModel.process(1000);
 
         if (mGUIStarted) {
 
@@ -77,13 +79,13 @@ void Service::run()
             #else
                 localtime_r(&utc, &tmNow);
             #endif
-            mGSModel->sendToGUI(S2GEvent::Time{ tmNow });
+            mGSModel.post(S2GEvent::Time{ tmNow });
 
             // Update GPS fix
 
             if (mPreviousGpsFixState != mGps.fix) {
                 mPreviousGpsFixState = mGps.fix;
-                mGSModel->sendToGUI(S2GEvent::GpsFix{ mGps.fix });
+                mGSModel.post(S2GEvent::GpsFix{ mGps.fix });
             }
 
             if (mTrackState != Track::State::INACTIVE) {
@@ -92,13 +94,11 @@ void Service::run()
 
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.app.getTimeMs() - startTime > 5000) {
+            if (mKernel.system.getTimeMs() - startTime > 5000) {
                 break;
             }
         }
     }
-
-    LOG_DEBUG("Exit service\n");
 
     // Unsubscribe from sensors
     if (mGpsSensor) {
@@ -120,45 +120,39 @@ void Service::run()
     if (mFloorCounterSensor) {
         mFloorCounterSensor->disconnect(this);
     }
-
-    exit(0);
 }
 
 
 
-void Service::onCreate()
-{
-    LOG_DEBUG("called\n");
-}
 
 void Service::onStart()
 {
-    LOG_DEBUG("called\n");
-}
-
-void Service::onResume()
-{
-    LOG_DEBUG("called\n");
+    LOG_INFO("called\n");
 }
 
 void Service::onStop()
 {
-    LOG_DEBUG("called\n");
+    LOG_INFO("called\n");
     mTerminate = true;
-    refreshService();
+    mGSModel.abortProcessWait();
 }
 
-void Service::onPause()
+void Service::onStartGUI()
 {
-    LOG_DEBUG("called\n");
+    LOG_INFO("GUI started\n");
+    mGUIStarted = true;
+    sendInitialInfoToGui();
+    mGSModel.abortProcessWait();
 }
 
-void Service::onDestroy()
+void Service::onStopGUI()
 {
-    LOG_DEBUG("called\n");
+    LOG_INFO("GUI stopped\n");
+    mGUIStarted = false;
+    mGSModel.abortProcessWait();
 }
 
-void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
+void Service::onSdlNewData(const SDK::Interface::ISensorDriver* sensor,
     const std::vector< SDK::Interface::ISensorData*>& data, bool first)
 {
     // We are only interested in the last sample
@@ -166,95 +160,82 @@ void Service::sdlNewData(const SDK::Interface::ISensorDriver* sensor,
     if (sapleNum == 0) {
         return;
     }
-    const  SDK::Interface::ISensorData& sample = *data[sapleNum -1];
+    const  SDK::Interface::ISensorData& sample = *data[sapleNum - 1];
 
-    // [time, fix, speed, acc], 
-    // [mask, time, lat, lon, alt, speed,  ...]
     if (sensor == mGpsSensor) {
-
-        SDK::SensorDataParser::GPS gps {sample};
+        SDK::SensorDataParser::GPS gps{ sample };
         if (gps.isDataValid()) {
-            mGps.timestamp = sample.getTimestamp();
+            mGps.timestamp = gps.getTimestamp();
             mGps.fix = gps.isCoordinatesValid();
 
             if (mGps.fix) { // Do not change position if no fix
                 gps.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
-                //LOG_DEBUG("lat %f, lon %f\n", mGps.latitude, mGps.longitude);
             }
+            //LOG_DEBUG("fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
         }
     } else if (sensor == mStepCounterSensor) {
-        SDK::SensorDataParser::StepCounter sc {sample};
+        SDK::SensorDataParser::StepCounter sc{ sample };
         if (sc.isDataValid()) {
-            if (mStepCounter.initialSteps == 0) {
-                mStepCounter.initialSteps = sc.getStepCount();
-            }
+            mStepCounter.timestamp = sc.getTimestamp();
             mStepCounter.steps = sc.getStepCount();
-            mStepCounter.timestamp = sample.getTimestamp();
+
+            if (!mStepCounter.dataValid) {
+                mStepCounter.initialSteps = mStepCounter.steps;
+                mStepCounter.dataValid = true;
+            }
             //LOG_DEBUG("steps %u\n", mStepCounter.steps);
         }
     } else if (sensor == mFloorCounterSensor) {
-        SDK::SensorDataParser::FloorCounter fc {sample};
+        SDK::SensorDataParser::FloorCounter fc{ sample };
         if (fc.isDataValid()) {
-            if (mFloorsCounter.initialFloors == 0) {
-                mFloorsCounter.initialFloors = fc.getFloorsUp() + fc.getFloorsDown();
-            }
+            mFloorsCounter.timestamp = fc.getTimestamp();
             mFloorsCounter.floors = fc.getFloorsUp() + fc.getFloorsDown();
-            mFloorsCounter.timestamp = sample.getTimestamp();
+
+            if (!mFloorsCounter.dataValid) {
+                mFloorsCounter.initialFloors = mFloorsCounter.floors;
+                mFloorsCounter.dataValid = true;
+            }
             //LOG_DEBUG("floors %u\n", mFloorsCounter.floors);
         }
     } else if (sensor == mAltimeterSensor) {
-        SDK::SensorDataParser::Altimeter alt {sample};
+        SDK::SensorDataParser::Altimeter alt{ sample };
         if (alt.isDataValid()) {
-            if (std::abs(mAltimeter.initialAltitude) < 0.01) {
-                mAltimeter.initialAltitude = alt.getAltitude();
-            }
+            mAltimeter.timestamp = alt.getTimestamp();
             mAltimeter.altitude = alt.getAltitude();
 
-            mAltimeter.timestamp = alt.getTimestamp();
+            if (!mAltimeter.dataValid) {
+                mAltimeter.initialAltitude = mAltimeter.altitude;
+                mAltimeter.dataValid = true;
+            }
             //LOG_DEBUG("altitude %f\n", mAltimeter.altitude);
         }
     } else if (sensor == mHrSensor) {
-        SDK::SensorDataParser::HeartRate hr {sample};
+        SDK::SensorDataParser::HeartRate hr{ sample };
         if (hr.isDataValid()) {
-            mHr.hr = static_cast<uint8_t>(hr.getBpm());
+            mHr.hr = hr.getBpm();
+            mHr.trustLevel = hr.getTrustLevel();
             mHr.timestamp = sample.getTimestamp();
 
             mHr.totalSum += mHr.hr;
             mHr.totalCnt++;
-            //LOG_DEBUG("hr %u\n", mHr.hr);
+            //LOG_DEBUG("hr %.1f, tl %.1f\n", mHr.hr, mHr.trustLevel);
         }
     }
 }
 
-void Service::handleEvent(const G2SEvent::GuiRun& event)
-{
-    (void)event;
-    LOG_DEBUG("G2SEvent::GuiRun\n");
-    mGUIStarted = true;
-    sendInitialInfoToGui();
-    refreshService();
-}
-
-void Service::handleEvent(const G2SEvent::GuiStop& event)
-{
-    (void)event;
-    LOG_DEBUG("G2SEvent::GuiStop\n");
-    mGUIStarted = false;
-    refreshService();
-}
 
 void Service::handleEvent(const G2SEvent::TrackStart& event)
 {
     LOG_DEBUG("G2SEvent::TrackStart\n");
     startTrack();
-    refreshService();
+    mGSModel.abortProcessWait();
 }
 
 void Service::handleEvent(const G2SEvent::TrackStop& event)
 {
     LOG_DEBUG("G2SEvent::TrackStop\n");
     stopTrack(event.discard);
-    refreshService();
+    mGSModel.abortProcessWait();
 }
 
 void Service::handleEvent(const G2SEvent::SettingsSave& event)
@@ -264,36 +245,30 @@ void Service::handleEvent(const G2SEvent::SettingsSave& event)
     mSettingsSerializer.save(event.settings);
 }
 
-void Service::handleEvent(const G2SEvent::InternalRefresh& event)
-{
-    // do nothing
-}
-
-
-
-
-void Service::refreshService()
-{
-    mGSModel->sendToService(G2SEvent::InternalRefresh{});
-}
-
 void Service::sendInitialInfoToGui()
 {
     // Settings
-    mGSModel->sendToGUI(S2GEvent::SettingsUpd{ mSettings, mKernel.settings.isUnitsImperial(), mKernel.settings.getHrThresholds() });
+    mGSModel.post(S2GEvent::SettingsUpd{ mSettings, mKernel.settings.isUnitsImperial(), mKernel.settings.getHrThresholds() });
 
     // Summary
-    mGSModel->sendToGUI(S2GEvent::Summary{ std::make_shared<const ActivitySummary>(mSummary) });
+    mGSModel.post(S2GEvent::Summary{ std::make_shared<const ActivitySummary>(mSummary) });
 
     // Battery level
     uint8_t batteryLevel = static_cast<uint8_t>(mKernel.pwr.getBatteryLevel());
-    mGSModel->sendToGUI(S2GEvent::Battery{ batteryLevel });
+    mGSModel.post(S2GEvent::Battery{ batteryLevel });
 }
 
 void Service::startTrack()
 {
     // Reset data
     memset(&mTrackData, 0, sizeof(mTrackData));
+    mStepCounter.reset();
+    mFloorsCounter.reset();
+    mAltimeter.reset();
+    mHr.reset();
+
+    mSessionNotEmpty = false;
+    mLapNotEmpty = false;
 
     // Assume that GPS has fix
     mPrevGpsPoint.latitude = mGps.latitude;
@@ -303,19 +278,8 @@ void Service::startTrack()
     mTrackMapBuilder.reset();
     mTrackMapBuilder.setDistanceThreshold(mPrevGpsPoint, skMapDistanceThreshold);
 
-    mStepCounter.initialSteps = 0;
-    mFloorsCounter.initialFloors = 0;
-
-    mAltimeter.initialAltitude = 0;
-    mAltimeter.ascent = 0.0f;
-    mAltimeter.descent = 0.0f;
-    mAltimeter.lapAscent = 0.0f;
-    mAltimeter.lapDescent = 0.0f;
-
-    mHr.totalCnt = 0;
-    mHr.totalSum = 0;
-    mHr.lapCnt = 0;
-    mHr.lapSum = 0;
+    // Determinate Lap split source
+    mLapDivSource = getLapDivSource();
 
 
     mTrackStartUTC = std::time(nullptr);
@@ -346,7 +310,7 @@ void Service::startTrack()
 
     mTrackState = Track::State::ACTIVE;
 
-    mGSModel->sendToGUI(S2GEvent::TrackStateUpd{ mTrackState });
+    mGSModel.post(S2GEvent::TrackStateUpd{ mTrackState });
 }
 
 void Service::processTrack(std::time_t utc)
@@ -356,29 +320,31 @@ void Service::processTrack(std::time_t utc)
 
     mTrackData.totalTime = trackTime;
     mTrackData.lapTime += trackTimeDiff;
-
+#if 1
     std::time_t timeDiff = static_cast<std::time_t>(std::difftime(utc, mTrackProcessTimestamp));
     if (timeDiff < (skSamplePeriod / 1000)) { // in seconds
         if (trackTimeDiff > 0) {
-            mGSModel->sendToGUI(S2GEvent::TrackDataUpd{ mTrackData });
+            mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
         }
         return;
     }
-
-
+#else
+    mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
+#endif
     // Process sensors
     std::time_t processTrackTimeDiff = static_cast<std::time_t>(std::difftime(utc, mTrackProcessTimestamp));
     mTrackProcessTimestamp = utc;
 
     // HR
     mTrackData.HR = mHr.hr;
+    mTrackData.hrTrustLevel = mHr.trustLevel;
     if (mHr.totalSum > 1 && mHr.totalCnt > 1) {
         mTrackData.avgHR = mHr.totalSum / mHr.totalCnt;
     } else {
         mTrackData.avgHR = mTrackData.HR;
     }
     mTrackData.maxHR = std::max(mTrackData.maxHR, mTrackData.HR);
-    
+
     if (mHr.lapSum > 1 && mHr.lapCnt > 1) {
         mTrackData.avgLapHR = mHr.lapSum / mHr.lapCnt;
     } else {
@@ -387,7 +353,7 @@ void Service::processTrack(std::time_t utc)
     mTrackData.maxLapHR = std::max(mTrackData.maxLapHR, mTrackData.HR);
 
     // Creating map
-    SDK::TrackMapBuilder::GpsPoint newPoint{ mGps.latitude, mGps.longitude};
+    SDK::TrackMapBuilder::GpsPoint newPoint{ mGps.latitude, mGps.longitude };
     // Add point to the track map
     mTrackMapBuilder.addPoint(newPoint);
 
@@ -398,7 +364,7 @@ void Service::processTrack(std::time_t utc)
     mTrackData.lapDistance += distance;
 
     // Steps
-    if (mStepCounter.initialSteps > 0) {
+    if (mStepCounter.dataValid) {
         int32_t total = static_cast<int32_t>(mStepCounter.steps - mStepCounter.initialSteps);
         int32_t diff = total - mTrackData.steps;
         mTrackData.steps = total;
@@ -406,7 +372,7 @@ void Service::processTrack(std::time_t utc)
     }
 
     // Floors
-    if (mFloorsCounter.initialFloors >= 0) {
+    if (mFloorsCounter.dataValid) {
         int32_t total = static_cast<int32_t>(mFloorsCounter.floors - mFloorsCounter.initialFloors);
         int32_t diff = total - mTrackData.floors;
         mTrackData.floors = total;
@@ -414,9 +380,8 @@ void Service::processTrack(std::time_t utc)
     }
 
     // Elevation
-    if (std::abs(mAltimeter.initialAltitude) > 0.01) {
+    if (mAltimeter.dataValid) {
         float total = mAltimeter.altitude - mAltimeter.initialAltitude;
-
         float diff = total - mTrackData.elevation;
         mTrackData.elevation = total;
         mTrackData.lapElevation += diff;
@@ -455,71 +420,91 @@ void Service::processTrack(std::time_t utc)
         mTrackData.avgLapSpeed = 0.0f;
         mTrackData.lapPace = 0;
     }
-    
+
 
     // Save record to the FIT file
-    ActivityWriter::RecordData fitRecord {};
+    ActivityWriter::RecordData fitRecord{};
     fitRecord.timestamp = utc;
     fitRecord.latitude = mGps.latitude;
     fitRecord.longitude = mGps.longitude;
-    fitRecord.heartRate = static_cast<uint8_t>(mTrackData.HR);
-    fitRecord.steps = static_cast<uint32_t>(mTrackData.steps);
-    fitRecord.floors = static_cast<uint32_t>(mTrackData.floors);
+    fitRecord.heartRate = mTrackData.hrTrustLevel >= 1.0 ? static_cast<uint8_t>(mTrackData.HR) : 0;
+    fitRecord.altitude = mAltimeter.altitude;
     mActivityWriter.addRecord(fitRecord);
 
-    mGSModel->sendToGUI(S2GEvent::TrackDataUpd{ mTrackData });
+    mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
+
+    mSessionNotEmpty = true;    // Session has at least one record
+    mLapNotEmpty = true;        // Lap has at least one record
 
     // Next lap
     uint32_t lapNum = getCurrentLap();
 
     if (lapNum > mTrackData.lapNum) {
 
-        // Save lap to the FIT file
-        ActivityWriter::LapData fitLap {};
-        fitLap.timeStart = utc - mTrackData.lapTime;
-        fitLap.duration = mTrackData.lapTime;
-        fitLap.elapsed = mTrackData.lapTime;
-        fitLap.distance = mTrackData.lapDistance * 1000.0f; //m
-        fitLap.speedAvg = mTrackData.avgLapSpeed / 3.6f;    // m/s
-        fitLap.speedMax = mTrackData.maxLapSpeed / 3.6f;    // m/s
-        fitLap.hrAvg = static_cast<uint8_t>(mTrackData.avgLapHR);
-        fitLap.hrMax = static_cast<uint8_t>(mTrackData.maxLapHR);
-        fitLap.ascent = mAltimeter.lapAscent;
-        fitLap.descent = mAltimeter.lapDescent;
-        fitLap.steps = static_cast<uint32_t>(mTrackData.lapSteps);
-        fitLap.floors = static_cast<uint32_t>(mTrackData.lapFloors);
-        mActivityWriter.addLap(fitLap);
+        saveLap(utc);
 
-        // Reset lap counters
-        mTrackData.lapTime = 0;
-        mTrackData.lapDistance = 0.0f;
-        mTrackData.lapSteps = 0;
-        mTrackData.lapFloors = 0;
-        mTrackData.lapElevation = 0.0f;
-
-        mAltimeter.lapAscent = 0.0f;
-        mAltimeter.lapDescent = 0.0f;
-
-        mTrackData.maxLapSpeed = 0.0f;
-        mTrackData.avgLapSpeed = 0.0f;
-
-        mTrackData.avgLapHR = 0.0f;
-        mTrackData.maxLapHR = 0.0f;
-        mHr.lapCnt = 0;
-        mHr.lapSum = 0;
-
-
-
-        mGSModel->sendToGUI(S2GEvent::LapEnded{ mTrackData.lapNum });
+        mGSModel.post(S2GEvent::LapEnded{ mTrackData.lapNum });
         mTrackData.lapNum = lapNum;
+
+        // Backlight
+        mKernel.backlight.on(3000);
+
+        // Vibro & buzzer
+        mKernel.vibro.play(SDK::Interface::IVibro::ALERT_750MS_100);
+        mKernel.buzzer.play();
     }
 
+}
+
+void Service::saveLap(std::time_t utc)
+{
+    // Save lap to the FIT file
+    ActivityWriter::LapData fitLap{};
+    fitLap.timeStart = utc - mTrackData.lapTime;
+    fitLap.duration = mTrackData.lapTime;
+    fitLap.elapsed = mTrackData.lapTime;
+    fitLap.distance = mTrackData.lapDistance * 1000.0f; //m
+    fitLap.speedAvg = mTrackData.avgLapSpeed / 3.6f;    // m/s
+    fitLap.speedMax = mTrackData.maxLapSpeed / 3.6f;    // m/s
+    fitLap.hrAvg = static_cast<uint8_t>(mTrackData.avgLapHR);
+    fitLap.hrMax = static_cast<uint8_t>(mTrackData.maxLapHR);
+    fitLap.ascent = mAltimeter.lapAscent;
+    fitLap.descent = mAltimeter.lapDescent;
+    fitLap.steps = static_cast<uint32_t>(mTrackData.lapSteps);
+    fitLap.floors = static_cast<uint32_t>(mTrackData.lapFloors);
+    mActivityWriter.addLap(fitLap);
+
+    // Reset lap counters
+    mTrackData.lapTime = 0;
+    mTrackData.lapDistance = 0.0f;
+    mTrackData.lapSteps = 0;
+    mTrackData.lapFloors = 0;
+    mTrackData.lapElevation = 0.0f;
+
+    mAltimeter.lapAscent = 0.0f;
+    mAltimeter.lapDescent = 0.0f;
+
+    mTrackData.maxLapSpeed = 0.0f;
+    mTrackData.avgLapSpeed = 0.0f;
+
+    mTrackData.avgLapHR = 0.0f;
+    mTrackData.maxLapHR = 0.0f;
+    mHr.lapCnt = 0;
+    mHr.lapSum = 0;
+
+    mLapNotEmpty = false;
 }
 
 void Service::stopTrack(bool discard)
 {
     time_t timeNow = std::time(nullptr);
-    if (!discard) {
+    if (!discard && mSessionNotEmpty) {
+
+        if (mLapNotEmpty) {
+            saveLap(timeNow);
+            mTrackData.lapNum++;
+        }
+
         mSummary.utc = timeNow;
         mSummary.time = mTrackData.totalTime;
         mSummary.distance = mTrackData.totalDistance;
@@ -535,9 +520,9 @@ void Service::stopTrack(bool discard)
         if (!mActivitySummarySerializer.save(mSummary)) {
             LOG_ERROR("Can't save activity summary\n");
         }
-        mGSModel->sendToGUI(S2GEvent::Summary{ std::make_shared<const ActivitySummary>(mSummary) });
+        mGSModel.post(S2GEvent::Summary{ std::make_shared<const ActivitySummary>(mSummary) });
 
-        // Create FIT file
+        // Save FIT file
         ActivityWriter::TrackData fitTrack{};
         fitTrack.timeStart = mTrackStartUTC;
         fitTrack.duration = mTrackData.totalTime;
@@ -551,53 +536,50 @@ void Service::stopTrack(bool discard)
         fitTrack.descent = mAltimeter.descent;
         fitTrack.steps = static_cast<uint32_t>(mTrackData.steps);
         fitTrack.floors = static_cast<uint32_t>(mTrackData.floors);
-        mActivityWriter.stop(fitTrack);        
+        mActivityWriter.stop(fitTrack);
     } else {
         mActivityWriter.discard();
     }
 
     mTrackState = Track::State::INACTIVE;
-    mGSModel->sendToGUI(S2GEvent::TrackStateUpd{ mTrackState });
+    mGSModel.post(S2GEvent::TrackStateUpd{ mTrackState });
 }
 
 
 Service::LapDivSource Service::getLapDivSource()
 {
-//    bool isImperial = mKernel.settings.isUnitsImperial();
-//
-//    float distance = isImperial ? Gui::Utils::km2mi(mSettings.alertDistance) : mSettings.alertDistance;
-//    size_t distanceId = Gui::Utils::RoundToNearestIndex(Gui::kDistanceList,
-//        Gui::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
-//
-//    size_t stepId = Gui::Utils::RoundToNearestIndex(Gui::kStepsList,
-//        Gui::Menu::Settings::Alerts::Steps::ID_COUNT, static_cast<float>(mSettings.alertSteps));
-//
-//    size_t timeId = Gui::Utils::RoundToNearestIndex(Gui::kTimeList,
-//        Gui::Menu::Settings::Alerts::Time::ID_COUNT, static_cast<float>(mSettings.alertTime));
-//
-//
-//    if (stepId != Gui::Menu::Settings::Alerts::Steps::ID_OFF) {
-//        return LapDivSource::STEPS;
-//    }
-//
-//    if (distanceId != Gui::Menu::Settings::Alerts::Distance::ID_OFF) {
-//        return LapDivSource::DISTANCE;
-//    }
-//
-//    if (timeId != Gui::Menu::Settings::Alerts::Time::ID_OFF) {
-//        return LapDivSource::TIME;
-//    }
+    bool isImperial = mKernel.settings.isUnitsImperial();
+
+    size_t stepId = App::Menu::RoundToNearestIndex(App::Menu::kStepsList,
+        App::Menu::Settings::Alerts::Steps::ID_COUNT, static_cast<float>(mSettings.alertSteps));
+
+    float distance = isImperial ? App::Utils::km2mi(mSettings.alertDistance) : mSettings.alertDistance;
+    size_t distanceId = App::Menu::RoundToNearestIndex(App::Menu::kDistanceList,
+        App::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
+
+    size_t timeId = App::Menu::RoundToNearestIndex(App::Menu::kTimeList,
+        App::Menu::Settings::Alerts::Time::ID_COUNT, static_cast<float>(mSettings.alertTime));
+
+
+    if (stepId != App::Menu::Settings::Alerts::Steps::ID_OFF) {
+        return LapDivSource::STEPS;
+    }
+
+    if (distanceId != App::Menu::Settings::Alerts::Distance::ID_OFF) {
+        return LapDivSource::DISTANCE;
+    }
+
+    if (timeId != App::Menu::Settings::Alerts::Time::ID_OFF) {
+        return LapDivSource::TIME;
+    }
 
     return LapDivSource::OFF;
 }
 
 uint32_t Service::getCurrentLap()
 {
-    // Determinate Lap split source
-    LapDivSource divSource = getLapDivSource();
-
     uint32_t lapNum = 0;
-    switch (divSource) {
+    switch (mLapDivSource) {
     case LapDivSource::STEPS:
         lapNum = mTrackData.steps / mSettings.alertSteps;
         break;

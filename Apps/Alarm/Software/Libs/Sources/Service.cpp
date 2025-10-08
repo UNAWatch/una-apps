@@ -45,7 +45,7 @@ void Service::run()
             if (mKernel.system.getTimeMs() - startTime > 5000) {
                 if (!mAlarmManager.hasActiveAlarms()) {
                     LOG_DEBUG("No active alarms and GUI not started, exiting service\n");
-                    exit(0);
+                    break;
                 }
             }
         }

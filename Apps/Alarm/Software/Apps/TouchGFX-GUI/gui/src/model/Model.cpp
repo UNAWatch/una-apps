@@ -34,7 +34,7 @@ Model::Model()
 
     std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
     LOG_INFO("Path to files created by app:\n"
-        "       [% s]\n", fileStoreDir.c_str());
+        "       [%s]\n", fileStoreDir.c_str());
 
     LOG_INFO("\n"
         "       Keys:                       \n"
@@ -58,13 +58,18 @@ FrontendApplication& Model::application()
 // and (if key) handleKeyEvent() called for current screen
 void Model::tick()
 {
-    //LOG_INFO("tick\n");
+    //LOG_DEBUG("tick\n");
 
     // Process events from Service only if app is in Resume state
     if (mIsRunning) {
         mGSModel->process(0);
         
         decIdleTimer();
+    }
+
+    if (mInvalidate) {
+        mInvalidate = false;
+        application().invalidate();
     }
 }
 
@@ -232,6 +237,9 @@ void Model::onResume()
 {
     LOG_INFO("called\n");
     mIsRunning = true;
+
+    // Redraw screen
+    mInvalidate = true;
 }
 
 void Model::onPause()

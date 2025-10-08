@@ -45,8 +45,11 @@ protected:
     const SDK::Kernel& mKernel;             ///< Reference to kernel interface
     std::shared_ptr<IGUIModel> mGSModel;    ///< Pointer to GUI-Service model interface
 
+    bool mInvalidate = false;               ///< Request to redraw current screen
+
     // IUserApp implementation
     virtual void onStart()   override;
+    virtual void onResume()  override;
     virtual void onStop()    override;
 
 

@@ -478,6 +478,12 @@
     <Filter Include="SDK\Libs\Source\TrackMap">
       <UniqueIdentifier>{29a8ce23-5024-45c8-bbe6-04a2d71f6c57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\Libs\Header\Kernel">
+      <UniqueIdentifier>{aef3fa24-fad3-4b33-a450-aa593d4aa8da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Kernel">
+      <UniqueIdentifier>{deab211e-4017-4b58-a20d-097abc115779}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -827,6 +833,9 @@
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\TrackMap\TrackMapBuilder.cpp">
       <Filter>SDK\Libs\Source\TrackMap</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp">
+      <Filter>SDK\Libs\Source\Kernel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1665,6 +1674,18 @@
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\JSON\JsonStreamWriter.hpp">
       <Filter>SDK\Libs\Header\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\Kernel.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderGUI.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

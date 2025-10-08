@@ -35,6 +35,7 @@
     <ClCompile Include="$(SdkPath)\Libs\Source\JSON\JsonStreamReader.cpp" />
     <ClCompile Include="$(SdkPath)\Libs\Source\JSON\JsonStreamWriter.cpp" />
     <ClCompile Include="$(SdkPath)\Libs\Source\TrackMap\TrackMapBuilder.cpp" />
+    <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivitySummarySerializer.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivityWriter.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp" />
@@ -305,6 +306,10 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\JSON\JsonStreamWriter.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\TrackMap\TrackMapBuilder.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\TrackMap\TrackMapScreen.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\Kernel.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderGUI.hpp" />
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\ActivitySummary.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\ActivitySummarySerializer.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\ActivityWriter.hpp" />

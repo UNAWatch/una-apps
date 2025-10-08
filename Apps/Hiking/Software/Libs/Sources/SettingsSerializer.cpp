@@ -20,7 +20,7 @@
 #include "SDK/UnaLogger/Logger.h"
 
 
-SettingsSerializer::SettingsSerializer(const IKernel& kernel,
+SettingsSerializer::SettingsSerializer(const SDK::Kernel& kernel,
     const char *pathToFile) :
     mKernel(kernel), mPath(pathToFile)
 {

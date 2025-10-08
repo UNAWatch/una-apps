@@ -35,7 +35,7 @@ void Service::run()
     uint32_t hrAvgCount = 0;
     float hrMax = 0;
 
-    uint32_t startTimeMs = mKernel.app.getTimeMs();
+    uint32_t startTimeMs = mKernel.system.getTimeMs();
 
     while (!mTerminate) {
 
@@ -61,10 +61,10 @@ void Service::run()
             }
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.app.getTimeMs() - startTimeMs > 5000) {
+            if (mKernel.system.getTimeMs() - startTimeMs > 5000) {
                 break;
             }
-            mKernel.app.delay(100);
+            mKernel.system.delay(100);
         }
     }
 
@@ -93,14 +93,18 @@ void Service::run()
     mHRSensor.disconnect();
 
     LOG_INFO("thread stopped\n");
+}
 
-    exit(0);
+void Service::onStart()
+{
+    LOG_INFO("called\n");
 }
 
 void Service::onStop()
 {
     LOG_INFO("called\n");
     mTerminate = true;
+    mGSModel.abortProcessWait();
 }
 
 void Service::onStartGUI()
@@ -114,6 +118,7 @@ void Service::onStopGUI()
 {
     LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
+    mGSModel.abortProcessWait();
 }
 
 void Service::onSdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first)

@@ -26,9 +26,10 @@ private:
     bool               mTerminate;
     bool               mGUIStarted;
 
-    virtual void onStop() override;
+    virtual void onStart()    override;
+    virtual void onStop()     override;
     virtual void onStartGUI() override;
-    virtual void onStopGUI() override;
+    virtual void onStopGUI()  override;
 
     void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
                       const std::vector<SDK::Interface::ISensorData*>& data,

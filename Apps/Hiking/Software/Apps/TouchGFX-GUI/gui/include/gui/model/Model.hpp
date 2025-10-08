@@ -4,12 +4,14 @@
 #include <vector>
 #include <memory>
 
-
-#include "SDK/GSModel/GSModelHelper.hpp"
-
 #include "touchgfx/UIEventListener.hpp"
 #include "gui/common/GuiConfig.hpp"
 
+#include "SDK/GSModel/IGUIModel.hpp"
+#include "SDK/Kernel/Kernel.hpp"
+
+#include "GSModelEvents/G2SEvents.hpp"
+#include "GSModelEvents/S2GEvents.hpp"
 #include "Settings.hpp"
 #include "ActivitySummary.hpp"
 #include "TrackInfo.hpp"
@@ -20,7 +22,7 @@ class FrontendApplication;
 class ModelListener;
 
 class Model : public touchgfx::UIEventListener,
-    public SDK::Interface::IUserApp::Callback,
+    public SDK::Interface::IApp::Callback,
     public IGUIModelHandler
 {
 public:
@@ -90,6 +92,12 @@ public:
     const ActivitySummary& trackSummary();
 
 protected:
+    ModelListener* modelListener;
+    // Fields required for for GUI <-> Service communication
+    const SDK::Kernel& mKernel;             ///< Reference to kernel interface
+    std::shared_ptr<IGUIModel> mGSModel;    ///< Pointer to GUI-Service model interface
+
+    // User application section
 
     /**
      * @brief Decrease the idle timer.
@@ -98,14 +106,20 @@ protected:
      */
     void decIdleTimer();
 
+    /**
+     * @brief Checks if any key is pressed.
+     * This method checks if the provided key corresponds to any of the defined keys
+     * in the Gui::Config::Button enumeration.
+     *
+     * @param key The key to check.
+     * @return true if the key is one of the defined keys, false otherwise.
+     */
+    bool isAnyKeyPressed(uint8_t key) const;
+
     // IUserApp implementation
-    virtual void onCreate()  override;
     virtual void onStart()   override;
     virtual void onResume()  override;
-    virtual void onFrame()   override;
-    virtual void onPause()   override;
     virtual void onStop()    override;
-    virtual void onDestroy() override;
 
     // IGUIModelHandler implementation
     virtual void handleEvent(const S2GEvent::Time& event) override;
@@ -117,9 +131,6 @@ protected:
     virtual void handleEvent(const S2GEvent::LapEnded& event) override;
     virtual void handleEvent(const S2GEvent::Summary& event) override;
 
-    const IKernel*             mKernel;
-    ModelListener*             modelListener;
-    std::shared_ptr<GSModelGUI> mGSModel;
 
     // User data
     uint32_t mIdleTimer = 0;

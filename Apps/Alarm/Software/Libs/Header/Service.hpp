@@ -7,7 +7,7 @@
 #include "AlarmManager.hpp"
 
 class Service : public IServiceModelHandler,
-    public SDK::Interface::IApp::Callback,
+                public SDK::Interface::IApp::Callback,
                 public AlarmManager::AlarmCallback
 {
 public:
@@ -32,7 +32,7 @@ private:
     bool                mTerminate;
     bool                mGUIStarted;
 
-    // IUserApp::Callback implementation
+    // IApp::Callback implementation
     virtual void onStart()    override;
     virtual void onStop()     override;
     virtual void onStartGUI() override;

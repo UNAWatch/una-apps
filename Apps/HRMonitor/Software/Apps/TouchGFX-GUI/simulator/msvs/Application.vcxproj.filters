@@ -292,6 +292,12 @@
     <Filter Include="Source Files\generated\gui_generated\containers">
       <UniqueIdentifier>3807A5E5-E373-9580-7A0B-28797A038833</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\Libs\Header\Kernel">
+      <UniqueIdentifier>{92e3a54a-6784-4724-a054-8e8898fbb2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Kernel">
+      <UniqueIdentifier>{2f861fcc-bfea-4e3a-a34f-f8a170add9d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -389,6 +395,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivityWriter.cpp">
       <Filter>Libs\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp">
+      <Filter>SDK\Libs\Source\Kernel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1008,6 +1017,18 @@
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserStepDetector.hpp">
       <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\Kernel.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderGUI.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

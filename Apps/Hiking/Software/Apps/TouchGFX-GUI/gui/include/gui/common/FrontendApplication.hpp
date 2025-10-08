@@ -20,7 +20,7 @@ public:
     virtual void handleTickEvent()
     {
 #if defined(SIMULATOR)
-        Simulator::KernelHolder::Get().tick();
+        SDK::Simulator::KernelHolder::Get().tick();
 #endif
         
         model.tick();
@@ -31,7 +31,7 @@ public:
     void handleKeyEvent(uint8_t key)
     {
 #if defined(SIMULATOR)
-        if (Simulator::KernelHolder::Get().keyFilter(key)) {
+        if (SDK::Simulator::KernelHolder::Get().keyFilter(key)) {
             model.handleKeyEvent(key);
             FrontendApplicationBase::handleKeyEvent(key);
         }
