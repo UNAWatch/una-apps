@@ -27,6 +27,7 @@ public:
 
     virtual ~EnterMenuPresenter() {}
 
+    virtual void onIdleTimeout() override;
     virtual void onGpsFix(bool acquired) override;
     virtual void onActivitySummary(const ActivitySummary& summary) override;
 

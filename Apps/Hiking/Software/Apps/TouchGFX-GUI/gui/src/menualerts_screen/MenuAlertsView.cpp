@@ -11,7 +11,7 @@ void MenuAlertsView::setupScreen()
 
     menu.setTitle(T_TEXT_ALERTS_UC);
 
-    menu.setNumberOfItems(Gui::Menu::Settings::Alerts::ID_COUNT);
+    menu.setNumberOfItems(App::Menu::Settings::Alerts::ID_COUNT);
     update();
 }
 
@@ -68,13 +68,13 @@ void MenuAlertsView::handleKeyEvent(uint8_t key)
         uint32_t id = menu.getSelectedItem();
 
         switch (id) {
-            case Gui::Menu::Settings::Alerts::ID_STEPS:
+            case App::Menu::Settings::Alerts::ID_STEPS:
                 application().gotoMenuStepsScreenNoTransition();
                 break;
-            case Gui::Menu::Settings::Alerts::ID_DISTANCE:
+            case App::Menu::Settings::Alerts::ID_DISTANCE:
                 application().gotoMenuDistanceScreenNoTransition();
                 break;
-            case Gui::Menu::Settings::Alerts::ID_TIME:
+            case App::Menu::Settings::Alerts::ID_TIME:
                 application().gotoMenuTimeScreenNoTransition();
                 break;
             default:
@@ -95,50 +95,50 @@ void MenuAlertsView::update()
     const uint16_t kBuffSize = 32;
     touchgfx::Unicode::UnicodeChar buffer[kBuffSize] {};
 
-    uint32_t stepsId = Gui::Utils::RoundToNearestIndex(Gui::kStepsList,
-        Gui::Menu::Settings::Alerts::Steps::ID_COUNT, static_cast<float>(mSteps));
+    uint32_t stepsId = App::Menu::RoundToNearestIndex(App::Menu::kStepsList,
+        App::Menu::Settings::Alerts::Steps::ID_COUNT, static_cast<float>(mSteps));
 
-    float distance = mUnitsImperial ? Gui::Utils::km2mi(mDistanceKm) : mDistanceKm;
-    uint32_t distanceId = Gui::Utils::RoundToNearestIndex(Gui::kDistanceList,
-        Gui::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
+    float distance = mUnitsImperial ? App::Utils::km2mi(mDistanceKm) : mDistanceKm;
+    uint32_t distanceId = App::Menu::RoundToNearestIndex(App::Menu::kDistanceList,
+        App::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
 
-    uint32_t timeId = Gui::Utils::RoundToNearestIndex(Gui::kTimeList,
-        Gui::Menu::Settings::Alerts::Time::ID_COUNT, static_cast<float>(mTime));
+    uint32_t timeId = App::Menu::RoundToNearestIndex(App::Menu::kTimeList,
+        App::Menu::Settings::Alerts::Time::ID_COUNT, static_cast<float>(mTime));
 
     // STEPS
-    if (stepsId == Gui::Menu::Settings::Alerts::Steps::ID_OFF) {
+    if (stepsId == App::Menu::Settings::Alerts::Steps::ID_OFF) {
         Unicode::snprintf(buffer, kBuffSize, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
     } else {
         Unicode::snprintf(buffer, kBuffSize, "%d", mSteps);
     }
 
-    pS = menu.getSelectedItem(Gui::Menu::Settings::Alerts::ID_STEPS);
+    pS = menu.getSelectedItem(App::Menu::Settings::Alerts::ID_STEPS);
     pS->configTip(T_TEXT_STEPS, buffer);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::Alerts::ID_STEPS);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::Alerts::ID_STEPS);
     pN->configTip(T_TEXT_STEPS, buffer);
-    pN->setTipColor(stepsId == Gui::Menu::Settings::Alerts::Steps::ID_OFF ?
+    pN->setTipColor(stepsId == App::Menu::Settings::Alerts::Steps::ID_OFF ?
         Gui::Config::Color::MENU_NOT_SELECTED_TIP_OFF : Gui::Config::Color::MENU_NOT_SELECTED_TIP_ON);
 
 
 
     // DISTANCE
-    if (distanceId == Gui::Menu::Settings::Alerts::Distance::ID_OFF) {
+    if (distanceId == App::Menu::Settings::Alerts::Distance::ID_OFF) {
         Unicode::snprintf(buffer, kBuffSize, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
     } else {
-        float diff = std::abs(static_cast<float>(Gui::kDistanceList[distanceId]) - distance);
+        float diff = std::abs(static_cast<float>(App::Menu::kDistanceList[distanceId]) - distance);
  
         if (diff > 0.01f) {
             // Show actual value
             Unicode::snprintfFloat(buffer, kBuffSize, "%.1f", distance);
         } else { 
             // Show value from the list
-            Unicode::snprintf(buffer, kBuffSize, "%d", Gui::kDistanceList[distanceId]);
+            Unicode::snprintf(buffer, kBuffSize, "%d", App::Menu::kDistanceList[distanceId]);
         }
         uint32_t offset = Unicode::strlen(buffer);
 
         if (mUnitsImperial) {
-            touchgfx::TypedTextId txt = Gui::kDistanceList[distanceId] > 1 ?
+            touchgfx::TypedTextId txt = App::Menu::kDistanceList[distanceId] > 1 ?
                 T_TEXT_MILES : T_TEXT_MILE;
 
             Unicode::snprintf(&buffer[offset], kBuffSize - offset, " %s", touchgfx::TypedText(txt).getText());
@@ -147,28 +147,28 @@ void MenuAlertsView::update()
         }
     }
 
-    pS = menu.getSelectedItem(Gui::Menu::Settings::Alerts::ID_DISTANCE);
+    pS = menu.getSelectedItem(App::Menu::Settings::Alerts::ID_DISTANCE);
     pS->configTip(T_TEXT_DISTANCE, buffer);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::Alerts::ID_DISTANCE);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::Alerts::ID_DISTANCE);
     pN->configTip(T_TEXT_DISTANCE, buffer);
-    pN->setTipColor(distanceId == Gui::Menu::Settings::Alerts::Distance::ID_OFF ?
+    pN->setTipColor(distanceId == App::Menu::Settings::Alerts::Distance::ID_OFF ?
         Gui::Config::Color::MENU_NOT_SELECTED_TIP_OFF : Gui::Config::Color::MENU_NOT_SELECTED_TIP_ON);
 
 
     // TIME
-    if (timeId == Gui::Menu::Settings::Alerts::Time::ID_OFF) {
+    if (timeId == App::Menu::Settings::Alerts::Time::ID_OFF) {
         Unicode::snprintf(buffer, kBuffSize, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
     } else {
         Unicode::snprintf(buffer, kBuffSize, "%d %s", mTime, touchgfx::TypedText(T_TEXT_MIN_DOT).getText());
     }
 
-    pS = menu.getSelectedItem(Gui::Menu::Settings::Alerts::ID_TIME);
+    pS = menu.getSelectedItem(App::Menu::Settings::Alerts::ID_TIME);
     pS->configTip(T_TEXT_TIME, buffer);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::Alerts::ID_TIME);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::Alerts::ID_TIME);
     pN->configTip(T_TEXT_TIME, buffer);
-    pN->setTipColor(timeId == Gui::Menu::Settings::Alerts::Time::ID_OFF ?
+    pN->setTipColor(timeId == App::Menu::Settings::Alerts::Time::ID_OFF ?
         Gui::Config::Color::MENU_NOT_SELECTED_TIP_OFF : Gui::Config::Color::MENU_NOT_SELECTED_TIP_ON);
 
     menu.invalidate();

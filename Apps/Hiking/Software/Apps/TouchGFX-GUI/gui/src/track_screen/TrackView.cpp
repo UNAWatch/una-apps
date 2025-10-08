@@ -14,7 +14,7 @@ void TrackView::setupScreen()
     buttons.setR1(Buttons::NONE);
     buttons.setR2(Buttons::AMBER);
 
-    sideBar.setCount(Gui::Menu::Start::Track::ID_COUNT);
+    sideBar.setCount(App::Menu::Start::Track::ID_COUNT);
 }
 
 void TrackView::tearDownScreen()
@@ -25,7 +25,7 @@ void TrackView::tearDownScreen()
 
 void TrackView::setPositionId(uint16_t id)
 {
-    if (id >= Gui::Menu::Start::Track::ID_COUNT) {
+    if (id >= App::Menu::Start::Track::ID_COUNT) {
         return;
     }
 
@@ -37,16 +37,16 @@ void TrackView::setPositionId(uint16_t id)
     trackFace4.setVisible(false);
 
     switch (id) {
-        case Gui::Menu::Start::Track::ID_TRACK4:
+        case App::Menu::Start::Track::ID_TRACK4:
             trackFace4.setVisible(true);
             break;
-        case Gui::Menu::Start::Track::ID_TRACK3:
+        case App::Menu::Start::Track::ID_TRACK3:
             trackFace3.setVisible(true);
             break;
-        case Gui::Menu::Start::Track::ID_TRACK2:
+        case App::Menu::Start::Track::ID_TRACK2:
             trackFace2.setVisible(true);
             break;
-        default:    // Gui::Menu::Start::Track::TRACK1:
+        default:    // App::Menu::Start::Track::TRACK1:
             trackFace1.setVisible(true);
             break;
     }
@@ -62,13 +62,13 @@ uint16_t TrackView::getPositionId()
     return sideBar.getActiveId();
 }
 
-void TrackView::setTrackData(const Track::Data &data, bool isImperial)
+void TrackView::setTrackData(const Track::Data &data, bool isImperial, const std::array<uint8_t, 4>& hrth)
 {
     trackFace1.setSteps(data.steps);
     trackFace1.setDistance(data.totalDistance, isImperial);
     trackFace1.setTimer(data.totalTime);
 
-    trackFace2.setHR(data.HR);
+    trackFace2.setHR(data.HR, data.hrTrustLevel, hrth);
     trackFace2.setAvgPace(data.avgPace, isImperial);
     trackFace2.setElevation(data.elevation, isImperial);
 
@@ -97,7 +97,7 @@ void TrackView::handleKeyEvent(uint8_t key)
     if (key == Gui::Config::Button::L1) {
         uint16_t p = getPositionId();
         if (p == 0) {
-            p = Gui::Menu::Start::Track::ID_COUNT;
+            p = App::Menu::Start::Track::ID_COUNT;
         }
         p--;
         setPositionId(p);
@@ -106,7 +106,7 @@ void TrackView::handleKeyEvent(uint8_t key)
     if (key == Gui::Config::Button::L2) {
         uint16_t p = getPositionId();
         p++;
-        if (p == Gui::Menu::Start::Track::ID_COUNT) {
+        if (p == App::Menu::Start::Track::ID_COUNT) {
             p = 0;
         }
         setPositionId(p);

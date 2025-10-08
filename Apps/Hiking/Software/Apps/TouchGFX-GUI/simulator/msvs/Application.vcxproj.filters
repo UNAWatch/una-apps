@@ -837,6 +837,291 @@
     <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp">
       <Filter>SDK\Libs\Source\Kernel</Filter>
     </ClCompile>
+    <ClInclude Include="..\..\gui\include\gui\model\AppTypes.hpp">
+      <Filter>Header Files\gui\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\BatteryBig.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\BatteryBigBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\Buttons.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ButtonsBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\simulator\include\simulator\video\DirectFrameBufferVideoController.hpp">
+      <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\entermenu_screen\EnterMenuPresenter.hpp">
+      <Filter>Header Files\gui\entermenu_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\entermenu_screen\EnterMenuView.hpp">
+      <Filter>Header Files\gui\entermenu_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\entermenu_screen\EnterMenuViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\entermenu_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\common\FrontendApplication.hpp">
+      <Filter>Header Files\gui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendApplicationBase.hpp">
+      <Filter>Header Files\generated\gui_generated\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\common\FrontendHeap.hpp">
+      <Filter>Header Files\gui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendHeapBase.hpp">
+      <Filter>Header Files\generated\gui_generated\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\common\GuiConfig.hpp">
+      <Filter>Header Files\gui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\HrBar.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\HrBarBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\Menu.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menualerts_screen\MenuAlertsPresenter.hpp">
+      <Filter>Header Files\gui\menualerts_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menualerts_screen\MenuAlertsView.hpp">
+      <Filter>Header Files\gui\menualerts_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menualerts_screen\MenuAlertsViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menualerts_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menudistance_screen\MenuDistancePresenter.hpp">
+      <Filter>Header Files\gui\menudistance_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menudistancesaved_screen\MenuDistanceSavedPresenter.hpp">
+      <Filter>Header Files\gui\menudistancesaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menudistancesaved_screen\MenuDistanceSavedView.hpp">
+      <Filter>Header Files\gui\menudistancesaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menudistancesaved_screen\MenuDistanceSavedViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menudistancesaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menudistance_screen\MenuDistanceView.hpp">
+      <Filter>Header Files\gui\menudistance_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menudistance_screen\MenuDistanceViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menudistance_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\MenuItemNotSelected.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuItemNotSelectedBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\MenuItemSelected.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuItemSelectedBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menusettings_screen\MenuSettingsPresenter.hpp">
+      <Filter>Header Files\gui\menusettings_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menusettings_screen\MenuSettingsView.hpp">
+      <Filter>Header Files\gui\menusettings_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menusettings_screen\MenuSettingsViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menusettings_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menusteps_screen\MenuStepsPresenter.hpp">
+      <Filter>Header Files\gui\menusteps_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menustepssaved_screen\MenuStepsSavedPresenter.hpp">
+      <Filter>Header Files\gui\menustepssaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menustepssaved_screen\MenuStepsSavedView.hpp">
+      <Filter>Header Files\gui\menustepssaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menustepssaved_screen\MenuStepsSavedViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menustepssaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menusteps_screen\MenuStepsView.hpp">
+      <Filter>Header Files\gui\menusteps_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menusteps_screen\MenuStepsViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menusteps_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menutime_screen\MenuTimePresenter.hpp">
+      <Filter>Header Files\gui\menutime_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menutimesaved_screen\MenuTimeSavedPresenter.hpp">
+      <Filter>Header Files\gui\menutimesaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menutimesaved_screen\MenuTimeSavedView.hpp">
+      <Filter>Header Files\gui\menutimesaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menutimesaved_screen\MenuTimeSavedViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menutimesaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menutime_screen\MenuTimeView.hpp">
+      <Filter>Header Files\gui\menutime_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menutime_screen\MenuTimeViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menutime_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\simulator\include\simulator\video\MJPEGDecoder.hpp">
+      <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\model\Model.hpp">
+      <Filter>Header Files\gui\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\model\ModelListener.hpp">
+      <Filter>Header Files\gui\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\PolyLine.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\SideBarBig.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SideBarBigBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\SideBarSmall.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SideBarSmallBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp">
+      <Filter>Header Files\generated\gui_generated\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp">
+      <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\Title.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TitleBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TitleInfo.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TitleInfoBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\Toggle.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ToggleBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackaction_screen\TrackActionPresenter.hpp">
+      <Filter>Header Files\gui\trackaction_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackaction_screen\TrackActionView.hpp">
+      <Filter>Header Files\gui\trackaction_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\trackaction_screen\TrackActionViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\trackaction_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackdiscardconfirmation_screen\TrackDiscardConfirmationPresenter.hpp">
+      <Filter>Header Files\gui\trackdiscardconfirmation_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackdiscardconfirmation_screen\TrackDiscardConfirmationView.hpp">
+      <Filter>Header Files\gui\trackdiscardconfirmation_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\trackdiscardconfirmation_screen\TrackDiscardConfirmationViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\trackdiscardconfirmation_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackdiscarded_screen\TrackDiscardedPresenter.hpp">
+      <Filter>Header Files\gui\trackdiscarded_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackdiscarded_screen\TrackDiscardedView.hpp">
+      <Filter>Header Files\gui\trackdiscarded_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\trackdiscarded_screen\TrackDiscardedViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\trackdiscarded_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TrackFace1.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackFace1Base.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TrackFace2.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackFace2Base.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TrackFace3.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackFace3Base.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TrackFace4.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackFace4Base.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\tracklap_screen\TrackLapPresenter.hpp">
+      <Filter>Header Files\gui\tracklap_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\tracklap_screen\TrackLapView.hpp">
+      <Filter>Header Files\gui\tracklap_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\tracklap_screen\TrackLapViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\tracklap_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\track_screen\TrackPresenter.hpp">
+      <Filter>Header Files\gui\track_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\tracksaved_screen\TrackSavedPresenter.hpp">
+      <Filter>Header Files\gui\tracksaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\tracksaved_screen\TrackSavedView.hpp">
+      <Filter>Header Files\gui\tracksaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\tracksaved_screen\TrackSavedViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\tracksaved_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TrackSummary.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackSummaryBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TrackSummaryHR.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackSummaryHRBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\tracksummary_screen\TrackSummaryPresenter.hpp">
+      <Filter>Header Files\gui\tracksummary_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\tracksummary_screen\TrackSummaryView.hpp">
+      <Filter>Header Files\gui\tracksummary_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\tracksummary_screen\TrackSummaryViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\tracksummary_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\track_screen\TrackView.hpp">
+      <Filter>Header Files\gui\track_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\track_screen\TrackViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\track_screen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml">

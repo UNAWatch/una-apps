@@ -75,6 +75,7 @@ public:
 
     // Settings
     bool isUnitsImperial();
+    const std::array<uint8_t, 4>& getHrThresholds() const;
     const Settings& getSettings() const;
     void setSettings(const Settings& sett);
 
