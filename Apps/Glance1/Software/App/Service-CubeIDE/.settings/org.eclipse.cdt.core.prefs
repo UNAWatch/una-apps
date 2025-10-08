@@ -16,9 +16,6 @@ environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.7
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK/operation=replace
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK/value=../../../../../../SDK
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK_HEADER/delimiter=;
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK_HEADER/operation=replace
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK_HEADER/value=${PATH_SDK}/Libs/Header
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/operation=append
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/value=0123ABCD89EF4560
