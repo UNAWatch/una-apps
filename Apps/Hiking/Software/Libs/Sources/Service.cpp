@@ -19,6 +19,8 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
+#include "icon_60x60.h"
+
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
@@ -34,10 +36,20 @@ Service::Service()
         , mActivitySummarySerializer(mKernel, "Activity/summary.json")
         , mActivityWriter(mKernel, "Activity")
 {
+    int16_t w;
+    int16_t h;
+    mKernel.app.getGlanceArea(w, h);
+    mGlanceUI.setWidth(w);
+    mGlanceUI.setHeight(h);
+    mKernel.app.registerGlance(this);
+
+    createGlanceGUI();
 }
 
 void Service::run()
 {
+    LOG_INFO("thread started\n");
+
     // Get settings
     if (!mSettingsSerializer.load(mSettings)) {
         LOG_ERROR("Failed to load settings\n");
@@ -46,6 +58,15 @@ void Service::run()
     // Get summary
     if (!mActivitySummarySerializer.load(mSummary)) {
         LOG_ERROR("Failed to load activity summary\n");
+    } else {
+        time_t utc = mSummary.utc; //  Last activity UTC time
+        std::tm tmNow{};
+#if WIN32
+        localtime_s(&tmNow, &utc);
+#else
+        localtime_r(&utc, &tmNow);
+#endif
+        mGlanceTime.print("%s %d, %d:%02d", App::Utils::DayShort[tmNow.tm_wday], tmNow.tm_mday, tmNow.tm_hour, tmNow.tm_min);
     }
 
 
@@ -54,15 +75,6 @@ void Service::run()
     mStepCounterSensor = mKernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::STEP_COUNTER);
     mFloorCounterSensor = mKernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::FLOOR_COUNTER);
     mAltimeterSensor = mKernel.sensorManager.getDefaultSensor(SDK::Sensor::Type::ALTIMETER);
-
-    // Subscribe to GPS to get fix
-    if (mGpsSensor) {
-        mGpsSensor->connect(this, &mKernel.app, skInitialSamplePeriod, skSampleLatency);
-    }
-
-#if defined(SIMULATOR) || 0
-    mGps.fix = true;
-#endif
 
     uint32_t startTime = mKernel.system.getTimeMs();
 
@@ -92,6 +104,8 @@ void Service::run()
                 processTrack(utc);
             }
 
+        } else if (mGlanceActive) {
+            // do nithing
         } else {
             // Just wait some time to see if GUI starts
             if (mKernel.system.getTimeMs() - startTime > 5000) {
@@ -120,6 +134,8 @@ void Service::run()
     if (mFloorCounterSensor) {
         mFloorCounterSensor->disconnect(this);
     }
+
+    LOG_INFO("thread stopped\n");
 }
 
 
@@ -141,6 +157,16 @@ void Service::onStartGUI()
 {
     LOG_INFO("GUI started\n");
     mGUIStarted = true;
+
+    // Subscribe to GPS to get fix
+    if (mGpsSensor) {
+        mGpsSensor->connect(this, &mKernel.app, skInitialSamplePeriod, skSampleLatency);
+    }
+
+#if defined(SIMULATOR) || 0
+    mGps.fix = true;
+#endif
+
     sendInitialInfoToGui();
     mGSModel.abortProcessWait();
 }
@@ -626,3 +652,43 @@ uint32_t Service::ParseVersion(const char* str)
 
     return 0;
 } 
+
+SDK::Interface::IGlance::Info Service::glanceGetInfo()
+{
+    mGlanceActive = true;
+
+    IGlance::Info info{};
+    info.altname = "Hiking";
+    info.count = static_cast<uint8_t>(mGlanceUI.size());
+    info.ctrls = mGlanceUI.data();
+    return info;
+}
+
+void Service::glanceUpdate()
+{
+    // Nothing changed
+}
+
+void Service::glanceClose()
+{
+    mGlanceActive = false;
+}
+
+void Service::createGlanceGUI()
+{
+    mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
+
+    mGlanceTitle = mGlanceUI.createText();
+    mGlanceTitle.pos({ 81, 0 }, { 125, 25 })
+        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
+        .color(GlanceColor_t::GLANCE_COLOR_TEAL)
+        .setText("Last Activity")
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+
+    mGlanceTime = mGlanceUI.createText();
+    mGlanceTime.pos({ 34, 34 }, { 172, 23 })
+        .font(GlanceFont_t::GLANCE_FONT_POPPINS_ITALIC_18)
+        .color(GlanceColor_t::GLANCE_COLOR_WHITE)
+        .setText("No activities")
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_RIGHT);
+}

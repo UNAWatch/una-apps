@@ -1972,6 +1972,12 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp">
       <Filter>SDK\Libs\Header\Kernel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Libs\Header\AppMenu.hpp">
+      <Filter>Libs\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Libs\Header\AppUtils.hpp">
+      <Filter>Libs\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc">

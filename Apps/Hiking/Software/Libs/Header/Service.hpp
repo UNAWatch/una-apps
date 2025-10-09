@@ -8,6 +8,9 @@
 #include "SDK/Interfaces/ISensorDataListener.hpp"
 #include "SDK/TrackMap/TrackMapBuilder.hpp"
 
+#include "SDK/Interfaces/IGlance.hpp"
+#include "SDK/Glance/GlanceControl.hpp"
+
 #include "SettingsSerializer.hpp"
 #include "ActivitySummarySerializer.hpp"
 #include "ActivityWriter.hpp"
@@ -15,7 +18,8 @@
 
 class Service : public IServiceModelHandler,
                 public SDK::Interface::IApp::Callback,
-                public SDK::Interface::ISensorDataListener
+                public SDK::Interface::ISensorDataListener,
+                public SDK::Interface::IGlance
 {
 public:
     Service();
@@ -204,6 +208,17 @@ private:
     uint32_t getCurrentLap();
     static uint32_t ParseVersion(const char* str);
 
+
+    // IGlance implementation
+    virtual IGlance::Info glanceGetInfo() override;
+    virtual void glanceUpdate()           override;
+    virtual void glanceClose()            override;
+    void createGlanceGUI();
+
+    bool mGlanceActive = false;
+    SDK::Glance::Form mGlanceUI;
+    SDK::Glance::ControlText mGlanceTitle;
+    SDK::Glance::ControlText mGlanceTime;
 };
 
 #endif  // __SERVICE_HPP__

@@ -116,6 +116,15 @@ inline uint8_t sec2hmsS(std::time_t sec)
     return s;
 }
 
+
+/**
+ * @brief   Days of the week.
+ * @note    The order of days is important, it is used in the menu logic.
+ */
+static constexpr const char* DayShort[7] = {
+        "Sun", "Mon", "Tue", "Wed",
+        "Thu", "Fri", "Sat"};
+
 } // App::Utils
 
 #endif /* __APP_UTILS_HPP */
