@@ -24,6 +24,7 @@ struct Settings {
     uint32_t alertSteps = 0;    ///< Steps alert threshold for. 0 if not use.
     float alertDistance = 0;    ///< Distance alert threshold in kilometers. 0 if not used.
     uint32_t alertTime = 0;     ///< Activity time threshold. 0 if not use.
+    bool debugSkipGpsFix = false;    ///< Skip GPS fix to start activity
 };
 
 

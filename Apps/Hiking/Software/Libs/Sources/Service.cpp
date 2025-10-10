@@ -165,6 +165,10 @@ void Service::onStartGUI()
 
 #if defined(SIMULATOR) || 0
     mGps.fix = true;
+#else
+    if (mSettings.debugSkipGpsFix) {
+        mGps.fix = true;
+    }
 #endif
 
     sendInitialInfoToGui();
