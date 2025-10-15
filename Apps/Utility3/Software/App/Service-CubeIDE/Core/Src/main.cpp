@@ -30,7 +30,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 #include "SDK/SwTimer/SwTimer.hpp"
 
-#define LOG_MODULE_PRX      "main::"
+#define LOG_MODULE_PRX      "main"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 

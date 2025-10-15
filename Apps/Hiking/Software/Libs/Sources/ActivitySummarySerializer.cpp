@@ -16,20 +16,20 @@
 #include "SDK/JSON/JsonStreamWriter.hpp"
 #include "SDK/JSON/JsonStreamReader.hpp"
 
-#define LOG_MODULE_PRX      "ActivitySummarySerializer::"
+#define LOG_MODULE_PRX      "ActivitySummarySerializer"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-ActivitySummarySerializer::ActivitySummarySerializer(const IKernel& kernel,
-        const char *pathToFile) :
+ActivitySummarySerializer::ActivitySummarySerializer(const SDK::Kernel& kernel,
+    const char* pathToFile) :
     mKernel(kernel), mPath(pathToFile)
 {
     assert(pathToFile != nullptr);
 }
 
-bool ActivitySummarySerializer::save(const ActivitySummary &summary)
+bool ActivitySummarySerializer::save(const ActivitySummary& summary)
 {
-    const char *slash = strrchr(mPath, '/');
+    const char* slash = strrchr(mPath, '/');
     if (slash) {
         char buff[SDK::Interface::IFileSystem::skMaxPathLen]{ };
         snprintf(buff, sizeof(buff), "%.*s", static_cast<size_t>(slash - mPath), mPath);
@@ -63,8 +63,8 @@ bool ActivitySummarySerializer::save(const ActivitySummary &summary)
     writer.add("pace_avg", summary.paceAvg);
     writer.add("hr_max", summary.hrMax);
     writer.add("hr_avg", summary.hrAvg);
-    
-    const uint8_t *points = reinterpret_cast<const uint8_t*>(summary.map.points.data());
+
+    const uint8_t* points = reinterpret_cast<const uint8_t*>(summary.map.points.data());
     writer.addHexString("map", points, summary.map.points.size() * 2);
 
     writer.endMap();
@@ -75,7 +75,7 @@ bool ActivitySummarySerializer::save(const ActivitySummary &summary)
     return true;
 }
 
-bool ActivitySummarySerializer::load(ActivitySummary &summary)
+bool ActivitySummarySerializer::load(ActivitySummary& summary)
 {
     std::unique_ptr<SDK::Interface::IFile> file = mKernel.fs.file(mPath);
 
@@ -141,13 +141,13 @@ bool ActivitySummarySerializer::load(ActivitySummary &summary)
 
 #if 1
     // Track map as HEX-String
-    const char *hexStr = nullptr;
+    const char* hexStr = nullptr;
     size_t hexStrLen = 0;
 
     if (reader.get("map", hexStr, hexStrLen) && hexStrLen % 4 == 0) {
         summary.map.points.reserve(hexStrLen / 4);
         for (size_t i = 0; i < hexStrLen / 4; i++) {
-            SDK::TrackMapScreen::Point point { };
+            SDK::TrackMapScreen::Point point{ };
             char xstr[3] = { hexStr[i * 4], hexStr[i * 4 + 1], 0 };
             char ystr[3] = { hexStr[i * 4 + 2], hexStr[i * 4 + 3], 0 };
             point.x = static_cast<uint8_t>(strtol(xstr, nullptr, 16));
