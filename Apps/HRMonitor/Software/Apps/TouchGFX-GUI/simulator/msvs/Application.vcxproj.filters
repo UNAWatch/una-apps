@@ -241,6 +241,21 @@
     <Filter Include="SDK\Libs\Header\Wrappers">
       <UniqueIdentifier>{12f3528f-87a4-4baf-a203-0df3431ded53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\ThirdParty">
+      <UniqueIdentifier>{9cd0adae-3b13-4746-856c-b082a0453afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\ThirdParty\FIT">
+      <UniqueIdentifier>{d64045dc-ab43-4d4d-b3db-92ea74d5049d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\SensorLayer">
+      <UniqueIdentifier>{d1385d01-a81f-48e4-852c-63960cc67a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\SensorLayer">
+      <UniqueIdentifier>{34391817-31f7-452e-8119-107a9c506d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\SensorLayer\DataParsers">
+      <UniqueIdentifier>{36888a59-5644-4ba4-bc46-7ef2c4dc8b69}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Libs">
       <UniqueIdentifier>{f2007c93-643c-48bc-8320-f9989601c8bf}</UniqueIdentifier>
     </Filter>
@@ -252,9 +267,6 @@
     </Filter>
     <Filter Include="Libs\Header\GSModelEvents">
       <UniqueIdentifier>{c699e549-a11a-4c9c-87af-4b89866bd520}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SDK\ThirdParty">
-      <UniqueIdentifier>{9cd0adae-3b13-4746-856c-b082a0453afd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\gui\main_screen">
       <UniqueIdentifier>867E566B-C66F-989E-C8A4-EAA264E301EE</UniqueIdentifier>
@@ -280,8 +292,17 @@
     <Filter Include="Source Files\generated\gui_generated\containers">
       <UniqueIdentifier>3807A5E5-E373-9580-7A0B-28797A038833</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\ThirdParty\FIT">
-      <UniqueIdentifier>{d64045dc-ab43-4d4d-b3db-92ea74d5049d}</UniqueIdentifier>
+    <Filter Include="SDK\Libs\Header\Kernel">
+      <UniqueIdentifier>{92e3a54a-6784-4724-a054-8e8898fbb2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Kernel">
+      <UniqueIdentifier>{2f861fcc-bfea-4e3a-a34f-f8a170add9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\FitHelper">
+      <UniqueIdentifier>{0042d757-c0af-489f-8eca-21e29ca3e1bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\FitHelper">
+      <UniqueIdentifier>{f16d3529-9d58-4f99-a8f6-90a9ffe31594}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -315,6 +336,21 @@
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp">
       <Filter>Source Files\gui\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gui\src\main_screen\MainPresenter.cpp">
+      <Filter>Source Files\gui\main_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\main_screen\MainView.cpp">
+      <Filter>Source Files\gui\main_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\main_screen\MainViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\main_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\ButtonsSet.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\ButtonsSetBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Platform\OS\OS.cpp">
       <Filter>SDK\Libs\Source\Platform\OS</Filter>
     </ClCompile>
@@ -345,38 +381,32 @@
     <ClCompile Include="$(SdkPath)\Libs\Source\Wrappers\StdLibWrappers.c">
       <Filter>SDK\Libs\Source\Wrappers</Filter>
     </ClCompile>
+    <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit.c">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_convert.c">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_crc.c">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_product.c">
+      <Filter>SDK\ThirdParty\FIT</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\SensorLayer\SensorDriverConnection.cpp">
+      <Filter>SDK\Libs\Source\SensorLayer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp">
       <Filter>Libs\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\main_screen\MainPresenter.cpp">
-      <Filter>Source Files\gui\main_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\main_screen\MainView.cpp">
-      <Filter>Source Files\gui\main_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\main_screen\MainViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\main_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\ButtonsSet.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\ButtonsSetBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit.c">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_convert.c">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_crc.c">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\ThirdParty\FitSDKRelease_21.171.00\c\fit_product.c">
-      <Filter>SDK\ThirdParty\FIT</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivityWriter.cpp">
       <Filter>Libs\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp">
+      <Filter>SDK\Libs\Source\Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\FitHelper\FitHelper.cpp">
+      <Filter>SDK\Libs\Source\FitHelper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -832,39 +862,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\KernelBase.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Backlight.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Buzzer.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\FileSystem.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockServiceControl.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockSynchManager.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockUserApp.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockUserAppMemAllocator.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\SensorCore.hpp">
       <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
     </ClInclude>
@@ -910,15 +907,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISettings.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IUserApp.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IUserAppControl.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IUserAppMemAllocator.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IVibro.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
@@ -954,6 +942,105 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Libs\Header\ActivityWriter.hpp">
       <Filter>Libs\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\App.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppCapabilities.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppMemAllocator.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Backlight.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Buzzer.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\FileSystem.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IApp.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppControl.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppMemAllocator.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Logger.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\ServiceControl.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\SensorDriverConnection.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\SensorTypes.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserAccelerometer.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserAccelerometerRaw.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserActivity.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserActivityRecognition.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserAltimeter.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserFloorCounter.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserGPS.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserHeartRate.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserMotionDetect.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserStepCounter.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SensorLayer\DataParsers\SensorDataParserStepDetector.hpp">
+      <Filter>SDK\Libs\Header\SensorLayer\DataParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\Kernel.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderGUI.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp">
+      <Filter>SDK\Libs\Header\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\FitHelper\FitHelper.hpp">
+      <Filter>SDK\Libs\Header\FitHelper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
