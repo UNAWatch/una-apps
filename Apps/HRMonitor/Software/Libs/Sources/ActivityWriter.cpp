@@ -22,17 +22,47 @@ extern "C" {
 #include "fit_crc.h"
 }
 
-#define LOG_MODULE_PRX      "ActivityWriter::"
+#define LOG_MODULE_PRX      "ActivityWriter"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-
+#include "SDK/FitHelper/FitHelper.hpp"
 
 
 ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir) :
     mKernel(kernel), mPath(pathToDir)
 {
     assert(pathToDir != nullptr);
+}
+
+void ActivityWriter::testFitHelper()
+{
+    SDK::Interface::IFile* fp = mFile.get();
+
+    SDK::Component::FitHelper eventFitHelper(skEventMsgNum,
+                                             *fit_mesg_defs[FIT_MESG_EVENT],
+                                             FIT_EVENT_MESG_DEF_SIZE);
+    eventFitHelper.init({FIT_EVENT_FIELD_NUM_TIMESTAMP,
+                         FIT_EVENT_FIELD_NUM_EVENT,
+                         FIT_EVENT_FIELD_NUM_EVENT_TYPE});
+
+    FIT_EVENT_MESG event_mesg{};
+
+    event_mesg.timestamp  = unixToFitTimestamp(0x11223344);
+    event_mesg.event      = FIT_EVENT_TIMER;
+    event_mesg.event_type = FIT_EVENT_TYPE_START;
+
+    eventFitHelper.writeDef(fp);
+    eventFitHelper.writeData(&event_mesg, fp);
+
+    uint8_t buffer[200];
+    uint32_t size = fp->size();
+    fp->seek(0);
+
+    size_t br;
+    fp->read((char*)buffer, size, br);
+
+    LOG_INFO_DUMP(buffer, size);
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -46,6 +76,8 @@ void ActivityWriter::start(const AppInfo& info)
     if (!mFile) {
         return;
     }
+
+    testFitHelper();
 
     SDK::Interface::IFile* fp = mFile.get();
 
@@ -416,8 +448,7 @@ void ActivityWriter::WriteFileHeader(SDK::Interface::IFile* fp)
     // Move pointer to the end of the file
     if (fileSize > 0) {
         fp->seek(fileSize);
-    }
-    
+    }    
 }
 
 void ActivityWriter::WriteData(const void* data, FIT_UINT16 data_size, SDK::Interface::IFile* fp)

@@ -99,6 +99,8 @@ private:
     void saveFile();
     void deleteFile();
 
+    void testFitHelper();
+
     static time_t tm2epoch(const struct tm* tm);
     static time_t epochToLocal(time_t utc);
     static FIT_DATE_TIME unixToFitTimestamp(std::time_t unixTimestamp);
