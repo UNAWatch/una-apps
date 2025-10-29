@@ -39,18 +39,22 @@ void ActivityWriter::testFitHelper()
 {
     SDK::Interface::IFile* fp = mFile.get();
 
-    SDK::Component::FitHelper eventFitHelper(skEventMsgNum,
-                                             *fit_mesg_defs[FIT_MESG_EVENT],
-                                             FIT_EVENT_MESG_DEF_SIZE);
+    SDK::Component::FitHelper eventFitHelper(skEventMsgNum, *fit_mesg_defs[FIT_MESG_EVENT]);
     eventFitHelper.init({FIT_EVENT_FIELD_NUM_TIMESTAMP,
                          FIT_EVENT_FIELD_NUM_EVENT,
                          FIT_EVENT_FIELD_NUM_EVENT_TYPE});
 
+    LOG_INFO("Original MsgDef\n");
+    eventFitHelper.printMsgDef((const FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT]);
+
+
     FIT_EVENT_MESG event_mesg{};
 
-    event_mesg.timestamp  = unixToFitTimestamp(0x11223344);
-    event_mesg.event      = FIT_EVENT_TIMER;
-    event_mesg.event_type = FIT_EVENT_TYPE_START;
+    //Fit_InitMesg(fit_mesg_defs[FIT_MESG_EVENT], &event_mesg);
+
+    event_mesg.timestamp  = 0x11223344;
+    event_mesg.event      = 0x55;
+    event_mesg.event_type = 0x66;
 
     eventFitHelper.writeDef(fp);
     eventFitHelper.writeData(&event_mesg, fp);
