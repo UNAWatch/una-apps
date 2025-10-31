@@ -35,7 +35,7 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
     assert(pathToDir != nullptr);
 }
 
-void ActivityWriter::testFitHelper()
+void ActivityWriter::testFitHelper(const AppInfo& info)
 {
     SDK::Interface::IFile* fp = mFile.get();
 
@@ -44,6 +44,16 @@ void ActivityWriter::testFitHelper()
                          FIT_EVENT_FIELD_NUM_EVENT,
                          FIT_EVENT_FIELD_NUM_EVENT_TYPE});
 
+
+    SDK::Component::FitHelper developerFitHelper(skDevelopMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID]);
+    developerFitHelper.init();
+
+    FIT_DEVELOPER_DATA_ID_MESG developer{};
+    strncpy(reinterpret_cast<char*>(developer.developer_id), info.devID.c_str(), FIT_DEVELOPER_DATA_ID_MESG_DEVELOPER_ID_COUNT);
+    strncpy(reinterpret_cast<char*>(developer.application_id), info.appID.c_str(), FIT_DEVELOPER_DATA_ID_MESG_APPLICATION_ID_COUNT);
+    developer.application_version  = info.appVersion;
+    developer.manufacturer_id      = FIT_MANUFACTURER_DEVELOPMENT;
+    developer.developer_data_index = 0;
 
     SDK::Component::FitHelper trustLevelFitHelper(skHrTrustLevelMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FIELD_DESCRIPTION]);
     trustLevelFitHelper.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
@@ -56,11 +66,14 @@ void ActivityWriter::testFitHelper()
 
     strncpy(trustLevel.field_name, "hr_trust_level", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
     strncpy(trustLevel.units, "percents", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
-    trustLevel.developer_data_index = 0;
+    trustLevel.developer_data_index    = 0;
     trustLevel.field_definition_number = 0;
-    trustLevel.fit_base_type_id = FIT_BASE_TYPE_UINT8;
+    trustLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT8;
 
     eventFitHelper.WriteFileHeader(fp);
+
+    developerFitHelper.writeDef(fp);
+    developerFitHelper.writeMessage(&developer, fp);
 
     trustLevelFitHelper.writeDef(fp);
     trustLevelFitHelper.writeMessage(&trustLevel, fp);
@@ -76,14 +89,14 @@ void ActivityWriter::testFitHelper()
 
     eventFitHelper.writeMessage(&event_mesg, fp);
 
-	uint8_t trust_level = 0x88;
+	uint8_t trust_level = 1;
     eventFitHelper.writeFieldMessage(0, &trust_level, fp);
-
-    eventFitHelper.WriteCRC(fp);
 
     fp->seek(0);
 
     eventFitHelper.WriteFileHeader(fp);
+
+    eventFitHelper.WriteCRC(fp);
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -98,7 +111,7 @@ void ActivityWriter::start(const AppInfo& info)
         return;
     }
 
-    testFitHelper();
+    testFitHelper(info);
 
     SDK::Interface::IFile* fp = mFile.get();
 

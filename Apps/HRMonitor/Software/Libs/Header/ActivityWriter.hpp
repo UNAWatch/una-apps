@@ -99,7 +99,7 @@ private:
     void saveFile();
     void deleteFile();
 
-    void testFitHelper();
+    void testFitHelper(const AppInfo& info);
 
     static time_t tm2epoch(const struct tm* tm);
     static time_t epochToLocal(time_t utc);
