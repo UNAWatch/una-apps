@@ -44,16 +44,47 @@ void ActivityWriter::testFitHelper()
                          FIT_EVENT_FIELD_NUM_EVENT,
                          FIT_EVENT_FIELD_NUM_EVENT_TYPE});
 
-    //eventFitHelper.init();
+
+    SDK::Component::FitHelper trustLevelFitHelper(skHrTrustLevelMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FIELD_DESCRIPTION]);
+    trustLevelFitHelper.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID, });
+
+    FIT_FIELD_DESCRIPTION_MESG trustLevel{};
+
+    strncpy(trustLevel.field_name, "hr_trust_level", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
+    strncpy(trustLevel.units, "hr_trust_level", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
+    trustLevel.developer_data_index = 0;
+    trustLevel.field_definition_number = 0;
+    trustLevel.fit_base_type_id = FIT_BASE_TYPE_UINT8;
+
+    trustLevelFitHelper.writeDef(fp);
+    trustLevelFitHelper.writeMessage(&trustLevel, fp);
+
+
+	eventFitHelper.addField(&trustLevelFitHelper);
+
+
+    eventFitHelper.writeDef(fp);
+
+
+
+
+
+
 
     FIT_EVENT_MESG event_mesg{};
 
-    event_mesg.timestamp  = 0x11223344;
-    event_mesg.event      = 0x55;
+    event_mesg.timestamp = 0x11223344;
+    event_mesg.event = 0x55;
     event_mesg.event_type = 0x66;
 
-    eventFitHelper.writeDef(fp);
-    eventFitHelper.writeData(&event_mesg, fp);
+    eventFitHelper.writeMessage(&event_mesg, fp);
+
+	uint8_t trust_level = 123;
+    eventFitHelper.writeFieldMessage(0, &trust_level, fp);
 }
 
 void ActivityWriter::start(const AppInfo& info)
