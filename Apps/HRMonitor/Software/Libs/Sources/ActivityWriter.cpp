@@ -55,36 +55,35 @@ void ActivityWriter::testFitHelper()
     FIT_FIELD_DESCRIPTION_MESG trustLevel{};
 
     strncpy(trustLevel.field_name, "hr_trust_level", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
-    strncpy(trustLevel.units, "hr_trust_level", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
+    strncpy(trustLevel.units, "percents", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
     trustLevel.developer_data_index = 0;
     trustLevel.field_definition_number = 0;
     trustLevel.fit_base_type_id = FIT_BASE_TYPE_UINT8;
 
+    eventFitHelper.WriteFileHeader(fp);
+
     trustLevelFitHelper.writeDef(fp);
     trustLevelFitHelper.writeMessage(&trustLevel, fp);
 
-
 	eventFitHelper.addField(&trustLevelFitHelper);
-
-
     eventFitHelper.writeDef(fp);
-
-
-
-
-
-
 
     FIT_EVENT_MESG event_mesg{};
 
-    event_mesg.timestamp = 0x11223344;
-    event_mesg.event = 0x55;
-    event_mesg.event_type = 0x66;
+    event_mesg.timestamp  = unixToFitTimestamp(1761915694);
+    event_mesg.event      = FIT_EVENT_TIMER;
+    event_mesg.event_type = FIT_EVENT_TYPE_START;
 
     eventFitHelper.writeMessage(&event_mesg, fp);
 
-	uint8_t trust_level = 123;
+	uint8_t trust_level = 0x88;
     eventFitHelper.writeFieldMessage(0, &trust_level, fp);
+
+    eventFitHelper.WriteCRC(fp);
+
+    fp->seek(0);
+
+    eventFitHelper.WriteFileHeader(fp);
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -337,6 +336,8 @@ void ActivityWriter::discard()
 
 bool ActivityWriter::createAndOpenFile(std::time_t utc)
 {
+    utc = 1761915694;
+
     char buff[256]{};
     std::tm localTime{};
 #if WIN32
