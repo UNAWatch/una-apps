@@ -17,6 +17,7 @@
 #include <string>
 
 #include "SDK/Kernel/Kernel.hpp"
+#include "SDK/FitHelper/FitHelper.hpp"
 
 extern "C" {
 #include "fit_example.h"
@@ -63,7 +64,6 @@ public:
 
     ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir);
 
-
     void start(const AppInfo& info);
     void pause();
     void resume();
@@ -71,7 +71,6 @@ public:
     void addLap(const LapData& lap);
     void stop(const TrackData& track);
     void discard();
-
     
 private:
     /// A constant reference to a Kernel object.
@@ -84,6 +83,15 @@ private:
     uint16_t mLapCounter = 0;
     FIT_UINT16 mDataCRC = 0;
 
+    SDK::Component::FitHelper mFHFileID;
+    SDK::Component::FitHelper mFHDeveloper;
+    SDK::Component::FitHelper mFHLap;
+    SDK::Component::FitHelper mFHSession;
+    SDK::Component::FitHelper mFHEvent;
+    SDK::Component::FitHelper mFHActivity;
+    SDK::Component::FitHelper mFHRecord;
+    SDK::Component::FitHelper mFHTrustLevelField;
+
     static constexpr uint8_t skFileMsgNum = 1;
     static constexpr uint8_t skDevelopMsgNum = 2;
     static constexpr uint8_t skRecordMsgNum = 3;
@@ -93,7 +101,7 @@ private:
     static constexpr uint8_t skEventMsgNum = 7;
     static constexpr uint8_t skHrTrustLevelMsgNum = 8;
 
-
+    void AddMessageEvent(std::time_t t, FIT_EVENT_TYPE type);
 
     bool createAndOpenFile(std::time_t utc);
     void saveFile();
@@ -107,14 +115,7 @@ private:
     static FIT_SINT32 ConvertDegreesToSemicircles(float degrees);
 
     void WriteFileHeader(SDK::Interface::IFile* fp);
-    void WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size, SDK::Interface::IFile* fp); 
-    void WriteMessageDefinitionWithDevFields(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size,
-        FIT_UINT8 number_dev_fields, FIT_DEV_FIELD_DEF* dev_field_definitions, SDK::Interface::IFile* fp);
-    void WriteMessage(FIT_UINT8 local_mesg_number, const void* mesg_pointer, FIT_UINT16 mesg_size, SDK::Interface::IFile* fp);
-    void WriteDeveloperField(const void* data, FIT_UINT16 data_size, SDK::Interface::IFile* fp);
-    void WriteData(const void* data, FIT_UINT16 data_size, SDK::Interface::IFile* fp);
     void WriteCRC(SDK::Interface::IFile* fp);
-
 };
 
 #endif /* __ACTIVITY_WRITER_HPP */
