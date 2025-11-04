@@ -38,8 +38,7 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
    , mFHEvent(skEventMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT])
    , mFHActivity(skActivityMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY])
    , mFHRecord(skRecordMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
-   , mFHTrustLevelField(skHrTrustLevelMsgNum, mFHRecord, 2)
-   , mFHNoteField(skHrNoteMsgNum, mFHRecord, 10)
+   , mFHTrustLevelField(skHrTrustLevelMsgNum, { &mFHRecord })
 {
     assert(pathToDir != nullptr);
 
@@ -82,12 +81,6 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
                              FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
                              FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
                              FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID});
-
-    mFHNoteField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
-                        FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
-                        FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
-                        FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
-                        FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -148,23 +141,9 @@ void ActivityWriter::start(const AppInfo& info)
         strncpy(trustLevel.units, "percents", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
         trustLevel.developer_data_index    = 0;
         trustLevel.field_definition_number = 0;
-        trustLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT16;
+        trustLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT8;
 
         mFHTrustLevelField.writeMessage(&trustLevel, fp);
-    }
-
-    {
-        mFHNoteField.writeDef(fp);
-
-        FIT_FIELD_DESCRIPTION_MESG note{};
-
-        strncpy(note.field_name, "text", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
-        strncpy(note.units, "mV", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
-        note.developer_data_index    = 0;
-        note.field_definition_number = 1;
-        note.fit_base_type_id        = FIT_BASE_TYPE_STRING;
-
-        mFHNoteField.writeMessage(&note, fp);
     }
 
     mFHRecord.writeDef(fp);
@@ -190,7 +169,6 @@ void ActivityWriter::resume()
 
     // Write Event message - START Event
     AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_START);
-
 }
 
 void ActivityWriter::addRecord(const RecordData& record)
@@ -208,11 +186,8 @@ void ActivityWriter::addRecord(const RecordData& record)
 
     mFHRecord.writeMessage(&record_mesg, fp);
 
-    FIT_UINT8 trustLevel[] = { 0x88, 0x89, 0x8A, 0x8B};// record.trustLevel;
+    FIT_UINT8 trustLevel = record.trustLevel;
     mFHRecord.writeFieldMessage(0, &trustLevel, fp);
-
-	const char* note = "hoba";
-	mFHRecord.writeFieldMessage(1, note, fp);
 }
 
 void ActivityWriter::addLap(const LapData& lap)

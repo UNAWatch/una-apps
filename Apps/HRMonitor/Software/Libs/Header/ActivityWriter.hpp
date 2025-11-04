@@ -91,7 +91,6 @@ private:
     SDK::Component::FitHelper mFHActivity;
     SDK::Component::FitHelper mFHRecord;
     SDK::Component::FitHelper mFHTrustLevelField;
-    SDK::Component::FitHelper mFHNoteField;
 
     static constexpr uint8_t skFileMsgNum         = 1;
     static constexpr uint8_t skDevelopMsgNum      = 2;
@@ -101,7 +100,6 @@ private:
     static constexpr uint8_t skActivityMsgNum     = 6;
     static constexpr uint8_t skEventMsgNum        = 7;
     static constexpr uint8_t skHrTrustLevelMsgNum = 8;
-    static constexpr uint8_t skHrNoteMsgNum       = 9;
 
     void AddMessageEvent(std::time_t t, FIT_EVENT_TYPE type);
 
