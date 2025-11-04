@@ -9,11 +9,7 @@
  ******************************************************************************
  */
 
-
 #include "ActivityWriter.hpp"
-
-#include <cassert>
-#include <cstring>
 
 #include "SDK/Interfaces/IFileSystem.hpp"
 #include "SDK/JSON/JsonStreamWriter.hpp"
@@ -23,17 +19,87 @@ extern "C" {
 #include "fit_crc.h"
 }
 
+#include <cassert>
+#include <cstring>
+
 #define LOG_MODULE_PRX      "ActivityWriter"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-
-
-
-ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir) :
-    mKernel(kernel), mPath(pathToDir)
+ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
+    : mKernel(kernel), mPath(pathToDir)
+    , mFHFileID(skFileMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FILE_ID])
+    , mFHDeveloper(skDevelopMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID])
+    , mFHLap(skLapMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_LAP])
+    , mFHSession(skSessionMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_SESSION])
+    , mFHEvent(skEventMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT])
+    , mFHActivity(skActivityMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY])
+    , mFHRecord(skRecordMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHStepsField(skStepsMsgNum, { &mFHLap, &mFHSession })
+	, mFHFloorField(skFloorsMsgNum, { &mFHLap, &mFHSession })
 {
     assert(pathToDir != nullptr);
+
+    mFHFileID.init();
+
+    mFHDeveloper.init();
+
+    mFHLap.init({ FIT_LAP_FIELD_NUM_TIMESTAMP,
+                  FIT_LAP_FIELD_NUM_START_TIME,
+                  FIT_LAP_FIELD_NUM_TOTAL_ELAPSED_TIME,
+                  FIT_LAP_FIELD_NUM_TOTAL_TIMER_TIME,
+                  FIT_LAP_FIELD_NUM_TOTAL_DISTANCE,
+                  FIT_LAP_FIELD_NUM_MESSAGE_INDEX,
+                  FIT_LAP_FIELD_NUM_AVG_SPEED,
+                  FIT_LAP_FIELD_NUM_MAX_SPEED,
+                  FIT_LAP_FIELD_NUM_TOTAL_ASCENT,
+                  FIT_LAP_FIELD_NUM_TOTAL_DESCENT,
+                  FIT_LAP_FIELD_NUM_AVG_HEART_RATE,
+                  FIT_LAP_FIELD_NUM_MAX_HEART_RATE });
+
+    mFHSession.init({ FIT_SESSION_FIELD_NUM_TIMESTAMP,
+                      FIT_SESSION_FIELD_NUM_START_TIME,
+                      FIT_SESSION_FIELD_NUM_TOTAL_ELAPSED_TIME,
+                      FIT_SESSION_FIELD_NUM_TOTAL_TIMER_TIME,
+                      FIT_SESSION_FIELD_NUM_TOTAL_DISTANCE,
+                      FIT_SESSION_FIELD_NUM_MESSAGE_INDEX,
+                      FIT_SESSION_FIELD_NUM_AVG_SPEED,
+                      FIT_SESSION_FIELD_NUM_MAX_SPEED,
+                      FIT_SESSION_FIELD_NUM_TOTAL_ASCENT,
+                      FIT_SESSION_FIELD_NUM_TOTAL_DESCENT,
+                      FIT_SESSION_FIELD_NUM_NUM_LAPS,
+                      FIT_SESSION_FIELD_NUM_SPORT,
+                      FIT_SESSION_FIELD_NUM_SUB_SPORT,
+                      FIT_SESSION_FIELD_NUM_AVG_HEART_RATE,
+                      FIT_SESSION_FIELD_NUM_MAX_HEART_RATE });
+
+    mFHEvent.init({ FIT_EVENT_FIELD_NUM_TIMESTAMP,
+                    FIT_EVENT_FIELD_NUM_EVENT,
+                    FIT_EVENT_FIELD_NUM_EVENT_TYPE });
+
+    mFHActivity.init({ FIT_ACTIVITY_FIELD_NUM_TIMESTAMP,
+                       FIT_ACTIVITY_FIELD_NUM_TOTAL_TIMER_TIME,
+                       FIT_ACTIVITY_FIELD_NUM_LOCAL_TIMESTAMP,
+                       FIT_ACTIVITY_FIELD_NUM_NUM_SESSIONS });
+
+    mFHRecord.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
+                     FIT_RECORD_FIELD_NUM_POSITION_LAT,
+                     FIT_RECORD_FIELD_NUM_POSITION_LONG,
+                     FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
+                     FIT_RECORD_FIELD_NUM_SPEED, // ?
+                     FIT_RECORD_FIELD_NUM_HEART_RATE });
+
+    mFHStepsField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
+
+    mFHFloorField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                         FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -55,97 +121,74 @@ void ActivityWriter::start(const AppInfo& info)
 
     // Write file id message.
     {
-        FIT_FILE_ID_MESG file_id_mesg{};
-        Fit_InitMesg(fit_mesg_defs[FIT_MESG_FILE_ID], &file_id_mesg);
+        mFHFileID.writeDef(fp);
 
+        FIT_FILE_ID_MESG file_id_mesg{};
+        strncpy(file_id_mesg.product_name, "UNA Watch", FIT_FILE_ID_MESG_PRODUCT_NAME_COUNT);
         file_id_mesg.serial_number = 0;
         file_id_mesg.time_created = unixToFitTimestamp(info.timestamp);
-        strncpy(file_id_mesg.product_name, "UNA Watch", FIT_FILE_ID_MESG_PRODUCT_NAME_COUNT);
         file_id_mesg.manufacturer = FIT_MANUFACTURER_DEVELOPMENT;
         file_id_mesg.product = 0;
         file_id_mesg.number = 0;
         file_id_mesg.type = FIT_FILE_ACTIVITY;
 
-        WriteMessageDefinition(skFileMsgNum, fit_mesg_defs[FIT_MESG_FILE_ID], FIT_FILE_ID_MESG_DEF_SIZE, fp);
-        WriteMessage(skFileMsgNum, &file_id_mesg, FIT_FILE_ID_MESG_SIZE, fp);
+        mFHFileID.writeMessage(&file_id_mesg, fp);
     }
 
     // Developer Data ID Message 
     {
-        FIT_DEVELOPER_DATA_ID_MESG developer_data_id_mesg{};
-        Fit_InitMesg(fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID], &developer_data_id_mesg);
+        mFHDeveloper.writeDef(fp);
 
-        strncpy(reinterpret_cast<char*>(developer_data_id_mesg.developer_id), info.devID.c_str(), FIT_DEVELOPER_DATA_ID_MESG_DEVELOPER_ID_COUNT);
-        strncpy(reinterpret_cast<char*>(developer_data_id_mesg.application_id), info.appID.c_str(), FIT_DEVELOPER_DATA_ID_MESG_APPLICATION_ID_COUNT);
-        developer_data_id_mesg.application_version = info.appVersion;
-        developer_data_id_mesg.manufacturer_id = FIT_MANUFACTURER_DEVELOPMENT;
-        developer_data_id_mesg.developer_data_index = 0;
+        FIT_DEVELOPER_DATA_ID_MESG developer{};
+        strncpy(reinterpret_cast<char*>(developer.developer_id), info.devID.c_str(), FIT_DEVELOPER_DATA_ID_MESG_DEVELOPER_ID_COUNT);
+        strncpy(reinterpret_cast<char*>(developer.application_id), info.appID.c_str(), FIT_DEVELOPER_DATA_ID_MESG_APPLICATION_ID_COUNT);
+        developer.application_version  = info.appVersion;
+        developer.manufacturer_id      = FIT_MANUFACTURER_DEVELOPMENT;
+        developer.developer_data_index = 0;
 
-        WriteMessageDefinition(skDevelopMsgNum, fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID], FIT_DEVELOPER_DATA_ID_MESG_DEF_SIZE, fp);
-        WriteMessage(skDevelopMsgNum, &developer_data_id_mesg, FIT_DEVELOPER_DATA_ID_MESG_SIZE, fp);
+        mFHDeveloper.writeMessage(&developer, fp);
     }
+
+    mFHEvent.writeDef(fp);
+    mFHActivity.writeDef(fp);
+	mFHRecord.writeDef(fp);
 
     // Custom field "steps"
     {
-        FIT_FIELD_DESCRIPTION_MESG field_description_mesg_steps{};
-        Fit_InitMesg(fit_mesg_defs[FIT_MESG_FIELD_DESCRIPTION], &field_description_mesg_steps);
+        mFHStepsField.writeDef(fp);
 
-        strncpy(field_description_mesg_steps.field_name, "steps", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
-        strncpy(field_description_mesg_steps.units, "steps", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
-        field_description_mesg_steps.developer_data_index = 0;
-        field_description_mesg_steps.field_definition_number = 0;
-        field_description_mesg_steps.fit_base_type_id = FIT_BASE_TYPE_UINT32;
+        FIT_FIELD_DESCRIPTION_MESG trustLevel{};
 
-        WriteMessageDefinition(skStepsMsgNum, fit_mesg_defs[FIT_MESG_FIELD_DESCRIPTION], FIT_FIELD_DESCRIPTION_MESG_DEF_SIZE, fp);
-        WriteMessage(skStepsMsgNum, &field_description_mesg_steps, FIT_FIELD_DESCRIPTION_MESG_SIZE, fp);
+        strncpy(trustLevel.field_name, "steps", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
+        strncpy(trustLevel.units, "steps", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
+        trustLevel.developer_data_index    = 0;
+        trustLevel.field_definition_number = 0;
+        trustLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
+
+        mFHStepsField.writeMessage(&trustLevel, fp);
     }
+
 
     // Custom field "floors"
-    {
-        FIT_FIELD_DESCRIPTION_MESG field_description_mesg_floors{};
-        Fit_InitMesg(fit_mesg_defs[FIT_MESG_FIELD_DESCRIPTION], &field_description_mesg_floors);
+        {
+        mFHFloorField.writeDef(fp);
 
-        strncpy(field_description_mesg_floors.field_name, "floors", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
-        strncpy(field_description_mesg_floors.units, "floors", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
-        field_description_mesg_floors.developer_data_index = 0;
-        field_description_mesg_floors.field_definition_number = 1;
-        field_description_mesg_floors.fit_base_type_id = FIT_BASE_TYPE_UINT32;
+        FIT_FIELD_DESCRIPTION_MESG trustLevel{};
 
-        WriteMessageDefinition(skFloorsMsgNum, fit_mesg_defs[FIT_MESG_FIELD_DESCRIPTION], FIT_FIELD_DESCRIPTION_MESG_DEF_SIZE, fp);
-        WriteMessage(skFloorsMsgNum, &field_description_mesg_floors, FIT_FIELD_DESCRIPTION_MESG_SIZE, fp);
+        strncpy(trustLevel.field_name, "hr_trust_level", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
+        strncpy(trustLevel.units, "percents", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
+        trustLevel.developer_data_index    = 0;
+        trustLevel.field_definition_number = 1;
+        trustLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
+
+        mFHFloorField.writeMessage(&trustLevel, fp);
     }
 
-
-    // The message definition only needs to be written once.
-    FIT_DEV_FIELD_DEF dev_field_def[2]{};
-    // steps
-    dev_field_def[0].def_num = 0;
-    dev_field_def[0].size = sizeof(FIT_UINT32);
-    dev_field_def[0].dev_index = 0;
-    // floors
-    dev_field_def[1].def_num = 1;
-    dev_field_def[1].size = sizeof(FIT_UINT32);
-    dev_field_def[1].dev_index = 0;
-
-    WriteMessageDefinitionWithDevFields(skLapMsgNum, fit_mesg_defs[FIT_MESG_LAP], FIT_LAP_MESG_DEF_SIZE, 2, dev_field_def, fp);
-    WriteMessageDefinitionWithDevFields(skSessionMsgNum, fit_mesg_defs[FIT_MESG_SESSION], FIT_SESSION_MESG_DEF_SIZE, 2, dev_field_def, fp);
-    WriteMessageDefinition(skEventMsgNum, fit_mesg_defs[FIT_MESG_EVENT], FIT_EVENT_MESG_DEF_SIZE, fp);
-    WriteMessageDefinition(skRecordMsgNum, fit_mesg_defs[FIT_MESG_RECORD], FIT_RECORD_MESG_DEF_SIZE, fp);
-
-
+    mFHLap.writeDef(fp);
+    mFHSession.writeDef(fp);
 
     // Write Event message - START Event
-    {
-        FIT_EVENT_MESG event_mesg{};
-        Fit_InitMesg(fit_mesg_defs[FIT_MESG_EVENT], &event_mesg);
-
-        event_mesg.timestamp = unixToFitTimestamp(info.timestamp);
-        event_mesg.event = FIT_EVENT_TIMER;
-        event_mesg.event_type = FIT_EVENT_TYPE_START;
-
-        WriteMessage(skEventMsgNum, &event_mesg, FIT_EVENT_MESG_SIZE, fp);
-    }
-
+    AddMessageEvent(info.timestamp, FIT_EVENT_TYPE_START);
 }
 
 void ActivityWriter::pause()
@@ -153,19 +196,9 @@ void ActivityWriter::pause()
     if (!mFile) {
         return;
     }
-    SDK::Interface::IFile* fp = mFile.get();
 
     // Write Event message - STOP Event
-
-    FIT_EVENT_MESG event_mesg{};
-    Fit_InitMesg(fit_mesg_defs[FIT_MESG_EVENT], &event_mesg);
-
-    event_mesg.timestamp = unixToFitTimestamp(std::time(nullptr));
-    event_mesg.event = FIT_EVENT_TIMER;
-    event_mesg.event_type = FIT_EVENT_TYPE_STOP;
-
-    WriteMessage(skEventMsgNum, &event_mesg, FIT_EVENT_MESG_SIZE, fp);
-
+    AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_STOP);
 }
 
 void ActivityWriter::resume()
@@ -176,16 +209,7 @@ void ActivityWriter::resume()
     SDK::Interface::IFile* fp = mFile.get();
 
     // Write Event message - START Event
-
-    FIT_EVENT_MESG event_mesg;
-    Fit_InitMesg(fit_mesg_defs[FIT_MESG_EVENT], &event_mesg);
-
-    event_mesg.timestamp = unixToFitTimestamp(std::time(nullptr));
-    event_mesg.event = FIT_EVENT_TIMER;
-    event_mesg.event_type = FIT_EVENT_TYPE_START;
-
-    WriteMessage(skEventMsgNum, &event_mesg, FIT_EVENT_MESG_SIZE, fp);
-
+    AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_START);
 }
 
 void ActivityWriter::addRecord(const RecordData& record)
@@ -193,18 +217,19 @@ void ActivityWriter::addRecord(const RecordData& record)
     if (!mFile) {
         return;
     }
+
     SDK::Interface::IFile* fp = mFile.get();
 
     FIT_RECORD_MESG record_mesg{};
-    Fit_InitMesg(fit_mesg_defs[FIT_MESG_RECORD], &record_mesg);
 
-    record_mesg.timestamp = unixToFitTimestamp(record.timestamp);
-    record_mesg.position_lat = ConvertDegreesToSemicircles(record.latitude);
-    record_mesg.position_long = ConvertDegreesToSemicircles(record.longitude);
+    record_mesg.timestamp         = unixToFitTimestamp(record.timestamp);
+    record_mesg.position_lat      = ConvertDegreesToSemicircles(record.latitude);
+    record_mesg.position_long     = ConvertDegreesToSemicircles(record.longitude);
     record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude * 5) + 500);   // 5 * m + 500
-    record_mesg.heart_rate = record.heartRate;
+    record_mesg.heart_rate        = record.heartRate;
+    record_mesg.speed             = static_cast<FIT_UINT16>(record.speed * 1000);
 
-    WriteMessage(skRecordMsgNum, &record_mesg, FIT_RECORD_MESG_SIZE, fp);
+	mFHRecord.writeMessage(&record_mesg, fp);
 }
 
 void ActivityWriter::addLap(const LapData& lap)
@@ -235,13 +260,13 @@ void ActivityWriter::addLap(const LapData& lap)
     lap_mesg.total_ascent = static_cast<FIT_UINT16>(lap.ascent); // 1 * m + 0
     lap_mesg.total_descent = static_cast<FIT_UINT16>(lap.descent); // 1 * m + 0
 
-    WriteMessage(skLapMsgNum, &lap_mesg, FIT_LAP_MESG_SIZE, fp);
+    mFHLap.writeMessage(&lap_mesg, fp);
 
     FIT_UINT32 steps = lap.steps;
-    WriteDeveloperField(&steps, sizeof(steps), fp);
+	mFHLap.writeFieldMessage(0, &steps, fp);
 
     FIT_UINT32 floors = lap.floors;
-    WriteDeveloperField(&floors, sizeof(floors), fp);
+    mFHLap.writeFieldMessage(1, &floors, fp);
 
     mLapCounter++;
 }
@@ -255,16 +280,7 @@ void ActivityWriter::stop(const TrackData& track)
     SDK::Interface::IFile* fp = mFile.get();
 
     // Write Event message - STOP Event
-    {
-        FIT_EVENT_MESG event_mesg{};
-        Fit_InitMesg(fit_mesg_defs[FIT_MESG_EVENT], &event_mesg);
-
-        event_mesg.timestamp = unixToFitTimestamp(std::time(nullptr));
-        event_mesg.event = FIT_EVENT_TIMER;
-        event_mesg.event_type = FIT_EVENT_TYPE_STOP;
-
-        WriteMessage(skEventMsgNum, &event_mesg, FIT_EVENT_MESG_SIZE, fp);
-    }
+    AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_STOP);
 
     // Write Session message.
     {
@@ -293,34 +309,32 @@ void ActivityWriter::stop(const TrackData& track)
 
         session_mesg.num_laps = mLapCounter;
 
-        WriteMessage(skSessionMsgNum, &session_mesg, FIT_SESSION_MESG_SIZE, fp);
+        mFHSession.writeMessage(&session_mesg, fp);
 
         FIT_UINT32 steps = track.steps;
-        WriteDeveloperField(&steps, sizeof(steps), fp);
+		mFHSession.writeFieldMessage(0, &steps, fp);
 
         FIT_UINT32 floors = track.floors;
-        WriteDeveloperField(&floors, sizeof(floors), fp);
+		mFHSession.writeFieldMessage(1, &floors, fp);   
     }
 
     // Write Activity message.
     {
-        FIT_ACTIVITY_MESG activity_mesg{};
-        Fit_InitMesg(fit_mesg_defs[FIT_MESG_ACTIVITY], &activity_mesg);
+        FIT_ACTIVITY_MESG activity_mesg {};
 
-        activity_mesg.timestamp = unixToFitTimestamp(track.timeStart);
-        activity_mesg.local_timestamp = unixToFitTimestamp(epochToLocal(track.timeStart));
+        activity_mesg.timestamp        = unixToFitTimestamp(track.timeStart);
+        activity_mesg.local_timestamp  = unixToFitTimestamp(epochToLocal(track.timeStart));
         activity_mesg.total_timer_time = static_cast<FIT_UINT32>((track.duration) * 1000);   // 1000 * s + 0, Exclude pauses
-        activity_mesg.num_sessions = 1;
+        activity_mesg.num_sessions     = 1;
 
-        WriteMessageDefinition(skActivityMsgNum, fit_mesg_defs[FIT_MESG_ACTIVITY], FIT_ACTIVITY_MESG_DEF_SIZE, fp);
-        WriteMessage(skActivityMsgNum, &activity_mesg, FIT_ACTIVITY_MESG_SIZE, fp);
+        mFHActivity.writeMessage(&activity_mesg, fp);
     }
 
-    // Write CRC.
-    WriteCRC(fp);
+    fp->seek(0);
 
-    // Update file header with data size.
     WriteFileHeader(fp);
+
+    WriteCRC(fp);
 
     saveFile();
 
@@ -330,6 +344,17 @@ void ActivityWriter::stop(const TrackData& track)
 void ActivityWriter::discard()
 {
     deleteFile();
+}
+
+void ActivityWriter::AddMessageEvent(std::time_t t, FIT_EVENT_TYPE type)
+{
+    FIT_EVENT_MESG event_mesg{};
+
+    event_mesg.timestamp  = unixToFitTimestamp(t);
+    event_mesg.event      = FIT_EVENT_TIMER;
+    event_mesg.event_type = type;
+
+    mFHEvent.writeMessage(&event_mesg, mFile.get());
 }
 
 bool ActivityWriter::createAndOpenFile(std::time_t utc)
@@ -480,9 +505,10 @@ void ActivityWriter::WriteFileHeader(SDK::Interface::IFile* fp)
     fp->flush();
     size_t fileSize = fp->size();
 
-    if (fileSize > FIT_FILE_HDR_SIZE - sizeof(FIT_UINT16)) {
-        file_header.data_size = static_cast<FIT_UINT32>(fileSize - FIT_FILE_HDR_SIZE - sizeof(FIT_UINT16));
-    } else {
+    if (fileSize > FIT_FILE_HDR_SIZE) {
+        file_header.data_size = static_cast<FIT_UINT32>(fileSize - FIT_FILE_HDR_SIZE);
+    }
+    else {
         file_header.data_size = 0;
     }
 
@@ -499,58 +525,41 @@ void ActivityWriter::WriteFileHeader(SDK::Interface::IFile* fp)
     if (fileSize > 0) {
         fp->seek(fileSize);
     }
-
-}
-
-void ActivityWriter::WriteData(const void* data, FIT_UINT16 data_size, SDK::Interface::IFile* fp)
-{
-    FIT_UINT16 offset;
-
-    size_t bw;
-    fp->write(reinterpret_cast<const char*>(data), static_cast<size_t>(data_size), bw);
-    fp->flush();
-
-    for (offset = 0; offset < data_size; offset++) {
-        mDataCRC = FitCRC_Get16(mDataCRC, *((FIT_UINT8*)data + offset));
-    }
 }
 
 void ActivityWriter::WriteCRC(SDK::Interface::IFile* fp)
 {
-    size_t bw;
-    fp->write(reinterpret_cast<const char*>(&mDataCRC), sizeof(FIT_UINT16), bw);
-    fp->flush();
-}
+    fp->close();
 
-void ActivityWriter::WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size, SDK::Interface::IFile* fp)
-{
-    FIT_UINT8 header = local_mesg_number | FIT_HDR_TYPE_DEF_BIT;
-    WriteData(&header, FIT_HDR_SIZE, fp);
-    WriteData(mesg_def_pointer, mesg_def_size, fp);
-}
+    fp->open(false);
 
-void ActivityWriter::WriteMessageDefinitionWithDevFields(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size,
-    FIT_UINT8 number_dev_fields, FIT_DEV_FIELD_DEF* dev_field_definitions, SDK::Interface::IFile* fp)
-{
-    FIT_UINT16 i;
-    FIT_UINT8 header = local_mesg_number | FIT_HDR_TYPE_DEF_BIT | FIT_HDR_DEV_DATA_BIT;
-    WriteData(&header, FIT_HDR_SIZE, fp);
-    WriteData(mesg_def_pointer, mesg_def_size, fp);
+    FIT_UINT8 buffer[512];
+    size_t    size = fp->size();
+    size_t    pos = 0;
+    uint16_t  crc = 0;
 
-    WriteData(&number_dev_fields, sizeof(FIT_UINT8), fp);
-    for (i = 0; i < number_dev_fields; i++) {
-        WriteData(&dev_field_definitions[i], sizeof(FIT_DEV_FIELD_DEF), fp);
+    while (pos < size) {
+        size_t toRead = size - pos;
+        if (toRead > sizeof(buffer)) {
+            toRead = sizeof(buffer);
+        }
+
+        size_t br;
+        fp->read(reinterpret_cast<char*>(buffer), toRead, br);
+
+        crc = FitCRC_Update16(crc, buffer, static_cast<FIT_UINT32>(br));
+
+        pos += br;
     }
-}
 
-void ActivityWriter::WriteMessage(FIT_UINT8 local_mesg_number, const void* mesg_pointer, FIT_UINT16 mesg_size, SDK::Interface::IFile* fp)
-{
-    WriteData(&local_mesg_number, FIT_HDR_SIZE, fp);
-    WriteData(mesg_pointer, mesg_size, fp);
-}
+    fp->close();
 
-void ActivityWriter::WriteDeveloperField(const void* data, FIT_UINT16 data_size, SDK::Interface::IFile* fp)
-{
-    WriteData(data, data_size, fp);
+    fp->open(true, false);
+
+    fp->seek(fp->size());
+
+    size_t bw;
+    fp->write(reinterpret_cast<const char*>(&crc), sizeof(FIT_UINT16), bw);
+    fp->flush();
 }
 

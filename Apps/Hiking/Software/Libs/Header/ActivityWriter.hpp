@@ -16,7 +16,8 @@
 #include <cstdbool>
 #include <string>
 
-#include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/Kernel/Kernel.hpp"
+#include "SDK/FitHelper/FitHelper.hpp"
 
 extern "C" {
 #include "fit_example.h"
@@ -27,9 +28,7 @@ extern "C" {
  * @brief Serializes activity data to a FIT file.
  */
 class ActivityWriter {
-
 public:
-
     struct AppInfo {
         std::time_t timestamp;  // UTC
         uint32_t appVersion;    // Application version 4 bytes LE [patch, minor, major, 0]
@@ -39,12 +38,12 @@ public:
 
     struct RecordData {
         std::time_t timestamp;  // UTC
-        float latitude;         // degrees
-        float longitude;        // degrees
-        uint8_t heartRate;      // Heart rate in beats per minute.
-        uint32_t steps;
-        uint32_t floors;
-    };
+        float       latitude;   // degrees
+        float       longitude;  // degrees
+        float       altitude;   // absolute altitude in m
+        uint8_t     heartRate;  // Heart rate in beats per minute.
+		float       speed;      // m/s
+    };              
 
     struct LapData {
         std::time_t timestamp;  // UTC
@@ -77,9 +76,7 @@ public:
         uint32_t floors;
     };
 
-
-    ActivityWriter(const IKernel& kernel, const char* pathToDir);
-
+    ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir);
 
     void start(const AppInfo& info);
     void pause();
@@ -89,10 +86,9 @@ public:
     void stop(const TrackData& track);
     void discard();
 
-    
 private:
-    /// A constant reference to an IKernel object.
-    const IKernel& mKernel;
+    /// A constant reference to an Kernel object.
+    const SDK::Kernel& mKernel;
 
     /// Path to FIT file
     const char* mPath = nullptr;
@@ -101,21 +97,33 @@ private:
     uint16_t mLapCounter = 0;
     FIT_UINT16 mDataCRC = 0;
 
-    static constexpr uint8_t skFileMsgNum = 1;
-    static constexpr uint8_t skDevelopMsgNum = 2;
-    static constexpr uint8_t skRecordMsgNum = 3;
-    static constexpr uint8_t skLapMsgNum = 4;
-    static constexpr uint8_t skSessionMsgNum = 5;
+    SDK::Component::FitHelper mFHFileID;
+    SDK::Component::FitHelper mFHDeveloper;
+    SDK::Component::FitHelper mFHLap;
+    SDK::Component::FitHelper mFHSession;
+    SDK::Component::FitHelper mFHEvent;
+    SDK::Component::FitHelper mFHActivity;
+    SDK::Component::FitHelper mFHRecord;
+    SDK::Component::FitHelper mFHStepsField;
+    SDK::Component::FitHelper mFHFloorField;
+
+    static constexpr uint8_t skFileMsgNum     = 1;
+    static constexpr uint8_t skDevelopMsgNum  = 2;
+    static constexpr uint8_t skRecordMsgNum   = 3;
+    static constexpr uint8_t skLapMsgNum      = 4;
+    static constexpr uint8_t skSessionMsgNum  = 5;
     static constexpr uint8_t skActivityMsgNum = 6;
-    static constexpr uint8_t skEventMsgNum = 7;
-    static constexpr uint8_t skStepsMsgNum = 8;
-    static constexpr uint8_t skFloorsMsgNum = 9;
+    static constexpr uint8_t skEventMsgNum    = 7;
+    static constexpr uint8_t skStepsMsgNum    = 8;
+    static constexpr uint8_t skFloorsMsgNum   = 9;
 
-
+    void AddMessageEvent(std::time_t t, FIT_EVENT_TYPE type);
 
     bool createAndOpenFile(std::time_t utc);
     void saveFile();
     void deleteFile();
+
+    void saveSummary(const TrackData& track);
 
     static time_t tm2epoch(const struct tm* tm);
     static time_t epochToLocal(time_t utc);
@@ -123,12 +131,6 @@ private:
     static FIT_SINT32 ConvertDegreesToSemicircles(float degrees);
 
     void WriteFileHeader(SDK::Interface::IFile* fp);
-    void WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size, SDK::Interface::IFile* fp); 
-    void WriteMessageDefinitionWithDevFields(FIT_UINT8 local_mesg_number, const void* mesg_def_pointer, FIT_UINT16 mesg_def_size,
-        FIT_UINT8 number_dev_fields, FIT_DEV_FIELD_DEF* dev_field_definitions, SDK::Interface::IFile* fp);
-    void WriteMessage(FIT_UINT8 local_mesg_number, const void* mesg_pointer, FIT_UINT16 mesg_size, SDK::Interface::IFile* fp);
-    void WriteDeveloperField(const void* data, FIT_UINT16 data_size, SDK::Interface::IFile* fp);
-    void WriteData(const void* data, FIT_UINT16 data_size, SDK::Interface::IFile* fp);
     void WriteCRC(SDK::Interface::IFile* fp);
 
 };
