@@ -206,7 +206,6 @@ void ActivityWriter::resume()
     if (!mFile) {
         return;
     }
-    SDK::Interface::IFile* fp = mFile.get();
 
     // Write Event message - START Event
     AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_START);
