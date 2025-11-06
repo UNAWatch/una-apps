@@ -13,9 +13,9 @@ public:
     virtual void tearDownScreen();
 
     void setUnitsImperial(bool isImperial);
-    void setLapNum(uint8_t n);
-    void setSteps(int32_t steps);
-    void setDistance(float km);
+    void setLapNum(uint32_t n);
+    void setSteps(uint32_t steps);
+    void setDistance(float m);
     void setTimer(std::time_t sec);
 
 protected:

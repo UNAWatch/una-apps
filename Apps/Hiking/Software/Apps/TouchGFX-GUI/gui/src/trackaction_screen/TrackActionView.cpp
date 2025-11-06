@@ -19,30 +19,30 @@ void TrackActionView::setupScreen()
     menu.getButtons().setR1(Buttons::AMBER);
     menu.getButtons().setR2(Buttons::NONE);
 
-    menu.setNumberOfItems(Gui::Menu::Start::Action::ID_COUNT);
+    menu.setNumberOfItems(App::Menu::Start::Action::ID_COUNT);
     menu.setBackground(BITMAP_BACKGROUND_TEAL_ID);
 
     MenuItemSelected *pS = nullptr;
     MenuItemNotSelected *pN = nullptr;
 
-    pS = menu.getSelectedItem(Gui::Menu::Start::Action::ID_RESUME);
+    pS = menu.getSelectedItem(App::Menu::Start::Action::ID_RESUME);
     pS->config(T_TEXT_RESUME);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Start::Action::ID_RESUME);
+    pN = menu.getNotSelectedItem(App::Menu::Start::Action::ID_RESUME);
     pN->config(T_TEXT_RESUME);
 
 
-    pS = menu.getSelectedItem(Gui::Menu::Start::Action::ID_SAVE);
+    pS = menu.getSelectedItem(App::Menu::Start::Action::ID_SAVE);
     pS->config(T_TEXT_SAVE);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Start::Action::ID_SAVE);
+    pN = menu.getNotSelectedItem(App::Menu::Start::Action::ID_SAVE);
     pN->config(T_TEXT_SAVE);
 
 
-    pS = menu.getSelectedItem(Gui::Menu::Start::Action::ID_DISCARD);
+    pS = menu.getSelectedItem(App::Menu::Start::Action::ID_DISCARD);
     pS->config(T_TEXT_DISCARD);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Start::Action::ID_DISCARD);
+    pN = menu.getNotSelectedItem(App::Menu::Start::Action::ID_DISCARD);
     pN->config(T_TEXT_DISCARD);
 
     menu.invalidate();
@@ -75,19 +75,19 @@ void TrackActionView::setTimer(std::time_t sec)
     updTitleInfo();
 }
 
-void TrackActionView::setAvgPace(int32_t sec)
+void TrackActionView::setAvgPace(float spm)
 {
-    mAvgPace = sec;
+    mAvgPace = spm;
     updTitleInfo();
 }
 
-void TrackActionView::setDistance(float km)
+void TrackActionView::setDistance(float m)
 {
-    mDistance = km;
+    mDistance = m;
     updTitleInfo();
 }
 
-void TrackActionView::setSteps(int32_t steps)
+void TrackActionView::setSteps(uint32_t steps)
 {
     mSteps = steps;
     updTitleInfo();
@@ -99,7 +99,7 @@ void TrackActionView::setAvgHR(float v)
     updTitleInfo();
 }
 
-void TrackActionView::setFloors(int32_t floors)
+void TrackActionView::setFloors(uint32_t floors)
 {
     mFloors = floors;
     updTitleInfo();
@@ -121,13 +121,13 @@ void TrackActionView::handleKeyEvent(uint8_t key)
         uint16_t id = menu.getSelectedItem();
 
         switch (id) {
-            case Gui::Menu::Start::Action::ID_RESUME:
+            case App::Menu::Start::Action::ID_RESUME:
                 application().gotoTrackScreenNoTransition();
                 break;
-            case Gui::Menu::Start::Action::ID_SAVE:
+            case App::Menu::Start::Action::ID_SAVE:
                 application().gotoTrackSavedScreenNoTransition();
                 break;
-            case Gui::Menu::Start::Action::ID_DISCARD:
+            case App::Menu::Start::Action::ID_DISCARD:
                 application().gotoTrackDiscardConfirmationScreenNoTransition();
                 break;
             default:
@@ -159,7 +159,7 @@ void TrackActionView::handleTickEvent()
 
 void TrackActionView::updTitleInfo()
 {
-    if (menu.getSelectedItem() == Gui::Menu::Start::Action::ID_SAVE) {
+    if (menu.getSelectedItem() == App::Menu::Start::Action::ID_SAVE) {
         tick.setVisible(true);
         titleInfo.setShortLine(true);
     } else {
@@ -173,29 +173,29 @@ void TrackActionView::updTitleInfo()
     if (mTitleInfoMsgId == 0) {
         titleInfo.setTitle(T_TEXT_TIMER_UC);
         Unicode::snprintf(buffer, bufferSize, "%d:%02d",
-            Gui::Utils::sec2hmsH(mTimerSec), Gui::Utils::sec2hmsM(mTimerSec));
+            App::Utils::sec2hmsH(mTimerSec), App::Utils::sec2hmsM(mTimerSec));
     } else if (mTitleInfoMsgId == 1) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_PACE_UC);
-        uint32_t sec = mAvgPace;
+        std::time_t secPerKm = static_cast<std::time_t>(mAvgPace * 1000.0f);
         if (mUnitsImperial) {
-            sec = static_cast<uint32_t>(sec / Gui::Utils::km2mi(1.0f));
+            secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
         }
-        Unicode::snprintf(buffer, bufferSize, "%d:%02d", Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
+        Unicode::snprintf(buffer, bufferSize, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
     } else if (mTitleInfoMsgId == 2) {
         titleInfo.setTitle(T_TEXT_DISTANCE_UC);
         if (mUnitsImperial) {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", Gui::Utils::km2mi(mDistance));
+            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", App::Utils::km2mi(mDistance / 1000.0f));    // mi
         } else {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", mDistance);
+            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", mDistance / 1000.0f); // km
         }
     } else if (mTitleInfoMsgId == 3) {
         titleInfo.setTitle(T_TEXT_STEPS_UC);
-        Unicode::snprintf(buffer, bufferSize, "%d", mSteps);
+        Unicode::snprintf(buffer, bufferSize, "%u", mSteps);
     } else if (mTitleInfoMsgId == 4) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_HR);
         Unicode::snprintfFloat(buffer, bufferSize, "%.0f", mAvgHr);
     } else if (mTitleInfoMsgId == 5) {
-        titleInfo.setTitle(T_TEXT_CALORIES_UC);
+        titleInfo.setTitle(T_TEXT_FLOORS_UC);
         Unicode::snprintf(buffer, bufferSize, "%d", mFloors);
     }
 

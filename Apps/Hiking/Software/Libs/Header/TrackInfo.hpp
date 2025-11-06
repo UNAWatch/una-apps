@@ -34,14 +34,13 @@ enum class State {
  */
 struct Data {
 
-    // Pace in seconds/km
-    int32_t pace;
-    int32_t avgPace;
-    int32_t lapPace;
+    // Pace in s/m
+    float pace;
+    float avgPace;
+    float lapPace;
 
-    // Distance in km
-    float startDistance;
-    float totalDistance;
+    // Distance in m
+    float distance;
     float lapDistance;
 
     // Time in seconds
@@ -57,21 +56,22 @@ struct Data {
     float avgLapHR;
     float maxLapHR;
 
-    // Speed in km/h
+    // Speed in m/s
     float speed;
     float avgSpeed;
     float maxSpeed;
     float avgLapSpeed;
     float maxLapSpeed;
 
+    // Elevation in m
     float elevation;
     float lapElevation;
 
-    int32_t steps;
-    int32_t lapSteps;
+    uint32_t steps;
+    uint32_t lapSteps;
 
-    int32_t floors;
-    int32_t lapFloors;
+    uint32_t floors;
+    uint32_t lapFloors;
 };
 
 } // namespace Track

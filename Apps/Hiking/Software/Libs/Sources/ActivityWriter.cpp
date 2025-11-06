@@ -86,7 +86,7 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
                      FIT_RECORD_FIELD_NUM_POSITION_LAT,
                      FIT_RECORD_FIELD_NUM_POSITION_LONG,
                      FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
-                     FIT_RECORD_FIELD_NUM_SPEED, // ?
+                     FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
                      FIT_RECORD_FIELD_NUM_HEART_RATE });
 
     mFHStepsField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
@@ -191,24 +191,24 @@ void ActivityWriter::start(const AppInfo& info)
     AddMessageEvent(info.timestamp, FIT_EVENT_TYPE_START);
 }
 
-void ActivityWriter::pause()
+void ActivityWriter::pause(std::time_t timestamp)
 {
     if (!mFile) {
         return;
     }
 
     // Write Event message - STOP Event
-    AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_STOP);
+    AddMessageEvent(timestamp, FIT_EVENT_TYPE_STOP);
 }
 
-void ActivityWriter::resume()
+void ActivityWriter::resume(std::time_t timestamp)
 {
     if (!mFile) {
         return;
     }
 
     // Write Event message - START Event
-    AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_START);
+    AddMessageEvent(timestamp, FIT_EVENT_TYPE_START);
 }
 
 void ActivityWriter::addRecord(const RecordData& record)
@@ -225,8 +225,8 @@ void ActivityWriter::addRecord(const RecordData& record)
     record_mesg.position_lat      = ConvertDegreesToSemicircles(record.latitude);
     record_mesg.position_long     = ConvertDegreesToSemicircles(record.longitude);
     record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude * 5) + 500);   // 5 * m + 500
-    record_mesg.heart_rate        = record.heartRate;
-    record_mesg.speed             = static_cast<FIT_UINT16>(record.speed * 1000);
+    record_mesg.heart_rate        = static_cast<FIT_UINT8>(record.heartRate);
+    record_mesg.enhanced_speed    = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
 
 	mFHRecord.writeMessage(&record_mesg, fp);
 }
@@ -243,10 +243,10 @@ void ActivityWriter::addLap(const LapData& lap)
 
     lap_mesg.message_index = 0;
 
-    lap_mesg.timestamp = unixToFitTimestamp(lap.timestamp);
+    lap_mesg.timestamp = unixToFitTimestamp(lap.timestamp); // 1 * s + 0, Lap end time
     lap_mesg.start_time = unixToFitTimestamp(lap.timeStart);
-    lap_mesg.total_elapsed_time = static_cast<FIT_UINT32>((lap.elapsed) * 1000);
-    lap_mesg.total_timer_time = static_cast<FIT_UINT32>((lap.duration) * 1000);
+    lap_mesg.total_elapsed_time = static_cast<FIT_UINT32>((lap.elapsed) * 1000); // 1000 * s + 0, Time (includes pauses)
+    lap_mesg.total_timer_time = static_cast<FIT_UINT32>((lap.duration) * 1000); // 1000 * s + 0, Timer Time (excludes pauses)
 
     lap_mesg.total_distance = static_cast<FIT_UINT32>(lap.distance * 100); // 100 * m + 0,
 
@@ -279,7 +279,7 @@ void ActivityWriter::stop(const TrackData& track)
     SDK::Interface::IFile* fp = mFile.get();
 
     // Write Event message - STOP Event
-    AddMessageEvent(std::time(nullptr), FIT_EVENT_TYPE_STOP);
+    AddMessageEvent(track.timestamp, FIT_EVENT_TYPE_STOP);
 
     // Write Session message.
     {
@@ -289,21 +289,21 @@ void ActivityWriter::stop(const TrackData& track)
         session_mesg.message_index = 0;
         session_mesg.sport = FIT_SPORT_HIKING;
         session_mesg.sub_sport = FIT_SUB_SPORT_GENERIC; // TODO: select correct type
-        session_mesg.timestamp = unixToFitTimestamp(track.timeStart);
+        session_mesg.timestamp = unixToFitTimestamp(track.timestamp);   // 1 * s + 0, Session end time
         session_mesg.start_time = unixToFitTimestamp(track.timeStart);
 
-        session_mesg.total_elapsed_time = static_cast<FIT_UINT32>((track.elapsed) * 1000); // 1000 * s + 0, Time (includes pauses)
-        session_mesg.total_timer_time = static_cast<FIT_UINT32>((track.duration) * 1000);   // 1000 * s + 0, Timer Time (excludes pauses)
+        session_mesg.total_elapsed_time = static_cast<FIT_UINT32>((track.timeStart + track.elapsed) * 1000);  // 1000 * s + 0, Time (includes pauses)
+        session_mesg.total_timer_time = static_cast<FIT_UINT32>(track.duration * 1000);   // 1000 * s + 0, Timer Time (excludes pauses)
 
-        session_mesg.total_distance = static_cast<FIT_UINT32>(track.totalDistance * 100); // 100 * m + 0,
+        session_mesg.total_distance = static_cast<FIT_UINT32>(track.distance * 100);   // 100 * m + 0,
 
-        session_mesg.avg_speed = static_cast<FIT_UINT16>(track.speedAvg * 1000);// 1000 * m/s + 0, total_distance / total_timer_time
-        session_mesg.max_speed = static_cast<FIT_UINT16>(track.speedMax * 1000);// 1000 * m/s + 0,
+        session_mesg.avg_speed = static_cast<FIT_UINT16>(track.speedAvg * 1000); // 1000 * m/s + 0, total_distance / total_timer_time
+        session_mesg.max_speed = static_cast<FIT_UINT16>(track.speedMax * 1000); // 1000 * m/s + 0,
 
-        session_mesg.avg_heart_rate = static_cast<FIT_UINT8>(track.hrAvg);// 1 * bpm + 0, average heart rate (excludes pause time)
-        session_mesg.max_heart_rate = static_cast<FIT_UINT8>(track.hrMax); // 1 * bpm + 0,
+        session_mesg.avg_heart_rate = static_cast<FIT_UINT8>(track.hrAvg);   // 1 * bpm + 0, average heart rate (excludes pause time)
+        session_mesg.max_heart_rate = static_cast<FIT_UINT8>(track.hrMax);   // 1 * bpm + 0,
 
-        session_mesg.total_ascent = static_cast<FIT_UINT16>(track.ascent); // 1 * m + 0
+        session_mesg.total_ascent = static_cast<FIT_UINT16>(track.ascent);   // 1 * m + 0
         session_mesg.total_descent = static_cast<FIT_UINT16>(track.descent); // 1 * m + 0
 
         session_mesg.num_laps = mLapCounter;
@@ -321,9 +321,9 @@ void ActivityWriter::stop(const TrackData& track)
     {
         FIT_ACTIVITY_MESG activity_mesg {};
 
-        activity_mesg.timestamp        = unixToFitTimestamp(track.timeStart);
-        activity_mesg.local_timestamp  = unixToFitTimestamp(epochToLocal(track.timeStart));
-        activity_mesg.total_timer_time = static_cast<FIT_UINT32>((track.duration) * 1000);   // 1000 * s + 0, Exclude pauses
+        activity_mesg.timestamp        = unixToFitTimestamp(track.timestamp);
+        activity_mesg.local_timestamp  = unixToFitTimestamp(epochToLocal(track.timestamp));  // timestamp epoch expressed in local time
+        activity_mesg.total_timer_time = static_cast<FIT_UINT32>(track.duration * 1000);   // 1000 * s + 0, Exclude pauses
         activity_mesg.num_sessions     = 1;
 
         mFHActivity.writeMessage(&activity_mesg, fp);
@@ -432,7 +432,7 @@ void ActivityWriter::saveSummary(const TrackData& track)
 
     writer.add("time_start", static_cast<uint32_t>(track.timeStart));
     writer.add("duration", static_cast<uint32_t>(track.duration));
-    writer.add("distance", track.totalDistance);
+    writer.add("distance", track.distance);
     writer.add("hr_avg", track.hrAvg);
     writer.add("elevation", track.ascent - track.descent);
     writer.add("activity_type", "hiking");

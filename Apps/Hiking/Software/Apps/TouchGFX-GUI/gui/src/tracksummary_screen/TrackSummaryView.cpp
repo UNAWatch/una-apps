@@ -28,9 +28,9 @@ void TrackSummaryView::tearDownScreen()
 }
 
 
-void TrackSummaryView::setDistance(float km, bool isImperial)
+void TrackSummaryView::setDistance(float m, bool isImperial)
 {
-    trackSummary.setDistance(km, isImperial);
+    trackSummary.setDistance(m, isImperial);
 }
 
 void TrackSummaryView::setSteps(uint32_t v)
@@ -38,12 +38,12 @@ void TrackSummaryView::setSteps(uint32_t v)
     trackSummary.setSteps(v);
 }
 
-void TrackSummaryView::setAvgPace(uint32_t sec, bool isImperial)
+void TrackSummaryView::setAvgPace(float spm, bool isImperial)
 {
     //trackSummary.setAvgPace(sec, isImperial);
 }
 
-void TrackSummaryView::setElevation(int32_t m, bool isImperial)
+void TrackSummaryView::setElevation(float m, bool isImperial)
 {
     trackSummary.setElevation(m, isImperial);
 }
@@ -53,12 +53,12 @@ void TrackSummaryView::setTimer(uint32_t sec)
     trackSummary.setTimer(sec);
 }
 
-void TrackSummaryView::setMaxHR(uint32_t hr)
+void TrackSummaryView::setMaxHR(float hr)
 {
     trackSummaryHR.setMaxHR(hr);
 }
 
-void TrackSummaryView::setAvgHR(uint32_t hr)
+void TrackSummaryView::setAvgHR(float hr)
 {
     trackSummaryHR.setAvgHR(hr);
 }

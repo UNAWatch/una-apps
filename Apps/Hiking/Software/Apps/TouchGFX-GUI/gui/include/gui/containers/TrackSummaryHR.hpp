@@ -11,8 +11,8 @@ public:
 
     virtual void initialize();
 
-    void setMaxHR(uint32_t hr);
-    void setAvgHR(uint32_t hr);
+    void setMaxHR(float hr);
+    void setAvgHR(float hr);
 
 protected:
 };

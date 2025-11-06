@@ -27,7 +27,7 @@ void TrackActionPresenter::onTrackData(const Track::Data& data)
 {
     view.setTimer(data.totalTime);
     view.setAvgPace(data.avgPace);
-    view.setDistance(data.totalDistance);
+    view.setDistance(data.distance);
     view.setSteps(data.steps);
     view.setAvgHR(data.avgHR);
     view.setFloors(data.floors);

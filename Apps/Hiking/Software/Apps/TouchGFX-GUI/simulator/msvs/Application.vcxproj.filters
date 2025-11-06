@@ -1909,9 +1909,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IFileSystem.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IPower.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISensorManager.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>

@@ -12,13 +12,13 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
-    void setDistance(float km, bool isImperial);
+    void setDistance(float m, bool isImperial);
     void setSteps(uint32_t v);
-    void setAvgPace(uint32_t sec, bool isImperial);
-    void setElevation(int32_t m, bool isImperial);
+    void setAvgPace(float spm, bool isImperial);
+    void setElevation(float m, bool isImperial);
     void setTimer(uint32_t sec);
-    void setMaxHR(uint32_t hr);
-    void setAvgHR(uint32_t hr);
+    void setMaxHR(float hr);
+    void setAvgHR(float hr);
     void setMap(const SDK::TrackMapScreen &map);
 
 protected:

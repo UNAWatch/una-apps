@@ -25,13 +25,13 @@
 struct ActivitySummary {
     time_t utc;         ///< Last activity UTC time
     time_t time;        ///< Total track time in seconds
-    float distance;     ///< Total track distance in km
-    float speedAvg;     ///< Average speed in km/h
-    int32_t steps;      ///< Steps number if any
-    int32_t elevation;  ///< Elevation in m
-    int32_t paceAvg;    ///< Average pace in seconds/km
-    int32_t hrMax;      ///< Maximum Heart Rate in bbs
-    int32_t hrAvg;      ///< Average Heart Rate in bbs
+    float distance;     ///< Total track distance in m
+    float speedAvg;     ///< Average speed in m/s
+    uint32_t steps;     ///< Steps number if any
+    float elevation;    ///< Elevation in m
+    float paceAvg;      ///< Average pace in s/m
+    float hrMax;        ///< Maximum Heart Rate in bbs
+    float hrAvg;        ///< Average Heart Rate in bbs
     SDK::TrackMapScreen map; ///< Track map
 };
 

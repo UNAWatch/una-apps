@@ -67,6 +67,7 @@ private:
     SDK::Sensor::DriverConnection mFloorCounterSensor;
     SDK::Sensor::DriverConnection mAltimeterSensor;
     SDK::Sensor::DriverConnection mHrSensor;
+    SDK::Sensor::DriverConnection mBatteryLevelSensor;
 
     static constexpr uint32_t skInitialSamplePeriod = 1000;
     static constexpr uint32_t skSamplePeriod        = 10000;
@@ -81,8 +82,6 @@ private:
         float    longitude;     // degrees
         float    altitude;      // meters
         uint32_t timestamp;     // ms
-        float    speed;         // m/s
-        float    distance;      // meters
 
         void reset()
         {
@@ -91,10 +90,34 @@ private:
             longitude = 0.0f;
             altitude  = 0.0f;
             timestamp = 0;
-            speed     = 0.0f;
-            distance  = 0.0f;
         }
     } mGps{};
+
+    struct {
+        float    speed;     // m/s
+        uint32_t timestamp; // ms
+
+        void reset() {
+            speed     = 0.0f;
+            timestamp = 0;
+        }
+    } mSpeed;
+
+    struct {
+        float    distance;  // m
+        uint32_t timestamp; // ms
+
+        // Working data
+        bool     dataValid;
+        float    initialDistance; // m
+
+        void reset() {
+            distance  = 0.0f;
+            timestamp = 0;
+            dataValid = false;
+            initialDistance = 0.0f;
+        }
+    } mDistance;
 
     struct {
         // Last sensor data
@@ -184,11 +207,14 @@ private:
         }
     } mHr{};
 
+    struct {
+        float level = 0.0f;
+    } mBattery;
+
     Track::State mTrackState = Track::State::INACTIVE;
     std::time_t mTrackStartUTC = 0;
     bool mPreviousGpsFixState = false;
     std::time_t mTrackProcessTimestamp = 0;
-    SDK::TrackMapBuilder::GpsPoint mPrevGpsPoint{};
 
     bool mSessionNotEmpty = false;
     bool mLapNotEmpty = false;
@@ -205,13 +231,12 @@ private:
     LapDivSource mLapDivSource{};
 
     void sendInitialInfoToGui();
-    void startTrack();
+    void startTrack(std::time_t utc);
     void processTrack(std::time_t utc);
     void saveLap(std::time_t utc);
-    void stopTrack(bool discard);
+    void stopTrack(std::time_t utc, bool discard);
     LapDivSource getLapDivSource();
     uint32_t getCurrentLap();
-    static uint32_t ParseVersion(const char* str);
 
 
     // IGlance implementation

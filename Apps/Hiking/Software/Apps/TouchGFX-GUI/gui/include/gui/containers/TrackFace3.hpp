@@ -11,8 +11,8 @@ public:
 
     virtual void initialize();
 
-    void setLapPace(int32_t sec, bool isImperial);
-    void setLapDistance(float km, bool isImperial);
+    void setLapPace(float spm, bool isImperial);
+    void setLapDistance(float m, bool isImperial);
     void setLapTimer(std::time_t sec);
 
 protected:

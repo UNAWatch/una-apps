@@ -274,7 +274,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IFileSystem.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IKernel.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IMutex.hpp" />
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IPower.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISemaphore.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISensorManager.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISettings.hpp" />

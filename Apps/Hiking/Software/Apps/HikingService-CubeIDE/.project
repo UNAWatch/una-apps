@@ -154,6 +154,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/FirmwareVersion.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/SDK/Libs/Header/SDK/FirmwareVersion.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/Interfaces</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>

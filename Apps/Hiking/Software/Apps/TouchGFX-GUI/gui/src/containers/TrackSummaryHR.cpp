@@ -10,14 +10,14 @@ void TrackSummaryHR::initialize()
     TrackSummaryHRBase::initialize();
 }
 
-void TrackSummaryHR::setMaxHR(uint32_t hr)
+void TrackSummaryHR::setMaxHR(float hr)
 {
-    Unicode::snprintf(maxHrValueBuffer, MAXHRVALUE_SIZE, "%u", hr);
+    Unicode::snprintfFloat(maxHrValueBuffer, MAXHRVALUE_SIZE, "%.0f", hr);
     maxHrValue.invalidate();
 }
 
-void TrackSummaryHR::setAvgHR(uint32_t hr)
+void TrackSummaryHR::setAvgHR(float hr)
 {
-    Unicode::snprintf(avgHrValueBuffer, AVGHRVALUE_SIZE, "%u", hr);
+    Unicode::snprintfFloat(avgHrValueBuffer, AVGHRVALUE_SIZE, "%.0f", hr);
     avgHrValue.invalidate();
 }

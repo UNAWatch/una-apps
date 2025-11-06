@@ -32,29 +32,29 @@ void TrackLapView::setUnitsImperial(bool isImperial)
     distanceUnits.invalidate();
 }
 
-void TrackLapView::setLapNum(uint8_t n)
+void TrackLapView::setLapNum(uint32_t n)
 {
-    const uint16_t kBuffSize = 10;
+    const uint16_t kBuffSize = 16;
     touchgfx::Unicode::UnicodeChar buffer[kBuffSize] { };
 
-    Unicode::snprintf(buffer, kBuffSize, "%s %d",
+    Unicode::snprintf(buffer, kBuffSize, "%s %u",
         touchgfx::TypedText(T_TEXT_LAP).getText(), n + 1);
 
     title.set(buffer);
 }
 
-void TrackLapView::setSteps(int32_t steps)
+void TrackLapView::setSteps(uint32_t steps)
 {
-    Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%d", steps);
+    Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%u", steps);
     stepsValue.invalidate();
 }
 
-void TrackLapView::setDistance(float km)
+void TrackLapView::setDistance(float m)
 {
     if (mUnitsImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", Gui::Utils::km2mi(km));
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
     } else {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", km);
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
     }
 
     distanceValue.invalidate();
@@ -62,8 +62,7 @@ void TrackLapView::setDistance(float km)
 
 void TrackLapView::setTimer(std::time_t sec)
 {
-    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d",
-        Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec));
+    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec));
     timeValue.invalidate();
 }
 

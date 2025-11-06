@@ -10,28 +10,28 @@ void TrackFace3::initialize()
     TrackFace3Base::initialize();
 }
 
-void TrackFace3::setLapPace(int32_t sec, bool isImperial)
+void TrackFace3::setLapPace(float spm, bool isImperial)
 {
+    std::time_t sekPerKm = static_cast<std::time_t>(spm * 1000.0f);
     if (isImperial) {
-        sec = static_cast<std::time_t>(sec / Gui::Utils::km2mi(1.0f));
+        sekPerKm = static_cast<std::time_t>(sekPerKm / App::Utils::km2mi(1.0f));
     }
-    Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%d:%02d", Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
+    Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(sekPerKm), App::Utils::sec2hmsS(sekPerKm));
     lapPaceValue.invalidate();
 }
 
-void TrackFace3::setLapDistance(float km, bool isImperial)
+void TrackFace3::setLapDistance(float m, bool isImperial)
 {
     if (isImperial) {
-        Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", Gui::Utils::km2mi(km));
+        Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", App::Utils::km2mi(m / 1000.0f));
     } else {
-        Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", km);
+        Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", m / 1000.0f);
     }
     lapDistanceValue.invalidate();
 }
 
 void TrackFace3::setLapTimer(std::time_t sec)
 {
-    Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d:%02d",
-        Gui::Utils::sec2hmsH(sec), Gui::Utils::sec2hmsM(sec), Gui::Utils::sec2hmsS(sec));
+    Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d:%02d", App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
     lapTimeValue.invalidate();
 }

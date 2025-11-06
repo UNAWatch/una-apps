@@ -41,7 +41,7 @@ public:
         float       latitude;   // degrees
         float       longitude;  // degrees
         float       altitude;   // absolute altitude in m
-        uint8_t     heartRate;  // Heart rate in beats per minute.
+        float       heartRate;  // Heart rate in beats per minute.
 		float       speed;      // m/s
     };              
 
@@ -53,8 +53,8 @@ public:
         float distance;         // m
         float speedAvg;         // m/s
         float speedMax;         // m/s
-        uint8_t hrAvg;          // bpm
-        uint8_t hrMax;          // bpm
+        float hrAvg;            // bpm
+        float hrMax;            // bpm
         float ascent;           // m
         float descent;          // m
         uint32_t steps;
@@ -62,14 +62,15 @@ public:
     };
 
     struct TrackData {
+        std::time_t timestamp;  // UTC
         std::time_t timeStart;  // UTC
         std::time_t duration;   // seconds
         std::time_t elapsed;    // seconds
-        float totalDistance;    // m
+        float distance;         // m
         float speedAvg;         // m/s
         float speedMax;         // m/s
-        uint8_t hrAvg;          // bpm
-        uint8_t hrMax;          // bpm
+        float hrAvg;            // bpm
+        float hrMax;            // bpm
         float ascent;           // m
         float descent;          // m
         uint32_t steps;
@@ -79,8 +80,8 @@ public:
     ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir);
 
     void start(const AppInfo& info);
-    void pause();
-    void resume();
+    void pause(std::time_t timestamp);
+    void resume(std::time_t timestamp);
     void addRecord(const RecordData& record);
     void addLap(const LapData& lap);
     void stop(const TrackData& track);
