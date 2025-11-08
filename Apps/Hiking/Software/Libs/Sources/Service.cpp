@@ -26,7 +26,7 @@
 #include "icon_60x60.h"
 
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service()
@@ -129,6 +129,10 @@ void Service::run()
         }
     }
 
+    if (mTrackState != Track::State::INACTIVE) {
+        stopTrack(std::time(nullptr), false);
+    }
+
     // Unsubscribe from sensors
     mGpsLocationSensor.disconnect();
     mGpsSpeedSensor.disconnect();
@@ -161,8 +165,6 @@ void Service::onStartGUI()
 
     // Subscribe to GPS to get fix
     mGpsLocationSensor.connect();
-
-    mBatteryLevelSensor.connect();
 
 #if defined(SIMULATOR) || 0
     mGps.fix = true;
@@ -341,6 +343,7 @@ void Service::startTrack(std::time_t utc)
     mTrackStartUTC = utc;
     mTrackProcessTimestamp = mTrackStartUTC;
 
+    mBatteryLevelSensor.connect();
     mGpsSpeedSensor.connect();
     mGpsDistanceSensor.connect();
     mStepCounterSensor.connect();
@@ -511,6 +514,7 @@ void Service::saveLap(std::time_t utc)
 {
     // Save lap to the FIT file
     ActivityWriter::LapData fitLap{};
+    fitLap.timestamp = utc;
     fitLap.timeStart = utc - mTrackData.lapTime;
     fitLap.duration = mTrackData.lapTime;
     fitLap.elapsed = mTrackData.lapTime;
@@ -574,6 +578,7 @@ void Service::stopTrack(std::time_t utc, bool discard)
 
         // Save FIT file
         ActivityWriter::TrackData fitTrack{};
+        fitTrack.timestamp = utc;
         fitTrack.timeStart = mTrackStartUTC;
         fitTrack.duration = mTrackData.totalTime;
         fitTrack.elapsed = mTrackData.totalTime;
@@ -593,6 +598,15 @@ void Service::stopTrack(std::time_t utc, bool discard)
 
     mTrackState = Track::State::INACTIVE;
     mGSModel.post(S2GEvent::TrackStateUpd{ mTrackState });
+
+    mGpsLocationSensor.disconnect();
+    mGpsSpeedSensor.disconnect();
+    mGpsDistanceSensor.disconnect();
+    mHrSensor.disconnect();
+    mStepCounterSensor.disconnect();
+    mAltimeterSensor.disconnect();
+    mFloorCounterSensor.disconnect();
+    mBatteryLevelSensor.disconnect();
 }
 
 

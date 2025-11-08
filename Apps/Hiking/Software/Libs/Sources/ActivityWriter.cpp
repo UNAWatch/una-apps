@@ -157,31 +157,31 @@ void ActivityWriter::start(const AppInfo& info)
     {
         mFHStepsField.writeDef(fp);
 
-        FIT_FIELD_DESCRIPTION_MESG trustLevel{};
+        FIT_FIELD_DESCRIPTION_MESG steps{};
 
-        strncpy(trustLevel.field_name, "steps", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
-        strncpy(trustLevel.units, "steps", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
-        trustLevel.developer_data_index    = 0;
-        trustLevel.field_definition_number = 0;
-        trustLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
+        strncpy(steps.field_name, "steps", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
+        strncpy(steps.units, "steps", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
+        steps.developer_data_index    = 0;
+        steps.field_definition_number = 0;
+        steps.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
 
-        mFHStepsField.writeMessage(&trustLevel, fp);
+        mFHStepsField.writeMessage(&steps, fp);
     }
 
 
     // Custom field "floors"
-        {
+    {
         mFHFloorField.writeDef(fp);
 
-        FIT_FIELD_DESCRIPTION_MESG trustLevel{};
+        FIT_FIELD_DESCRIPTION_MESG floors{};
 
-        strncpy(trustLevel.field_name, "hr_trust_level", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
-        strncpy(trustLevel.units, "percents", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
-        trustLevel.developer_data_index    = 0;
-        trustLevel.field_definition_number = 1;
-        trustLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
+        strncpy(floors.field_name, "floors", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT);
+        strncpy(floors.units, "floors", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT);
+        floors.developer_data_index    = 0;
+        floors.field_definition_number = 1;
+        floors.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
 
-        mFHFloorField.writeMessage(&trustLevel, fp);
+        mFHFloorField.writeMessage(&floors, fp);
     }
 
     mFHLap.writeDef(fp);
