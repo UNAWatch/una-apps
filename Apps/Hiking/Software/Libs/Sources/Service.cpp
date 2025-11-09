@@ -371,20 +371,6 @@ void Service::processTrack(std::time_t utc)
     mTrackData.totalTime = trackTime;
     mTrackData.lapTime += trackTimeDiff;
 
-#if 1
-    std::time_t timeDiff = static_cast<std::time_t>(std::difftime(utc, mTrackProcessTimestamp));
-    if (timeDiff < (skSamplePeriod / 1000)) { // in seconds
-        if (trackTimeDiff > 0) {
-            mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
-        }
-        return;
-    }
-#else
-    // Debug. Save data every second
-    mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
-#endif
-    mTrackProcessTimestamp = utc;
-
     // Process sensors
 
     // HR
@@ -474,6 +460,19 @@ void Service::processTrack(std::time_t utc)
         mTrackData.avgLapSpeed = 0.0f;
         mTrackData.lapPace = 0.0f;
     }
+
+#if 1
+    std::time_t timeDiff = static_cast<std::time_t>(std::difftime(utc, mTrackProcessTimestamp));
+    if (timeDiff < (skSamplePeriod / 1000)) { // in seconds
+        if (trackTimeDiff > 0) {
+            mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
+        }
+        return;
+    }
+#else
+    // Debug. Save data every second
+#endif
+    mTrackProcessTimestamp = utc;
 
     // Save record to the FIT file
     ActivityWriter::RecordData fitRecord{};
