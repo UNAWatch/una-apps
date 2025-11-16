@@ -7,7 +7,7 @@
 
 #include "icon_60x60.h"
 #include "icon_30x30.h"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
 Service::Service()
         : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
@@ -15,9 +15,8 @@ Service::Service()
         , mGlanceUI()
         , mGlanceTitle()
         , mGlanceValue()
-        , mHrSensor(SDK::Sensor::Type::HEART_RATE, this, 1000, 1000)
-        , mHrValue(0)
-        , mIsValid(false)
+        , mFloorsSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, 1000, 1000)
+        , mFloorsValue(0)
 {
     int16_t w;
     int16_t h;
@@ -32,19 +31,20 @@ Service::Service()
 
 void Service::run()
 {
-    mHrSensor.connect();
+    //mKernel.system.delay(800);
+    mFloorsSensor.connect();
 
     while (!mTerminate) {
         mKernel.system.delay(1000);
     }
 
-    mHrSensor.disconnect();
+    mFloorsSensor.disconnect();
 }
 
 SDK::Interface::IGlance::Info Service::glanceGetInfo()
 {
     IGlance::Info info{};
-    info.altname = "Live HR";
+    info.altname = "Floors";
     info.count = static_cast<uint8_t>(mGlanceUI.size());
     info.ctrls = mGlanceUI.data();
     return info;
@@ -52,23 +52,7 @@ SDK::Interface::IGlance::Info Service::glanceGetInfo()
 
 void Service::glanceUpdate()
 {
-    if (mHrValue > 1.0 && !mIsValid) {
-        mIsValid = true;
-        mGlanceValue.pos({ 80, 28 }, { 160, 34 })
-                .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
-                .setText("")
-                .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
-    } else if (mHrValue <= 1.0 && mIsValid) {
-        mIsValid = false;
-        mGlanceValue.pos({ 81, 34 }, { 130, 23 })
-                .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
-                .setText(skTextCalculating)
-                .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
-    }
-
-    if (mIsValid) {
-        mGlanceValue.print("%.0f          ", mHrValue);
-    }
+    mGlanceValue.print("%u", mFloorsValue);
 }
 
 void Service::glanceClose()
@@ -120,10 +104,10 @@ void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sen
 
     const SDK::Interface::ISensorData& sample = *data[sampleNum - 1];
 
-    if (mHrSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::HeartRate hr {sample};
-        if (hr.isDataValid()) {
-            mHrValue = hr.getBpm();
+    if (mFloorsSensor.matchesDriver(sensor)) {
+        SDK::SensorDataParser::FloorCounter f {sample};
+        if (f.isDataValid()) {
+            mFloorsValue = f.getFloorsDown() + f.getFloorsUp();
         }
     }
 
@@ -137,14 +121,14 @@ void Service::createGlanceGUI()
     mGlanceTitle.pos({ 70, 0 }, { 100, 25 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
-        .setText("Live HR")
+        .setText("Floors")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     mGlanceValue = mGlanceUI.createText();
-    mGlanceValue.pos({ 81, 34 }, { 172, 23 })
-        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
+    mGlanceValue.pos({ 80, 28 }, { 80, 34 })
+        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .setText(skTextCalculating)
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+        .setText("")
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
 }
