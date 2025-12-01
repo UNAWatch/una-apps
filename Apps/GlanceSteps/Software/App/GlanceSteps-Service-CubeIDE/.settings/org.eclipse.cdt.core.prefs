@@ -24,7 +24,7 @@ environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.7
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/value=GlanceSteps
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/operation=replace
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/value=0.0.1
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/value=0.0.2
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__DEV_ID__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__DEV_ID__/operation=append
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__DEV_ID__/value=UNA
