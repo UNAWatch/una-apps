@@ -94,6 +94,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -119,14 +124,24 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/SwTimer</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/Kernel.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/Kernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/KernelBuilder.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelBuilder.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/KernelProviderService.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelProviderService.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
@@ -162,21 +177,6 @@
 			<name>SDK/Libs/Source/Logger/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/UnaLogger/Logger.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Source/SensorLayer/SensorDriverConnection.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorDriverConnection.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Source/SwTimer/SwTimer.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/SwTimer/SwTimer.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Source/SwTimer/SwTimerPort.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/SwTimer/SwTimerPort.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

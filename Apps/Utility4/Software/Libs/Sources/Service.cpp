@@ -33,13 +33,6 @@ void Service::run()
         }
 
         switch (msg->getType()) {
-            case SDK::MessageType::COMMAND_APP_RUN:
-                LOG_DEBUG("Initializing...\n");
-
-                // confirm starting
-                msg->setResult(SDK::MessageResult::SUCCESS);
-                mKernel.comm.sendResponse(msg);
-                break;
 
             case SDK::MessageType::COMMAND_APP_STOP:
                 LOG_DEBUG("Stopping...\n");
@@ -48,17 +41,11 @@ void Service::run()
                 mKernel.sys.delay(500);
                 // ...
 
-                // confirm stopping
-                msg->setResult(SDK::MessageResult::SUCCESS);
-                mKernel.comm.sendResponse(msg);
-
                 // We must release message because this is the last event.
                 mKernel.comm.releaseMessage(msg);
 
                 // Waiting for the kernel to kill this app
-                while (true) {
-                    mKernel.sys.delay(1000);
-                }
+                mKernel.sys.exit(0); // no return
 
                 break;
 
