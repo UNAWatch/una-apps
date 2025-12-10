@@ -71,8 +71,8 @@ void Gui::run()
                         memset(frameBuffer, (3 << 4), sizeof(frameBuffer));
                         updDisp->pBuffer = frameBuffer;
                         mKernel.comm.sendMessage(updDisp);
-                        if (msg->getResult() != SDK::MessageResult::SUCCESS) {
-                            LOG_ERROR("Command execution status: %s\n", msg->getResultStr());
+                        if (updDisp->getResult() != SDK::MessageResult::SUCCESS) {
+                            LOG_ERROR("Command execution status: %s\n", updDisp->getResultStr());
                         }
                         mKernel.comm.releaseMessage(updDisp);
                     }
@@ -82,7 +82,7 @@ void Gui::run()
             case SDK::MessageType::EVENT_BUTTON: {
                 auto *button = static_cast<SDK::Message::EventButton*>(msg);
                 LOG_DEBUG("Button event 0x%08X. Id %d, Event %d\n", msg->getType(), button->id, button->event);
-                if (button->id == SDK::Message::EventButton::Id::SW1) {
+                if (button->id == SDK::Message::EventButton::Id::SW1 && button->event == SDK::Message::EventButton::Event::CLICK) {
                     // We must release message because this is the last event.
                     mKernel.comm.releaseMessage(msg);
 
@@ -96,8 +96,8 @@ void Gui::run()
                         bl->brightness = 100;
                         bl->autoOffTimeoutMs = 1000;
                         mKernel.comm.sendMessage(bl);
-                        if (msg->getResult() != SDK::MessageResult::SUCCESS) {
-                            LOG_ERROR("Command execution status: %s\n", msg->getResultStr());
+                        if (bl->getResult() != SDK::MessageResult::SUCCESS) {
+                            LOG_ERROR("Command execution status: %s\n", bl->getResultStr());
                         }
                         mKernel.comm.releaseMessage(bl);
                     }

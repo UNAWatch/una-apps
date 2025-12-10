@@ -55,6 +55,12 @@ void Service::run()
 
             case SDK::MessageType::COMMAND_APP_NOTIF_GUI_STOP:
                 LOG_DEBUG("GUI has stopped\n");
+
+                // We must release message because this is the last event.
+                mKernel.comm.releaseMessage(msg);
+
+                // Waiting for the kernel to kill this app
+                mKernel.sys.exit(0); // no return
                 break;
 
 

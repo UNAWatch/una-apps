@@ -16,25 +16,25 @@ class Service //: public SDK::Interface::ISensorDataListener
 public:
     Service(SDK::Kernel &kernel);
 
-    virtual ~Service() = default;
+    virtual ~Service();
 
     void run();
 
 private:
     const SDK::Kernel&  mKernel;
 
-    void onStop(SDK::MessageBase *msg);
-    void onGlanceStart(SDK::MessageBase *msg);
-    void onGlanceStop(SDK::MessageBase *msg);
-    void onGlanceTick(SDK::MessageBase *msg);
 
+    void connect();
+    void disconnect();
 
     // ISensorDataListener implementation
 //    virtual void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
 //                              const std::vector<SDK::Interface::ISensorData*>& data,
 //                              bool                                             first) override;
 
-    void createGlanceGUI();
+    void onGlanceTick();
+    bool configGui();
+    void createGuiControls();
 
     const char*              mName;
     uint32_t                 mMaxControls;

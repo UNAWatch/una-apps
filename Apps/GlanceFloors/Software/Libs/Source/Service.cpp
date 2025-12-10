@@ -20,33 +20,18 @@ Service::Service(SDK::Kernel &kernel)
         //, mFloorsSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, 1000, 1000)
         , mFloorsValue(0)
 {
+    LOG_DEBUG("Service\n");
+}
 
-    // Get Glance configuration
-    auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
-    if (!gc) {
-        mKernel.sys.exit(0); // no return
-    }
-    mKernel.comm.sendMessage(gc);
-
-    if (gc->getResult() != SDK::MessageResult::SUCCESS) {
-        LOG_ERROR("Command execution status: %s\n", gc->getResultStr());
-        mKernel.comm.releaseMessage(gc);
-        mKernel.sys.exit(0); // no return
-    }
-
-    mGlanceUI.setWidth(gc->width);
-    mGlanceUI.setHeight(gc->height);
-    mMaxControls = gc->maxControls;
-    mKernel.comm.releaseMessage(gc);
-
-    createGlanceGUI();
+Service::~Service()
+{
+    LOG_DEBUG("~Service\n");
+    disconnect();   // Cleanup recourses
 }
 
 void Service::run()
 {
     LOG_DEBUG("Ready\n");
-
-    //mFloorsSensor.connect();
 
     while (true) {
         SDK::MessageBase *msg;
@@ -58,82 +43,42 @@ void Service::run()
 
         switch (msg->getType()) {
 
-            case SDK::MessageType::COMMAND_APP_STOP:
-                onStop(msg);
-                break;
-
             case SDK::MessageType::EVENT_GLANCE_START:
-                onGlanceStart(msg);
+                LOG_DEBUG("Starting...\n");
+                if (configGui()) {
+                    createGuiControls();
+                    connect();
+                }
                 break;
 
+            case SDK::MessageType::COMMAND_APP_STOP:
             case SDK::MessageType::EVENT_GLANCE_STOP:
-                onGlanceStop(msg);
+                LOG_DEBUG("Stopping...\n");
+                disconnect();
+                // We must release message because this is the last event.
+                mKernel.comm.releaseMessage(msg);
+                return;
                 break;
 
             case SDK::MessageType::EVENT_GLANCE_TICK:
-                onGlanceTick(msg);
+                onGlanceTick();
                 break;
         }
 
         // Release message after processing
         mKernel.comm.releaseMessage(msg);
     }
-
-    //mFloorsSensor.disconnect();
 }
 
-void Service::onStop(SDK::MessageBase *msg)
+void Service::connect()
 {
-    LOG_DEBUG("Stopping...\n");
-
-    // cleanup resources
-    //mFloorsSensor.disconnect();
-
-    // We must release message because this is the last event.
-    mKernel.comm.releaseMessage(msg);
-
-    // Waiting for the kernel to kill this app
-    mKernel.sys.exit(0); // no return
-
-}
-
-void Service::onGlanceStart(SDK::MessageBase *msg)
-{
-    LOG_DEBUG("Glance start\n");
     //mFloorsSensor.connect();
 }
 
-void Service::onGlanceStop(SDK::MessageBase *msg)
+void Service::disconnect()
 {
-    LOG_DEBUG("Glance stop\n");
-    // cleanup resources
     //mFloorsSensor.disconnect();
 }
-
-void Service::onGlanceTick(SDK::MessageBase *msg)
-{
-    LOG_DEBUG("Glance tick\n");
-
-    mGlanceValue.print("%u", mFloorsValue);
-
-//    if (invalidate) {
-//        auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
-//        if (upd) {
-//            upd->name = mName;
-//            upd->controls = mGlanceUI.data();
-//            upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
-//
-//            mKernel.comm.sendMessage(upd, 100);
-//            mKernel.comm.releaseMessage(upd);
-//        }
-//
-//        invalidate = false;
-//    }
-//
-//
-
-}
-
 
 //void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sensor,
 //                           const std::vector< SDK::Interface::ISensorData*>& data,
@@ -150,13 +95,60 @@ void Service::onGlanceTick(SDK::MessageBase *msg)
 //    if (mFloorsSensor.matchesDriver(sensor)) {
 //        SDK::SensorDataParser::FloorCounter f {sample};
 //        if (f.isDataValid()) {
-//            mFloorsValue = f.getFloorsDown() + f.getFloorsUp();
+//
+//            uint32_t newValue = f.getFloorsDown() + f.getFloorsUp();
+//            if (mFloorsValue != newValue) {
+//                mFloorsValue = newValue;
+//                mGlanceValue.print("%u", mFloorsValue);
+//            }
 //        }
 //    }
 //
 //}
 
-void Service::createGlanceGUI()
+void Service::onGlanceTick()
+{
+    LOG_DEBUG("Glance tick\n");
+
+    if (mGlanceUI.isInvalid()) {
+        auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
+        if (upd) {
+            upd->name = mName;
+            upd->controls = mGlanceUI.data();
+            upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
+
+            mKernel.comm.sendMessage(upd, 100);
+            mKernel.comm.releaseMessage(upd);
+        }
+
+        mGlanceUI.setValid();
+   }
+}
+
+bool Service::configGui()
+{
+    // Get Glance configuration
+    auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
+    if (!gc) {
+        mKernel.sys.exit(0); // no return
+    }
+    mKernel.comm.sendMessage(gc);
+
+    if (gc->getResult() != SDK::MessageResult::SUCCESS) {
+        LOG_ERROR("Command execution status: %s\n", gc->getResultStr());
+        mKernel.comm.releaseMessage(gc);
+        return false;
+    }
+
+    mGlanceUI.setWidth(gc->width);
+    mGlanceUI.setHeight(gc->height);
+    mMaxControls = gc->maxControls;
+    mKernel.comm.releaseMessage(gc);
+
+    return true;
+}
+
+void Service::createGuiControls()
 {
     mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
 
