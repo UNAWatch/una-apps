@@ -74,9 +74,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AppTypes.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/GSModelEvents</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<name>Libs/Header/Commands.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Commands.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Header/Service.hpp</name>
@@ -109,22 +109,22 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header/Interfaces</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/JSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -140,6 +140,11 @@
 		</link>
 		<link>
 			<name>SDK/Libs/Source/JSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -169,9 +174,54 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/JSON/JsonStreamWriter.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Kernel/Kernel.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/Kernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/KernelBuilder.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelBuilder.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/KernelProviderService.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelProviderService.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/CommandMessages.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/CommandMessages.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/ConcreteMessages.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/ConcreteMessages.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/MessageBase.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageBase.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/MessageTypes.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageTypes.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/AtExitImpl.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/AtExitImpl.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/AppSystem/main.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/EntryPoint/Service/main.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/AppSystem/startup_user_app.s</name>
@@ -179,9 +229,9 @@
 			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
+			<name>SDK/Libs/Source/AppSystem/system.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/system.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/JSON/JsonStreamReader.cpp</name>
@@ -192,6 +242,11 @@
 			<name>SDK/Libs/Source/JSON/JsonStreamWriter.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/JSON/JsonStreamWriter.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>

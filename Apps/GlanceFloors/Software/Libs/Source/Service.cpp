@@ -63,6 +63,9 @@ void Service::run()
             case SDK::MessageType::EVENT_GLANCE_TICK:
                 onGlanceTick();
                 break;
+
+            default:
+                break;
         }
 
         // Release message after processing

@@ -1,57 +1,41 @@
-#ifndef __SERVICE_HPP__
-#define __SERVICE_HPP__
 
-#include "SDK/Interfaces/IKernel.hpp"
-#include "SDK/GSModel/GSModelHelper.hpp"
+#pragma once
+
+#include "SDK/Kernel/Kernel.hpp"
+
 #include "AlarmManager.hpp"
+#include "Commands.hpp"
 
-class Service : public IServiceModelHandler,
-                public SDK::Interface::IUserApp::Callback,
-                public AlarmManager::AlarmCallback
+class Service : public AlarmManager::AlarmCallback
 {
 public:
-    Service(const IKernel& kernel);
+    Service(SDK::Kernel &kernel);
 
-    virtual ~Service() = default;
+    virtual ~Service();
 
     void run();
 
-    virtual void handleEvent(const G2SEvent::Run& event);
-    virtual void handleEvent(const G2SEvent::Stop& event);
-
     // User-defined event handlers
-    virtual void handleEvent(const G2SEvent::AlarmSaveList& event) override;
-    virtual void handleEvent(const G2SEvent::AlarmActiveteEffect& event) override;
-    virtual void handleEvent(const G2SEvent::AlarmStop& event) override;
-    virtual void handleEvent(const G2SEvent::AlarmStopAll& event) override;
-    virtual void handleEvent(const G2SEvent::AlarmSnooze& event) override;
-    virtual void handleEvent(const G2SEvent::AlarmSnoozeAll& event) override;
-    virtual void handleEvent(const G2SEvent::InternalRefresh& event) override;
+    void handleEvent(const CustomMessage::AlarmList& event);
+    void handleEvent(const CustomMessage::AlarmActiveteEffect& event);
+    void handleEvent(const CustomMessage::AlarmStop& event);
+    void handleEvent(const CustomMessage::AlarmStopAll& event);
+    void handleEvent(const CustomMessage::AlarmSnooze& event);
+    void handleEvent(const CustomMessage::AlarmSnoozeAll& event);
 
 private:
-    // IUserApp::Callback implementation
-    void onCreate()  override;
-    void onStart()   override;
-    void onResume()  override;
-    void onStop()    override;
-    void onPause()   override;
-    void onDestroy() override;
+    const SDK::Kernel&  mKernel;
+    bool                mGUIStarted;
+
+    void onStartGUI();
+    void onStopGUI();
+
+    void stopAlarm();
 
     // AlarmManager::AlarmCallback implementation
-    virtual void onAlarm(const AppType::Alarm& alarm) override;
-    virtual void onListChanged(const std::vector<AppType::Alarm>& list) override;
+    void onAlarm(const AppType::Alarm& alarm);
+    void onListChanged(const std::vector<AppType::Alarm>& list);
 
-    
-    // Force refresh service state
-    void refreshService();
-
-
-    const IKernel&                  mKernel;
-    std::shared_ptr<GSModelService> mGSModel;
-    bool                            mTerminate;
-    bool                            mGUIStarted;
-    AlarmManager                    mAlarmManager;
-    AppType::Alarm                  mActiveAlarm;
+    AlarmManager        mAlarmManager;
+    AppType::Alarm      mActiveAlarm;
 };
-
-#endif

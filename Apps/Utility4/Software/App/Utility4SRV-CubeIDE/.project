@@ -89,6 +89,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Messages</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -127,6 +132,26 @@
 			<name>SDK/Libs/Header/Kernel/KernelProviderService.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelProviderService.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/CommandMessages.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/CommandMessages.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/ConcreteMessages.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/ConcreteMessages.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/MessageBase.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageBase.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/MessageTypes.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageTypes.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>

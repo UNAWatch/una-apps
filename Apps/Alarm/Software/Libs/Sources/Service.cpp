@@ -1,36 +1,38 @@
+
 #include "Service.hpp"
-#include "SDK/Interfaces/IBuzzer.hpp"
-#include "SDK/Interfaces/IVibro.hpp"
 
 #define ARRAY_SIZE(a)   (sizeof(a) / sizeof(a[0]))
 
-#define LOG_MODULE_PRX      "Service::"
+#define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-#include <stdio.h>
+#include <cstdio>
 
-Service::Service(const IKernel& kernel)
+
+Service::Service(SDK::Kernel &kernel)
         : mKernel(kernel)
-        , mGSModel(std::make_shared<GSModelService>(kernel, *this))
-        , mTerminate(false)
         , mGUIStarted(false)
-        , mAlarmManager(kernel)
+        , mAlarmManager(mKernel)
         , mActiveAlarm()
 {
-    mKernel.app.registerApp(this);
-    mKernel.sctrl.setContext(mGSModel);
+    LOG_DEBUG("Service\n");
+}
+
+Service::~Service()
+{
+    LOG_DEBUG("~Service\n");
+    mAlarmManager.attachCallback(nullptr);
 }
 
 void Service::run()
 {
-    mKernel.app.initialized();
     mAlarmManager.attachCallback(this);
     mAlarmManager.load();
 
-    uint32_t startTime = mKernel.app.getTimeMs();
+    uint32_t startTime = mKernel.sys.getTimeMs();
 
-    while (!mTerminate) {
+    while (true) {
         std::tm tmNow{};
         time_t t = time(nullptr);
 #if SIMULATOR
@@ -38,69 +40,127 @@ void Service::run()
 #else
         localtime_r(&t, &tmNow);
 #endif
-
-
         uint32_t sleepTime = mAlarmManager.execute(tmNow);
-        mGSModel->checkG2SEvents(sleepTime);
 
-        if (mGUIStarted) {
-
-        } else {
-            // Just wait some time to see if GUI starts
-            if (mKernel.app.getTimeMs() - startTime > 5000) {
-                if (!mAlarmManager.hasActiveAlarms()) {
-                    LOG_DEBUG("No active alarms and GUI not started, exiting service\n");
-                    exit(0);
+        SDK::MessageBase *msg;
+        if(!mKernel.comm.getMessage(msg, sleepTime)) {
+            if (!mGUIStarted) {
+                // Just wait some time to see if GUI starts
+                if (mKernel.sys.getTimeMs() - startTime > 5000) {
+                    if (!mAlarmManager.hasActiveAlarms()) {
+                        LOG_DEBUG("No active alarms and GUI not started, exiting service\n");
+                        mAlarmManager.attachCallback(nullptr);
+                        return;
+                    }
                 }
             }
+            continue;
         }
+
+        switch (msg->getType()) {
+            case SDK::MessageType::COMMAND_APP_STOP:
+                LOG_DEBUG("Stopping...\n");
+                mAlarmManager.attachCallback(nullptr);
+                // We must release message because this is the last event.
+                mKernel.comm.releaseMessage(msg);
+                return;
+
+            case SDK::MessageType::COMMAND_APP_NOTIF_GUI_RUN:
+                LOG_DEBUG("GUI is now running\n");
+                onStartGUI();
+                break;
+
+            case SDK::MessageType::COMMAND_APP_NOTIF_GUI_STOP:
+                LOG_DEBUG("GUI has stopped\n");
+                onStopGUI();
+                break;
+
+            case CustomMessage::ALARM_LIST:
+                handleEvent(*static_cast<CustomMessage::AlarmList*>(msg));
+                break;
+
+            case CustomMessage::ACTIVATED_EFFECT:
+                handleEvent(*static_cast<CustomMessage::AlarmActiveteEffect*>(msg));
+                break;
+
+            case CustomMessage::ALARM_STOP:
+                handleEvent(*static_cast<CustomMessage::AlarmStop*>(msg));
+                break;
+
+            case CustomMessage::ALARM_STOP_ALL:
+                handleEvent(*static_cast<CustomMessage::AlarmStopAll*>(msg));
+                break;
+
+            case CustomMessage::ALARM_SNOOZE:
+                handleEvent(*static_cast<CustomMessage::AlarmSnooze*>(msg));
+                break;
+
+            case CustomMessage::ALARM_SNOOZE_ALL:
+                handleEvent(*static_cast<CustomMessage::AlarmSnoozeAll*>(msg));
+                break;
+
+            default:
+                break;
+        }
+        // Release message after processing
+        mKernel.comm.releaseMessage(msg);
+
     }
 
     // Cleanup
     mAlarmManager.attachCallback(nullptr);
 }
 
-void Service::handleEvent(const G2SEvent::Run& event)
+void Service::onStartGUI()
 {
-    (void) event;
-
+    LOG_INFO("GUI started\n");
     mGUIStarted = true;
 
     // If there is an active alarm, send it to GUI first
     if (mActiveAlarm.on) {
-        mGSModel->sendToGUI(S2GEvent::Alarm{ mActiveAlarm });
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::ActivatedAlarm>();
+        if (msg) {
+            msg->alarm = mActiveAlarm;
+            mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
         mActiveAlarm = {}; // clear active alarm
     }
 
     // Send current alarm list to GUI
-    mGSModel->sendToGUI(S2GEvent::AlarmList{ mAlarmManager.getAlarmList() });
 
-    refreshService();
+    auto *msgList = mKernel.comm.allocateMessage<CustomMessage::AlarmList>();
+    if (msgList) {
+        msgList->list = mAlarmManager.getAlarmList();
+        mKernel.comm.sendMessage(msgList);
+        mKernel.comm.releaseMessage(msgList);
+    }
+
 }
 
-void Service::handleEvent(const G2SEvent::Stop& event)
+void Service::onStopGUI()
 {
-    (void) event;
-
+    LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
-
-    refreshService();
 }
 
-// User-defined event handlers
-void Service::handleEvent(const G2SEvent::AlarmSaveList& event)
+void Service::handleEvent(const CustomMessage::AlarmList& event)
 {
-    LOG_INFO("AlarmSaveList\n");
+    LOG_DEBUG("AlarmList\n");
     mAlarmManager.saveAlarmList(event.list);
-
-    refreshService();
 }
 
-void Service::handleEvent(const G2SEvent::AlarmActiveteEffect& event)
+void Service::handleEvent(const CustomMessage::AlarmActiveteEffect& event)
 {
-    LOG_INFO("AlarmActiveteEffect\n");
+    LOG_DEBUG("AlarmActiveteEffect\n");
 
-    mKernel.backlight.on(3000);
+    auto *backlightMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBacklightSet>();
+    if (backlightMsg) {
+        backlightMsg->autoOffTimeoutMs = 3000;
+        backlightMsg->brightness = 100;
+        mKernel.comm.sendMessage(backlightMsg);
+        mKernel.comm.releaseMessage(backlightMsg);
+    }
 
     bool isVibro = event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
             event.alarm.effect == AppType::Alarm::Effect::EFFECT_VIBRO;
@@ -108,144 +168,122 @@ void Service::handleEvent(const G2SEvent::AlarmActiveteEffect& event)
     bool isBuzzer = event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
             event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP;
 
-    LOG_INFO("isVibro isBuzzer : %d %d\n", (int)isVibro, (int)isBuzzer);
+    LOG_DEBUG("isVibro isBuzzer : %d %d\n", (int)isVibro, (int)isBuzzer);
 
     if (isVibro) {
-        SDK::Interface::IVibro::Note vm[5]{};
-        vm[0].effect = SDK::Interface::IVibro::Effect::ALERT_750MS_100;
-        vm[1].pause  = 250;
-        vm[2].effect = SDK::Interface::IVibro::Effect::ALERT_750MS_100;
-        vm[3].pause  = 250;
-        vm[4].effect = SDK::Interface::IVibro::Effect::ALERT_750MS_100;
+        auto *vibroMsg = mKernel.comm.allocateMessage<SDK::Message::RequestVibroPlay>();
+        if (vibroMsg) {
 
-        mKernel.vibro.play(vm, ARRAY_SIZE(vm));
+            vibroMsg->notes[0].effect = SDK::Message::RequestVibroPlay::Effect::ALERT_750MS_100;
+            vibroMsg->notes[1].pause  = 250;
+            vibroMsg->notes[2].effect = SDK::Message::RequestVibroPlay::Effect::ALERT_750MS_100;
+            vibroMsg->notes[3].pause  = 250;
+            vibroMsg->notes[4].effect = SDK::Message::RequestVibroPlay::Effect::ALERT_750MS_100;
+            vibroMsg->notesCount = 5;
+
+            mKernel.comm.sendMessage(vibroMsg);
+            mKernel.comm.releaseMessage(vibroMsg);
+        }
     }
 
     if (isBuzzer) {
-        SDK::Interface::IBuzzer::Note bm[5]{};
-        bm[0].level = 3;
-        bm[0].time  = 750;
-        bm[1].level = 0;
-        bm[1].time  = 250;
-        bm[2].level = 3;
-        bm[2].time  = 750;
-        bm[3].level = 0;
-        bm[3].time  = 250;
-        bm[4].level = 3;
-        bm[4].time  = 750;
+        auto *buzzerMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBuzzerPlay>();
+        if (buzzerMsg) {
+            buzzerMsg->notes[0].volume = 100;
+            buzzerMsg->notes[0].time  = 750;
+            buzzerMsg->notes[1].volume = 0;
+            buzzerMsg->notes[1].time  = 250;
+            buzzerMsg->notes[2].volume = 100;
+            buzzerMsg->notes[2].time  = 750;
+            buzzerMsg->notes[3].volume = 0;
+            buzzerMsg->notes[3].time  = 250;
+            buzzerMsg->notes[4].volume = 100;
+            buzzerMsg->notes[4].time  = 750;
+            buzzerMsg->notesCount = 5;
 
-        mKernel.buzzer.play(bm, ARRAY_SIZE(bm));
+            mKernel.comm.sendMessage(buzzerMsg);
+            mKernel.comm.releaseMessage(buzzerMsg);
+        }
     }
 }
 
-void Service::handleEvent(const G2SEvent::AlarmStop& event)
+void Service::handleEvent(const CustomMessage::AlarmStop& event)
 {
-    LOG_INFO("AlarmStop\n");
+    LOG_DEBUG("AlarmStop\n");
     mAlarmManager.disableAlarm(event.alarm);
 
-    mKernel.buzzer.stop();
-    mKernel.vibro.stop();
-
-    refreshService();
+    stopAlarm();
 }
 
-void Service::handleEvent(const G2SEvent::AlarmStopAll& event)
+void Service::handleEvent(const CustomMessage::AlarmStopAll& event)
 {
-    LOG_INFO("AlarmStopAll\n");
+    LOG_DEBUG("AlarmStopAll\n");
     mAlarmManager.disableAllActiveAlarm();
 
-    mKernel.buzzer.stop();
-    mKernel.vibro.stop();
-
-    refreshService();
+    stopAlarm();
 }
 
-void Service::handleEvent(const G2SEvent::AlarmSnooze& event)
+void Service::handleEvent(const CustomMessage::AlarmSnooze& event)
 {
-    LOG_INFO("AlarmSnooze\n");
+    LOG_DEBUG("AlarmSnooze\n");
     mAlarmManager.snoozeAlarm(event.alarm);
 
-    mKernel.buzzer.stop();
-    mKernel.vibro.stop();
-
-    refreshService();
+    stopAlarm();
 }
 
-void Service::handleEvent(const G2SEvent::AlarmSnoozeAll& event)
+void Service::handleEvent(const CustomMessage::AlarmSnoozeAll& event)
 {
     LOG_INFO("AlarmSnoozeAll\n");
     mAlarmManager.snoozeAllActiveAlarm();   
 
-    mKernel.buzzer.stop();
-    mKernel.vibro.stop();
-
-    refreshService();
+    stopAlarm();
 }
 
-void Service::handleEvent(const G2SEvent::InternalRefresh& event)
+void Service::stopAlarm()
 {
-    // do nothing
-}
+    auto *buzzerMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBuzzerPlay>();
+    if (buzzerMsg) {
+        mKernel.comm.sendMessage(buzzerMsg);
+        mKernel.comm.releaseMessage(buzzerMsg);
+    }
 
-
-
-
-
-void Service::onCreate()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onStart()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onResume()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onStop()
-{
-    LOG_INFO("called\n");
-    mTerminate = true;
-}
-
-void Service::onPause()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onDestroy()
-{
-    LOG_INFO("called\n");
+    auto *vibroMsg = mKernel.comm.allocateMessage<SDK::Message::RequestVibroPlay>();
+    if (vibroMsg) {
+        mKernel.comm.sendMessage(vibroMsg);
+        mKernel.comm.releaseMessage(vibroMsg);
+    }
 }
 
 void Service::onAlarm(const AppType::Alarm& alarm)
 {
-    mKernel.sctrl.runGUI(mGSModel); // Make sure GUI is started
-    
-    if (mGUIStarted) {
-        mActiveAlarm = {}; // clear active alarm
-        mGSModel->sendToGUI(S2GEvent::Alarm{ alarm });
-    } else {
-        mActiveAlarm = alarm; // save active alarm
-    }
+    // Make sure GUI is started
+    if (!mGUIStarted) {
+        auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestAppRunGui>();
+        if (msg) {
+            mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
 
+        mActiveAlarm = alarm; // save active alarm
+    } else {
+        // clear active alarm
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::ActivatedAlarm>();
+        if (msg) {
+            mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
+        mActiveAlarm = {}; // clear active alarm
+    }
 }
 
 void Service::onListChanged(const std::vector<AppType::Alarm>& list)
 {
     if (mGUIStarted) {
-        mGSModel->sendToGUI(S2GEvent::AlarmList{ list });
+        auto *msgList = mKernel.comm.allocateMessage<CustomMessage::AlarmList>();
+        if (msgList) {
+            msgList->list = list;
+            mKernel.comm.sendMessage(msgList);
+            mKernel.comm.releaseMessage(msgList);
+        }
     }
-
-    refreshService();
-}
-
-
-void Service::refreshService()
-{
-    mGSModel->sendToService(G2SEvent::InternalRefresh{});
 }
