@@ -19,6 +19,7 @@ Service::Service(SDK::Kernel &kernel)
         , mGlanceValue()
         //, mFloorsSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, 1000, 1000)
         , mFloorsValue(0)
+        , mCH(kernel)
 {
     LOG_DEBUG("Service\n");
 }

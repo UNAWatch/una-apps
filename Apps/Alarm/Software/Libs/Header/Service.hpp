@@ -36,6 +36,7 @@ private:
     void onAlarm(const AppType::Alarm& alarm);
     void onListChanged(const std::vector<AppType::Alarm>& list);
 
-    AlarmManager        mAlarmManager;
-    AppType::Alarm      mActiveAlarm;
+    AlarmManager            mAlarmManager;
+    AppType::Alarm          mActiveAlarm;
+    CustomMessage::Sender   mGuiSender;
 };

@@ -15,6 +15,7 @@ Service::Service(SDK::Kernel &kernel)
         , mGUIStarted(false)
         , mAlarmManager(mKernel)
         , mActiveAlarm()
+        , mGuiSender(kernel)
 {
     LOG_DEBUG("Service\n");
 }
@@ -118,24 +119,12 @@ void Service::onStartGUI()
 
     // If there is an active alarm, send it to GUI first
     if (mActiveAlarm.on) {
-        auto *msg = mKernel.comm.allocateMessage<CustomMessage::ActivatedAlarm>();
-        if (msg) {
-            msg->alarm = mActiveAlarm;
-            mKernel.comm.sendMessage(msg);
-            mKernel.comm.releaseMessage(msg);
-        }
+        mGuiSender.alarmActivated(mActiveAlarm);
         mActiveAlarm = {}; // clear active alarm
     }
 
     // Send current alarm list to GUI
-
-    auto *msgList = mKernel.comm.allocateMessage<CustomMessage::AlarmList>();
-    if (msgList) {
-        msgList->list = mAlarmManager.getAlarmList();
-        mKernel.comm.sendMessage(msgList);
-        mKernel.comm.releaseMessage(msgList);
-    }
-
+    mGuiSender.updList(mAlarmManager.getAlarmList());
 }
 
 void Service::onStopGUI()
@@ -267,23 +256,14 @@ void Service::onAlarm(const AppType::Alarm& alarm)
         mActiveAlarm = alarm; // save active alarm
     } else {
         // clear active alarm
-        auto *msg = mKernel.comm.allocateMessage<CustomMessage::ActivatedAlarm>();
-        if (msg) {
-            mKernel.comm.sendMessage(msg);
-            mKernel.comm.releaseMessage(msg);
-        }
         mActiveAlarm = {}; // clear active alarm
+        mGuiSender.alarmActivated(mActiveAlarm);
     }
 }
 
 void Service::onListChanged(const std::vector<AppType::Alarm>& list)
 {
     if (mGUIStarted) {
-        auto *msgList = mKernel.comm.allocateMessage<CustomMessage::AlarmList>();
-        if (msgList) {
-            msgList->list = list;
-            mKernel.comm.sendMessage(msgList);
-            mKernel.comm.releaseMessage(msgList);
-        }
+        mGuiSender.updList(list);
     }
 }

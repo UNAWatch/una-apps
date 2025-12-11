@@ -169,6 +169,16 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Interfaces/ICustomMessageHandler.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/ICustomMessageHandler.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Interfaces/IGuiLifeCycleCallback.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IGuiLifeCycleCallback.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>

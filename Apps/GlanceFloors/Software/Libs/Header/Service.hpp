@@ -42,6 +42,7 @@ private:
     SDK::Glance::ControlText mGlanceTitle;
     SDK::Glance::ControlText mGlanceValue;
 
+    SDK::CommandHandler      mCH;
 
 //    SDK::Sensor::DriverConnection mFloorsSensor;
     uint32_t mFloorsValue;
