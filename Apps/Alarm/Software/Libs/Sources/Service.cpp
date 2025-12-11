@@ -4,7 +4,7 @@
 #define ARRAY_SIZE(a)   (sizeof(a) / sizeof(a[0]))
 
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 #include <cstdio>
@@ -17,17 +17,17 @@ Service::Service(SDK::Kernel &kernel)
         , mActiveAlarm()
         , mGuiSender(kernel)
 {
-    LOG_DEBUG("Service\n");
 }
 
 Service::~Service()
 {
-    LOG_DEBUG("~Service\n");
     mAlarmManager.attachCallback(nullptr);
 }
 
 void Service::run()
 {
+    LOG_INFO("Started\n");
+
     mAlarmManager.attachCallback(this);
     mAlarmManager.load();
 
@@ -49,9 +49,9 @@ void Service::run()
                 // Just wait some time to see if GUI starts
                 if (mKernel.sys.getTimeMs() - startTime > 5000) {
                     if (!mAlarmManager.hasActiveAlarms()) {
-                        LOG_DEBUG("No active alarms and GUI not started, exiting service\n");
+                        LOG_INFO("No active alarms and GUI not started, exiting service\n");
                         mAlarmManager.attachCallback(nullptr);
-                        return;
+                        return; // Exit app
                     }
                 }
             }
@@ -60,7 +60,7 @@ void Service::run()
 
         switch (msg->getType()) {
             case SDK::MessageType::COMMAND_APP_STOP:
-                LOG_DEBUG("Stopping...\n");
+                LOG_INFO("Force exit from the application\n");
                 mAlarmManager.attachCallback(nullptr);
                 // We must release message because this is the last event.
                 mKernel.comm.releaseMessage(msg);
@@ -77,26 +77,32 @@ void Service::run()
                 break;
 
             case CustomMessage::ALARM_LIST:
+                LOG_DEBUG("ALARM_LIST\n");
                 handleEvent(*static_cast<CustomMessage::AlarmList*>(msg));
                 break;
 
             case CustomMessage::ACTIVATED_EFFECT:
+                LOG_DEBUG("ACTIVATED_EFFECT\n");
                 handleEvent(*static_cast<CustomMessage::AlarmActiveteEffect*>(msg));
                 break;
 
             case CustomMessage::ALARM_STOP:
+                LOG_DEBUG("ALARM_STOP\n");
                 handleEvent(*static_cast<CustomMessage::AlarmStop*>(msg));
                 break;
 
             case CustomMessage::ALARM_STOP_ALL:
+                LOG_DEBUG("ALARM_STOP_ALL\n");
                 handleEvent(*static_cast<CustomMessage::AlarmStopAll*>(msg));
                 break;
 
             case CustomMessage::ALARM_SNOOZE:
+                LOG_DEBUG("ALARM_SNOOZE\n");
                 handleEvent(*static_cast<CustomMessage::AlarmSnooze*>(msg));
                 break;
 
             case CustomMessage::ALARM_SNOOZE_ALL:
+                LOG_DEBUG("ALARM_SNOOZE_ALL\n");
                 handleEvent(*static_cast<CustomMessage::AlarmSnoozeAll*>(msg));
                 break;
 
@@ -107,14 +113,10 @@ void Service::run()
         mKernel.comm.releaseMessage(msg);
 
     }
-
-    // Cleanup
-    mAlarmManager.attachCallback(nullptr);
 }
 
 void Service::onStartGUI()
 {
-    LOG_INFO("GUI started\n");
     mGUIStarted = true;
 
     // If there is an active alarm, send it to GUI first
@@ -129,20 +131,16 @@ void Service::onStartGUI()
 
 void Service::onStopGUI()
 {
-    LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
 }
 
 void Service::handleEvent(const CustomMessage::AlarmList& event)
 {
-    LOG_DEBUG("AlarmList\n");
     mAlarmManager.saveAlarmList(event.list);
 }
 
 void Service::handleEvent(const CustomMessage::AlarmActiveteEffect& event)
 {
-    LOG_DEBUG("AlarmActiveteEffect\n");
-
     auto *backlightMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBacklightSet>();
     if (backlightMsg) {
         backlightMsg->autoOffTimeoutMs = 3000;
@@ -198,33 +196,25 @@ void Service::handleEvent(const CustomMessage::AlarmActiveteEffect& event)
 
 void Service::handleEvent(const CustomMessage::AlarmStop& event)
 {
-    LOG_DEBUG("AlarmStop\n");
     mAlarmManager.disableAlarm(event.alarm);
-
     stopAlarm();
 }
 
 void Service::handleEvent(const CustomMessage::AlarmStopAll& event)
 {
-    LOG_DEBUG("AlarmStopAll\n");
     mAlarmManager.disableAllActiveAlarm();
-
     stopAlarm();
 }
 
 void Service::handleEvent(const CustomMessage::AlarmSnooze& event)
 {
-    LOG_DEBUG("AlarmSnooze\n");
     mAlarmManager.snoozeAlarm(event.alarm);
-
     stopAlarm();
 }
 
 void Service::handleEvent(const CustomMessage::AlarmSnoozeAll& event)
 {
-    LOG_INFO("AlarmSnoozeAll\n");
     mAlarmManager.snoozeAllActiveAlarm();   
-
     stopAlarm();
 }
 

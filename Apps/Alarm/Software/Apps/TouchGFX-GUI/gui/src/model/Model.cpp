@@ -1,11 +1,12 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 #include <gui/common/FrontendApplication.hpp>
-#include "SDK/KernelManager.hpp"
 
+#include "SDK/Kernel/KernelProviderGUI.hpp"
+#include "SDK/../../../Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
-#define LOG_MODULE_PRX      "Model::"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_PRX      "Model"
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 #if defined(SIMULATOR)
@@ -16,27 +17,23 @@
 #endif
 
 Model::Model()
-    : mKernel(KernelManager::GetInstance().getKernel())
-    , modelListener(0)
-    , mGSModel(std::static_pointer_cast<GSModelGUI>(mKernel->gctrl.getContext()))
+    : modelListener(0)
+    , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
+    , mSrvSender(mKernel)
 {
-    mKernel->app.registerApp(this);
-    mGSModel->setGUIHandler(mKernel, this);
+    SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(this);
+    SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(this);
 
-    // Default values
-    mKernel->app.enableMusicControl(true);
-    mKernel->app.enablePhoneNotification(true);
-    mKernel->app.enableUsbCharging(true);
-
-    LOG_INFO("GUI [Alarm] is initialized\n");
+    setCapabilities();
 
 #if defined(SIMULATOR)
-    LOG_DEBUG("Application is running through simulator! \n");
+    LOG_INFO("Application is running through simulator! \n");
 
-    std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
-    LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
+    std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
+    LOG_INFO("Path to files created by app:\n"
+        "       [%s]\n", fileStoreDir.c_str());
 
-    LOG_DEBUG_WP("\n"
+    LOG_INFO("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
         "       1   L1,                     \n"
@@ -58,19 +55,21 @@ FrontendApplication& Model::application()
 // and (if key) handleKeyEvent() called for current screen
 void Model::tick()
 {
-    //LOG_INFO("tick\n");
+    //LOG_DEBUG("tick\n");
 
-    // Process events from Service only if app is in Resume state
     if (mIsRunning) {
-        mGSModel->checkS2GEvents(0);
-        
         decIdleTimer();
+    }
+
+    if (mInvalidate) {
+        mInvalidate = false;
+        application().invalidate();
     }
 }
 
 void Model::handleKeyEvent(uint8_t key)
 {
-    LOG_INFO("key = %c\n", static_cast<char>(key));
+    LOG_DEBUG("key = %c\n", static_cast<char>(key));
 
     if (isAnyKeyPressed(key)) {
 
@@ -92,27 +91,29 @@ void Model::resetIdleTimer()
 
 void Model::exitApp()
 {
-    LOG_INFO("exit from AlarmGUI\n");
+    LOG_INFO("Manually exiting the application\n");
+    // Cleanup recourses
 
-    exit(0);
+    SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(nullptr);
+    SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(nullptr);
+
+    mKernel.sys.exit(); // No return for real app
+
+    // !!! For TouchGFX Simulator !!!
     // This function only sets a flag. 
     // The current TouchGFX loop will be completed, meaning that depending 
     // on where this function was called, Model::tick(), Model::handleKeyEvent(), 
     // as well as handleTickEvent() and handleKeyEvent() for the 
     // current screen will be called.
-    // After that, onPause() ->onStop() -> onDestroy() will be called.
 }
 
 void Model::switchToNextPriorityScreen()
 {
-    LOG_INFO("called\n");
-
     if (mActiveAlarm.on) {
         application().gotoAlarmScreenNoTransition();
         return;
     }
 
-    //
     if (mStayInApp) {
         mStayInApp = false;
         application().gotoMainScreenNoTransition();
@@ -130,21 +131,21 @@ const AppType::Alarm& Model::getActiveAlarm() const
 
 void Model::playAlarm()
 {
-    LOG_INFO("called\n");
-    mGSModel->sendToService(G2SEvent::AlarmActiveteEffect{ mActiveAlarm });
+    LOG_DEBUG("called\n");
+    mSrvSender.activateEffect(mActiveAlarm);
 }
 
 void Model::stopAlarm()
 {
-    LOG_INFO("called\n");
-    mGSModel->sendToService(G2SEvent::AlarmStopAll {});
+    LOG_DEBUG("called\n");
+    mSrvSender.stopAll();
     mActiveAlarm = {};  // clear active alarm
 }
 
 void Model::snoozeAlarm()
 {
-    LOG_INFO("called\n");
-    mGSModel->sendToService(G2SEvent::AlarmSnoozeAll {});
+    LOG_DEBUG("called\n");
+    mSrvSender.snoozeAll();
     mActiveAlarm = {};  // clear active alarm
 }
 
@@ -169,10 +170,10 @@ size_t Model::alarmGetEditId()
 
 void Model::saveAlarm(size_t id, AppType::Alarm alarm)
 {
-    LOG_INFO("called\n");
+    LOG_DEBUG("called\n");
     if (id < mAlarmList.size()) {
         mAlarmList[id] = alarm;
-        mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+        mSrvSender.updList(mAlarmList);
         modelListener->onAlarmListUpdated(mAlarmList);
     } else if (id == mAlarmList.size()) {
         // Check if this alarm already exists, if so just overwrite it (avoid duplicates)
@@ -182,7 +183,7 @@ void Model::saveAlarm(size_t id, AppType::Alarm alarm)
             if (mAlarmList[i] == alarm) {
                 mEditAlarmId = i;
                 mAlarmList[i] = alarm;
-                mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+                mSrvSender.updList(mAlarmList);
                 modelListener->onAlarmListUpdated(mAlarmList);
                 return;
             }
@@ -190,7 +191,7 @@ void Model::saveAlarm(size_t id, AppType::Alarm alarm)
 
         // New alarm
         mAlarmList.push_back(alarm);
-        mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+        mSrvSender.updList(mAlarmList);
     }
 }
 
@@ -200,7 +201,7 @@ void Model::deleteAlarm(size_t id)
         return;
     }
     mAlarmList.erase(mAlarmList.begin() + id);
-    mGSModel->sendToService(G2SEvent::AlarmSaveList{ mAlarmList });
+    mSrvSender.updList(mAlarmList);
     modelListener->onAlarmListUpdated(mAlarmList);
 }
 
@@ -224,65 +225,67 @@ bool Model::isAnyKeyPressed(uint8_t key) const
            (Gui::Config::Button::R2 == key);
 }
 
-// IUserApp implementation
-void Model::onCreate()
+void Model::setCapabilities()
 {
-    LOG_INFO("called\n");
+    // Default values
+    auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestSetCapabilities>();
+    if (msg) {
+        msg->enMusicControl = true;
+        msg->enUsbChargingScreen = true;
+        msg->enMusicControl = true;
+        mKernel.comm.sendMessage(msg);
+        mKernel.comm.releaseMessage(msg);
+    }
 }
 
+// IUserApp implementation
 void Model::onStart()
 {
-    LOG_INFO("called\n");
-
-    mGSModel->setGUIHandler(mKernel, this); // re-set handler after stop
-    mGSModel->sendToService(G2SEvent::Run{});
+    LOG_INFO("Started\n");
 }
 
 void Model::onResume()
 {
-    LOG_INFO("called\n");
     mIsRunning = true;
+    resetIdleTimer();
+
+    // Redraw screen
+    mInvalidate = true;
 }
 
-void Model::onFrame()
+void Model::onSuspend()
 {
-    //LOG_INFO("called\n");
-}
-
-void Model::onPause()
-{
-    LOG_INFO("called\n");
     mIsRunning = false;
 }
 
 void Model::onStop()
 {
-    LOG_INFO("called\n");
-
-    mGSModel->sendToService(G2SEvent::Stop {});
-    mGSModel->setGUIHandler(nullptr, nullptr);  // clear handler after stop
-}
-
-void Model::onDestroy()
-{
-    LOG_INFO("called\n");
+    LOG_INFO("Force exit from the application\n");
 }
 
 
 // Events from Service
-void Model::handleEvent(const S2GEvent::AlarmList& event)
+bool Model::customMessageHandler(SDK::MessageBase *msg)
 {
-    mAlarmList = event.list;
-    modelListener->onAlarmListUpdated(mAlarmList);
-}
+    switch (msg->getType()) {
+        case CustomMessage::ALARM_LIST:  {
+            LOG_DEBUG("ALARM_LIST\n");
+            auto *cmsg = static_cast<CustomMessage::AlarmList*>(msg);
+            mAlarmList = cmsg->list;
+            modelListener->onAlarmListUpdated(mAlarmList);
+        } break;
 
-void Model::handleEvent(const S2GEvent::Alarm& event)
-{
-    LOG_INFO("Alarm\n");
+        case CustomMessage::ACTIVATED_ALARM:  {
+            LOG_DEBUG("ACTIVATED_ALARM\n");
+            auto *cmsg = static_cast<CustomMessage::ActivatedAlarm*>(msg);
+            mActiveAlarm = cmsg->alarm;
+            modelListener->onAlarmActivated(mActiveAlarm);
+        } break;
 
-    // Save active alarm
-    mActiveAlarm = event.alarm;
+        default:
+            break;
+    }
 
-    modelListener->onAlarmActivated(mActiveAlarm);
+    return true;
 }
 

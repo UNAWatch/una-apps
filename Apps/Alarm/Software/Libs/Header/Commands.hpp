@@ -9,6 +9,9 @@
 #include "AppTypes.hpp"
 #include <vector>
 
+// Force 4-byte alignment for all message structures
+#pragma pack(push, 4)
+
 namespace CustomMessage {
 
     // Application custom commands
@@ -80,7 +83,7 @@ namespace CustomMessage {
 // Helper wrapper
 class Sender {
 public:
-    Sender(SDK::Kernel &kernel) :
+    Sender(const SDK::Kernel &kernel) :
             mKernel(kernel)
     {
     }
@@ -113,11 +116,12 @@ public:
     }
 
     // GUI --> Service
-    bool activateEffect()
+    bool activateEffect(AppType::Alarm alarm)
     {
         bool status = false;
         auto *msg = mKernel.comm.allocateMessage<CustomMessage::AlarmActiveteEffect>();
         if (msg) {
+            msg->alarm = alarm;
             status = mKernel.comm.sendMessage(msg);
             mKernel.comm.releaseMessage(msg);
         }
@@ -175,3 +179,4 @@ private:
 
 } // namespace CustomMessage
 
+#pragma pack(pop)

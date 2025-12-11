@@ -3,12 +3,12 @@
 
 #include "touchgfx/UIEventListener.hpp"
 
-#include "SDK/GSModel/IGUIModel.hpp"
 #include "SDK/Kernel/Kernel.hpp"
+#include "SDK/Interfaces/IGuiLifeCycleCallback.hpp"
+#include "SDK/Interfaces/ICustomMessageHandler.hpp"
 
 #include "gui/common/GuiConfig.hpp"
-#include "SDK/Interfaces/IGuiLifeCycleCallback.hpp"
-
+#include "Commands.hpp"
 
 #include <vector>
 #include <memory>
@@ -17,7 +17,8 @@ class FrontendApplication;
 class ModelListener;
 
 class Model : public touchgfx::UIEventListener,
-              public SDK::Interface::IGuiLifeCycleCallback
+              public SDK::Interface::IGuiLifeCycleCallback,
+              public SDK::Interface::ICustomMessageHandler
 {
 public:
     Model();
@@ -89,9 +90,8 @@ protected:
     ModelListener* modelListener;           ///< Pointer to model listener
     
     // Fields required for for GUI <-> Service communication
-    const SDK::Kernel& mKernel;             ///< Reference to kernel interface
-    std::shared_ptr<IGUIModel> mGSModel;    ///< Pointer to GUI-Service model interface
-
+    const SDK::Kernel&      mKernel;        ///< Reference to kernel interface
+    CustomMessage::Sender   mSrvSender;
 
     // IGuiLifeCycleCallback implementation required methods for app lifecycle
     virtual void onStart()   override;
@@ -119,9 +119,10 @@ protected:
      */
     bool isAnyKeyPressed(uint8_t key) const;
 
-    // IGUIModelHandler implementation
-    void handleEvent(const S2GEvent::AlarmList& event) override;
-    void handleEvent(const S2GEvent::Alarm& event) override;
+    void setCapabilities();
+
+    // ICustomMessageHandler implementation
+    virtual bool customMessageHandler(SDK::MessageBase *msg) override;
 
 
     /// Is app running (between onResume and onPause)

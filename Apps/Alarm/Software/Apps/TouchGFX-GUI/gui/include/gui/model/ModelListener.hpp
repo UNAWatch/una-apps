@@ -3,6 +3,7 @@
 
 #include <gui/model/Model.hpp>
 #include <gui/common/FrontendApplication.hpp>
+#include <vector>
 
 class ModelListener
 {
