@@ -3,59 +3,48 @@
 
 #include <ctime>
 
-#include "SDK/Kernel/KernelProviderService.hpp"
-
+#include "SDK/Kernel/Kernel.hpp"
 #include "SDK/Interfaces/IGlance.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
-
-#include "SDK/Interfaces/ISensorDriver.hpp"
+#include "SDK/SensorLayer/SensorConnection.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
-#include "SDK/SensorLayer/SensorDriverConnection.hpp"
 
-class Service : public SDK::Interface::IApp::Callback,
-                public SDK::Interface::IGlance,
-                public SDK::Interface::ISensorDataListener
+class Service : public SDK::Interface::ISensorDataListener
 {
 public:
-    Service();
-
-    ~Service() override = default;
+    Service(SDK::Kernel &kernel);
+    virtual ~Service();
 
     void run();
 
 private:
-    const SDK::Kernel&  mKernel;
-    bool                mTerminate;
-
-    // IApp::Callback implementation
-    virtual void onCreate()  override;
-    virtual void onStart()   override;
-    virtual void onResume()  override;
-    virtual void onStop()    override;
-    virtual void onPause()   override;
-    virtual void onDestroy() override;
-
-    // IGlance implementation
-    virtual IGlance::Info glanceGetInfo() override;
-    virtual void glanceUpdate()           override;
-    virtual void glanceClose()            override;
+    void connect();
+    void disconnect();
 
     // ISensorDataListener implementation
-    virtual void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
-                              const std::vector<SDK::Interface::ISensorData*>& data,
-                              bool                                             first) override;
+    void onSdlNewData(uint16_t                 handle,
+                      const SDK::Sensor::Data* data,
+                      uint16_t                 count,
+                      uint16_t                 stride) override;
 
-    void createGlanceGUI();
+    void glanceUpdate();
 
+    void onGlanceTick();
+    bool configGui();
+    void createGuiControls();
+
+    static constexpr char skTextCalculating[] = "Calculating...";
+
+    const SDK::Kernel&       mKernel;
+    const char*              mName;
+    uint32_t                 mMaxControls;
     SDK::Glance::Form        mGlanceUI;
     SDK::Glance::ControlText mGlanceTitle;
     SDK::Glance::ControlText mGlanceValue;
 
-    static constexpr char skTextCalculating[] = "Calculating...";
-
-    SDK::Sensor::DriverConnection mHrSensor;
-    float mHrValue;
-    bool mIsValid;
+    SDK::Sensor::Connection mSensorHR;
+    float                   mHrValue;
+    bool                    mIsValid;
 };
 
 #endif

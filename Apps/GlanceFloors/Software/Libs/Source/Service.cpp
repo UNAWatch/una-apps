@@ -5,10 +5,13 @@
 #include "SDK/UnaLogger/Logger.h"
 
 #include "SDK/Messages/CommandMessages.hpp"
+#include "SDK/Messages/SensorLayerMessages.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
+
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
 #include "icon_60x60.h"
 #include "icon_30x30.h"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
 Service::Service(SDK::Kernel &kernel)
         : mKernel(kernel)
@@ -17,14 +20,16 @@ Service::Service(SDK::Kernel &kernel)
         , mGlanceUI()
         , mGlanceTitle()
         , mGlanceValue()
-        //, mFloorsSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, 1000, 1000)
+        , mSensorFloors(SDK::Sensor::Type::FLOOR_COUNTER)
         , mFloorsValue(0)
 {
 }
 
 Service::~Service()
 {
-    disconnect();   // Cleanup recourses
+    LOG_DEBUG("~Service\n");
+
+    disconnect();
 }
 
 void Service::run()
@@ -62,6 +67,14 @@ void Service::run()
                 onGlanceTick();
                 break;
 
+            case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
+                auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
+                this->onSdlNewData(event->handle,
+                                   event->data,
+                                   event->count,
+                                   event->stride);
+                } break;
+
             default:
                 break;
         }
@@ -73,39 +86,35 @@ void Service::run()
 
 void Service::connect()
 {
-    //mFloorsSensor.connect();
+    LOG_DEBUG("tick\n");
+    mSensorFloors.connect();
 }
 
 void Service::disconnect()
 {
-    //mFloorsSensor.disconnect();
+    LOG_DEBUG("tick\n");
+    mSensorFloors.disconnect();
 }
 
-//void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sensor,
-//                           const std::vector< SDK::Interface::ISensorData*>& data,
-//                           bool                                              first)
-//{
-//    // We are only interested in the last sample
-//    const size_t sampleNum = data.size();
-//    if (sampleNum == 0) {
-//        return;
-//    }
-//
-//    const SDK::Interface::ISensorData& sample = *data[sampleNum - 1];
-//
-//    if (mFloorsSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::FloorCounter f {sample};
-//        if (f.isDataValid()) {
-//
-//            uint32_t newValue = f.getFloorsDown() + f.getFloorsUp();
-//            if (mFloorsValue != newValue) {
-//                mFloorsValue = newValue;
-//                mGlanceValue.print("%u", mFloorsValue);
-//            }
-//        }
-//    }
-//
-//}
+void Service::onSdlNewData(uint16_t                 handle,
+                           const SDK::Sensor::Data* data,
+                           uint16_t                 count,
+                           uint16_t                 stride)
+{
+    SDK::Sensor::DataBatch batch(data, count, stride);
+
+    if (mSensorFloors.matchesDriver(handle)) {
+        SDK::SensorDataParser::FloorCounter p(batch[0]);
+        LOG_DEBUG("up = %d down = %d\n", p.getFloorsUp(), p.getFloorsDown());
+        if (p.isDataValid()) {
+            uint32_t newValue = p.getFloorsDown() + p.getFloorsUp();
+            if (mFloorsValue != newValue) {
+                mFloorsValue = newValue;
+                mGlanceValue.print("%u", mFloorsValue);
+            }
+        }
+    }
+}
 
 void Service::onGlanceTick()
 {
