@@ -5,10 +5,15 @@
 #include "SDK/UnaLogger/Logger.h"
 
 #include "SDK/Messages/CommandMessages.hpp"
+#include "SDK/Messages/SensorLayerMessages.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserTemperature.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserPressure.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
 
 #include "icon_60x60.h"
 #include "icon_30x30.h"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
 Service::Service(SDK::Kernel &kernel)
         : mKernel(kernel)
@@ -17,7 +22,10 @@ Service::Service(SDK::Kernel &kernel)
         , mGlanceUI()
         , mGlanceTitle()
         , mGlanceValue()
-        //, mFloorsSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, 1000, 1000)
+        , mSensorFloors(SDK::Sensor::Type::FLOOR_COUNTER)
+        , mSensorTemperature(SDK::Sensor::Type::AMBIENT_TEMPERATURE)
+        , mSensorPressure(SDK::Sensor::Type::PRESSURE)
+        , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER)
         , mFloorsValue(0)
 {
     LOG_DEBUG("Service\n");
@@ -64,6 +72,14 @@ void Service::run()
                 onGlanceTick();
                 break;
 
+            case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
+                auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
+                this->onSdlNewData(event->handle,
+                                   event->data,
+                                   event->count,
+                                   event->stride);
+                } break;
+
             default:
                 break;
         }
@@ -75,39 +91,49 @@ void Service::run()
 
 void Service::connect()
 {
-    //mFloorsSensor.connect();
+    LOG_DEBUG("tick\n");
+    mSensorFloors.connect();
+    mSensorTemperature.connect();
+    mSensorPressure.connect();
+    mSensorAltimeter.connect();
 }
 
 void Service::disconnect()
 {
-    //mFloorsSensor.disconnect();
+    LOG_DEBUG("tick\n");
+    mSensorFloors.disconnect();
+    mSensorTemperature.disconnect();
+    mSensorPressure.disconnect();
+    mSensorAltimeter.disconnect();
 }
 
-//void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sensor,
-//                           const std::vector< SDK::Interface::ISensorData*>& data,
-//                           bool                                              first)
-//{
-//    // We are only interested in the last sample
-//    const size_t sampleNum = data.size();
-//    if (sampleNum == 0) {
-//        return;
-//    }
-//
-//    const SDK::Interface::ISensorData& sample = *data[sampleNum - 1];
-//
-//    if (mFloorsSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::FloorCounter f {sample};
-//        if (f.isDataValid()) {
-//
-//            uint32_t newValue = f.getFloorsDown() + f.getFloorsUp();
-//            if (mFloorsValue != newValue) {
-//                mFloorsValue = newValue;
-//                mGlanceValue.print("%u", mFloorsValue);
-//            }
-//        }
-//    }
-//
-//}
+void Service::onSdlNewData(uint16_t                 handle,
+                           const SDK::Sensor::Data* data,
+                           uint16_t                 count,
+                           uint16_t                 stride)
+{
+    SDK::Sensor::DataBatch batch(data, count, stride);
+
+    if (mSensorFloors.matchesDriver(handle)) {
+        SDK::SensorDataParser::FloorCounter p(batch[0]);
+        if (p.isDataValid()) {
+            uint32_t newValue = p.getFloorsDown() + p.getFloorsUp();
+            if (mFloorsValue != newValue) {
+                mFloorsValue = newValue;
+                mGlanceValue.print("%u", mFloorsValue);
+            }
+        }
+    } else if (mSensorTemperature.matchesDriver(handle)) {
+        SDK::SensorDataParser::Temperature p(batch[0]);
+        LOG_DEBUG("temperature = %f\n", p.getTemperature());
+    } else if (mSensorPressure.matchesDriver(handle)) {
+        SDK::SensorDataParser::Pressure p(batch[0]);
+        LOG_DEBUG("pressure    = %f\n", p.getPressure());
+    } else if (mSensorAltimeter.matchesDriver(handle)) {
+        SDK::SensorDataParser::Altimeter p(batch[0]);
+        LOG_DEBUG("altitude    = %f\n", p.getAltitude());
+    }
+}
 
 void Service::onGlanceTick()
 {

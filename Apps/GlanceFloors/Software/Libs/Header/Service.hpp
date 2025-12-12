@@ -4,14 +4,11 @@
 #include <ctime>
 
 #include "SDK/Kernel/Kernel.hpp"
-
 #include "SDK/Glance/GlanceControl.hpp"
+#include "SDK/SensorLayer/SensorConnection.hpp"
+#include "SDK/Interfaces/ISensorDataListener.hpp"
 
-//#include "SDK/Interfaces/ISensorDriver.hpp"
-//#include "SDK/Interfaces/ISensorDataListener.hpp"
-//#include "SDK/SensorLayer/SensorDriverConnection.hpp"
-
-class Service //: public SDK::Interface::ISensorDataListener
+class Service : public SDK::Interface::ISensorDataListener
 {
 public:
     Service(SDK::Kernel &kernel);
@@ -28,9 +25,10 @@ private:
     void disconnect();
 
     // ISensorDataListener implementation
-//    virtual void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
-//                              const std::vector<SDK::Interface::ISensorData*>& data,
-//                              bool                                             first) override;
+    void onSdlNewData(uint16_t                 handle,
+                      const SDK::Sensor::Data* data,
+                      uint16_t                 count,
+                      uint16_t                 stride) override;
 
     void onGlanceTick();
     bool configGui();
@@ -42,9 +40,11 @@ private:
     SDK::Glance::ControlText mGlanceTitle;
     SDK::Glance::ControlText mGlanceValue;
 
-
-//    SDK::Sensor::DriverConnection mFloorsSensor;
-    uint32_t mFloorsValue;
+    SDK::Sensor::Connection mSensorFloors;
+    SDK::Sensor::Connection mSensorTemperature;
+    SDK::Sensor::Connection mSensorPressure;
+    SDK::Sensor::Connection mSensorAltimeter;
+    uint32_t                mFloorsValue;
 
 };
 
