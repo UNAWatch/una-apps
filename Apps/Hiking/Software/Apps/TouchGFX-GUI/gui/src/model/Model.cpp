@@ -6,7 +6,7 @@
 #include "SDK/../../../Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 #define LOG_MODULE_PRX      "Model"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 #if defined(SIMULATOR)
@@ -59,8 +59,6 @@ void Model::invalidate()
 
 void Model::tick()
 {
-    //LOG_DEBUG("tick\n");
-
     if (mIsRunning) {
         decIdleTimer();
     }
