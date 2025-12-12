@@ -18,9 +18,6 @@ public:
     void run();
 
 private:
-    const SDK::Kernel&  mKernel;
-
-
     void connect();
     void disconnect();
 
@@ -34,6 +31,7 @@ private:
     bool configGui();
     void createGuiControls();
 
+    const SDK::Kernel&       mKernel;
     const char*              mName;
     uint32_t                 mMaxControls;
     SDK::Glance::Form        mGlanceUI;

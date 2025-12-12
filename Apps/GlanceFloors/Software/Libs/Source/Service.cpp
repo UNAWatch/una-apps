@@ -6,11 +6,9 @@
 
 #include "SDK/Messages/CommandMessages.hpp"
 #include "SDK/Messages/SensorLayerMessages.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserTemperature.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserPressure.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
+
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
 #include "icon_60x60.h"
 #include "icon_30x30.h"
@@ -31,7 +29,8 @@ Service::Service(SDK::Kernel &kernel)
 Service::~Service()
 {
     LOG_DEBUG("~Service\n");
-    disconnect();   // Cleanup recourses
+
+    disconnect();
 }
 
 void Service::run()
