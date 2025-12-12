@@ -104,6 +104,16 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Messages</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -184,6 +194,16 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelProviderService.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Messages/MessageGuard.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageGuard.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/SensorConnection.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorConnection.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/UnaLogger/Logger.h</locationURI>
@@ -217,6 +237,11 @@
 			<name>SDK/Libs/Source/Logger/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/UnaLogger/Logger.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/SensorLayer/SensorConnection.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorConnection.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

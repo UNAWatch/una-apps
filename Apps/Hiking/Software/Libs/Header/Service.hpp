@@ -3,9 +3,8 @@
 
 #include "SDK/Kernel/Kernel.hpp"
 
-//#include "SDK/Interfaces/ISensorDriver.hpp"
-//#include "SDK/Interfaces/ISensorDataListener.hpp"
-//#include "SDK/SensorLayer/SensorDriverConnection.hpp"
+#include "SDK/Interfaces/ISensorDataListener.hpp"
+#include "SDK/SensorLayer/SensorConnection.hpp"
 
 #include "SDK/TrackMap/TrackMapBuilder.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
@@ -17,7 +16,7 @@
 #include "Commands.hpp"
 
 
-class Service
+class Service : public SDK::Interface::ISensorDataListener
 {
 public:
     Service(SDK::Kernel &kernel);
@@ -46,11 +45,11 @@ private:
     void onStartGUI();
     void onStopGUI();
 
-
-//    // ISensorDataListener implementation
-//    virtual void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
-//                              const std::vector<SDK::Interface::ISensorData*>& data,
-//                              bool                                             first) override;
+    // ISensorDataListener implementation
+    void onSdlNewData(uint16_t                 handle,
+                      const SDK::Sensor::Data* data,
+                      uint16_t                 count,
+                      uint16_t                 stride) override;
 
     // User-defined event handlers
     void handleEvent(const CustomMessage::TrackStart& event);
@@ -61,15 +60,15 @@ private:
     void notifyLapEnd();
     std::tm toLocalTime(std::time_t utc);
 
-//    // Sensors
-//    SDK::Sensor::DriverConnection mGpsLocationSensor;
-//    SDK::Sensor::DriverConnection mGpsSpeedSensor;
-//    SDK::Sensor::DriverConnection mGpsDistanceSensor;
-//    SDK::Sensor::DriverConnection mStepCounterSensor;
-//    SDK::Sensor::DriverConnection mFloorCounterSensor;
-//    SDK::Sensor::DriverConnection mAltimeterSensor;
-//    SDK::Sensor::DriverConnection mHrSensor;
-//    SDK::Sensor::DriverConnection mBatteryLevelSensor;
+    // Sensors
+    SDK::Sensor::Connection mSensorGpsLocation;
+    SDK::Sensor::Connection mSensorGpsSpeed;
+    SDK::Sensor::Connection mSensorGpsDistance;
+    SDK::Sensor::Connection mSensorStepCounter;
+    SDK::Sensor::Connection mSensorFloorCounter;
+    SDK::Sensor::Connection mSensorAltimeter;
+    SDK::Sensor::Connection mSensorHr;
+    SDK::Sensor::Connection mSensorBatteryLevel;
 
     static constexpr uint32_t skInitialSamplePeriod = 1000;
     static constexpr uint32_t skSamplePeriod        = 10000;

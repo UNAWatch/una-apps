@@ -14,15 +14,16 @@
 #include "TrackInfo.hpp"
 #include "icon_60x60.h"
 #include "SDK/FirmwareVersion.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
 
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsDistance.hpp"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
-//#include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsDistance.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
@@ -38,14 +39,14 @@ Service::Service(SDK::Kernel &kernel)
         , mActivitySummarySerializer(mKernel, "Activity/summary.json")
         , mActivityWriter(mKernel, "Activity")
         , mTrackMapBuilder{}
-//        , mGpsLocationSensor(SDK::Sensor::Type::GPS_LOCATION, this, skInitialSamplePeriod, skSampleLatency)
-//        , mGpsSpeedSensor(SDK::Sensor::Type::GPS_SPEED, this, skInitialSamplePeriod, skSampleLatency)
-//        , mGpsDistanceSensor(SDK::Sensor::Type::GPS_DISTANCE, this, skInitialSamplePeriod, skSampleLatency)
-//        , mStepCounterSensor(SDK::Sensor::Type::STEP_COUNTER, this, skInitialSamplePeriod, skSampleLatency)
-//        , mFloorCounterSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, skInitialSamplePeriod, skSampleLatency)
-//        , mAltimeterSensor(SDK::Sensor::Type::ALTIMETER, this, skInitialSamplePeriod, skSampleLatency)
-//        , mHrSensor(SDK::Sensor::Type::HEART_RATE, this, skInitialSamplePeriod, skSampleLatency)
-//        , mBatteryLevelSensor(SDK::Sensor::Type::BATTERY_LEVEL, this, skInitialSamplePeriod, skSampleLatency)
+        , mSensorGpsLocation(SDK::Sensor::Type::GPS_LOCATION, skInitialSamplePeriod, skSampleLatency)
+        , mSensorGpsSpeed(SDK::Sensor::Type::GPS_SPEED, skInitialSamplePeriod, skSampleLatency)
+        , mSensorGpsDistance(SDK::Sensor::Type::GPS_DISTANCE, skInitialSamplePeriod, skSampleLatency)
+        , mSensorStepCounter(SDK::Sensor::Type::STEP_COUNTER, skInitialSamplePeriod, skSampleLatency)
+        , mSensorFloorCounter(SDK::Sensor::Type::FLOOR_COUNTER, skInitialSamplePeriod, skSampleLatency)
+        , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER, skInitialSamplePeriod, skSampleLatency)
+        , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
+        , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
         , mName("Hiking")
 {
 }
@@ -192,134 +193,135 @@ void Service::run()
 void Service::connectGps()
 {
     LOG_DEBUG("called\n");
-//    mGpsLocationSensor.connect();
+//    mSensorGpsLocation.connect();
 }
 
 void Service::connectAll()
 {
     LOG_DEBUG("called\n");
-//    mBatteryLevelSensor.connect();
-//    mGpsSpeedSensor.connect();
-//    mGpsDistanceSensor.connect();
-//    mStepCounterSensor.connect();
-//    mFloorCounterSensor.connect();
-//    mAltimeterSensor.connect();
-//    mHrSensor.connect();
 
+    ////////////////////////////////
+    //// Subscribe to sensors
+    ////////////////////////////////
+
+    mSensorBatteryLevel.connect();
+    mSensorGpsSpeed.connect();
+    mSensorGpsDistance.connect();
+    mSensorStepCounter.connect();
+    mSensorFloorCounter.connect();
+    mSensorAltimeter.connect();
+    mSensorHr.connect();
 }
 
 void Service::disconnect()
 {
     LOG_DEBUG("called\n");
-//    // Unsubscribe from sensors
-//    mGpsLocationSensor.disconnect();
-//    mGpsSpeedSensor.disconnect();
-//    mGpsDistanceSensor.disconnect();
-//    mHrSensor.disconnect();
-//    mStepCounterSensor.disconnect();
-//    mAltimeterSensor.disconnect();
-//    mFloorCounterSensor.disconnect();
-//    mBatteryLevelSensor.disconnect();
 
+    ////////////////////////////////
+    //// Unsubscribe from sensors
+    ////////////////////////////////
+    mSensorGpsLocation.disconnect();
+    mSensorGpsSpeed.disconnect();
+    mSensorGpsDistance.disconnect();
+    mSensorHr.disconnect();
+    mSensorStepCounter.disconnect();
+    mSensorAltimeter.disconnect();
+    mSensorFloorCounter.disconnect();
+    mSensorBatteryLevel.disconnect();
 }
 
-//void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sensor,
-//                           const std::vector< SDK::Interface::ISensorData*>& data,
-//                           bool                                              first)
-//{
-//    // We are only interested in the last sample
-//    const size_t sampleNum = data.size();
-//    if (sampleNum == 0) {
-//        return;
-//    }
-//
-//    const SDK::Interface::ISensorData& sample = *data[sampleNum - 1];
-//
-//    if (mGpsLocationSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::GpsLocation parser{ sample };
-//        if (parser.isDataValid()) {
-//            mGps.timestamp = parser.getTimestamp();
-//            mGps.fix = parser.isCoordinatesValid();
-//
-//            if (mGps.fix) { // Do not change position if no fix
-//                parser.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
-//            }
-//            LOG_DEBUG("Location: fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
-//        }
-//    } else if (mGpsSpeedSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::GpsSpeed parser{ sample };
-//        if (parser.isDataValid()) {
-//            mSpeed.speed = parser.getSpeed();
-//            mSpeed.timestamp = parser.getTimestamp();
-//            LOG_DEBUG("Speed:    %.2f m/s\n", mSpeed.speed);
-//        }
-//    } else if (mGpsDistanceSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::GpsDistance parser{ sample };
-//        if (parser.isDataValid()) {
-//            mDistance.distance = parser.getDistance();
-//            mDistance.timestamp = parser.getTimestamp();
-//
-//            if (!mDistance.dataValid) {
-//                mDistance.initialDistance = mDistance.distance;
-//                mDistance.dataValid = true;
-//            }
-//            LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
-//        }
-//    } else if (mStepCounterSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::StepCounter sc{ sample };
-//        if (sc.isDataValid()) {
-//            mStepCounter.timestamp = sc.getTimestamp();
-//            mStepCounter.steps = sc.getStepCount();
-//
-//            if (!mStepCounter.dataValid) {
-//                mStepCounter.initialSteps = mStepCounter.steps;
-//                mStepCounter.dataValid = true;
-//            }
-//            LOG_DEBUG("Steps %u\n", mStepCounter.steps);
-//        }
-//    } else if (mFloorCounterSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::FloorCounter fc{ sample };
-//        if (fc.isDataValid()) {
-//            mFloorsCounter.timestamp = fc.getTimestamp();
-//            mFloorsCounter.floors = fc.getFloorsUp() + fc.getFloorsDown();
-//
-//            if (!mFloorsCounter.dataValid) {
-//                mFloorsCounter.initialFloors = mFloorsCounter.floors;
-//                mFloorsCounter.dataValid = true;
-//            }
-//            LOG_DEBUG("Floors %u\n", mFloorsCounter.floors);
-//        }
-//    } else if (mAltimeterSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::Altimeter alt{ sample };
-//        if (alt.isDataValid()) {
-//            mAltimeter.timestamp = alt.getTimestamp();
-//            mAltimeter.altitude = alt.getAltitude();
-//
-//            if (!mAltimeter.dataValid) {
-//                mAltimeter.initialAltitude = mAltimeter.altitude;
-//                mAltimeter.dataValid = true;
-//            }
-//            LOG_DEBUG("Altitude %.2f\n", mAltimeter.altitude);
-//        }
-//    } else if (mHrSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::HeartRate hr{ sample };
-//        if (hr.isDataValid()) {
-//            mHr.hr = hr.getBpm();
-//            mHr.trustLevel = hr.getTrustLevel();
-//            mHr.timestamp = sample.getTimestamp();
-//
-//            mHr.totalSum += mHr.hr;
-//            mHr.totalCnt++;
-//            LOG_DEBUG("HR %.1f, TrustLevel %.1f\n", mHr.hr, mHr.trustLevel);
-//        }
-//    } else if (mBatteryLevelSensor.matchesDriver(sensor)) {
-//        SDK::SensorDataParser::BatteryLevel lvl{ sample };
-//        if (lvl.isDataValid()) {
-//            mBattery.level = lvl.getCharge();
-//            LOG_DEBUG("Battery %.1f %%\n", mBattery.level);
-//        }
-//    }
-//}
+void Service::onSdlNewData(uint16_t                 handle,
+                           const SDK::Sensor::Data* data,
+                           uint16_t                 count,
+                           uint16_t                 stride)
+{
+    SDK::Sensor::DataBatch batch(data, count, stride);
+
+    if (mSensorGpsLocation.matchesDriver(handle)) {
+        SDK::SensorDataParser::GpsLocation parser(batch[0]);
+        if (parser.isDataValid()) {
+            mGps.timestamp = parser.getTimestamp();
+            mGps.fix = parser.isCoordinatesValid();
+
+            if (mGps.fix) { // Do not change position if no fix
+                parser.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
+            }
+            LOG_DEBUG("Location: fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
+        }
+    } else if (mSensorGpsSpeed.matchesDriver(handle)) {
+        SDK::SensorDataParser::GpsSpeed parser(batch[0]);
+        if (parser.isDataValid()) {
+            mSpeed.speed = parser.getSpeed();
+            mSpeed.timestamp = parser.getTimestamp();
+            LOG_DEBUG("Speed:    %.2f m/s\n", mSpeed.speed);
+        }
+    } else if (mSensorGpsDistance.matchesDriver(handle)) {
+        SDK::SensorDataParser::GpsDistance parser(batch[0]);
+        if (parser.isDataValid()) {
+            mDistance.distance = parser.getDistance();
+            mDistance.timestamp = parser.getTimestamp();
+
+            if (!mDistance.dataValid) {
+                mDistance.initialDistance = mDistance.distance;
+                mDistance.dataValid = true;
+            }
+            LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
+        }
+    } else if (mSensorStepCounter.matchesDriver(handle)) {
+        SDK::SensorDataParser::StepCounter parser(batch[0]);
+        if (parser.isDataValid()) {
+            mStepCounter.timestamp = parser.getTimestamp();
+            mStepCounter.steps = parser.getStepCount();
+
+            if (!mStepCounter.dataValid) {
+                mStepCounter.initialSteps = mStepCounter.steps;
+                mStepCounter.dataValid = true;
+            }
+            LOG_DEBUG("Steps %u\n", mStepCounter.steps);
+        }
+    } else if (mSensorFloorCounter.matchesDriver(handle)) {
+        SDK::SensorDataParser::FloorCounter parser(batch[0]);
+        if (parser.isDataValid()) {
+            mFloorsCounter.timestamp = parser.getTimestamp();
+            mFloorsCounter.floors = parser.getFloorsUp() + parser.getFloorsDown();
+
+            if (!mFloorsCounter.dataValid) {
+                mFloorsCounter.initialFloors = mFloorsCounter.floors;
+                mFloorsCounter.dataValid = true;
+            }
+            LOG_DEBUG("Floors %u\n", mFloorsCounter.floors);
+        }
+    } else if (mSensorAltimeter.matchesDriver(handle)) {
+        SDK::SensorDataParser::Altimeter parser(batch[0]);
+        if (parser.isDataValid()) {
+            mAltimeter.timestamp = parser.getTimestamp();
+            mAltimeter.altitude = parser.getAltitude();
+
+            if (!mAltimeter.dataValid) {
+                mAltimeter.initialAltitude = mAltimeter.altitude;
+                mAltimeter.dataValid = true;
+            }
+            LOG_DEBUG("Altitude %.2f\n", mAltimeter.altitude);
+        }
+    } else if (mSensorHr.matchesDriver(handle)) {
+        SDK::SensorDataParser::HeartRate parser(batch[0]);
+        if (parser.isDataValid()) {
+            mHr.hr = parser.getBpm();
+            mHr.trustLevel = parser.getTrustLevel();
+            mHr.timestamp = parser.getTimestamp();
+
+            mHr.totalSum += mHr.hr;
+            mHr.totalCnt++;
+            LOG_DEBUG("HR %.1f, TrustLevel %.1f\n", mHr.hr, mHr.trustLevel);
+        }
+    } else if (mSensorBatteryLevel.matchesDriver(handle)) {
+        SDK::SensorDataParser::BatteryLevel parser(batch[0]);
+        if (parser.isDataValid()) {
+            mBattery.level = parser.getCharge();
+            LOG_DEBUG("Battery %.1f %%\n", mBattery.level);
+        }
+    }
+}
 
 void Service::onStartGUI()
 {

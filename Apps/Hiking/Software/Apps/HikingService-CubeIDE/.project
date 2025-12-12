@@ -169,6 +169,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/SensorLayer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/TrackMap</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -294,6 +299,11 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/SensorLayerMessages.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/SensorLayer/SensorConnection.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorConnection.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/TrackMap/TrackMapBuilder.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/TrackMap/TrackMapBuilder.hpp</locationURI>
@@ -349,9 +359,9 @@
 			<locationURI>SDK_LOC/Libs/Source/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/SensorLayer/SensorDriverConnection.cpp</name>
+			<name>SDK/Libs/Source/SensorLayer/SensorConnection.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorDriverConnection.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorConnection.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/TrackMap/TrackMapBuilder.cpp</name>

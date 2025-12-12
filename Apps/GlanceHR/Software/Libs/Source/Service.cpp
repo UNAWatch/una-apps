@@ -5,49 +5,155 @@
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-#include "icon_60x60.h"
-#include "icon_30x30.h"
+#include "SDK/Messages/CommandMessages.hpp"
+#include "SDK/Messages/SensorLayerMessages.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
+
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 
-Service::Service()
-        : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
-        , mTerminate(false)
+#include "icon_60x60.h"
+#include "icon_30x30.h"
+
+Service::Service(SDK::Kernel &kernel)
+        : mKernel(kernel)
+        , mName("HeartRate")
+        , mMaxControls(0)
         , mGlanceUI()
         , mGlanceTitle()
         , mGlanceValue()
-        , mHrSensor(SDK::Sensor::Type::HEART_RATE, this, 1000, 1000)
+        , mSensorHR(SDK::Sensor::Type::HEART_RATE)
         , mHrValue(0)
         , mIsValid(false)
 {
-    int16_t w;
-    int16_t h;
-    mKernel.app.getGlanceArea(w, h);
-    mGlanceUI.setWidth(w);
-    mGlanceUI.setHeight(h);
+    LOG_DEBUG("Service\n");
+}
 
-    mKernel.app.registerGlance(this);
+Service::~Service()
+{
+    LOG_DEBUG("~Service\n");
 
-    createGlanceGUI();
+    disconnect();
 }
 
 void Service::run()
 {
-    mHrSensor.connect();
+    LOG_DEBUG("Ready\n");
 
-    while (!mTerminate) {
-        mKernel.system.delay(1000);
+    while (true) {
+        SDK::MessageBase *msg;
+
+        // Wait for command (blocks until available)
+        if(!mKernel.comm.getMessage(msg)) {
+            continue;
+        }
+
+        switch (msg->getType()) {
+
+            case SDK::MessageType::EVENT_GLANCE_START:
+                LOG_DEBUG("Starting...\n");
+                if (configGui()) {
+                    createGuiControls();
+                    connect();
+                }
+                break;
+
+            case SDK::MessageType::COMMAND_APP_STOP:
+            case SDK::MessageType::EVENT_GLANCE_STOP:
+                LOG_DEBUG("Stopping...\n");
+                disconnect();
+                // We must release message because this is the last event.
+                mKernel.comm.releaseMessage(msg);
+                return;
+                break;
+
+            case SDK::MessageType::EVENT_GLANCE_TICK:
+                onGlanceTick();
+                break;
+
+            case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
+                auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
+                this->onSdlNewData(event->handle,
+                                   event->data,
+                                   event->count,
+                                   event->stride);
+                } break;
+
+            default:
+                break;
+        }
+
+        // Release message after processing
+        mKernel.comm.releaseMessage(msg);
     }
-
-    mHrSensor.disconnect();
 }
 
-SDK::Interface::IGlance::Info Service::glanceGetInfo()
+void Service::connect()
 {
-    IGlance::Info info{};
-    info.altname = "Live HR";
-    info.count = static_cast<uint8_t>(mGlanceUI.size());
-    info.ctrls = mGlanceUI.data();
-    return info;
+    LOG_DEBUG("tick\n");
+    mSensorHR.connect();
+}
+
+void Service::disconnect()
+{
+    LOG_DEBUG("tick\n");
+    mSensorHR.disconnect();
+}
+
+void Service::onSdlNewData(uint16_t                 handle,
+                           const SDK::Sensor::Data* data,
+                           uint16_t                 count,
+                           uint16_t                 stride)
+{
+    SDK::Sensor::DataBatch batch(data, count, stride);
+
+    if (mSensorHR.matchesDriver(handle)) {
+        SDK::SensorDataParser::HeartRate p(batch[0]);
+        LOG_DEBUG("hr = %.2f\n", p.getBpm());
+        mHrValue = p.getBpm();
+        glanceUpdate();
+    }
+}
+
+void Service::onGlanceTick()
+{
+    LOG_DEBUG("Glance tick\n");
+
+    if (mGlanceUI.isInvalid()) {
+        auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
+        if (upd) {
+            upd->name = mName;
+            upd->controls = mGlanceUI.data();
+            upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
+
+            mKernel.comm.sendMessage(upd, 100);
+            mKernel.comm.releaseMessage(upd);
+        }
+
+        mGlanceUI.setValid();
+   }
+}
+
+bool Service::configGui()
+{
+    // Get Glance configuration
+    auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
+    if (!gc) {
+        mKernel.sys.exit(0); // no return
+    }
+    mKernel.comm.sendMessage(gc);
+
+    if (gc->getResult() != SDK::MessageResult::SUCCESS) {
+        LOG_ERROR("Command execution status: %s\n", gc->getResultStr());
+        mKernel.comm.releaseMessage(gc);
+        return false;
+    }
+
+    mGlanceUI.setWidth(gc->width);
+    mGlanceUI.setHeight(gc->height);
+    mMaxControls = gc->maxControls;
+    mKernel.comm.releaseMessage(gc);
+
+    return true;
 }
 
 void Service::glanceUpdate()
@@ -71,65 +177,7 @@ void Service::glanceUpdate()
     }
 }
 
-void Service::glanceClose()
-{
-    LOG_INFO("called\n");
-    mTerminate = true;
-}
-
-void Service::onCreate()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onStart()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onResume()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onStop()
-{
-    LOG_INFO("called\n");
-    mTerminate = true;
-}
-
-void Service::onPause()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onDestroy()
-{
-    LOG_INFO("called\n");
-}
-
-void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sensor,
-                           const std::vector< SDK::Interface::ISensorData*>& data,
-                           bool                                              first)
-{
-    // We are only interested in the last sample
-    const size_t sampleNum = data.size();
-    if (sampleNum == 0) {
-        return;
-    }
-
-    const SDK::Interface::ISensorData& sample = *data[sampleNum - 1];
-
-    if (mHrSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::HeartRate hr {sample};
-        if (hr.isDataValid()) {
-            mHrValue = hr.getBpm();
-        }
-    }
-
-}
-
-void Service::createGlanceGUI()
+void Service::createGuiControls()
 {
     mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
 
