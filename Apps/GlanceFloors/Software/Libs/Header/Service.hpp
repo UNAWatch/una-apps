@@ -41,9 +41,6 @@ private:
     SDK::Glance::ControlText mGlanceValue;
 
     SDK::Sensor::Connection mSensorFloors;
-    SDK::Sensor::Connection mSensorTemperature;
-    SDK::Sensor::Connection mSensorPressure;
-    SDK::Sensor::Connection mSensorAltimeter;
     uint32_t                mFloorsValue;
 
 };

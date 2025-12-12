@@ -23,9 +23,6 @@ Service::Service(SDK::Kernel &kernel)
         , mGlanceTitle()
         , mGlanceValue()
         , mSensorFloors(SDK::Sensor::Type::FLOOR_COUNTER)
-        , mSensorTemperature(SDK::Sensor::Type::AMBIENT_TEMPERATURE)
-        , mSensorPressure(SDK::Sensor::Type::PRESSURE)
-        , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER)
         , mFloorsValue(0)
 {
     LOG_DEBUG("Service\n");
@@ -93,18 +90,12 @@ void Service::connect()
 {
     LOG_DEBUG("tick\n");
     mSensorFloors.connect();
-    mSensorTemperature.connect();
-    mSensorPressure.connect();
-    mSensorAltimeter.connect();
 }
 
 void Service::disconnect()
 {
     LOG_DEBUG("tick\n");
     mSensorFloors.disconnect();
-    mSensorTemperature.disconnect();
-    mSensorPressure.disconnect();
-    mSensorAltimeter.disconnect();
 }
 
 void Service::onSdlNewData(uint16_t                 handle,
@@ -116,6 +107,7 @@ void Service::onSdlNewData(uint16_t                 handle,
 
     if (mSensorFloors.matchesDriver(handle)) {
         SDK::SensorDataParser::FloorCounter p(batch[0]);
+        LOG_DEBUG("up = %d down = %d\n", p.getFloorsUp(), p.getFloorsDown());
         if (p.isDataValid()) {
             uint32_t newValue = p.getFloorsDown() + p.getFloorsUp();
             if (mFloorsValue != newValue) {
@@ -123,15 +115,6 @@ void Service::onSdlNewData(uint16_t                 handle,
                 mGlanceValue.print("%u", mFloorsValue);
             }
         }
-    } else if (mSensorTemperature.matchesDriver(handle)) {
-        SDK::SensorDataParser::Temperature p(batch[0]);
-        LOG_DEBUG("temperature = %f\n", p.getTemperature());
-    } else if (mSensorPressure.matchesDriver(handle)) {
-        SDK::SensorDataParser::Pressure p(batch[0]);
-        LOG_DEBUG("pressure    = %f\n", p.getPressure());
-    } else if (mSensorAltimeter.matchesDriver(handle)) {
-        SDK::SensorDataParser::Altimeter p(batch[0]);
-        LOG_DEBUG("altitude    = %f\n", p.getAltitude());
     }
 }
 
