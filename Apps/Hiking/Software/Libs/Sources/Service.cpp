@@ -1,61 +1,58 @@
-﻿#include "Service.hpp"
-#include "GSModelEvents/G2SEvents.hpp"
+﻿
+#include "Service.hpp"
 
 #include <ctime>
 #include <cmath>
 #include <memory>
 #include <cstring>
+#include <array>
 
 #include "AppMenu.hpp"
 #include "AppUtils.hpp"
-
 #include "Settings.hpp"
 #include "ActivitySummary.hpp"
 #include "TrackInfo.hpp"
-
-#include "SDK/FirmwareVersion.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsDistance.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
-
 #include "icon_60x60.h"
+#include "SDK/FirmwareVersion.hpp"
+
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp"
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp"
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserGpsDistance.hpp"
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
+//#include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
 
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-Service::Service()
-        : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
-        , mGSModel(*this)
-        , mTerminate(false)
+Service::Service(SDK::Kernel &kernel)
+        : mKernel(kernel)
         , mGUIStarted(false)
+        , mGuiSender(kernel)
         , mSettings{}
         , mSettingsSerializer(mKernel, "settings.json")
         , mSummary{}
         , mActivitySummarySerializer(mKernel, "Activity/summary.json")
         , mActivityWriter(mKernel, "Activity")
-        , mGpsLocationSensor(SDK::Sensor::Type::GPS_LOCATION, this, skInitialSamplePeriod, skSampleLatency)
-        , mGpsSpeedSensor(SDK::Sensor::Type::GPS_SPEED, this, skInitialSamplePeriod, skSampleLatency)
-        , mGpsDistanceSensor(SDK::Sensor::Type::GPS_DISTANCE, this, skInitialSamplePeriod, skSampleLatency)
-        , mStepCounterSensor(SDK::Sensor::Type::STEP_COUNTER, this, skInitialSamplePeriod, skSampleLatency)
-        , mFloorCounterSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, skInitialSamplePeriod, skSampleLatency)
-        , mAltimeterSensor(SDK::Sensor::Type::ALTIMETER, this, skInitialSamplePeriod, skSampleLatency)
-        , mHrSensor(SDK::Sensor::Type::HEART_RATE, this, skInitialSamplePeriod, skSampleLatency)
-        , mBatteryLevelSensor(SDK::Sensor::Type::BATTERY_LEVEL, this, skInitialSamplePeriod, skSampleLatency)
+        , mTrackMapBuilder{}
+//        , mGpsLocationSensor(SDK::Sensor::Type::GPS_LOCATION, this, skInitialSamplePeriod, skSampleLatency)
+//        , mGpsSpeedSensor(SDK::Sensor::Type::GPS_SPEED, this, skInitialSamplePeriod, skSampleLatency)
+//        , mGpsDistanceSensor(SDK::Sensor::Type::GPS_DISTANCE, this, skInitialSamplePeriod, skSampleLatency)
+//        , mStepCounterSensor(SDK::Sensor::Type::STEP_COUNTER, this, skInitialSamplePeriod, skSampleLatency)
+//        , mFloorCounterSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, skInitialSamplePeriod, skSampleLatency)
+//        , mAltimeterSensor(SDK::Sensor::Type::ALTIMETER, this, skInitialSamplePeriod, skSampleLatency)
+//        , mHrSensor(SDK::Sensor::Type::HEART_RATE, this, skInitialSamplePeriod, skSampleLatency)
+//        , mBatteryLevelSensor(SDK::Sensor::Type::BATTERY_LEVEL, this, skInitialSamplePeriod, skSampleLatency)
+        , mName("Hiking")
 {
-    int16_t w;
-    int16_t h;
-    mKernel.app.getGlanceArea(w, h);
-    mGlanceUI.setWidth(w);
-    mGlanceUI.setHeight(h);
-    mKernel.app.registerGlance(this);
+}
 
-    createGlanceGUI();
+Service::~Service()
+{
+    disconnect();   // Cleanup recourses
 }
 
 void Service::run()
@@ -64,107 +61,272 @@ void Service::run()
 
     // Get settings
     if (!mSettingsSerializer.load(mSettings)) {
-        LOG_ERROR("Failed to load settings\n");
+        LOG_WARNING("Failed to load settings\n");
     }
 
     // Get summary
     if (!mActivitySummarySerializer.load(mSummary)) {
-        LOG_ERROR("Failed to load activity summary\n");
-    } else {
-        time_t utc = mSummary.utc; //  Last activity UTC time
-        std::tm tmNow{};
-#if WIN32
-        localtime_s(&tmNow, &utc);
-#else
-        localtime_r(&utc, &tmNow);
-#endif
-        mGlanceTime.print("%s %d, %d:%02d", App::Utils::DayShort[tmNow.tm_wday], tmNow.tm_mday, tmNow.tm_hour, tmNow.tm_min);
+        LOG_WARNING("Failed to load activity summary\n");
     }
 
-    uint32_t startTime = mKernel.system.getTimeMs();
-    bool firstFix = false;
+    uint32_t startTime = mKernel.sys.getTimeMs();
+    bool firstFix = true;
 
-    while (!mTerminate) {
-        mGSModel.process(1000);
+    std::time_t processedUtc = 0;
 
+    while (true) {
+        SDK::MessageBase *msg;
+        if (mKernel.comm.getMessage(msg, 500)) {
+            // Command handling
+            switch (msg->getType()) {
+
+                // Kernel messages
+                case SDK::MessageType::COMMAND_APP_STOP:
+                    LOG_INFO("Force exit from the application\n");
+                    disconnect();   // Cleanup recourses
+                    if (mTrackState != Track::State::INACTIVE) {
+                        stopTrack(std::time(nullptr), false);
+                    }
+                    // We must release message because this is the last event.
+                    mKernel.comm.releaseMessage(msg);
+                    return;
+
+                case SDK::MessageType::COMMAND_APP_NOTIF_GUI_RUN:
+                    LOG_INFO("GUI is now running\n");
+                    onStartGUI();
+                    break;
+
+                case SDK::MessageType::COMMAND_APP_NOTIF_GUI_STOP:
+                    LOG_INFO("GUI has stopped\n");
+                    onStopGUI();
+                    break;
+
+                case SDK::MessageType::EVENT_GLANCE_START:
+                    LOG_INFO("GLANCE is now running\n");
+                    if (configGui()) {
+                        createGuiControls();
+                        mGlanceActive = true;
+                    }
+                    break;
+
+                case SDK::MessageType::EVENT_GLANCE_STOP:
+                    LOG_INFO("GLANCE has stopped\n");
+                    mGlanceActive = false;
+                    break;
+
+                case SDK::MessageType::EVENT_GLANCE_TICK:
+                    //LOG_DEBUG("GLANCE tick\n");
+                    onGlanceTick();
+                    break;
+
+
+                // Custom  messages
+                case CustomMessage::SETTINGS_SAVE:  {
+                    LOG_DEBUG("SETTINGS_SAVE\n");
+                    handleEvent(*static_cast<CustomMessage::SettingsUpd*>(msg));
+                } break;
+
+                case CustomMessage::TRACK_START:  {
+                    LOG_DEBUG("TRACK_START\n");
+                    handleEvent(*static_cast<CustomMessage::TrackStart*>(msg));
+                } break;
+
+                case CustomMessage::TRACK_STOP:  {
+                    LOG_DEBUG("TRACK_STOP\n");
+                    handleEvent(*static_cast<CustomMessage::TrackStop*>(msg));
+                } break;
+
+
+                // Sensors messages
+
+                default:
+                    break;
+            }
+            // Release message after processing
+            mKernel.comm.releaseMessage(msg);
+        }
+
+
+        // Periodic process
         if (mGUIStarted) {
-
             // Update time every second
             std::time_t utc = std::time(nullptr);
-            std::tm tmNow{};
-            #if WIN32
-                localtime_s(&tmNow, &utc);
-            #else
-                localtime_r(&utc, &tmNow);
-            #endif
-            mGSModel.post(S2GEvent::Time{ tmNow });
 
-            mGSModel.post(S2GEvent::Battery{ static_cast<uint8_t>(mBattery.level) });
+            if (processedUtc != utc) {
+                processedUtc = utc;
 
-            // Update GPS fix
-            if (mPreviousGpsFixState != mGps.fix) {
-                mPreviousGpsFixState = mGps.fix;
+                std::tm tmNow = toLocalTime(utc);
 
-                if (!firstFix) {
-                    mKernel.backlight.on(3000);
-                    mKernel.buzzer.play();
-                    mKernel.vibro.play();
-                    firstFix = true;
+                LOG_DEBUG("Periodic refresh. Time %u, sec %u\n", (uint32_t)utc, tmNow.tm_sec);
+
+                mGuiSender.time(tmNow);
+                mGuiSender.battery(static_cast<uint8_t>(mBattery.level));
+
+                // Update GPS fix
+                if (mPreviousGpsFixState != mGps.fix) {
+                    mPreviousGpsFixState = mGps.fix;
+
+                    if (!firstFix) {
+                        notifyFirstFix();
+                        firstFix = true;
+                    }
+                    mGuiSender.fix(mGps.fix);
                 }
-                mGSModel.post(S2GEvent::GpsFix{ mGps.fix });
+
+                if (mTrackState != Track::State::INACTIVE) {
+                    processTrack(utc);
+                }
             }
-
-            if (mTrackState != Track::State::INACTIVE) {
-                processTrack(utc);
-            }
-
-
         } else if (mGlanceActive) {
             // do nothing
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.system.getTimeMs() - startTime > 5000) {
-                break;
+            if (mKernel.sys.getTimeMs() - startTime > 5000) {
+                LOG_INFO("No activities, exiting service\n");
+                return; // Exit app
             }
         }
     }
-
-    if (mTrackState != Track::State::INACTIVE) {
-        stopTrack(std::time(nullptr), false);
-    }
-
-    // Unsubscribe from sensors
-    mGpsLocationSensor.disconnect();
-    mGpsSpeedSensor.disconnect();
-    mGpsDistanceSensor.disconnect();
-    mHrSensor.disconnect();
-    mStepCounterSensor.disconnect();
-    mAltimeterSensor.disconnect();
-    mFloorCounterSensor.disconnect();
-    mBatteryLevelSensor.disconnect();
-
-    LOG_INFO("Stopped\n");
 }
 
-void Service::onStart()
+void Service::connectGps()
 {
-    LOG_INFO("called\n");
+    LOG_DEBUG("called\n");
+//    mGpsLocationSensor.connect();
 }
 
-void Service::onStop()
+void Service::connectAll()
 {
-    LOG_INFO("called\n");
-    mTerminate = true;
-    mGSModel.abortProcessWait();
+    LOG_DEBUG("called\n");
+//    mBatteryLevelSensor.connect();
+//    mGpsSpeedSensor.connect();
+//    mGpsDistanceSensor.connect();
+//    mStepCounterSensor.connect();
+//    mFloorCounterSensor.connect();
+//    mAltimeterSensor.connect();
+//    mHrSensor.connect();
+
 }
+
+void Service::disconnect()
+{
+    LOG_DEBUG("called\n");
+//    // Unsubscribe from sensors
+//    mGpsLocationSensor.disconnect();
+//    mGpsSpeedSensor.disconnect();
+//    mGpsDistanceSensor.disconnect();
+//    mHrSensor.disconnect();
+//    mStepCounterSensor.disconnect();
+//    mAltimeterSensor.disconnect();
+//    mFloorCounterSensor.disconnect();
+//    mBatteryLevelSensor.disconnect();
+
+}
+
+//void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sensor,
+//                           const std::vector< SDK::Interface::ISensorData*>& data,
+//                           bool                                              first)
+//{
+//    // We are only interested in the last sample
+//    const size_t sampleNum = data.size();
+//    if (sampleNum == 0) {
+//        return;
+//    }
+//
+//    const SDK::Interface::ISensorData& sample = *data[sampleNum - 1];
+//
+//    if (mGpsLocationSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::GpsLocation parser{ sample };
+//        if (parser.isDataValid()) {
+//            mGps.timestamp = parser.getTimestamp();
+//            mGps.fix = parser.isCoordinatesValid();
+//
+//            if (mGps.fix) { // Do not change position if no fix
+//                parser.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
+//            }
+//            LOG_DEBUG("Location: fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
+//        }
+//    } else if (mGpsSpeedSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::GpsSpeed parser{ sample };
+//        if (parser.isDataValid()) {
+//            mSpeed.speed = parser.getSpeed();
+//            mSpeed.timestamp = parser.getTimestamp();
+//            LOG_DEBUG("Speed:    %.2f m/s\n", mSpeed.speed);
+//        }
+//    } else if (mGpsDistanceSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::GpsDistance parser{ sample };
+//        if (parser.isDataValid()) {
+//            mDistance.distance = parser.getDistance();
+//            mDistance.timestamp = parser.getTimestamp();
+//
+//            if (!mDistance.dataValid) {
+//                mDistance.initialDistance = mDistance.distance;
+//                mDistance.dataValid = true;
+//            }
+//            LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
+//        }
+//    } else if (mStepCounterSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::StepCounter sc{ sample };
+//        if (sc.isDataValid()) {
+//            mStepCounter.timestamp = sc.getTimestamp();
+//            mStepCounter.steps = sc.getStepCount();
+//
+//            if (!mStepCounter.dataValid) {
+//                mStepCounter.initialSteps = mStepCounter.steps;
+//                mStepCounter.dataValid = true;
+//            }
+//            LOG_DEBUG("Steps %u\n", mStepCounter.steps);
+//        }
+//    } else if (mFloorCounterSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::FloorCounter fc{ sample };
+//        if (fc.isDataValid()) {
+//            mFloorsCounter.timestamp = fc.getTimestamp();
+//            mFloorsCounter.floors = fc.getFloorsUp() + fc.getFloorsDown();
+//
+//            if (!mFloorsCounter.dataValid) {
+//                mFloorsCounter.initialFloors = mFloorsCounter.floors;
+//                mFloorsCounter.dataValid = true;
+//            }
+//            LOG_DEBUG("Floors %u\n", mFloorsCounter.floors);
+//        }
+//    } else if (mAltimeterSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::Altimeter alt{ sample };
+//        if (alt.isDataValid()) {
+//            mAltimeter.timestamp = alt.getTimestamp();
+//            mAltimeter.altitude = alt.getAltitude();
+//
+//            if (!mAltimeter.dataValid) {
+//                mAltimeter.initialAltitude = mAltimeter.altitude;
+//                mAltimeter.dataValid = true;
+//            }
+//            LOG_DEBUG("Altitude %.2f\n", mAltimeter.altitude);
+//        }
+//    } else if (mHrSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::HeartRate hr{ sample };
+//        if (hr.isDataValid()) {
+//            mHr.hr = hr.getBpm();
+//            mHr.trustLevel = hr.getTrustLevel();
+//            mHr.timestamp = sample.getTimestamp();
+//
+//            mHr.totalSum += mHr.hr;
+//            mHr.totalCnt++;
+//            LOG_DEBUG("HR %.1f, TrustLevel %.1f\n", mHr.hr, mHr.trustLevel);
+//        }
+//    } else if (mBatteryLevelSensor.matchesDriver(sensor)) {
+//        SDK::SensorDataParser::BatteryLevel lvl{ sample };
+//        if (lvl.isDataValid()) {
+//            mBattery.level = lvl.getCharge();
+//            LOG_DEBUG("Battery %.1f %%\n", mBattery.level);
+//        }
+//    }
+//}
 
 void Service::onStartGUI()
 {
-    LOG_INFO("GUI started\n");
     mGUIStarted = true;
 
     // Subscribe to GPS to get fix
-    mGpsLocationSensor.connect();
+    connectGps();
 
 #if defined(SIMULATOR) || 0
     mGps.fix = true;
@@ -175,146 +337,128 @@ void Service::onStartGUI()
 #endif
 
     sendInitialInfoToGui();
-    
-    mGSModel.abortProcessWait();
 }
 
 void Service::onStopGUI()
 {
-    LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
-    mGSModel.abortProcessWait();
 }
 
-void Service::onSdlNewData(const SDK::Interface::ISensorDriver*              sensor,
-                           const std::vector< SDK::Interface::ISensorData*>& data,
-                           bool                                              first)
+void Service::handleEvent(const CustomMessage::TrackStart& event)
 {
-    // We are only interested in the last sample
-    const size_t sampleNum = data.size();
-    if (sampleNum == 0) {
-        return;
-    }
-    
-    const SDK::Interface::ISensorData& sample = *data[sampleNum - 1];
-
-    if (mGpsLocationSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::GpsLocation parser{ sample };
-        if (parser.isDataValid()) {
-            mGps.timestamp = parser.getTimestamp();
-            mGps.fix = parser.isCoordinatesValid();
-
-            if (mGps.fix) { // Do not change position if no fix
-                parser.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
-            }
-            LOG_DEBUG("Location: fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
-        }
-    } else if (mGpsSpeedSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::GpsSpeed parser{ sample };
-        if (parser.isDataValid()) {
-            mSpeed.speed = parser.getSpeed();
-            mSpeed.timestamp = parser.getTimestamp();
-            LOG_DEBUG("Speed:    %.2f m/s\n", mSpeed.speed);
-        }
-    } else if (mGpsDistanceSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::GpsDistance parser{ sample };
-        if (parser.isDataValid()) {
-            mDistance.distance = parser.getDistance();
-            mDistance.timestamp = parser.getTimestamp();
-
-            if (!mDistance.dataValid) {
-                mDistance.initialDistance = mDistance.distance;
-                mDistance.dataValid = true;
-            }
-            LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
-        }
-    } else if (mStepCounterSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::StepCounter sc{ sample };
-        if (sc.isDataValid()) {
-            mStepCounter.timestamp = sc.getTimestamp();
-            mStepCounter.steps = sc.getStepCount();
-
-            if (!mStepCounter.dataValid) {
-                mStepCounter.initialSteps = mStepCounter.steps;
-                mStepCounter.dataValid = true;
-            }
-            LOG_DEBUG("Steps %u\n", mStepCounter.steps);
-        }
-    } else if (mFloorCounterSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::FloorCounter fc{ sample };
-        if (fc.isDataValid()) {
-            mFloorsCounter.timestamp = fc.getTimestamp();
-            mFloorsCounter.floors = fc.getFloorsUp() + fc.getFloorsDown();
-
-            if (!mFloorsCounter.dataValid) {
-                mFloorsCounter.initialFloors = mFloorsCounter.floors;
-                mFloorsCounter.dataValid = true;
-            }
-            LOG_DEBUG("Floors %u\n", mFloorsCounter.floors);
-        }
-    } else if (mAltimeterSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::Altimeter alt{ sample };
-        if (alt.isDataValid()) {
-            mAltimeter.timestamp = alt.getTimestamp();
-            mAltimeter.altitude = alt.getAltitude();
-
-            if (!mAltimeter.dataValid) {
-                mAltimeter.initialAltitude = mAltimeter.altitude;
-                mAltimeter.dataValid = true;
-            }
-            LOG_DEBUG("Altitude %.2f\n", mAltimeter.altitude);
-        }
-    } else if (mHrSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::HeartRate hr{ sample };
-        if (hr.isDataValid()) {
-            mHr.hr = hr.getBpm();
-            mHr.trustLevel = hr.getTrustLevel();
-            mHr.timestamp = sample.getTimestamp();
-
-            mHr.totalSum += mHr.hr;
-            mHr.totalCnt++;
-            LOG_DEBUG("HR %.1f, TrustLevel %.1f\n", mHr.hr, mHr.trustLevel);
-        }
-    } else if (mBatteryLevelSensor.matchesDriver(sensor)) {
-        SDK::SensorDataParser::BatteryLevel lvl{ sample };
-        if (lvl.isDataValid()) {
-            mBattery.level = lvl.getCharge();
-            LOG_DEBUG("Battery %.1f %%\n", mBattery.level);
-        }
-    }
-}
-
-void Service::handleEvent(const G2SEvent::TrackStart& event)
-{
-    LOG_DEBUG("G2SEvent::TrackStart\n");
     startTrack(std::time(nullptr));
-    mGSModel.abortProcessWait();
 }
 
-void Service::handleEvent(const G2SEvent::TrackStop& event)
+void Service::handleEvent(const CustomMessage::TrackStop& event)
 {
-    LOG_DEBUG("G2SEvent::TrackStop\n");
     stopTrack(std::time(nullptr), event.discard);
-    mGSModel.abortProcessWait();
 }
 
-void Service::handleEvent(const G2SEvent::SettingsSave& event)
+void Service::handleEvent(const CustomMessage::SettingsUpd& event)
 {
-    LOG_DEBUG("G2SEvent::SettingsSave\n");
     mSettings = event.settings;
     mSettingsSerializer.save(event.settings);
+}
+
+
+void Service::notifyFirstFix()
+{
+    auto *backlightMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBacklightSet>();
+    if (backlightMsg) {
+        backlightMsg->autoOffTimeoutMs = 3000;
+        backlightMsg->brightness = 100;
+        mKernel.comm.sendMessage(backlightMsg);
+        mKernel.comm.releaseMessage(backlightMsg);
+    }
+
+    auto *buzzerMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBuzzerPlay>();
+    if (buzzerMsg) {
+        buzzerMsg->notes[0].volume = 100;
+        buzzerMsg->notes[0].time  = 100;
+        buzzerMsg->notesCount = 1;
+
+        mKernel.comm.sendMessage(buzzerMsg);
+        mKernel.comm.releaseMessage(buzzerMsg);
+    }
+
+    auto *vibroMsg = mKernel.comm.allocateMessage<SDK::Message::RequestVibroPlay>();
+    if (vibroMsg) {
+
+        vibroMsg->notes[0].effect = SDK::Message::RequestVibroPlay::Effect::STRONG_CLICK_100;
+        vibroMsg->notesCount = 1;
+
+        mKernel.comm.sendMessage(vibroMsg);
+        mKernel.comm.releaseMessage(vibroMsg);
+    }
+}
+
+void Service::notifyLapEnd()
+{
+    auto *backlightMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBacklightSet>();
+    if (backlightMsg) {
+        backlightMsg->autoOffTimeoutMs = 3000;
+        backlightMsg->brightness = 100;
+        mKernel.comm.sendMessage(backlightMsg);
+        mKernel.comm.releaseMessage(backlightMsg);
+    }
+
+    auto *buzzerMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBuzzerPlay>();
+    if (buzzerMsg) {
+        buzzerMsg->notes[0].volume = 100;
+        buzzerMsg->notes[0].time  = 100;
+        buzzerMsg->notesCount = 1;
+
+        mKernel.comm.sendMessage(buzzerMsg);
+        mKernel.comm.releaseMessage(buzzerMsg);
+    }
+
+    auto *vibroMsg = mKernel.comm.allocateMessage<SDK::Message::RequestVibroPlay>();
+    if (vibroMsg) {
+
+        vibroMsg->notes[0].effect = SDK::Message::RequestVibroPlay::Effect::ALERT_750MS_100;
+        vibroMsg->notesCount = 1;
+
+        mKernel.comm.sendMessage(vibroMsg);
+        mKernel.comm.releaseMessage(vibroMsg);
+    }
+}
+
+std::tm Service::toLocalTime(std::time_t utc)
+{
+    std::tm tmNow{};
+#if WIN32
+    localtime_s(&tmNow, &utc);
+#else
+    localtime_r(&utc, &tmNow);
+#endif
+    return tmNow;
 }
 
 void Service::sendInitialInfoToGui()
 {
     // Settings
-    mGSModel.post(S2GEvent::SettingsUpd{ mSettings, mKernel.settings.isUnitsImperial(), mKernel.settings.getHrThresholds() });
+    std::array<uint8_t, 4> hrThresholds { 80, 90, 100, 120 };
+
+    auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestSystemSettings>();
+    if (msg) {
+        if(mKernel.comm.sendMessage(msg, 100) && msg->getResult() == SDK::MessageResult::SUCCESS) {
+            mUnits = msg->imperialUnits;
+            if (msg->heartRateCount >= 4) {
+                for (uint8_t i = 0; i < 4; i++) {
+                    hrThresholds[i] = msg->heartRateTh[i];
+                }
+            }
+        }
+        mKernel.comm.releaseMessage(msg);
+    }
+
+    mGuiSender.settingsUpd(mSettings, mUnits, hrThresholds);
 
     // Summary
-    mGSModel.post(S2GEvent::Summary{ std::make_shared<const ActivitySummary>(mSummary) });
+    mGuiSender.summary(std::make_shared<const ActivitySummary>(mSummary));
 
     // Battery level
-    mGSModel.post(S2GEvent::Battery{ static_cast<uint8_t>(mBattery.level) });
+    mGuiSender.battery(static_cast<uint8_t>(mBattery.level));
 }
 
 void Service::startTrack(std::time_t utc)
@@ -343,13 +487,7 @@ void Service::startTrack(std::time_t utc)
     mTrackStartUTC = utc;
     mTrackProcessTimestamp = mTrackStartUTC;
 
-    mBatteryLevelSensor.connect();
-    mGpsSpeedSensor.connect();
-    mGpsDistanceSensor.connect();
-    mStepCounterSensor.connect();
-    mFloorCounterSensor.connect();
-    mAltimeterSensor.connect();
-    mHrSensor.connect();
+    connectAll();
 
     ActivityWriter::AppInfo info{};
     info.timestamp = utc;
@@ -360,7 +498,7 @@ void Service::startTrack(std::time_t utc)
 
     mTrackState = Track::State::ACTIVE;
 
-    mGSModel.post(S2GEvent::TrackStateUpd{ mTrackState });
+    mGuiSender.trackState(mTrackState);
 }
 
 void Service::processTrack(std::time_t utc)
@@ -465,7 +603,7 @@ void Service::processTrack(std::time_t utc)
     std::time_t timeDiff = static_cast<std::time_t>(std::difftime(utc, mTrackProcessTimestamp));
     if (timeDiff < (skSamplePeriod / 1000)) { // in seconds
         if (trackTimeDiff > 0) {
-            mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
+            mGuiSender.trackData(mTrackData);
         }
         return;
     }
@@ -484,7 +622,7 @@ void Service::processTrack(std::time_t utc)
 	fitRecord.speed     = mTrackData.speed;
     mActivityWriter.addRecord(fitRecord);
 
-    mGSModel.post(S2GEvent::TrackDataUpd{ mTrackData });
+    mGuiSender.trackData(mTrackData);
 
     mSessionNotEmpty = true;    // Session has at least one record
     mLapNotEmpty = true;        // Lap has at least one record
@@ -496,15 +634,11 @@ void Service::processTrack(std::time_t utc)
 
         saveLap(utc);
 
-        mGSModel.post(S2GEvent::LapEnded{ mTrackData.lapNum });
+        mGuiSender.lapEnd(mTrackData.lapNum);
+
         mTrackData.lapNum = lapNum;
 
-        // Backlight
-        mKernel.backlight.on(3000);
-
-        // Vibro & buzzer
-        mKernel.vibro.play(SDK::Interface::IVibro::ALERT_750MS_100);
-        mKernel.buzzer.play();
+        notifyLapEnd();
     }
 
 }
@@ -573,7 +707,7 @@ void Service::stopTrack(std::time_t utc, bool discard)
         if (!mActivitySummarySerializer.save(mSummary)) {
             LOG_ERROR("Can't save activity summary\n");
         }
-        mGSModel.post(S2GEvent::Summary{ std::make_shared<const ActivitySummary>(mSummary) });
+        mGuiSender.summary(std::make_shared<const ActivitySummary>(mSummary));
 
         // Save FIT file
         ActivityWriter::TrackData fitTrack{};
@@ -596,27 +730,18 @@ void Service::stopTrack(std::time_t utc, bool discard)
     }
 
     mTrackState = Track::State::INACTIVE;
-    mGSModel.post(S2GEvent::TrackStateUpd{ mTrackState });
+    mGuiSender.trackState(mTrackState);
 
-    mGpsLocationSensor.disconnect();
-    mGpsSpeedSensor.disconnect();
-    mGpsDistanceSensor.disconnect();
-    mHrSensor.disconnect();
-    mStepCounterSensor.disconnect();
-    mAltimeterSensor.disconnect();
-    mFloorCounterSensor.disconnect();
-    mBatteryLevelSensor.disconnect();
+    disconnect();
 }
 
 
 Service::LapDivSource Service::getLapDivSource()
 {
-    bool isImperial = mKernel.settings.isUnitsImperial();
-
     size_t stepId = App::Menu::RoundToNearestIndex(App::Menu::kStepsList,
         App::Menu::Settings::Alerts::Steps::ID_COUNT, static_cast<float>(mSettings.alertSteps));
 
-    float distance = isImperial ? App::Utils::km2mi(mSettings.alertDistance) : mSettings.alertDistance;
+    float distance = mUnits ? App::Utils::km2mi(mSettings.alertDistance) : mSettings.alertDistance;
     size_t distanceId = App::Menu::RoundToNearestIndex(App::Menu::kDistanceList,
         App::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
 
@@ -661,29 +786,49 @@ uint32_t Service::getCurrentLap()
     return lapNum;
 }
 
-SDK::Interface::IGlance::Info Service::glanceGetInfo()
+void Service::onGlanceTick()
 {
-    mGlanceActive = true;
+    if (mGlanceUI.isInvalid()) {
+        auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
+        if (upd) {
+            upd->name = mName;
+            upd->controls = mGlanceUI.data();
+            upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
 
-    IGlance::Info info{};
-    info.altname = "Hiking";
-    info.count = static_cast<uint8_t>(mGlanceUI.size());
-    info.ctrls = mGlanceUI.data();
-    return info;
+            mKernel.comm.sendMessage(upd, 100);
+            mKernel.comm.releaseMessage(upd);
+        }
+
+        mGlanceUI.setValid();
+   }
 }
 
-void Service::glanceUpdate()
+bool Service::configGui()
 {
-    // Nothing changed
+    bool status = false;
+    // Get Glance configuration
+    auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
+    if (gc) {
+        if (mKernel.comm.sendMessage(gc, 100) && gc->getResult() == SDK::MessageResult::SUCCESS) {
+            mGlanceUI.setWidth(gc->width);
+            mGlanceUI.setHeight(gc->height);
+            mMaxControls = gc->maxControls;
+            if (mMaxControls >= 3) {
+                status = true;
+            }
+        }
+        mKernel.comm.releaseMessage(gc);
+    }
+
+    return status;
 }
 
-void Service::glanceClose()
+void Service::createGuiControls()
 {
-    mGlanceActive = false;
-}
+    if (mMaxControls < 3) {
+        return;
+    }
 
-void Service::createGlanceGUI()
-{
     mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
 
     mGlanceTitle = mGlanceUI.createText();
@@ -699,4 +844,14 @@ void Service::createGlanceGUI()
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .setText("No activities")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_RIGHT);
+
+    if (mSummary.utc != 0) {
+        std::tm tmNow{};
+#if WIN32
+        localtime_s(&tmNow, &mSummary.utc);
+#else
+        localtime_r(&mSummary.utc, &tmNow);
+#endif
+        mGlanceTime.print("%s %d, %d:%02d", App::Utils::DayShort[tmNow.tm_wday], tmNow.tm_mday, tmNow.tm_hour, tmNow.tm_min);
+    }
 }

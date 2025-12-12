@@ -1,27 +1,28 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <vector>
-#include <memory>
-
-
-#include "SDK/GSModel/GSModelHelper.hpp"
-
 #include "touchgfx/UIEventListener.hpp"
-#include "gui/common/GuiConfig.hpp"
 
+#include "SDK/Kernel/Kernel.hpp"
+#include "SDK/Interfaces/IGuiLifeCycleCallback.hpp"
+#include "SDK/Interfaces/ICustomMessageHandler.hpp"
+
+#include "gui/common/GuiConfig.hpp"
+#include "Commands.hpp"
 #include "Settings.hpp"
 #include "ActivitySummary.hpp"
 #include "TrackInfo.hpp"
 
+#include <vector>
+#include <memory>
 
 
 class FrontendApplication;
 class ModelListener;
 
 class Model : public touchgfx::UIEventListener,
-    public SDK::Interface::IUserApp::Callback,
-    public IGUIModelHandler
+              public SDK::Interface::IGuiLifeCycleCallback,
+              public SDK::Interface::ICustomMessageHandler
 {
 public:
     Model();
@@ -73,6 +74,7 @@ public:
 
     // Settings
     bool isUnitsImperial();
+    const std::array<uint8_t, 4>& getHrThresholds() const;
     const Settings& getSettings() const;
     void setSettings(const Settings& sett);
 
@@ -90,6 +92,13 @@ public:
     const ActivitySummary& trackSummary();
 
 protected:
+    ModelListener* modelListener;
+    // Fields required for for GUI <-> Service communication
+    const SDK::Kernel&      mKernel;             ///< Reference to kernel interface
+    CustomMessage::Sender   mSrvSender;
+
+
+    // User application section
 
     /**
      * @brief Decrease the idle timer.
@@ -98,30 +107,32 @@ protected:
      */
     void decIdleTimer();
 
-    // IUserApp implementation
-    virtual void onCreate()  override;
+    /**
+     * @brief Checks if any key is pressed.
+     * This method checks if the provided key corresponds to any of the defined keys
+     * in the Gui::Config::Button enumeration.
+     *
+     * @param key The key to check.
+     * @return true if the key is one of the defined keys, false otherwise.
+     */
+    bool isAnyKeyPressed(uint8_t key) const;
+
+    void setCapabilities();
+
+    // IGuiLifeCycleCallback implementation required methods for app lifecycle
     virtual void onStart()   override;
     virtual void onResume()  override;
-    virtual void onFrame()   override;
-    virtual void onPause()   override;
+    virtual void onSuspend() override;
     virtual void onStop()    override;
-    virtual void onDestroy() override;
 
-    // IGUIModelHandler implementation
-    virtual void handleEvent(const S2GEvent::Time& event) override;
-    virtual void handleEvent(const S2GEvent::SettingsUpd& event) override;
-    virtual void handleEvent(const S2GEvent::Battery& event) override;
-    virtual void handleEvent(const S2GEvent::GpsFix& event) override;
-    virtual void handleEvent(const S2GEvent::TrackStateUpd& event) override;
-    virtual void handleEvent(const S2GEvent::TrackDataUpd& event) override;
-    virtual void handleEvent(const S2GEvent::LapEnded& event) override;
-    virtual void handleEvent(const S2GEvent::Summary& event) override;
-
-    const IKernel*             mKernel;
-    ModelListener*             modelListener;
-    std::shared_ptr<GSModelGUI> mGSModel;
+    // ICustomMessageHandler implementation
+    virtual bool customMessageHandler(SDK::MessageBase *msg) override;
 
     // User data
+
+    /// Is app running (between onResume and onPause)
+    bool mIsRunning = false;
+
     uint32_t mIdleTimer = 0;
     bool mInvalidate = false;
 
@@ -138,7 +149,7 @@ protected:
 
     // Kernel settings
     bool mUnitsImperial = false;
-    std::array<uint8_t, 4> mHrThresholds { 150, 170, 190, 210 };
+    std::array<uint8_t, 4> mHrThresholds { 90, 100, 110, 120 };
 
     // Application settings
     Settings mSettings {};

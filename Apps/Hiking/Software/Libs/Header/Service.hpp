@@ -1,79 +1,81 @@
-#ifndef __SERVICE_HPP__
-#define __SERVICE_HPP__
 
-#include "SDK/GSModel/GSModel.hpp"
-#include "SDK/Kernel/KernelProviderService.hpp"
+#pragma once
 
-#include "SDK/Interfaces/ISensorDriver.hpp"
-#include "SDK/Interfaces/ISensorDataListener.hpp"
+#include "SDK/Kernel/Kernel.hpp"
+
+//#include "SDK/Interfaces/ISensorDriver.hpp"
+//#include "SDK/Interfaces/ISensorDataListener.hpp"
+//#include "SDK/SensorLayer/SensorDriverConnection.hpp"
+
 #include "SDK/TrackMap/TrackMapBuilder.hpp"
-#include "SDK/Interfaces/IGlance.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
-#include "SDK/SensorLayer/SensorDriverConnection.hpp"
 
 #include "SettingsSerializer.hpp"
 #include "ActivitySummarySerializer.hpp"
 #include "ActivityWriter.hpp"
 
+#include "Commands.hpp"
 
-class Service : public IServiceModelHandler,
-                public SDK::Interface::IApp::Callback,
-                public SDK::Interface::ISensorDataListener,
-                public SDK::Interface::IGlance
+
+class Service
 {
 public:
-    Service();
+    Service(SDK::Kernel &kernel);
 
-    virtual ~Service() = default;
+    virtual ~Service();
 
     void run();
 
 private:
-    const SDK::Kernel&  mKernel;
-    GSModel             mGSModel;
-
-    bool                mTerminate;
-    bool                mGUIStarted;
-
-    // IApp::Callback implementation
-    virtual void onStart()   override;
-    virtual void onStop()    override;
-    virtual void onStartGUI() override;
-    virtual void onStopGUI()  override;
-
-    // ISensorDataListener implementation
-    virtual void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
-                              const std::vector<SDK::Interface::ISensorData*>& data,
-                              bool                                             first) override;
-
-    // User-defined event handlers
-    virtual void handleEvent(const G2SEvent::TrackStart& event) override;
-    virtual void handleEvent(const G2SEvent::TrackStop& event) override;
-    virtual void handleEvent(const G2SEvent::SettingsSave& event) override;
+    const SDK::Kernel&      mKernel;
+    bool                    mGUIStarted;
+    CustomMessage::Sender   mGuiSender;
 
     Settings mSettings;
+    bool mUnits = false;
     SettingsSerializer mSettingsSerializer;
-    
+
     ActivitySummary mSummary;
     ActivitySummarySerializer mActivitySummarySerializer;
-    SDK::TrackMapBuilder mTrackMapBuilder;
     ActivityWriter mActivityWriter;
+    SDK::TrackMapBuilder mTrackMapBuilder;
 
-    // Sensors
-    SDK::Sensor::DriverConnection mGpsLocationSensor;
-    SDK::Sensor::DriverConnection mGpsSpeedSensor;
-    SDK::Sensor::DriverConnection mGpsDistanceSensor;
-    SDK::Sensor::DriverConnection mStepCounterSensor;
-    SDK::Sensor::DriverConnection mFloorCounterSensor;
-    SDK::Sensor::DriverConnection mAltimeterSensor;
-    SDK::Sensor::DriverConnection mHrSensor;
-    SDK::Sensor::DriverConnection mBatteryLevelSensor;
+    void connectGps();
+    void connectAll(); // Except GPS
+    void disconnect();
+    void onStartGUI();
+    void onStopGUI();
+
+
+//    // ISensorDataListener implementation
+//    virtual void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
+//                              const std::vector<SDK::Interface::ISensorData*>& data,
+//                              bool                                             first) override;
+
+    // User-defined event handlers
+    void handleEvent(const CustomMessage::TrackStart& event);
+    void handleEvent(const CustomMessage::TrackStop& event);
+    void handleEvent(const CustomMessage::SettingsUpd& event);
+
+    void notifyFirstFix();
+    void notifyLapEnd();
+    std::tm toLocalTime(std::time_t utc);
+
+//    // Sensors
+//    SDK::Sensor::DriverConnection mGpsLocationSensor;
+//    SDK::Sensor::DriverConnection mGpsSpeedSensor;
+//    SDK::Sensor::DriverConnection mGpsDistanceSensor;
+//    SDK::Sensor::DriverConnection mStepCounterSensor;
+//    SDK::Sensor::DriverConnection mFloorCounterSensor;
+//    SDK::Sensor::DriverConnection mAltimeterSensor;
+//    SDK::Sensor::DriverConnection mHrSensor;
+//    SDK::Sensor::DriverConnection mBatteryLevelSensor;
 
     static constexpr uint32_t skInitialSamplePeriod = 1000;
     static constexpr uint32_t skSamplePeriod        = 10000;
     static constexpr uint32_t skSampleLatency       = 1000;
 
-    static constexpr float skMapDistanceThreshold = 10.0f; // meters
+    static constexpr float skMapDistanceThreshold   = 10.0f; // meters
 
     struct {
         // Last sensor data
@@ -101,7 +103,7 @@ private:
             speed     = 0.0f;
             timestamp = 0;
         }
-    } mSpeed;
+    } mSpeed{};
 
     struct {
         float    distance;  // m
@@ -117,7 +119,7 @@ private:
             dataValid = false;
             initialDistance = 0.0f;
         }
-    } mDistance;
+    } mDistance{};
 
     struct {
         // Last sensor data
@@ -209,7 +211,7 @@ private:
 
     struct {
         float level = 0.0f;
-    } mBattery;
+    } mBattery{};
 
     Track::State mTrackState = Track::State::INACTIVE;
     std::time_t mTrackStartUTC = 0;
@@ -240,15 +242,15 @@ private:
 
 
     // IGlance implementation
-    virtual IGlance::Info glanceGetInfo() override;
-    virtual void glanceUpdate()           override;
-    virtual void glanceClose()            override;
-    void createGlanceGUI();
+    bool                     mGlanceActive = false;
+    const char*              mName = nullptr;
+    uint32_t                 mMaxControls = 0;
+    SDK::Glance::Form        mGlanceUI {};
+    SDK::Glance::ControlText mGlanceTitle {};
+    SDK::Glance::ControlText mGlanceTime {};
 
-    bool mGlanceActive = false;
-    SDK::Glance::Form mGlanceUI;
-    SDK::Glance::ControlText mGlanceTitle;
-    SDK::Glance::ControlText mGlanceTime;
+    void onGlanceTick();
+    bool configGui();
+    void createGuiControls();
 };
 
-#endif  // __SERVICE_HPP__

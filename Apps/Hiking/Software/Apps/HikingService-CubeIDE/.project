@@ -79,9 +79,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/ActivityWriter.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/GSModelEvents</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<name>Libs/Header/Commands.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Commands.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Header/Service.hpp</name>
@@ -144,16 +144,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header/FirmwareVersion.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/SDK/Libs/Header/SDK/FirmwareVersion.hpp</locationURI>
@@ -165,6 +155,16 @@
 		</link>
 		<link>
 			<name>SDK/Libs/Header/JSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -252,6 +252,46 @@
 			<name>SDK/Libs/Header/JSON/JsonStreamWriter.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/JSON/JsonStreamWriter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/Kernel.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/Kernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/KernelBuilder.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelBuilder.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Kernel/KernelProviderService.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Kernel/KernelProviderService.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/CommandMessages.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/CommandMessages.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/MessageBase.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageBase.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/MessageGuard.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageGuard.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/MessageTypes.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/MessageTypes.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Messages/SensorLayerMessages.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/SensorLayerMessages.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/TrackMap/TrackMapBuilder.hpp</name>

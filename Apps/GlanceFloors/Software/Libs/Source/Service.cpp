@@ -20,18 +20,16 @@ Service::Service(SDK::Kernel &kernel)
         //, mFloorsSensor(SDK::Sensor::Type::FLOOR_COUNTER, this, 1000, 1000)
         , mFloorsValue(0)
 {
-    LOG_DEBUG("Service\n");
 }
 
 Service::~Service()
 {
-    LOG_DEBUG("~Service\n");
     disconnect();   // Cleanup recourses
 }
 
 void Service::run()
 {
-    LOG_DEBUG("Ready\n");
+    LOG_INFO("Started\n");
 
     while (true) {
         SDK::MessageBase *msg;
@@ -135,7 +133,7 @@ bool Service::configGui()
     if (!gc) {
         mKernel.sys.exit(0); // no return
     }
-    mKernel.comm.sendMessage(gc);
+    mKernel.comm.sendMessage(gc, 100);
 
     if (gc->getResult() != SDK::MessageResult::SUCCESS) {
         LOG_ERROR("Command execution status: %s\n", gc->getResultStr());
