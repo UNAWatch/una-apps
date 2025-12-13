@@ -27,7 +27,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
 
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service(SDK::Kernel &kernel)
@@ -72,7 +72,7 @@ void Service::run()
     }
 
     uint32_t startTime = mKernel.sys.getTimeMs();
-    bool firstFix = true;
+    bool firstFix = false;
 
     std::time_t processedUtc = 0;
 
@@ -163,11 +163,14 @@ void Service::run()
 
             if (processedUtc != utc) {
 
-                if ((processedUtc > utc) || ((utc - processedUtc) > 5)) {
-                    LOG_WARNING("Wrong UTC (%u -> %u). Restart track\n",
-                            static_cast<uint32_t>(processedUtc), static_cast<uint32_t>(utc));
-                    stopTrack(processedUtc, false);
-                    startTrack(utc);
+                if (mTrackState != Track::State::INACTIVE) {
+                    if ((processedUtc > utc) || ((utc - processedUtc) > 5)) {
+                        LOG_WARNING("Wrong UTC (%u -> %u). Restart track\n",
+                                static_cast<uint32_t>(processedUtc),
+                                static_cast<uint32_t>(utc));
+                        stopTrack(processedUtc, false);
+                        startTrack(utc);
+                    }
                 }
 
                 processedUtc = utc;
@@ -356,6 +359,7 @@ void Service::onStartGUI()
     mGps.fix = true;
 #else
     if (mSettings.debugSkipGpsFix) {
+        LOG_WARNING("Setting: debug_skip_gps_fix = true\n");
         mGps.fix = true;
     }
 #endif

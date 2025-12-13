@@ -332,7 +332,9 @@ bool Model::customMessageHandler(SDK::MessageBase *msg)
             auto *cmsg = static_cast<CustomMessage::Time*>(msg);
 
             std::tm newTime = cmsg->localTime;
-            LOG_DEBUG("LOCAL_TIME %02u:%02u:%02u\n", newTime.tm_hour, newTime.tm_min, newTime.tm_sec);
+            LOG_DEBUG("LOCAL_TIME %04u-%02u-%02u %02u:%02u:%02u\n",
+                    newTime.tm_year + 1900, newTime.tm_mon + 1, newTime.tm_mday,
+                    newTime.tm_hour, newTime.tm_min, newTime.tm_sec);
 
             bool dateChanged = (newTime.tm_year != mTime.tm_year ||
                 newTime.tm_mon != mTime.tm_mon || newTime.tm_mday != mTime.tm_mday);
@@ -362,8 +364,8 @@ bool Model::customMessageHandler(SDK::MessageBase *msg)
         } break;
 
         case CustomMessage::GPS_FIX:  {
-            LOG_DEBUG("GPS_FIX\n");
             auto *cmsg = static_cast<CustomMessage::GpsFix*>(msg);
+            LOG_DEBUG("GPS_FIX %u\n", cmsg->state);
             if (mGpsFix != cmsg->state) {
                 mGpsFix = cmsg->state;
                 modelListener->onGpsFix(mGpsFix);
