@@ -2,7 +2,7 @@
 #include "SDK/Kernel/KernelProviderService.hpp"
 
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 #include "SDK/Messages/CommandMessages.hpp"
@@ -25,19 +25,16 @@ Service::Service(SDK::Kernel &kernel)
         , mHrValue(0)
         , mIsValid(false)
 {
-    LOG_DEBUG("Service\n");
 }
 
 Service::~Service()
 {
-    LOG_DEBUG("~Service\n");
-
     disconnect();
 }
 
 void Service::run()
 {
-    LOG_DEBUG("Ready\n");
+    LOG_INFO("Started\n");
 
     while (true) {
         SDK::MessageBase *msg;
@@ -50,16 +47,20 @@ void Service::run()
         switch (msg->getType()) {
 
             case SDK::MessageType::EVENT_GLANCE_START:
-                LOG_DEBUG("Starting...\n");
+                LOG_INFO("GLANCE is now running\n");
                 if (configGui()) {
                     createGuiControls();
                     connect();
+                } else {
+                    mKernel.comm.releaseMessage(msg);
+                    mKernel.sys.exit(0); // no return
                 }
                 break;
 
             case SDK::MessageType::COMMAND_APP_STOP:
+                LOG_INFO("Force exit from the application\n");
             case SDK::MessageType::EVENT_GLANCE_STOP:
-                LOG_DEBUG("Stopping...\n");
+                LOG_INFO("GLANCE has stopped\n");
                 disconnect();
                 // We must release message because this is the last event.
                 mKernel.comm.releaseMessage(msg);
@@ -89,14 +90,18 @@ void Service::run()
 
 void Service::connect()
 {
-    LOG_DEBUG("tick\n");
-    mSensorHR.connect();
+    if (!mSensorHR.isConnected()) {
+        LOG_DEBUG("Connect to sensors...\n");
+        mSensorHR.connect();
+    }
 }
 
 void Service::disconnect()
 {
-    LOG_DEBUG("tick\n");
-    mSensorHR.disconnect();
+    if (mSensorHR.isConnected()) {
+        LOG_DEBUG("Disconnect from sensors...\n");
+        mSensorHR.disconnect();
+    }
 }
 
 void Service::onSdlNewData(uint16_t                 handle,
@@ -108,15 +113,18 @@ void Service::onSdlNewData(uint16_t                 handle,
 
     if (mSensorHR.matchesDriver(handle)) {
         SDK::SensorDataParser::HeartRate p(batch[0]);
-        LOG_DEBUG("hr = %.2f\n", p.getBpm());
-        mHrValue = p.getBpm();
-        glanceUpdate();
+        float newValue = p.getBpm();
+        LOG_DEBUG("hr = %.2f\n", newValue);
+        if (static_cast<uint32_t>(newValue) != static_cast<uint32_t>(mHrValue)) {
+            mHrValue = newValue;
+            glanceUpdate();
+        }
     }
 }
 
 void Service::onGlanceTick()
 {
-    LOG_DEBUG("Glance tick\n");
+    //LOG_DEBUG("Glance tick\n");
 
     if (mGlanceUI.isInvalid()) {
         auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
@@ -135,25 +143,22 @@ void Service::onGlanceTick()
 
 bool Service::configGui()
 {
+    bool status = false;
     // Get Glance configuration
     auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
-    if (!gc) {
-        mKernel.sys.exit(0); // no return
-    }
-    mKernel.comm.sendMessage(gc);
-
-    if (gc->getResult() != SDK::MessageResult::SUCCESS) {
-        LOG_ERROR("Command execution status: %s\n", gc->getResultStr());
+    if (gc) {
+        if (mKernel.comm.sendMessage(gc, 100) && gc->getResult() == SDK::MessageResult::SUCCESS) {
+            if (gc->maxControls >= 3) {
+                mMaxControls = gc->maxControls;
+                mGlanceUI.setWidth(gc->width);
+                mGlanceUI.setHeight(gc->height);
+                status = true;
+            }
+        }
         mKernel.comm.releaseMessage(gc);
-        return false;
     }
 
-    mGlanceUI.setWidth(gc->width);
-    mGlanceUI.setHeight(gc->height);
-    mMaxControls = gc->maxControls;
-    mKernel.comm.releaseMessage(gc);
-
-    return true;
+    return status;
 }
 
 void Service::glanceUpdate()

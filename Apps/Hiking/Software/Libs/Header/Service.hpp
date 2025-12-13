@@ -69,6 +69,7 @@ private:
     SDK::Sensor::Connection mSensorAltimeter;
     SDK::Sensor::Connection mSensorHr;
     SDK::Sensor::Connection mSensorBatteryLevel;
+    bool mIsSensorsConnected = false;
 
     static constexpr uint32_t skInitialSamplePeriod = 1000;
     static constexpr uint32_t skSamplePeriod        = 10000;

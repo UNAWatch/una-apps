@@ -14,6 +14,7 @@
 #include "TrackInfo.hpp"
 #include "icon_60x60.h"
 #include "SDK/FirmwareVersion.hpp"
+#include "SDK/Messages/SensorLayerMessages.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp"
@@ -139,6 +140,13 @@ void Service::run()
 
 
                 // Sensors messages
+                case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
+                    auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
+                    this->onSdlNewData(event->handle,
+                                       event->data,
+                                       event->count,
+                                       event->stride);
+                } break;
 
                 default:
                     break;
@@ -154,11 +162,17 @@ void Service::run()
             std::time_t utc = std::time(nullptr);
 
             if (processedUtc != utc) {
+
+                if ((processedUtc > utc) || ((utc - processedUtc) > 5)) {
+                    LOG_WARNING("Wrong UTC (%u -> %u). Restart track\n",
+                            static_cast<uint32_t>(processedUtc), static_cast<uint32_t>(utc));
+                    stopTrack(processedUtc, false);
+                    startTrack(utc);
+                }
+
                 processedUtc = utc;
 
                 std::tm tmNow = toLocalTime(utc);
-
-                LOG_DEBUG("Periodic refresh. Time %u, sec %u\n", (uint32_t)utc, tmNow.tm_sec);
 
                 mGuiSender.time(tmNow);
                 mGuiSender.battery(static_cast<uint8_t>(mBattery.level));
@@ -192,42 +206,50 @@ void Service::run()
 
 void Service::connectGps()
 {
-    LOG_DEBUG("called\n");
-//    mSensorGpsLocation.connect();
+    if (!mSensorGpsLocation.isConnected()) {
+        LOG_DEBUG("Connect to GPS sensor...\n");
+        mSensorGpsLocation.connect();
+    }
 }
 
 void Service::connectAll()
 {
-    LOG_DEBUG("called\n");
+    if (!mIsSensorsConnected) {
+        LOG_DEBUG("Connect to sensors...\n");
 
-    ////////////////////////////////
-    //// Subscribe to sensors
-    ////////////////////////////////
+        mSensorBatteryLevel.connect();
+        mSensorGpsSpeed.connect();
+        mSensorGpsDistance.connect();
+        mSensorStepCounter.connect();
+        mSensorAltimeter.connect();
+        mSensorFloorCounter.connect();
+        mSensorHr.connect();
 
-    mSensorBatteryLevel.connect();
-    mSensorGpsSpeed.connect();
-    mSensorGpsDistance.connect();
-    mSensorStepCounter.connect();
-    mSensorFloorCounter.connect();
-    mSensorAltimeter.connect();
-    mSensorHr.connect();
+        mIsSensorsConnected = true;
+    }
 }
 
 void Service::disconnect()
 {
-    LOG_DEBUG("called\n");
 
-    ////////////////////////////////
-    //// Unsubscribe from sensors
-    ////////////////////////////////
-    mSensorGpsLocation.disconnect();
-    mSensorGpsSpeed.disconnect();
-    mSensorGpsDistance.disconnect();
-    mSensorHr.disconnect();
-    mSensorStepCounter.disconnect();
-    mSensorAltimeter.disconnect();
-    mSensorFloorCounter.disconnect();
-    mSensorBatteryLevel.disconnect();
+    if (mIsSensorsConnected) {
+        LOG_DEBUG("Disconnect from sensors...\n");
+
+        mSensorHr.disconnect();
+        mSensorFloorCounter.disconnect();
+        mSensorAltimeter.disconnect();
+        mSensorStepCounter.disconnect();
+        mSensorGpsSpeed.disconnect();
+        mSensorGpsDistance.disconnect();
+        mSensorBatteryLevel.disconnect();
+
+        mIsSensorsConnected = false;
+    }
+
+    if (mSensorGpsLocation.isConnected()) {
+        LOG_DEBUG("Disconnect from GPS sensor...\n");
+        mSensorGpsLocation.disconnect();
+    }
 }
 
 void Service::onSdlNewData(uint16_t                 handle,
@@ -812,10 +834,10 @@ bool Service::configGui()
     auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
     if (gc) {
         if (mKernel.comm.sendMessage(gc, 100) && gc->getResult() == SDK::MessageResult::SUCCESS) {
-            mGlanceUI.setWidth(gc->width);
-            mGlanceUI.setHeight(gc->height);
-            mMaxControls = gc->maxControls;
-            if (mMaxControls >= 3) {
+            if (gc->maxControls >= 3) {
+                mMaxControls = gc->maxControls;
+                mGlanceUI.setWidth(gc->width);
+                mGlanceUI.setHeight(gc->height);
                 status = true;
             }
         }
@@ -827,10 +849,6 @@ bool Service::configGui()
 
 void Service::createGuiControls()
 {
-    if (mMaxControls < 3) {
-        return;
-    }
-
     mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
 
     mGlanceTitle = mGlanceUI.createText();

@@ -40,6 +40,7 @@ private:
 
     SDK::Sensor::Connection mSensorFloors;
     uint32_t                mFloorsValue;
+    bool                    mDataReceived;
 };
 
 #endif

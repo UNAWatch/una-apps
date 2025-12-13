@@ -39,6 +39,8 @@ private:
     SDK::Glance::ControlText mGlanceValue;
 
     SDK::Sensor::Connection mSensorPedo;
+    uint32_t                mStepsValue;
+    bool                    mDataReceived;
 };
 
 #endif
