@@ -58,6 +58,7 @@ private:
 
     void notifyFirstFix();
     void notifyLapEnd();
+    void notifyNewActivity();
     std::tm toLocalTime(std::time_t utc);
 
     // Sensors

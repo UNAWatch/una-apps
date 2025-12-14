@@ -451,6 +451,15 @@ void Service::notifyLapEnd()
     }
 }
 
+void Service::notifyNewActivity()
+{
+    auto *msg = mKernel.comm.allocateMessage<SDK::Message::CommandAppNewActivity>();
+    if (msg) {
+        mKernel.comm.sendMessage(msg);
+        mKernel.comm.releaseMessage(msg);
+    }
+}
+
 std::tm Service::toLocalTime(std::time_t utc)
 {
     std::tm tmNow{};
@@ -753,6 +762,8 @@ void Service::stopTrack(std::time_t utc, bool discard)
         fitTrack.steps = mTrackData.steps;
         fitTrack.floors = mTrackData.floors;
         mActivityWriter.stop(fitTrack);
+
+        notifyNewActivity();
     } else {
         mActivityWriter.discard();
     }
