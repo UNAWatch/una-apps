@@ -5,25 +5,24 @@
 #include <memory>
 
 #include "touchgfx/UIEventListener.hpp"
-#include "gui/common/GuiConfig.hpp"
 
-#include "SDK/GSModel/IGUIModel.hpp"
 #include "SDK/Kernel/Kernel.hpp"
+#include "SDK/Interfaces/IGuiLifeCycleCallback.hpp"
+#include "SDK/Interfaces/ICustomMessageHandler.hpp"
 
-#include "GSModelEvents/G2SEvents.hpp"
-#include "GSModelEvents/S2GEvents.hpp"
+#include "gui/common/GuiConfig.hpp"
+#include "Commands.hpp"
 #include "Settings.hpp"
 #include "ActivitySummary.hpp"
 #include "TrackInfo.hpp"
-
 
 
 class FrontendApplication;
 class ModelListener;
 
 class Model : public touchgfx::UIEventListener,
-    public SDK::Interface::IApp::Callback,
-    public IGUIModelHandler
+              public SDK::Interface::IGuiLifeCycleCallback,
+              public SDK::Interface::ICustomMessageHandler
 {
 public:
     Model();
@@ -95,8 +94,9 @@ public:
 protected:
     ModelListener* modelListener;
     // Fields required for for GUI <-> Service communication
-    const SDK::Kernel& mKernel;             ///< Reference to kernel interface
-    std::shared_ptr<IGUIModel> mGSModel;    ///< Pointer to GUI-Service model interface
+    const SDK::Kernel&      mKernel;             ///< Reference to kernel interface
+    CustomMessage::Sender   mSrvSender;
+
 
     // User application section
 
@@ -117,23 +117,22 @@ protected:
      */
     bool isAnyKeyPressed(uint8_t key) const;
 
-    // IUserApp implementation
+    void setCapabilities();
+
+    // IGuiLifeCycleCallback implementation required methods for app lifecycle
     virtual void onStart()   override;
     virtual void onResume()  override;
+    virtual void onSuspend() override;
     virtual void onStop()    override;
 
-    // IGUIModelHandler implementation
-    virtual void handleEvent(const S2GEvent::Time& event) override;
-    virtual void handleEvent(const S2GEvent::SettingsUpd& event) override;
-    virtual void handleEvent(const S2GEvent::Battery& event) override;
-    virtual void handleEvent(const S2GEvent::GpsFix& event) override;
-    virtual void handleEvent(const S2GEvent::TrackStateUpd& event) override;
-    virtual void handleEvent(const S2GEvent::TrackDataUpd& event) override;
-    virtual void handleEvent(const S2GEvent::LapEnded& event) override;
-    virtual void handleEvent(const S2GEvent::Summary& event) override;
-
+    // ICustomMessageHandler implementation
+    virtual bool customMessageHandler(SDK::MessageBase *msg) override;
 
     // User data
+
+    /// Is app running (between onResume and onPause)
+    bool mIsRunning = false;
+
     uint32_t mIdleTimer = 0;
     bool mInvalidate = false;
 
@@ -150,7 +149,7 @@ protected:
 
     // Kernel settings
     bool mUnitsImperial = false;
-    std::array<uint8_t, 4> mHrThresholds { 150, 170, 190, 210 };
+    std::array<uint8_t, 4> mHrThresholds { 90, 100, 110, 120 };
 
     // Application settings
     Settings mSettings {};

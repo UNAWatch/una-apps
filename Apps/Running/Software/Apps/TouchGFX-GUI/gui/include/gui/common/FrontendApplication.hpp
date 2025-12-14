@@ -2,6 +2,7 @@
 #define FRONTENDAPPLICATION_HPP
 
 #include <gui_generated/common/FrontendApplicationBase.hpp>
+#include "SDK/../../../Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 class FrontendHeap;
 
@@ -22,7 +23,7 @@ public:
 #if defined(SIMULATOR)
         SDK::Simulator::KernelHolder::Get().tick();
 #endif
-        
+        SDK::TouchGFXCommandProcessor::GetInstance().callCustomMessageHandler();
         model.tick();
         FrontendApplicationBase::handleTickEvent();
     }

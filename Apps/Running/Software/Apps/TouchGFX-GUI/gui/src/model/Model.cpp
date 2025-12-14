@@ -3,6 +3,7 @@
 #include <gui/common/FrontendApplication.hpp>
 
 #include "SDK/Kernel/KernelProviderGUI.hpp"
+#include "SDK/../../../Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 #define LOG_MODULE_PRX      "Model"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
@@ -18,15 +19,12 @@
 Model::Model()
     : modelListener(0)
     , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
-    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel.gctrl.getContext()))
+    , mSrvSender(mKernel)
 {
-    mKernel.app.registerApp(this);
-    mGSModel->setGUIHandler(&mKernel, this);
+    SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(this);
+    SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(this);
 
-    // Default values
-    mKernel.appCapabilities.enableMusicControl(true);
-    mKernel.appCapabilities.enablePhoneNotification(true);
-    mKernel.appCapabilities.enableUsbCharging(false);
+    setCapabilities();
 
 #if defined(SIMULATOR)
     LOG_INFO("Application is running through simulator! \n");
@@ -61,11 +59,9 @@ void Model::invalidate()
 
 void Model::tick()
 {
-    //LOG_DEBUG("tick\n");
-
-    mGSModel->process(0);
-
-    decIdleTimer();
+    if (mIsRunning) {
+        decIdleTimer();
+    }
 
     if (mInvalidate) {
         mInvalidate = false;
@@ -91,15 +87,20 @@ void Model::resetIdleTimer()
 
 void Model::exitApp()
 {
-    mGSModel->setGUIHandler(nullptr, nullptr);
+    LOG_INFO("Manually exiting the application\n");
+    // Cleanup recourses
 
-    mKernel.system.exit();
+    SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(nullptr);
+    SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(nullptr);
+
+    mKernel.sys.exit(); // No return for real app
+
+    // !!! For TouchGFX Simulator !!!
     // This function only sets a flag. 
     // The current TouchGFX loop will be completed, meaning that depending 
     // on where this function was called, Model::tick(), Model::handleKeyEvent(), 
     // as well as handleTickEvent() and handleKeyEvent() for the 
     // current screen will be called.
-    // After that, onPause() ->onStop() -> onDestroy() will be called.
 }
 
 
@@ -206,7 +207,7 @@ const Settings& Model::getSettings() const
 void Model::setSettings(const Settings& sett)
 {
     mSettings = sett;
-    mGSModel->post(G2SEvent::SettingsSave{ mSettings });
+    mSrvSender.settingsSave(mSettings);
 }
 
 
@@ -220,7 +221,7 @@ bool Model::getGpsFix()
 // Track
 void Model::trackStart()
 {
-    mGSModel->post(G2SEvent::TrackStart{});
+    mSrvSender.trackStart();
 }
 
 bool Model::trackIsActive()
@@ -240,12 +241,12 @@ const Track::Data& Model::getTrackData() const
 
 void Model::saveTrack()
 {
-    mGSModel->post(G2SEvent::TrackStop{});
+    mSrvSender.trackStop(false);
 }
 
 void Model::discardTrack()
 {
-    mGSModel->post(G2SEvent::TrackStop{ true });
+    mSrvSender.trackStop(true);
 }
 
 bool Model::trackIsSummaryAvailable()
@@ -278,98 +279,131 @@ bool Model::isAnyKeyPressed(uint8_t key) const
         (Gui::Config::Button::R2 == key);
 }
 
+void Model::setCapabilities()
+{
+    auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestSetCapabilities>();
+    if (msg) {
+        msg->enMusicControl = true;
+        msg->enUsbChargingScreen = false;
+        msg->enMusicControl = true;
+        mKernel.comm.sendMessage(msg);
+        mKernel.comm.releaseMessage(msg);
+    }
+}
+
 // IUserApp implementation
 
 void Model::onStart()
 {
-    LOG_INFO("called\n");
-    mGSModel->setGUIHandler(&mKernel, this); // re-set handler after stop
+    LOG_INFO("Started\n");
 }
 
 void Model::onResume()
 {
-    LOG_INFO("called\n");
+    mIsRunning = true;
+    resetIdleTimer();
+
     invalidate();   // Redraw screen
+}
+
+void Model::onSuspend()
+{
+    mIsRunning = false;
 }
 
 void Model::onStop()
 {
-    LOG_INFO("called\n");
-    mGSModel->setGUIHandler(nullptr, nullptr);  // clear handler after stop
+    LOG_INFO("Force exit from the application\n");
 }
 
-void Model::handleEvent(const S2GEvent::Time& event)
+// Events from Service
+
+bool Model::customMessageHandler(SDK::MessageBase *msg)
 {
+    switch (msg->getType()) {
+        case CustomMessage::SETTINGS_UPDATE:  {
+            LOG_DEBUG("SETTINGS_UPDATE\n");
+            auto *cmsg = static_cast<CustomMessage::SettingsUpd*>(msg);
+            mSettings = cmsg->settings;
+            mUnitsImperial = cmsg->unitsImperial;
+        } break;
 
-    std::tm newTime = event.localTime;
+        case CustomMessage::LOCAL_TIME:  {
+            auto *cmsg = static_cast<CustomMessage::Time*>(msg);
 
-    bool dateChanged = (newTime.tm_year != mTime.tm_year ||
-        newTime.tm_mon != mTime.tm_mon || newTime.tm_mday != mTime.tm_mday);
+            std::tm newTime = cmsg->localTime;
+            LOG_DEBUG("LOCAL_TIME %04u-%02u-%02u %02u:%02u:%02u\n",
+                    newTime.tm_year + 1900, newTime.tm_mon + 1, newTime.tm_mday,
+                    newTime.tm_hour, newTime.tm_min, newTime.tm_sec);
 
-    bool timeChanged = (newTime.tm_hour != mTime.tm_hour ||
-        newTime.tm_min != mTime.tm_min || newTime.tm_sec != mTime.tm_sec);
+            bool dateChanged = (newTime.tm_year != mTime.tm_year ||
+                newTime.tm_mon != mTime.tm_mon || newTime.tm_mday != mTime.tm_mday);
 
-    mTime = newTime;
+            bool timeChanged = (newTime.tm_hour != mTime.tm_hour ||
+                                newTime.tm_min != mTime.tm_min ||
+                                newTime.tm_sec != mTime.tm_sec);
 
-    if (dateChanged) {
-        modelListener->onDate(mTime.tm_year + 1900, mTime.tm_mon + 1, mTime.tm_mday, mTime.tm_wday);
+            mTime = newTime;
+
+            if (dateChanged) {
+                modelListener->onDate(mTime.tm_year + 1900, mTime.tm_mon + 1, mTime.tm_mday, mTime.tm_wday);
+            }
+
+            if (timeChanged) {
+                modelListener->onTime(mTime.tm_hour, mTime.tm_min, mTime.tm_sec);
+            }
+        } break;
+
+        case CustomMessage::BATTERY:  {
+            auto *cmsg = static_cast<CustomMessage::Battery*>(msg);
+            LOG_DEBUG("BATTERY Level %u\n", cmsg->level);
+            if (mBatteryLevel != cmsg->level) {
+                mBatteryLevel = cmsg->level;
+                modelListener->onBatteryLevel(mBatteryLevel);
+            }
+        } break;
+
+        case CustomMessage::GPS_FIX:  {
+            auto *cmsg = static_cast<CustomMessage::GpsFix*>(msg);
+            LOG_DEBUG("GPS_FIX %u\n", cmsg->state);
+            if (mGpsFix != cmsg->state) {
+                mGpsFix = cmsg->state;
+                modelListener->onGpsFix(mGpsFix);
+            }
+        } break;
+
+        case CustomMessage::TRACK_STATE_UPDATE:  {
+            LOG_DEBUG("TRACK_STATE_UPDATE\n");
+            auto *cmsg = static_cast<CustomMessage::TrackStateUpd*>(msg);
+            if (mTrackState != cmsg->state) {
+                mTrackState = cmsg->state;
+                modelListener->onTrackState(mTrackState);
+            }
+        } break;
+
+        case CustomMessage::TRACK_DATA_UPDATE:  {
+            LOG_DEBUG("TRACK_DATA_UPDATE\n");
+            auto *cmsg = static_cast<CustomMessage::TrackDataUpd*>(msg);
+            mTrackData = cmsg->data;
+            modelListener->onTrackData(mTrackData);
+        } break;
+
+        case CustomMessage::LAP_END:  {
+            LOG_DEBUG("LAP_END\n");
+            auto *cmsg = static_cast<CustomMessage::LapEnded*>(msg);
+            modelListener->onLapChanged(cmsg->lapNum);
+        } break;
+
+        case CustomMessage::SUMMARY:  {
+            LOG_DEBUG("SUMMARY\n");
+            auto *cmsg = static_cast<CustomMessage::Summary*>(msg);
+            mpActivitySummary = cmsg->summary;
+            modelListener->onActivitySummary(*mpActivitySummary);
+        } break;
+
+        default:
+            break;
     }
 
-    if (timeChanged) {
-        modelListener->onTime(mTime.tm_hour, mTime.tm_min, mTime.tm_sec);
-    }
-}
-
-void Model::handleEvent(const S2GEvent::SettingsUpd& event)
-{
-    LOG_DEBUG("S2GEvent::SettingsUpd\n");
-    mSettings = event.settings;
-    mUnitsImperial = event.unitsImperial;
-}
-
-void Model::handleEvent(const S2GEvent::Battery& event)
-{
-    LOG_DEBUG("S2GEvent::Battery\n");
-    if (mBatteryLevel != event.level) {
-        mBatteryLevel = event.level;
-        modelListener->onBatteryLevel(mBatteryLevel);
-    }
-}
-
-void Model::handleEvent(const S2GEvent::GpsFix& event)
-{
-    LOG_DEBUG("S2GEvent::GpsFix\n");
-    if (mGpsFix != event.state) {
-        mGpsFix = event.state;
-        modelListener->onGpsFix(mGpsFix);
-    }
-}
-
-void Model::handleEvent(const S2GEvent::TrackStateUpd& event)
-{
-    LOG_DEBUG("S2GEvent::TrackStateUpd\n");
-    if (mTrackState != event.state) {
-        mTrackState = event.state;
-        modelListener->onTrackState(mTrackState);
-    }
-}
-
-void Model::handleEvent(const S2GEvent::TrackDataUpd& event)
-{
-    //LOG_DEBUG("S2GEvent::TrackDataUpd\n");
-    mTrackData = event.data;
-    modelListener->onTrackData(mTrackData);
-}
-
-void Model::handleEvent(const S2GEvent::LapEnded& event)
-{
-    LOG_DEBUG("S2GEvent::LapEnded\n");
-    modelListener->onLapChanged(event.lapNum);
-}
-
-void Model::handleEvent(const S2GEvent::Summary& event)
-{
-    LOG_DEBUG("S2GEvent::Summary\n");
-    mpActivitySummary = event.summary;
-    modelListener->onActivitySummary(*mpActivitySummary);
+    return true;
 }
