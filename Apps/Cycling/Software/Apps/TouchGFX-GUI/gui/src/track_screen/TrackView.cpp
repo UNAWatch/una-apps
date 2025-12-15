@@ -34,8 +34,12 @@ void TrackView::setPositionId(uint16_t id)
     trackFace1.setVisible(false);
     trackFace2.setVisible(false);
     trackFace3.setVisible(false);
+    trackFace4.setVisible(false);
 
     switch (id) {
+        case App::Menu::Start::Track::ID_TRACK4:
+            trackFace4.setVisible(true);
+            break;
         case App::Menu::Start::Track::ID_TRACK3:
             trackFace3.setVisible(true);
             break;
@@ -50,6 +54,7 @@ void TrackView::setPositionId(uint16_t id)
     trackFace1.invalidate();
     trackFace2.invalidate();
     trackFace3.invalidate();
+    trackFace4.invalidate();
 }
 
 uint16_t TrackView::getPositionId()
@@ -59,24 +64,27 @@ uint16_t TrackView::getPositionId()
 
 void TrackView::setTrackData(const Track::Data &data, bool isImperial, const std::array<uint8_t, 4>& hrth)
 {
-    trackFace1.setPace(data.pace, isImperial);
+    trackFace1.setSpeed(data.speed, isImperial);
     trackFace1.setDistance(data.distance, isImperial);
     trackFace1.setTimer(data.totalTime);
 
     trackFace2.setHR(data.HR, data.hrTrustLevel, hrth);
-    trackFace2.setLapPace(data.lapPace, isImperial);
-    trackFace2.setLapDistance(data.lapDistance, isImperial);
-    trackFace2.setLapTimer(data.lapTime);
+    trackFace2.setSpeed(data.avgSpeed, isImperial);
+    trackFace2.setElevation(data.elevation, isImperial);
+
+    trackFace3.setSpeed(data.avgLapSpeed, isImperial);
+    trackFace3.setDistance(data.lapDistance, isImperial);
+    trackFace3.setTimer(data.lapTime);
 }
 
 void TrackView::setTime(uint8_t h, uint8_t m)
 {
-    trackFace3.setTime(h, m);
+    trackFace4.setTime(h, m);
 }
 
 void TrackView::setBatteryLevel(uint8_t level)
 {
-    trackFace3.setBatteryLevel(level);
+    trackFace4.setBatteryLevel(level);
 }
 
 void TrackView::setCharging(bool state)

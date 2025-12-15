@@ -10,21 +10,35 @@ void TrackFace3::initialize()
     TrackFace3Base::initialize();
 }
 
-void TrackFace3::setTime(uint8_t h, uint8_t m)
+void TrackFace3::setSpeed(float mps, bool isImperial)
 {
-    if (mHour != h || mMinute != m) {
-        mHour = h;
-        mMinute = m;
-        Unicode::snprintf(valueDayTimeBuffer, VALUEDAYTIME_SIZE, "%d:%02d", h, m);
-        valueDayTime.invalidate();
+    float kmPerH = (3.6f * mps);
+    if (isImperial) {
+        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", App::Utils::km2mi(kmPerH)); // mi
+        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_PER_H).getText());
+    } else {
+        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", kmPerH);
+        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
     }
+
+    speedValue.invalidate();
+    speedUnits.invalidate();
 }
 
-void TrackFace3::setBatteryLevel(uint8_t level)
+void TrackFace3::setDistance(float m, bool isImperial)
 {
-    battery.setBatteryLevel(level);
+    if (isImperial) {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+        Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
+    } else {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
+    }
+    distanceValue.invalidate();
+}
 
-    Unicode::snprintf(valuePercentBuffer, VALUEPERCENT_SIZE, "%d%s", level, touchgfx::TypedText(T_TEXT_PERCENT).getText());
-    valuePercent.invalidate();
-    
+void TrackFace3::setTimer(std::time_t sec)
+{
+    Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%u:%02u:%02u", App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
+    timerValue.invalidate();
 }

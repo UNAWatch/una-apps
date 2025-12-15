@@ -25,13 +25,13 @@ TrackFace2Base::TrackFace2Base()
     elevationUnits.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18_L));
     add(elevationUnits);
 
-    elevtionValue.setPosition(70, 165, 100, 42);
-    elevtionValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    elevtionValue.setLinespacing(0);
-    Unicode::snprintf(elevtionValueBuffer, ELEVTIONVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_GAMW).getText());
-    elevtionValue.setWildcard(elevtionValueBuffer);
-    elevtionValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
-    add(elevtionValue);
+    elevationValue.setPosition(70, 165, 100, 42);
+    elevationValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    elevationValue.setLinespacing(0);
+    Unicode::snprintf(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_GAMW).getText());
+    elevationValue.setWildcard(elevationValueBuffer);
+    elevationValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    add(elevationValue);
 
     line2.setPosition(35, 159, 170, 3);
     line2Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
@@ -42,29 +42,29 @@ TrackFace2Base::TrackFace2Base()
     line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line2);
 
-    avgSpeedUnits.setPosition(160, 129, 50, 24);
-    avgSpeedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgSpeedUnits.setLinespacing(0);
-    Unicode::snprintf(avgSpeedUnitsBuffer, AVGSPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
-    avgSpeedUnits.setWildcard(avgSpeedUnitsBuffer);
-    avgSpeedUnits.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(avgSpeedUnits);
+    speedUnits.setPosition(160, 129, 50, 24);
+    speedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    speedUnits.setLinespacing(0);
+    Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
+    speedUnits.setWildcard(speedUnitsBuffer);
+    speedUnits.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(speedUnits);
 
-    avgSpeedValue.setPosition(70, 111, 100, 48);
-    avgSpeedValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgSpeedValue.setLinespacing(0);
-    Unicode::snprintf(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_OTQI).getText());
-    avgSpeedValue.setWildcard(avgSpeedValueBuffer);
-    avgSpeedValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
-    add(avgSpeedValue);
+    speedValue.setPosition(70, 111, 100, 48);
+    speedValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    speedValue.setLinespacing(0);
+    Unicode::snprintf(speedValueBuffer, SPEEDVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_OTQI).getText());
+    speedValue.setWildcard(speedValueBuffer);
+    speedValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    add(speedValue);
 
-    avgSpeedText.setPosition(67, 88, 107, 23);
-    avgSpeedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgSpeedText.setLinespacing(0);
-    Unicode::snprintf(avgSpeedTextBuffer, AVGSPEEDTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_AVG_DOT_SPEED).getText());
-    avgSpeedText.setWildcard(avgSpeedTextBuffer);
-    avgSpeedText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(avgSpeedText);
+    speedText.setPosition(67, 88, 107, 23);
+    speedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    speedText.setLinespacing(0);
+    Unicode::snprintf(speedTextBuffer, SPEEDTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_AVG_DOT_SPEED).getText());
+    speedText.setWildcard(speedTextBuffer);
+    speedText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(speedText);
 
     line1.setPosition(35, 79, 170, 3);
     line1Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));

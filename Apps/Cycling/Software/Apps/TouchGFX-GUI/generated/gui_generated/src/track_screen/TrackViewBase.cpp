@@ -19,6 +19,10 @@ TrackViewBase::TrackViewBase()
     buttons.setXY(0, 47);
     add(buttons);
 
+    trackFace4.setXY(0, 0);
+    trackFace4.setVisible(false);
+    add(trackFace4);
+
     trackFace3.setXY(0, 0);
     trackFace3.setVisible(false);
     add(trackFace3);
@@ -40,6 +44,7 @@ void TrackViewBase::setupScreen()
 {
     sideBar.initialize();
     buttons.initialize();
+    trackFace4.initialize();
     trackFace3.initialize();
     trackFace2.initialize();
     trackFace1.initialize();

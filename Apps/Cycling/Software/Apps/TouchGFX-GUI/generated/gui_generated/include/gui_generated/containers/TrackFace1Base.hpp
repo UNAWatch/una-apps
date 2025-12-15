@@ -34,7 +34,7 @@ protected:
     touchgfx::TextAreaWithOneWildcard distanceText;
     touchgfx::Line line1;
     touchgfx::PainterABGR2222 line1Painter;
-    touchgfx::TextAreaWithOneWildcard sppedUnits;
+    touchgfx::TextAreaWithOneWildcard speedUnits;
     touchgfx::TextAreaWithOneWildcard speedValue;
     touchgfx::TextAreaWithOneWildcard speedText;
 
@@ -49,8 +49,8 @@ protected:
     touchgfx::Unicode::UnicodeChar distanceValueBuffer[DISTANCEVALUE_SIZE];
     static const uint16_t DISTANCETEXT_SIZE = 15;
     touchgfx::Unicode::UnicodeChar distanceTextBuffer[DISTANCETEXT_SIZE];
-    static const uint16_t SPPEDUNITS_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar sppedUnitsBuffer[SPPEDUNITS_SIZE];
+    static const uint16_t SPEEDUNITS_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar speedUnitsBuffer[SPEEDUNITS_SIZE];
     static const uint16_t SPEEDVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar speedValueBuffer[SPEEDVALUE_SIZE];
     static const uint16_t SPEEDTEXT_SIZE = 15;

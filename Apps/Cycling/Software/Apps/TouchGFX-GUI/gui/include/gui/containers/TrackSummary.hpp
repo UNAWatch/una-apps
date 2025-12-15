@@ -14,7 +14,8 @@ public:
     virtual void initialize();
 
     void setDistance(float m, bool isImperial);
-    void setAvgPace(float spm, bool isImperial);
+    void setAvgSpeed(float mps, bool isImperial);
+    void setElevation(float m, bool isImperial);
     void setTimer(uint32_t sec);
     void setMap(const SDK::TrackMapScreen &map);
 

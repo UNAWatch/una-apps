@@ -55,6 +55,7 @@ private:
     void handleEvent(const CustomMessage::TrackStop& event);
     void handleEvent(const CustomMessage::SettingsUpd& event);
 
+    void setCapabilities();
     void notifyFirstFix();
     void notifyLapEnd();
     void notifyNewActivity();

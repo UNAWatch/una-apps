@@ -338,12 +338,20 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "trackFace3",
+            "Name": "trackFace4",
             "Width": 240,
             "Height": 240,
             "Visible": false,
             "LockPosition": true,
             "CustomContainerDefinitionName": "TrackFace4"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "trackFace3",
+            "Width": 240,
+            "Height": 240,
+            "Visible": false,
+            "CustomContainerDefinitionName": "TrackFace3"
           },
           {
             "Type": "CustomContainerInstance",
@@ -1728,7 +1736,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "elevatioValue",
+            "Name": "elevationValue",
             "X": 140,
             "Y": 148,
             "Width": 80,
@@ -2101,7 +2109,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "sppedUnits",
+            "Name": "speedUnits",
             "X": 160,
             "Y": 51,
             "Width": 52,
@@ -2215,7 +2223,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "elevtionValue",
+            "Name": "elevationValue",
             "X": 70,
             "Y": 165,
             "Width": 100,
@@ -2252,7 +2260,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "avgSpeedUnits",
+            "Name": "speedUnits",
             "X": 160,
             "Y": 129,
             "Width": 50,
@@ -2273,7 +2281,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "avgSpeedValue",
+            "Name": "speedValue",
             "X": 70,
             "Y": 111,
             "Width": 100,
@@ -2294,7 +2302,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "avgSpeedText",
+            "Name": "speedText",
             "X": 67,
             "Y": 88,
             "Width": 107,
@@ -2526,7 +2534,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "sppedUnits",
+            "Name": "speedUnits",
             "X": 160,
             "Y": 51,
             "Width": 52,

@@ -33,6 +33,7 @@ enum Id {
     ID_TRACK1 = 0,
     ID_TRACK2,
     ID_TRACK3,
+    ID_TRACK4,
 
     ID_COUNT,               // Total number of menu items
     ID_DEFAULT = ID_START   // Default selected item
@@ -79,11 +80,11 @@ namespace Settings::Alerts::Distance
 enum Id {
     ID_OFF = 0,
     ID_KM_MILL_1,
-    ID_KM_MILL_2,
-    ID_KM_MILL_3,
-    ID_KM_MILL_4,
     ID_KM_MILL_5,
     ID_KM_MILL_10,
+    ID_KM_MILL_15,
+    ID_KM_MILL_20,
+    ID_KM_MILL_25,
 
     ID_COUNT,               // Total number of menu items
     ID_DEFAULT = ID_OFF     // Default selected item
@@ -94,20 +95,19 @@ namespace Settings::Alerts::Time
 {
 enum Id {
     ID_OFF = 0,
-    ID_MIN_1,
-    ID_MIN_5,
     ID_MIN_10,
-    ID_MIN_15,
     ID_MIN_20,
     ID_MIN_30,
+    ID_MIN_60,
+    ID_MIN_120,
 
     ID_COUNT,               // Total number of menu items
     ID_DEFAULT = ID_OFF     // Default selected item
 };
 } // Settings::Alerts::Time
 
-static constexpr uint16_t kDistanceList[Settings::Alerts::Distance::ID_COUNT] = { 0,1,2,3,4,5,10 };
-static constexpr uint16_t kTimeList[Settings::Alerts::Time::ID_COUNT] = { 0,1,5,10,15,20,30 };
+static constexpr uint16_t kDistanceList[Settings::Alerts::Distance::ID_COUNT] = { 0,1,5,10,15,20,25 };
+static constexpr uint16_t kTimeList[Settings::Alerts::Time::ID_COUNT] = { 0,10,20,30,60,120 };
 
 
 /**

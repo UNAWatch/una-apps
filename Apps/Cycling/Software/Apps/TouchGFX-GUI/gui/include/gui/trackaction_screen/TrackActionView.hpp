@@ -16,7 +16,7 @@ public:
     uint16_t getPositionId();
     void setUnitsImperial(bool isImperial);
     void setTimer(std::time_t sec);
-    void setAvgPace(float spm);
+    void setAvgSpeed(float mps);
     void setDistance(float m);
     void setAvgHR(float v);
     void setElevation(float m);
@@ -28,7 +28,7 @@ protected:
     uint16_t mTitleInfoMsgId = 0;
 
     std::time_t mTimerSec = 0;
-    float mAvgPace = 0.0f;  // s/m
+    float mAvgSpeed = 0.0f;  // m/s
     float mDistance = 0.0f; // m
     float mAvgHr = 0.0f;
     float mElevation = 0.0f; // m

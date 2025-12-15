@@ -12,9 +12,8 @@ public:
     virtual void initialize();
 
     void setHR(float hr, float tl, const std::array<uint8_t, 4>& th);
-    void setLapPace(float spm, bool isImperial);
-    void setLapDistance(float m, bool isImperial);
-    void setLapTimer(std::time_t sec);
+    void setSpeed(float mps, bool isImperial);
+    void setElevation(float m, bool isImperial);
 
 protected:
 };

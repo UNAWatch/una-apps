@@ -25,7 +25,7 @@ protected:
      */
     touchgfx::TextAreaWithOneWildcard timerValue;
     touchgfx::TextAreaWithOneWildcard timerText;
-    touchgfx::TextAreaWithOneWildcard elevatioValue;
+    touchgfx::TextAreaWithOneWildcard elevationValue;
     touchgfx::TextAreaWithOneWildcard elevationText;
     touchgfx::TextAreaWithOneWildcard avgSpeedValue;
     touchgfx::TextAreaWithOneWildcard avgSpeedText;
@@ -39,8 +39,8 @@ protected:
     touchgfx::Unicode::UnicodeChar timerValueBuffer[TIMERVALUE_SIZE];
     static const uint16_t TIMERTEXT_SIZE = 10;
     touchgfx::Unicode::UnicodeChar timerTextBuffer[TIMERTEXT_SIZE];
-    static const uint16_t ELEVATIOVALUE_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar elevatioValueBuffer[ELEVATIOVALUE_SIZE];
+    static const uint16_t ELEVATIONVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar elevationValueBuffer[ELEVATIONVALUE_SIZE];
     static const uint16_t ELEVATIONTEXT_SIZE = 10;
     touchgfx::Unicode::UnicodeChar elevationTextBuffer[ELEVATIONTEXT_SIZE];
     static const uint16_t AVGSPEEDVALUE_SIZE = 10;

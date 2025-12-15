@@ -11,14 +11,19 @@ void TrackFace1::initialize()
 }
 
 
-void TrackFace1::setPace(float spm, bool isImperial)
+void TrackFace1::setSpeed(float mps, bool isImperial)
 {
-    std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    float kmPerH = (3.6f * mps);
     if (isImperial) {
-        secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", App::Utils::km2mi(kmPerH)); // mi
+        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_PER_H).getText());
+    } else {
+        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", kmPerH);
+        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
     }
-    Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
-    paceValue.invalidate();
+
+    speedValue.invalidate();
+    speedUnits.invalidate();
 }
 
 void TrackFace1::setDistance(float m, bool isImperial)

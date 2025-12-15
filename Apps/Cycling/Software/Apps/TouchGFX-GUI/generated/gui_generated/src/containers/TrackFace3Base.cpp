@@ -68,13 +68,13 @@ TrackFace3Base::TrackFace3Base()
     line1.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line1);
 
-    sppedUnits.setPosition(160, 51, 52, 19);
-    sppedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    sppedUnits.setLinespacing(0);
-    Unicode::snprintf(sppedUnitsBuffer, SPPEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
-    sppedUnits.setWildcard(sppedUnitsBuffer);
-    sppedUnits.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
-    add(sppedUnits);
+    speedUnits.setPosition(160, 51, 52, 19);
+    speedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    speedUnits.setLinespacing(0);
+    Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
+    speedUnits.setWildcard(speedUnitsBuffer);
+    speedUnits.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
+    add(speedUnits);
 
     speedValue.setPosition(58, 30, 124, 42);
     speedValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));

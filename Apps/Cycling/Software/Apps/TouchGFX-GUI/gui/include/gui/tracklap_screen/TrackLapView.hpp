@@ -14,7 +14,7 @@ public:
 
     void setUnitsImperial(bool isImperial);
     void setLapNum(uint32_t n);
-    void setPace(float spm);
+    void setSpeed(float mps);
     void setDistance(float m);
     void setTimer(std::time_t sec);
 

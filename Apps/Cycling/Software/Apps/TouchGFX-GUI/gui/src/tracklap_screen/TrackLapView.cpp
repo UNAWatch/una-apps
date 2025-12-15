@@ -36,14 +36,16 @@ void TrackLapView::setLapNum(uint32_t n)
     title.set(buffer);
 }
 
-void TrackLapView::setPace(float spm)
+void TrackLapView::setSpeed(float mps)
 {
-    std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    float kmPerH = (3.6f * mps);
     if (mUnitsImperial) {
-        secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.2f", App::Utils::km2mi(kmPerH)); // mi
+    } else {
+        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.2f", kmPerH);
     }
-    Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
-    avgPaceValue.invalidate();
+
+    avgSpeedValue.invalidate();
 }
 
 void TrackLapView::setDistance(float m)

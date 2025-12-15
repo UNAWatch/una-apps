@@ -11,7 +11,7 @@ public:
 
     virtual void initialize();
 
-    void setPace(float spm, bool isImperial);
+    void setSpeed(float mps, bool isImperial);
     void setDistance(float m, bool isImperial);
     void setTimer(std::time_t sec);
 

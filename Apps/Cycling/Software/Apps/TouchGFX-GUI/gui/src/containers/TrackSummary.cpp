@@ -26,14 +26,26 @@ void TrackSummary::setDistance(float m, bool isImperial)
     distanceUnits.invalidate();
 }
 
-void TrackSummary::setAvgPace(float spm, bool isImperial)
+void TrackSummary::setAvgSpeed(float mps, bool isImperial)
 {
-    std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    float kmPerH = (3.6f * mps);
     if (isImperial) {
-        secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.1f", App::Utils::km2mi(kmPerH)); // mi
+    } else {
+        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.1f", kmPerH);
     }
-    Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
-    avgPaceValue.invalidate();
+
+    avgSpeedValue.invalidate();
+}
+
+void TrackSummary::setElevation(float m, bool isImperial)
+{
+    if (isImperial) {
+        m = App::Utils::m2ft(m);
+    }
+    Unicode::snprintfFloat(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%.0f", m);
+    elevationValue.invalidate();
+    elevationText.invalidate();
 }
 
 void TrackSummary::setTimer(uint32_t sec)

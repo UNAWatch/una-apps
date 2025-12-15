@@ -17,28 +17,33 @@ void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
     hrBar.setHR(hr, th);
 }
 
-void TrackFace2::setLapPace(float spm, bool isImperial)
+void TrackFace2::setSpeed(float mps, bool isImperial)
 {
-    std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    float kmPerH = (3.6f * mps);
     if (isImperial) {
-        secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
-    }
-    Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
-    lapPaceValue.invalidate();
-}
-
-void TrackFace2::setLapDistance(float m, bool isImperial)
-{
-    if (isImperial) {
-        Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", App::Utils::km2mi(kmPerH)); // mi
+        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_PER_H).getText());
     } else {
-        Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", kmPerH);
+        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
     }
-    lapDistValue.invalidate();
+
+    speedValue.invalidate();
+    speedUnits.invalidate();
 }
 
-void TrackFace2::setLapTimer(std::time_t sec)
+void TrackFace2::setElevation(float m, bool isImperial)
 {
-    Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%u:%02u:%02u", App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
-    timerValue.invalidate();
+    if (isImperial) {
+        m = App::Utils::m2ft(m);
+        Unicode::snprintfFloat(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%.0f", App::Utils::m2ft(m));
+        Unicode::snprintf(elevationUnitsBuffer, ELEVATIONUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_FT).getText());
+    } else {
+        Unicode::snprintfFloat(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%.0f", m);
+        Unicode::snprintf(elevationUnitsBuffer, ELEVATIONUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_M).getText());
+    }
+
+    elevationValue.invalidate();
+    elevationUnits.invalidate();
 }
+

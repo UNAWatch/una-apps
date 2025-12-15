@@ -335,8 +335,10 @@ void Service::onSdlNewData(uint16_t                 handle,
             mHr.trustLevel = parser.getTrustLevel();
             mHr.timestamp = parser.getTimestamp();
 
-            mHr.totalSum += mHr.hr;
-            mHr.totalCnt++;
+            if (mHr.hr > 1) {
+                mHr.totalSum += mHr.hr;
+                mHr.totalCnt++;
+            }
             LOG_DEBUG("HR %.1f, TrustLevel %.1f\n", mHr.hr, mHr.trustLevel);
         }
     } else if (mSensorBatteryLevel.matchesDriver(handle)) {
@@ -351,6 +353,8 @@ void Service::onSdlNewData(uint16_t                 handle,
 void Service::onStartGUI()
 {
     mGUIStarted = true;
+
+    setCapabilities();
 
     // Subscribe to GPS to get fix
     connectGps();
@@ -384,10 +388,26 @@ void Service::handleEvent(const CustomMessage::TrackStop& event)
 
 void Service::handleEvent(const CustomMessage::SettingsUpd& event)
 {
+    bool updCaps = mSettings.phoneNotifEn != event.settings.phoneNotifEn;
     mSettings = event.settings;
     mSettingsSerializer.save(event.settings);
+
+    if (updCaps) {
+        setCapabilities();
+    }
 }
 
+void Service::setCapabilities()
+{
+    auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestSetCapabilities>();
+    if (msg) {
+        msg->enPhoneNotification = mSettings.phoneNotifEn;
+        msg->enUsbChargingScreen = false;
+        msg->enMusicControl = true;
+        mKernel.comm.sendMessage(msg);
+        mKernel.comm.releaseMessage(msg);
+    }
+}
 
 void Service::notifyFirstFix()
 {

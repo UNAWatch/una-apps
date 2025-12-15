@@ -24,8 +24,6 @@ Model::Model()
     SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(this);
     SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(this);
 
-    setCapabilities();
-
 #if defined(SIMULATOR)
     LOG_INFO("Application is running through simulator! \n");
 
@@ -277,18 +275,6 @@ bool Model::isAnyKeyPressed(uint8_t key) const
         (Gui::Config::Button::L2 == key) ||
         (Gui::Config::Button::R1 == key) ||
         (Gui::Config::Button::R2 == key);
-}
-
-void Model::setCapabilities()
-{
-    auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestSetCapabilities>();
-    if (msg) {
-        msg->enMusicControl = true;
-        msg->enUsbChargingScreen = false;
-        msg->enMusicControl = true;
-        mKernel.comm.sendMessage(msg);
-        mKernel.comm.releaseMessage(msg);
-    }
 }
 
 // IUserApp implementation

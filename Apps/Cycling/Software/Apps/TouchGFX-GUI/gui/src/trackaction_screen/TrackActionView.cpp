@@ -75,9 +75,9 @@ void TrackActionView::setTimer(std::time_t sec)
     updTitleInfo();
 }
 
-void TrackActionView::setAvgPace(float spm)
+void TrackActionView::setAvgSpeed(float mps)
 {
-    mAvgPace = spm;
+    mAvgSpeed = mps;
     updTitleInfo();
 }
 
@@ -169,12 +169,12 @@ void TrackActionView::updTitleInfo()
         Unicode::snprintf(buffer, bufferSize, "%d:%02d",
             App::Utils::sec2hmsH(mTimerSec), App::Utils::sec2hmsM(mTimerSec));
     } else if (mTitleInfoMsgId == 1) {
-        titleInfo.setTitle(T_TEXT_AVG_DOT_PACE_UC);
-        std::time_t secPerKm = static_cast<std::time_t>(mAvgPace * 1000.0f);
+        titleInfo.setTitle(T_TEXT_AVG_DOT_SPEED);
         if (mUnitsImperial) {
-            secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+            Unicode::snprintfFloat(buffer, bufferSize, "%.1f", App::Utils::km2mi(3.6f * mAvgSpeed));
+        } else {
+            Unicode::snprintfFloat(buffer, bufferSize, "%.1f", (3.6f * mAvgSpeed));
         }
-        Unicode::snprintf(buffer, bufferSize, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
     } else if (mTitleInfoMsgId == 2) {
         titleInfo.setTitle(T_TEXT_DISTANCE_UC);
         if (mUnitsImperial) {

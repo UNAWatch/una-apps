@@ -25,13 +25,13 @@ TrackSummaryBase::TrackSummaryBase()
     timerText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
     add(timerText);
 
-    elevatioValue.setPosition(140, 148, 80, 32);
-    elevatioValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    elevatioValue.setLinespacing(0);
-    Unicode::snprintf(elevatioValueBuffer, ELEVATIOVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_SCJO).getText());
-    elevatioValue.setWildcard(elevatioValueBuffer);
-    elevatioValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25));
-    add(elevatioValue);
+    elevationValue.setPosition(140, 148, 80, 32);
+    elevationValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    elevationValue.setLinespacing(0);
+    Unicode::snprintf(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_SCJO).getText());
+    elevationValue.setWildcard(elevationValueBuffer);
+    elevationValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25));
+    add(elevationValue);
 
     elevationText.setPosition(36, 155, 100, 21);
     elevationText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));

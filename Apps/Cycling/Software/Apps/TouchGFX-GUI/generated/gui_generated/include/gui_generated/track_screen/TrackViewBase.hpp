@@ -11,6 +11,7 @@
 #include <gui/containers/SideBarSmall.hpp>
 #include <gui/containers/Buttons.hpp>
 #include <gui/containers/TrackFace4.hpp>
+#include <gui/containers/TrackFace3.hpp>
 #include <gui/containers/TrackFace2.hpp>
 #include <gui/containers/TrackFace1.hpp>
 
@@ -33,7 +34,8 @@ protected:
     touchgfx::Box __background;
     SideBarSmall sideBar;
     Buttons buttons;
-    TrackFace4 trackFace3;
+    TrackFace4 trackFace4;
+    TrackFace3 trackFace3;
     TrackFace2 trackFace2;
     TrackFace1 trackFace1;
 

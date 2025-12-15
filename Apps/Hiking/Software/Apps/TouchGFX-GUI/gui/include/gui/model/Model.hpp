@@ -117,8 +117,6 @@ protected:
      */
     bool isAnyKeyPressed(uint8_t key) const;
 
-    void setCapabilities();
-
     // IGuiLifeCycleCallback implementation required methods for app lifecycle
     virtual void onStart()   override;
     virtual void onResume()  override;
