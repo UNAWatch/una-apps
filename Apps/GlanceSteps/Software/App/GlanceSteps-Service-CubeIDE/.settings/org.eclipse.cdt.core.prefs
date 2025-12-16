@@ -17,14 +17,14 @@ environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.7
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK/operation=replace
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_SDK/value=../../../../../../SDK
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/delimiter=;
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/operation=append
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/value=0123ABCD89EF4560
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/operation=replace
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/value=A1F29B8D4E7C3A65
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/operation=replace
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/value=GSteps
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/operation=replace
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/value=0.0.3
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/value=0.0.4
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__DEV_ID__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__DEV_ID__/operation=append
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__DEV_ID__/value=UNA

@@ -37,8 +37,7 @@ private:
     const char*              mName;
     uint32_t                 mMaxControls;
     SDK::Glance::Form        mGlanceUI;
-    SDK::Glance::ControlText mGlanceTitleAHR;
-    SDK::Glance::ControlText mGlanceTitleRHR;
+    SDK::Glance::ControlText mGlanceTitle;
     SDK::Glance::ControlText mGlanceValueAHR;
     SDK::Glance::ControlText mGlanceValueRHR;
 
