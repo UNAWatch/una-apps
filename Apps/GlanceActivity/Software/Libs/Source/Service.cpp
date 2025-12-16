@@ -16,7 +16,7 @@
 
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
-    , mName("Steps")
+    , mName("Activity Min.")
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValue()
@@ -154,14 +154,14 @@ bool Service::configGui()
 
 void Service::createGuiControls()
 {
-    mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
+    mGlanceUI.createImage().init({31, 15}, {60, 60}, ICON_60X60_ABGR2222);
 
     mGlanceTitle = mGlanceUI.createText();
-    mGlanceTitle.pos({ 90, 0 }, { 100, 25 })
+    mGlanceTitle.pos({ 20, 0 }, { 200, 25 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
-        .setText("Activity")
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+        .setText("Activity Minutes")
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     mGlanceValue = mGlanceUI.createText();
     mGlanceValue.pos({ 80, 28 }, { 80, 34 })

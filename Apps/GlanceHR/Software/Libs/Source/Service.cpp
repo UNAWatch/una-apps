@@ -16,7 +16,7 @@
 
 Service::Service(SDK::Kernel &kernel)
         : mKernel(kernel)
-        , mName("HeartRate")
+        , mName("Live HR")
         , mMaxControls(0)
         , mGlanceUI()
         , mGlanceTitle()

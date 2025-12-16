@@ -16,11 +16,10 @@
 
 Service::Service(SDK::Kernel &kernel)
         : mKernel(kernel)
-        , mName("HeartRate")
+        , mName("AVG / R HR")
         , mMaxControls(0)
         , mGlanceUI()
-        , mGlanceTitleAHR()
-        , mGlanceTitleRHR()
+        , mGlanceTitle()
         , mGlanceValueAHR()
         , mGlanceValueRHR()
         , mSensorHRMetrics(SDK::Sensor::Type::HEART_RATE_METRICS)
@@ -169,112 +168,39 @@ void Service::glanceUpdate()
 
 void Service::createGuiControls()
 {
-    // |-----------|
-    // | AHR | RHR |
-    // |-----|-----|
-    // |  v  |  v  |
-    // |-----------|
+    // |-------------|
+    // | AHR / R HR  |
+    // |------|------|
+    // |  v   |  v   |
+    // |-------------|
 
-    //////////////////////////////////////////////////////////////
-    //// Sizes
-    //////////////////////////////////////////////////////////////
 
-    GlancePoint_t p11 = {
-            .x = 0,
-            .y = 0
-    };
+    mGlanceTitle = mGlanceUI.createText();
 
-    GlancePoint_t p12 = {
-            .x = static_cast<uint16_t>(mGlanceUI.getWidth() / 2),
-            .y = 0
-    };
-
-    GlancePoint_t p21 = {
-            .x = 0,
-            .y = static_cast<uint16_t>(mGlanceUI.getHeight() / 2),
-    };
-
-    GlancePoint_t p22 = {
-            .x = static_cast<uint16_t>(mGlanceUI.getWidth() / 2),
-            .y = static_cast<uint16_t>(mGlanceUI.getHeight() / 2),
-    };
-
-    GlanceSize_t areaSize = {
-            .w = static_cast<uint16_t>(mGlanceUI.getWidth() / 2),
-            .h = static_cast<uint16_t>(mGlanceUI.getHeight() / 2),
-    };
-
-    //////////////////////////////////////////////////////////////
-    //// Title AHR
-    //////////////////////////////////////////////////////////////
-
-    mGlanceTitleAHR = mGlanceUI.createText();
-
-    GlancePoint_t posGlanceTitleAHR = SDK::Glance::Align::placeWithin(p11,
-                                                                      areaSize,
-                                                                      areaSize,
-                                                                      GlanceAlignH_t::GLANCE_ALIGN_H_CENTER,
-                                                                      GlanceAlignV_t::GLANCE_ALIGN_V_CENTER);
-
-    mGlanceTitleAHR
-        .pos(posGlanceTitleAHR, areaSize)
+    mGlanceTitle
+        .pos({ 20, 0 }, { 200, 25 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
-        .setText("AHR")
+        .setText("AVG / R HR")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
-    //////////////////////////////////////////////////////////////
-    //// Title RHR
-    //////////////////////////////////////////////////////////////
 
-    mGlanceTitleRHR = mGlanceUI.createText();
-
-    GlancePoint_t posGlanceTitleRHR = SDK::Glance::Align::placeWithin(p12,
-                                                                      areaSize,
-                                                                      areaSize,
-                                                                      GlanceAlignH_t::GLANCE_ALIGN_H_CENTER,
-                                                                      GlanceAlignV_t::GLANCE_ALIGN_V_CENTER);
-
-    mGlanceTitleRHR
-        .pos(posGlanceTitleRHR, areaSize)
-        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
-        .color(GlanceColor_t::GLANCE_COLOR_TEAL)
-        .setText("RHR")
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
-
-    //////////////////////////////////////////////////////////////
-    //// Value AHR
-    //////////////////////////////////////////////////////////////
 
     mGlanceValueAHR = mGlanceUI.createText();
 
-    GlancePoint_t posGlanceValueAHR = SDK::Glance::Align::placeWithin(p21,
-                                                                      areaSize,
-                                                                      areaSize,
-                                                                      GlanceAlignH_t::GLANCE_ALIGN_H_CENTER,
-                                                                      GlanceAlignV_t::GLANCE_ALIGN_V_CENTER);
-
     mGlanceValueAHR
-        .pos(posGlanceValueAHR, areaSize)
-        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
-        .color(GlanceColor_t::GLANCE_COLOR_TEAL)
+        .pos({ 44, 28 }, { 80, 34 })
+        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
+        .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
-    //////////////////////////////////////////////////////////////
-    //// Value RHR
-    //////////////////////////////////////////////////////////////
+
 
     mGlanceValueRHR = mGlanceUI.createText();
 
-    GlancePoint_t posGlanceValueRHR = SDK::Glance::Align::placeWithin(p22,
-                                                                      areaSize,
-                                                                      areaSize,
-                                                                      GlanceAlignH_t::GLANCE_ALIGN_H_CENTER,
-                                                                      GlanceAlignV_t::GLANCE_ALIGN_V_CENTER);
-
     mGlanceValueRHR
-        .pos(posGlanceValueRHR, areaSize)
-        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
-        .color(GlanceColor_t::GLANCE_COLOR_TEAL)
+        .pos({ 116, 28 }, { 80, 34 })
+        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
+        .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }
