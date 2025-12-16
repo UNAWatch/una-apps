@@ -72,6 +72,7 @@ private:
     SDK::Sensor::Connection mSensorBatteryLevel;
     bool mIsSensorsConnected = false;
 
+    static constexpr uint32_t skBacklightTimeout    = 5000;
     static constexpr uint32_t skInitialSamplePeriod = 1000;
     static constexpr uint32_t skSamplePeriod        = 1000;
     static constexpr uint32_t skSampleLatency       = 1000;

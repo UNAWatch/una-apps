@@ -24,6 +24,8 @@ public:
     void handleEvent(const CustomMessage::AlarmSnoozeAll& event);
 
 private:
+    static constexpr uint32_t skBacklightTimeout = 5000;
+
     const SDK::Kernel&  mKernel;
     bool                mGUIStarted;
 
