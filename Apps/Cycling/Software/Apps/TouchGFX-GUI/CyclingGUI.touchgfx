@@ -369,6 +369,23 @@
             "Height": 240,
             "LockPosition": true,
             "CustomContainerDefinitionName": "TrackFace1"
+          },
+          {
+            "Type": "Circle",
+            "Name": "gpsDot",
+            "X": 116,
+            "Y": 227,
+            "Width": 8,
+            "Height": 8,
+            "Color": {
+              "Red": 64,
+              "Green": 192
+            },
+            "CenterX": 4.0,
+            "CenterY": 4.0,
+            "Radius": 4.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt"
           }
         ],
         "Interactions": [

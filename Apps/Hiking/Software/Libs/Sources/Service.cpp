@@ -361,11 +361,6 @@ void Service::onStartGUI()
 
 #if defined(SIMULATOR) || 0
     mGps.fix = true;
-#else
-    if (mSettings.debugSkipGpsFix) {
-        LOG_WARNING("Setting: debug_skip_gps_fix = true\n");
-        mGps.fix = true;
-    }
 #endif
 
     sendInitialInfoToGui();
@@ -511,6 +506,7 @@ void Service::sendInitialInfoToGui()
 
     mGuiSender.settingsUpd(mSettings, mUnits, hrThresholds);
 
+    LOG_DEBUG("Settings: units %u, th: %u-%u-%u-%u\n", mUnits, hrThresholds[0], hrThresholds[1], hrThresholds[2], hrThresholds[3]);
     // Summary
     mGuiSender.summary(std::make_shared<const ActivitySummary>(mSummary));
 

@@ -14,6 +14,8 @@
 #include <gui/containers/TrackFace3.hpp>
 #include <gui/containers/TrackFace2.hpp>
 #include <gui/containers/TrackFace1.hpp>
+#include <touchgfx/widgets/canvas/Circle.hpp>
+#include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
 
 class TrackViewBase : public touchgfx::View<TrackPresenter>
 {
@@ -38,6 +40,8 @@ protected:
     TrackFace3 trackFace3;
     TrackFace2 trackFace2;
     TrackFace1 trackFace1;
+    touchgfx::Circle gpsDot;
+    touchgfx::PainterABGR2222 gpsDotPainter;
 
 private:
 

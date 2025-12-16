@@ -12,33 +12,33 @@ void EnterMenuView::setupScreen()
 
     menu.setTitle(T_TEXT_APP_NAME_UC);
 
-    menu.setNumberOfItems(Gui::Menu::ID_COUNT);
+    menu.setNumberOfItems(App::Menu::ID_COUNT);
 
     MenuItemSelected *pS = nullptr;
     MenuItemNotSelected *pN = nullptr;
 
 
     // START
-    pS = menu.getSelectedItem(Gui::Menu::ID_START);
+    pS = menu.getSelectedItem(App::Menu::ID_START);
     pS->config(T_TEXT_START);
     pS->setMsgTypedTextId(T_TMP_SEMIBOLD_35);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::ID_START);
+    pN = menu.getNotSelectedItem(App::Menu::ID_START);
     pN->config(T_TEXT_START);
 
 
     // SETTINGS
-    pS = menu.getSelectedItem(Gui::Menu::ID_SETTINGS);
+    pS = menu.getSelectedItem(App::Menu::ID_SETTINGS);
     pS->config(T_TEXT_SETTINGS);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::ID_SETTINGS);
+    pN = menu.getNotSelectedItem(App::Menu::ID_SETTINGS);
     pN->config(T_TEXT_SETTINGS);
 
     // LAST_ACTIVITY
-    pS = menu.getSelectedItem(Gui::Menu::ID_LAST_ACTIVITY);
+    pS = menu.getSelectedItem(App::Menu::ID_LAST_ACTIVITY);
     pS->config(T_TEXT_LAST_ACTIVITY);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::ID_LAST_ACTIVITY);
+    pN = menu.getNotSelectedItem(App::Menu::ID_LAST_ACTIVITY);
     pN->config(T_TEXT_LAST_ACTIVITY);
 
     updBackground();
@@ -99,16 +99,16 @@ void EnterMenuView::handleKeyEvent(uint8_t key)
         uint32_t id = menu.getSelectedItem();
 
         switch (id) {
-            case Gui::Menu::ID_START:
-                if (mGpsFix == true) {
+            case App::Menu::ID_START:
+//                if (mGpsFix == true) {
                     presenter->startTrack();
                     application().gotoTrackScreenNoTransition();
-                }
+//                }
                 break;
-            case Gui::Menu::ID_SETTINGS:
+            case App::Menu::ID_SETTINGS:
                 application().gotoMenuSettingsScreenNoTransition();
                 break;
-            case Gui::Menu::ID_LAST_ACTIVITY:
+            case App::Menu::ID_LAST_ACTIVITY:
                 if (mSummaryAvailable) {
                     application().gotoTrackSummaryScreenNoTransition();
                 }
@@ -136,15 +136,15 @@ void EnterMenuView::handleTickEvent()
 void EnterMenuView::updBackground()
 {
     uint32_t id = menu.getSelectedItem();
-    if (id == Gui::Menu::ID_START) {
-        if (mGpsFix == false) {
-            menu.setBackground(BITMAP_BACKGROUND_GRAY_ID);
-            menu.getButtons().setR1(Buttons::NONE);
-        } else {
+    if (id == App::Menu::ID_START) {
+//        if (mGpsFix == false) {
+//            menu.setBackground(BITMAP_BACKGROUND_GRAY_ID);
+//            menu.getButtons().setR1(Buttons::NONE);
+//        } else {
             menu.setBackground(BITMAP_BACKGROUND_TEAL_ID);
             menu.getButtons().setR1(Buttons::AMBER);
-        }
-    } else if (id == Gui::Menu::ID_LAST_ACTIVITY) {
+//        }
+    } else if (id == App::Menu::ID_LAST_ACTIVITY) {
         if (mSummaryAvailable == false) {
             menu.setBackground(BITMAP_BACKGROUND_GRAY_ID);
             menu.getButtons().setR1(Buttons::NONE);

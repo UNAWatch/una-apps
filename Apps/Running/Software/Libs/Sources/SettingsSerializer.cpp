@@ -59,10 +59,6 @@ bool SettingsSerializer::save(const Settings &settings)
     writer.add("alert_distance", settings.alertDistance);
     writer.add("alert_time", settings.alertTime);
 
-    if (settings.debugSkipGpsFix) { // Hide setting if inactive
-        writer.add("debug_skip_gps_fix", settings.debugSkipGpsFix);
-    }
-
     writer.endMap();
 
     file->flush();
@@ -126,7 +122,6 @@ bool SettingsSerializer::load(Settings &settings)
     reader.get("phone_notif_en", settings.phoneNotifEn);
     reader.get("alert_distance", settings.alertDistance);
     reader.get("alert_time", settings.alertTime);
-    reader.get("debug_skip_gps_fix", settings.debugSkipGpsFix);
 
     delete[] buffer;
 

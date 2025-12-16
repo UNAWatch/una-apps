@@ -29,6 +29,15 @@ TrackViewBase::TrackViewBase()
 
     trackFace1.setXY(0, 0);
     add(trackFace1);
+
+    gpsDot.setPosition(116, 227, 8, 8);
+    gpsDot.setCenter(4, 4);
+    gpsDot.setRadius(4);
+    gpsDot.setLineWidth(0);
+    gpsDot.setArc(0, 360);
+    gpsDotPainter.setColor(touchgfx::Color::getColorFromRGB(64, 192, 0));
+    gpsDot.setPainter(gpsDotPainter);
+    add(gpsDot);
 }
 
 TrackViewBase::~TrackViewBase()

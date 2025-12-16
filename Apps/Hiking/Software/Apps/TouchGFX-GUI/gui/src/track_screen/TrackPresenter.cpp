@@ -24,6 +24,7 @@ void TrackPresenter::activate()
     view.setTime(hour, minute);
 
     view.setBatteryLevel(model->getBatteryLevel());
+    view.setGpsFix(model->getGpsFix());
 }
 
 void TrackPresenter::deactivate()
@@ -33,7 +34,7 @@ void TrackPresenter::deactivate()
 
 void TrackPresenter::onTrackData(const Track::Data& data)
 {
-    view.setTrackData(data, model->isUnitsImperial());
+    view.setTrackData(data, model->isUnitsImperial(), model->getHrThresholds());
 }
 
 void TrackPresenter::onBatteryLevel(uint8_t lvl)
@@ -49,4 +50,9 @@ void TrackPresenter::onTime(uint8_t hour, uint8_t minute, uint8_t sec)
 void TrackPresenter::onLapChanged(uint8_t lapEnd)
 {
     model->application().gotoTrackLapScreenNoTransition();
+}
+
+void TrackPresenter::onGpsFix(bool acquired)
+{
+    view.setGpsFix(acquired);
 }

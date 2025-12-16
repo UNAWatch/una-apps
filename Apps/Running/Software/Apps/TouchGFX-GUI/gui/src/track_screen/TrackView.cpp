@@ -112,3 +112,28 @@ void TrackView::handleKeyEvent(uint8_t key)
         application().gotoTrackLapScreenNoTransition();
     }
 }
+
+void TrackView::setGpsFix(bool state)
+{
+    mGpsFix = state;
+}
+
+void TrackView::handleTickEvent()
+{
+    if (mGpsFix && !gpsDot.isVisible()) {
+        mGpsFixBlinkCounter = 0;
+        return;
+    }
+
+    if (mGpsFixBlinkCounter > GUI_CONFIG_MS_2_TICKS(500)) {
+        if (mGpsFix) {
+            gpsDot.setVisible(false);
+        } else {
+            gpsDot.setVisible(!gpsDot.isVisible());
+        }
+        gpsDot.invalidate();
+        mGpsFixBlinkCounter = 0;
+    }
+
+    mGpsFixBlinkCounter++;
+}

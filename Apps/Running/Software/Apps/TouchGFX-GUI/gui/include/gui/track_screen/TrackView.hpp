@@ -18,9 +18,14 @@ public:
     void setTime(uint8_t h, uint8_t m);
     void setBatteryLevel(uint8_t level);
     void setCharging(bool state);
+    void setGpsFix(bool state);
 
 protected:
     virtual void handleKeyEvent(uint8_t key) override;
+
+    bool mGpsFix = false;
+    uint16_t mGpsFixBlinkCounter = 0;
+    virtual void handleTickEvent() override;
 };
 
 #endif // TRACKVIEW_HPP

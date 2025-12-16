@@ -32,6 +32,7 @@ public:
     virtual void onBatteryLevel(uint8_t lvl) override;
     virtual void onTime(uint8_t hour, uint8_t minute, uint8_t sec) override;
     virtual void onLapChanged(uint8_t lapEnd) override;
+    virtual void onGpsFix(bool acquired) override;
 
 private:
     TrackPresenter();

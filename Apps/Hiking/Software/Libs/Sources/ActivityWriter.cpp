@@ -224,7 +224,7 @@ void ActivityWriter::addRecord(const RecordData& record)
     record_mesg.timestamp         = unixToFitTimestamp(record.timestamp);
     record_mesg.position_lat      = ConvertDegreesToSemicircles(record.latitude);
     record_mesg.position_long     = ConvertDegreesToSemicircles(record.longitude);
-    record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude * 5) + 500);   // 5 * m + 500
+    record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
     record_mesg.heart_rate        = static_cast<FIT_UINT8>(record.heartRate);
     record_mesg.enhanced_speed    = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
 
@@ -292,7 +292,7 @@ void ActivityWriter::stop(const TrackData& track)
         session_mesg.timestamp = unixToFitTimestamp(track.timestamp);   // 1 * s + 0, Session end time
         session_mesg.start_time = unixToFitTimestamp(track.timeStart);
 
-        session_mesg.total_elapsed_time = static_cast<FIT_UINT32>((track.timeStart + track.elapsed) * 1000);  // 1000 * s + 0, Time (includes pauses)
+        session_mesg.total_elapsed_time = static_cast<FIT_UINT32>(track.elapsed * 1000);  // 1000 * s + 0, Time (includes pauses)
         session_mesg.total_timer_time = static_cast<FIT_UINT32>(track.duration * 1000);   // 1000 * s + 0, Timer Time (excludes pauses)
 
         session_mesg.total_distance = static_cast<FIT_UINT32>(track.distance * 100);   // 100 * m + 0,

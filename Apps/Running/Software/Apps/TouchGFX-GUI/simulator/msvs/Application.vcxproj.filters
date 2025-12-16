@@ -217,23 +217,11 @@
     <Filter Include="Header Files\gui\entermenu_screen">
       <UniqueIdentifier>228B3EB8-D39B-21AB-E84B-188BDFF31DCA</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\menusteps_screen">
-      <UniqueIdentifier>C23EDB68-A183-EA43-198E-7975D0ADFA72</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\gui\trackdiscarded_screen">
       <UniqueIdentifier>67FCC8FC-684F-55AE-7394-74C7AEC2F48A</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\menusteps_screen">
-      <UniqueIdentifier>70AE6ACB-3A36-93E2-D65E-379F632E1AF5</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gui\trackdiscarded_screen">
       <UniqueIdentifier>4C3C1BAD-8564-7A8B-70B2-19B9C2A3620D</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\menustepssaved_screen">
-      <UniqueIdentifier>99F0A769-37BA-E5EE-E7BF-9A1F7F18EDA7</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\menustepssaved_screen">
-      <UniqueIdentifier>7D55C7D2-8F40-60EC-DB56-5068003B1892</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\menusettings_screen">
       <UniqueIdentifier>9729FA07-C555-C8DB-E4C3-2E1F252F7F2F</UniqueIdentifier>
@@ -594,18 +582,6 @@
     <ClCompile Include="..\..\generated\gui_generated\src\menusettings_screen\MenuSettingsViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\menusettings_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\menusteps_screen\MenuStepsPresenter.cpp">
-      <Filter>Source Files\gui\menusteps_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\menustepssaved_screen\MenuStepsSavedPresenter.cpp">
-      <Filter>Source Files\gui\menustepssaved_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\menustepssaved_screen\MenuStepsSavedView.cpp">
-      <Filter>Source Files\gui\menustepssaved_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\menusteps_screen\MenuStepsView.cpp">
-      <Filter>Source Files\gui\menusteps_screen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\menutime_screen\MenuTimePresenter.cpp">
       <Filter>Source Files\gui\menutime_screen</Filter>
     </ClCompile>
@@ -698,9 +674,6 @@
     </ClCompile>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\TrackFace3Base.cpp">
       <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TrackFace4.cpp">
-      <Filter>Source Files\gui\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gui\src\tracklap_screen\TrackLapPresenter.cpp">
       <Filter>Source Files\gui\tracklap_screen</Filter>
@@ -927,15 +900,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menusettings_screen\MenuSettingsViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\menusettings_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\menusteps_screen\MenuStepsPresenter.hpp">
-      <Filter>Header Files\gui\menusteps_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\menustepssaved_screen\MenuStepsSavedView.hpp">
-      <Filter>Header Files\gui\menustepssaved_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\menusteps_screen\MenuStepsView.hpp">
-      <Filter>Header Files\gui\menusteps_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\menutime_screen\MenuTimePresenter.hpp">
       <Filter>Header Files\gui\menutime_screen</Filter>
     </ClInclude>
@@ -1046,9 +1010,6 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackFace3Base.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TrackFace4.hpp">
-      <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\tracklap_screen\TrackLapPresenter.hpp">
       <Filter>Header Files\gui\tracklap_screen</Filter>
