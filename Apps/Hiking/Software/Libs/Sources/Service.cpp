@@ -413,7 +413,7 @@ void Service::notifyFirstFix()
 {
     auto *backlightMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBacklightSet>();
     if (backlightMsg) {
-        backlightMsg->autoOffTimeoutMs = 3000;
+        backlightMsg->autoOffTimeoutMs = skBacklightTimeout;
         backlightMsg->brightness = 100;
         mKernel.comm.sendMessage(backlightMsg);
         mKernel.comm.releaseMessage(backlightMsg);
@@ -444,7 +444,7 @@ void Service::notifyLapEnd()
 {
     auto *backlightMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBacklightSet>();
     if (backlightMsg) {
-        backlightMsg->autoOffTimeoutMs = 3000;
+        backlightMsg->autoOffTimeoutMs = skBacklightTimeout;
         backlightMsg->brightness = 100;
         mKernel.comm.sendMessage(backlightMsg);
         mKernel.comm.releaseMessage(backlightMsg);
