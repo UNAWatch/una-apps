@@ -24,6 +24,13 @@ void AlarmView::handleTickEvent()
     if (mCounter == 0) {
         presenter->snooze();
     }
+
+    if (mRepeatPeriod >= Gui::Config::kAlarmPlayRepeatPeriod) {
+        presenter->play();
+        mRepeatPeriod = 0;
+    }
+    mRepeatPeriod++;
+
 }
 
 void AlarmView::handleKeyEvent(uint8_t key)

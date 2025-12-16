@@ -18,6 +18,7 @@
 #include "touchgfx/Color.hpp"
 #include <texts/TextKeysAndLanguages.hpp>
 #include "AppTypes.hpp"
+#include "SDK/Interfaces/IApp.hpp"
 
 #define GUI_CONFIG_MS_2_TICKS(ms) ((ms)/(1000 / Gui::Config::kFrameRate))
 namespace Gui
@@ -26,19 +27,20 @@ namespace Gui
 namespace Config
 {
 
-constexpr uint32_t kFrameRate = 10;
+constexpr uint32_t kFrameRate = SDK::Interface::IApp::kFrameRate;
 constexpr uint32_t kMenuAnimationSteps = 4;
 constexpr uint32_t kScreenTimeoutSteps = GUI_CONFIG_MS_2_TICKS(30 * 1000);      // 30s
-constexpr uint32_t kAlarmAutoSnoozeTimeout = GUI_CONFIG_MS_2_TICKS(15 * 1000);  // 15s;
+constexpr uint32_t kAlarmAutoSnoozeTimeout = GUI_CONFIG_MS_2_TICKS(2 * 60 * 1000);  // 120s;
+constexpr uint32_t kAlarmPlayRepeatPeriod = GUI_CONFIG_MS_2_TICKS(5 * 1000);  // 5s;
 constexpr uint32_t kConfirmTimeout = GUI_CONFIG_MS_2_TICKS(1 * 1000);           // 1s;
 
 namespace Button
 {
-constexpr uint8_t L1 = '1';
-constexpr uint8_t L2 = '2';
-constexpr uint8_t R1 = '3';
-constexpr uint8_t R2 = '4';
-constexpr uint8_t L1R2 = 'z';
+constexpr uint8_t L1   = SDK::Interface::IApp::BUTTON_L1;
+constexpr uint8_t L2   = SDK::Interface::IApp::BUTTON_L2;
+constexpr uint8_t R1   = SDK::Interface::IApp::BUTTON_R1;
+constexpr uint8_t R2   = SDK::Interface::IApp::BUTTON_R2;
+constexpr uint8_t L1R2 = SDK::Interface::IApp::BUTTON_L1R2;
 } // Button
 
 

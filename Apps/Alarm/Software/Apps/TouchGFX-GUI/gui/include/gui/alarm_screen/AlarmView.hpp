@@ -15,6 +15,8 @@ protected:
 
     uint16_t mCounter = Gui::Config::kAlarmAutoSnoozeTimeout;
 
+    uint16_t mRepeatPeriod = 0;
+
     virtual void handleTickEvent() override;
     virtual void handleKeyEvent(uint8_t key) override;
 };

@@ -9,7 +9,7 @@ AlarmPresenter::AlarmPresenter(AlarmView& v)
 
 void AlarmPresenter::activate()
 {
-    model->playAlarm();
+    play();
 }
 
 void AlarmPresenter::deactivate()
@@ -20,6 +20,12 @@ void AlarmPresenter::deactivate()
         model->stopAlarm();
     }
 }
+
+void AlarmPresenter::play()
+{
+    model->playAlarm();
+}
+
 
 void AlarmPresenter::stop()
 {

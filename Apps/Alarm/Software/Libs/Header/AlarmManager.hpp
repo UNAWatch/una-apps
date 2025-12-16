@@ -19,7 +19,7 @@
 #include <memory>
 #include <string_view>
 
-#include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/Kernel/Kernel.hpp"
 #include "SDK/JSON/JsonStreamReader.hpp"
 #include "SDK/JSON/JsonStreamWriter.hpp"
 
@@ -58,7 +58,7 @@ public:
      * @brief Constructor for AlarmManager.
      * @param kernel: Reference to the kernel interface.
      */
-    AlarmManager(const IKernel& kernel);
+    AlarmManager(const SDK::Kernel& kernel);
 
     /**
      * @brief Destructor for AlarmManager.
@@ -131,7 +131,7 @@ public:
 private:
 
     /// A constant reference to an IKernel object.
-    const IKernel& mKernel;
+    const SDK::Kernel& mKernel;
 
     ///  File path for storing alarms.
     static constexpr char skFilePath[] = "alarms.json";
@@ -155,10 +155,10 @@ private:
     { "beep_vibro", "vibro", "beep" };
 
     /// Time interval for snoozed alarms in minutes.
-    static constexpr uint8_t kSnoozedTimeMinutes = 1;
+    static constexpr uint8_t kSnoozedTimeMinutes = 5;
 
     /// Maximum number of snoozes.
-    static constexpr uint8_t kMaxSnoozeCount = 3;
+    static constexpr uint8_t kMaxSnoozeCount = 5;
 
     /// Initial list size.
     static constexpr size_t kInitialCount = 20;

@@ -27,6 +27,7 @@ public:
 
     virtual ~AlarmPresenter() {}
 
+    void play();
     void stop();
     void snooze();
 
