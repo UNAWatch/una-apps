@@ -16,11 +16,11 @@ void MenuSettingsView::setupScreen()
     MenuItemSelected *pS = nullptr;
     MenuItemNotSelected *pN = nullptr;
 
-    // ALERTS
+    // LAP ALERTS
     pS = menu.getSelectedItem(App::Menu::Settings::ID_ALERTS);
-    pS->config(T_TEXT_ALERTS);
+    pS->config(T_TEXT_LAP_ALERTS);
     pN = menu.getNotSelectedItem(App::Menu::Settings::ID_ALERTS);
-    pN->config(T_TEXT_ALERTS);
+    pN->config(T_TEXT_LAP_ALERTS);
 
     // AUTO PAUSE
     pS = menu.getSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);

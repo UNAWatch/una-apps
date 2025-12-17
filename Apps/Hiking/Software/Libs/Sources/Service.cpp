@@ -613,10 +613,9 @@ void Service::processTrack(std::time_t utc)
 
     // Elevation, m
     if (mAltimeter.dataValid) {
-        float total = mAltimeter.altitude - mAltimeter.initialAltitude;
-        float diff = total - mTrackData.elevation;
-        mTrackData.elevation = total;
-        mTrackData.lapElevation += diff;
+        float diff = mAltimeter.altitude - mTrackData.elevation;
+        mTrackData.elevation = mAltimeter.altitude;
+//        mTrackData.lapElevation = ; // not used
 
         if (diff > 0) {
             mAltimeter.ascent += diff;

@@ -11,31 +11,31 @@ void MenuSettingsView::setupScreen()
 
     menu.setTitle(T_TEXT_SETTINGS_UC);
 
-    menu.setNumberOfItems(Gui::Menu::Settings::ID_COUNT);
+    menu.setNumberOfItems(App::Menu::Settings::ID_COUNT);
 
     MenuItemSelected *pS = nullptr;
     MenuItemNotSelected *pN = nullptr;
 
-    // ALERTS
-    pS = menu.getSelectedItem(Gui::Menu::Settings::ID_ALERTS);
-    pS->config(T_TEXT_ALERTS);
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::ID_ALERTS);
-    pN->config(T_TEXT_ALERTS);
+    // LAP ALERTS
+    pS = menu.getSelectedItem(App::Menu::Settings::ID_ALERTS);
+    pS->config(T_TEXT_LAP_ALERTS);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_ALERTS);
+    pN->config(T_TEXT_LAP_ALERTS);
 
     // AUTO PAUSE
-    pS = menu.getSelectedItem(Gui::Menu::Settings::ID_AUTO_PAUSE);
+    pS = menu.getSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
     pS->configToggle(T_TEXT_AUTO_BR_PAUSE);
     pS->setMsgTypedTextId(T_TMP_SEMIBOLD_25);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::ID_AUTO_PAUSE);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
     pN->configTip(T_TEXT_AUTO_PAUSE, T_TEXT_ON_UC);
 
     // PHONE NOTIF
-    pS = menu.getSelectedItem(Gui::Menu::Settings::ID_PHONE_NOTIF);
+    pS = menu.getSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
     pS->configToggle(T_TEXT_PHONE_BR_NOTIF_DOT);
     pS->setMsgTypedTextId(T_TMP_SEMIBOLD_25);
 
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::ID_PHONE_NOTIF);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
     pN->configTip(T_TEXT_PHONE_NOTIF_DOT, T_TEXT_OFF_UC);
 
     setGpsFix(mGpsFix);
@@ -67,8 +67,8 @@ void MenuSettingsView::setAutoPause(bool state)
 
     MenuItemSelected *pS = nullptr;
     MenuItemNotSelected *pN = nullptr;
-    pS = menu.getSelectedItem(Gui::Menu::Settings::ID_AUTO_PAUSE);
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::ID_AUTO_PAUSE);
+    pS = menu.getSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
 
     pS->setToggle(mAutoPause);
     pN->configTip(T_TEXT_AUTO_PAUSE, state ? T_TEXT_ON_UC : T_TEXT_OFF_UC);
@@ -83,8 +83,8 @@ void MenuSettingsView::setPhoneNotif(bool state)
 
     MenuItemSelected *pS = nullptr;
     MenuItemNotSelected *pN = nullptr;
-    pS = menu.getSelectedItem(Gui::Menu::Settings::ID_PHONE_NOTIF);
-    pN = menu.getNotSelectedItem(Gui::Menu::Settings::ID_PHONE_NOTIF);
+    pS = menu.getSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
+    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
 
     pS->setToggle(mPhoneNotif);
     pN->configTip(T_TEXT_PHONE_NOTIF_DOT, state ? T_TEXT_ON_UC : T_TEXT_OFF_UC);
@@ -117,15 +117,15 @@ void MenuSettingsView::handleKeyEvent(uint8_t key)
         uint32_t id = menu.getSelectedItem();
 
         switch (id) {
-            case Gui::Menu::Settings::ID_ALERTS:
+            case App::Menu::Settings::ID_ALERTS:
                 application().gotoMenuAlertsScreenNoTransition();
                 break;
-            case Gui::Menu::Settings::ID_AUTO_PAUSE:
+            case App::Menu::Settings::ID_AUTO_PAUSE:
                 mAutoPause = !mAutoPause;
                 setAutoPause(mAutoPause);
                 presenter->saveAutoPause(mAutoPause);
                 break;
-            case Gui::Menu::Settings::ID_PHONE_NOTIF:
+            case App::Menu::Settings::ID_PHONE_NOTIF:
                 mPhoneNotif = !mPhoneNotif;
                 setPhoneNotif(mPhoneNotif);
                 presenter->savePhoneNotif(mPhoneNotif);

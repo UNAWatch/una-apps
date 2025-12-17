@@ -18,6 +18,7 @@ void TrackSummaryPresenter::activate()
     view.setMaxHR(model->trackSummary().hrMax);
     view.setAvgHR(model->trackSummary().hrAvg);
     view.setMap(model->trackSummary().map);
+    view.setElevation(model->trackSummary().elevation, model->isUnitsImperial());
 }
 
 void TrackSummaryPresenter::deactivate()

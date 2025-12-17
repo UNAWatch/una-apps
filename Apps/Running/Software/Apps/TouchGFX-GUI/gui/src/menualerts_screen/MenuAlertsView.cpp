@@ -9,7 +9,7 @@ void MenuAlertsView::setupScreen()
 {
     MenuAlertsViewBase::setupScreen();
 
-    menu.setTitle(T_TEXT_ALERTS_UC);
+    menu.setTitle(T_TEXT_LAP_ALERTS_UC);
 
     menu.setNumberOfItems(App::Menu::Settings::Alerts::ID_COUNT);
     update();

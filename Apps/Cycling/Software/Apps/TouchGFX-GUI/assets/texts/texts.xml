@@ -223,6 +223,12 @@
       <Text Id="TEXT_ALERTS_UC" Alignment="Left" TypographyId="Poppins_Medium_18">
         <Translation Language="GB">ALERTS</Translation>
       </Text>
+      <Text Id="TEXT_LAP_ALERTS" Alignment="Left" TypographyId="Poppins_Medium_18">
+        <Translation Language="GB">Lap Alerts</Translation>
+      </Text>
+      <Text Id="TEXT_LAP_ALERTS_UC" Alignment="Left" TypographyId="Poppins_Medium_18">
+        <Translation Language="GB">LAP ALERTS</Translation>
+      </Text>
       <Text Id="TEXT_AUTO_PAUSE" Alignment="Left" TypographyId="Poppins_Medium_18">
         <Translation Language="GB">Auto Pause</Translation>
       </Text>
