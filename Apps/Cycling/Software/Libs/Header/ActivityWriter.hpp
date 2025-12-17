@@ -38,6 +38,7 @@ public:
 
     struct RecordData {
         std::time_t timestamp;  // UTC
+        bool        gotFix;
         float       latitude;   // degrees
         float       longitude;  // degrees
         float       altitude;   // absolute altitude in m

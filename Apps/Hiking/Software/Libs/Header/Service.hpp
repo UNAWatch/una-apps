@@ -38,6 +38,7 @@ private:
     ActivitySummarySerializer mActivitySummarySerializer;
     ActivityWriter mActivityWriter;
     SDK::TrackMapBuilder mTrackMapBuilder;
+    bool mGotFix;
 
     void connectGps();
     void connectAll(); // Except GPS

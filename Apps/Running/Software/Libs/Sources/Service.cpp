@@ -262,6 +262,7 @@ void Service::onSdlNewData(uint16_t                 handle,
             mGps.fix = parser.isCoordinatesValid();
 
             if (mGps.fix) { // Do not change position if no fix
+                mGotFix = true;
                 parser.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
             }
             LOG_DEBUG("Location: fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
@@ -553,7 +554,9 @@ void Service::processTrack(std::time_t utc)
     // Creating map
     SDK::TrackMapBuilder::GpsPoint newPoint{ mGps.latitude, mGps.longitude };
     // Add point to the track map
-    mTrackMapBuilder.addPoint(newPoint);
+    if (mGotFix) {
+        mTrackMapBuilder.addPoint(newPoint);
+    }
 
     // Distance, m
     if (mDistance.dataValid) {
@@ -566,9 +569,11 @@ void Service::processTrack(std::time_t utc)
     // Elevation, m
     if (mAltimeter.dataValid) {
         float diff = mAltimeter.altitude - mTrackData.elevation;
+        if (std::abs(mTrackData.elevation) < 0.01) {
+            diff = 0;
+        }
         mTrackData.elevation = mAltimeter.altitude;
 //        mTrackData.lapElevation = ; // not used
-
 
         if (diff > 0) {
             mAltimeter.ascent += diff;
@@ -620,6 +625,7 @@ void Service::processTrack(std::time_t utc)
     // Save record to the FIT file
     ActivityWriter::RecordData fitRecord{};
     fitRecord.timestamp = utc;
+    fitRecord.gotFix    = mGotFix;
     fitRecord.latitude  = mGps.latitude;
     fitRecord.longitude = mGps.longitude;
     fitRecord.heartRate = mTrackData.hrTrustLevel >= 1.0 ? mTrackData.HR : 0.0f;

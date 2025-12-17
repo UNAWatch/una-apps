@@ -222,8 +222,10 @@ void ActivityWriter::addRecord(const RecordData& record)
     FIT_RECORD_MESG record_mesg{};
 
     record_mesg.timestamp         = unixToFitTimestamp(record.timestamp);
-    record_mesg.position_lat      = ConvertDegreesToSemicircles(record.latitude);
-    record_mesg.position_long     = ConvertDegreesToSemicircles(record.longitude);
+    if (record.gotFix) {
+        record_mesg.position_lat      = ConvertDegreesToSemicircles(record.latitude);
+        record_mesg.position_long     = ConvertDegreesToSemicircles(record.longitude);
+    }
     record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
     record_mesg.heart_rate        = static_cast<FIT_UINT8>(record.heartRate);
     record_mesg.enhanced_speed    = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
