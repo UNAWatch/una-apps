@@ -2,7 +2,7 @@
 #define FRONTENDAPPLICATION_HPP
 
 #include <gui_generated/common/FrontendApplicationBase.hpp>
-#include "SDK/../../../Port/TouchGFX/TouchGFXCommandProcessor.hpp"
+#include "SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 class FrontendHeap;
 

@@ -42,7 +42,6 @@ void Service::run()
         }
 
         switch (msg->getType()) {
-
             case SDK::MessageType::EVENT_GLANCE_START:
                 LOG_INFO("GLANCE is now running\n");
                 if (configGui()) {

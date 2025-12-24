@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_LINKER/delimiter=;
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_LINKER/operation=append
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_LINKER/value=${UNA_SDK}/Libs/Source/AppSystem
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_OUTPUT/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_OUTPUT/operation=replace
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/PATH_OUTPUT/value=../../../../Output

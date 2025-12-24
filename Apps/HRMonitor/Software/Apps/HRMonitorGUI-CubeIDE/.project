@@ -69,11 +69,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -84,12 +79,12 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX</name>
+			<name>SDK/Libs/Header/Interfaces</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/Interfaces</name>
+			<name>SDK/Libs/Header/Port</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -109,42 +104,12 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/UnaLogger</name>
+			<name>SDK/Libs/Source/Port</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX/STM32TouchController.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/STM32TouchController.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Port/TouchGFX/STM32TouchController.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/STM32TouchController.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Port/TouchGFX/TouchGFXGPIO.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/TouchGFXGPIO.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Port/TouchGFX/TouchGFXHAL.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/TouchGFXHAL.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Port/TouchGFX/TouchGFXHAL.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/TouchGFXHAL.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Port/TouchGFX/app_touchgfx.h</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/app_touchgfx.h</locationURI>
-		</link>
-		<link>
-			<name>SDK/Port/TouchGFX/generated</name>
+			<name>SDK/Libs/Source/UnaLogger</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -152,6 +117,11 @@
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Port/TouchGFX</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/UnaLogger/Logger.h</name>
@@ -174,9 +144,9 @@
 			<locationURI>SDK_LOC/Libs/Source/AppSystem/startup_user_app.s</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/AppSystem/sysmem.cpp</name>
+			<name>SDK/Libs/Source/AppSystem/system.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/AppSystem/sysmem.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/AppSystem/system.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/Kernel/KernelBuilder.cpp</name>
@@ -184,39 +154,94 @@
 			<locationURI>SDK_LOC/Libs/Source/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/UnaLogger/Logger.cpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX/generated/OSWrappers.cpp</name>
+			<name>SDK/Libs/Header/Port/TouchGFX/STM32TouchController.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/generated/OSWrappers.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Port/TouchGFX/STM32TouchController.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX/generated/STM32DMA.cpp</name>
+			<name>SDK/Libs/Header/Port/TouchGFX/TouchGFXCommandProcessor.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/generated/STM32DMA.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX/generated/STM32DMA.hpp</name>
+			<name>SDK/Libs/Header/Port/TouchGFX/TouchGFXHAL.hpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/generated/STM32DMA.hpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Port/TouchGFX/TouchGFXHAL.hpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX/generated/TouchGFXConfiguration.cpp</name>
+			<name>SDK/Libs/Header/Port/TouchGFX/app_touchgfx.h</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/generated/TouchGFXConfiguration.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Port/TouchGFX/app_touchgfx.h</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/generated/TouchGFXGeneratedHAL.cpp</locationURI>
+			<name>SDK/Libs/Header/Port/TouchGFX/generated</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</name>
+			<name>SDK/Libs/Source/Port/TouchGFX/STM32TouchController.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/STM32TouchController.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/TouchGFXCommandProcessor.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/TouchGFXCommandProcessor.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/TouchGFXGPIO.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/TouchGFXGPIO.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/TouchGFXHAL.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/TouchGFXHAL.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/generated</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Port/TouchGFX/generated/STM32DMA.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Port/TouchGFX/generated/STM32DMA.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Port/TouchGFX/generated/TouchGFXGeneratedHAL.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/generated/OSWrappers.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/generated/OSWrappers.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/generated/STM32DMA.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/generated/STM32DMA.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/generated/TouchGFXConfiguration.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/generated/TouchGFXConfiguration.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Port/TouchGFX/generated/TouchGFXGeneratedHAL.cpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Source/Port/TouchGFX/generated/TouchGFXGeneratedHAL.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
