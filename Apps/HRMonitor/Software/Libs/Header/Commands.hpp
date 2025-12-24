@@ -42,15 +42,15 @@ namespace CustomMessage {
     //// Wrappers
     ///////////////////////////////////////
 
-    class ServiceSender {
+    class GUISender {
     public:
-        ServiceSender(SDK::Kernel& kernel) : mKernel(kernel)
+        GUISender(const SDK::Kernel& kernel) : mKernel(kernel)
         {}
 
-        virtual ~ServiceSender() = default;
+        virtual ~GUISender() = default;
 
         // Service --> GUI
-        bool publishHeartRate(float value, float trustLevel)
+        bool updateHeartRate(float value, float trustLevel)
         {
             if (auto req = SDK::make_msg<CustomMessage::HRValues>(mKernel)) {
                 req->heartRate  = value;
@@ -63,7 +63,7 @@ namespace CustomMessage {
         }
 
     private:
-        SDK::Kernel& mKernel;
+        const SDK::Kernel& mKernel;
     };
 
 } // namespace CustomMessage

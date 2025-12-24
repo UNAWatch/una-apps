@@ -233,7 +233,6 @@ void Service::connectAll()
 
 void Service::disconnect()
 {
-
     if (mIsSensorsConnected) {
         LOG_DEBUG("Disconnect from sensors...\n");
 

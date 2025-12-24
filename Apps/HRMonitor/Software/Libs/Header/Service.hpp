@@ -5,37 +5,32 @@
 #include "SDK/Kernel/KernelProviderService.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
 #include "SDK/SensorLayer/SensorConnection.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
 
 #include "ActivityWriter.hpp"
 
-class Service : public SDK::Interface::ISensorDataListener
+class Service
 {
 public:
-    Service();
+    Service(SDK::Kernel& kernel);
 
     virtual ~Service() = default;
 
     void run();
 
 private:
-    const SDK::Kernel&           mKernel;
-    CustomMessage::ServiceSender mSender;
-    bool                         mTerminate;
-    bool                         mGUIStarted;
-    SDK::Sensor::Connection      mHRSensor;
-    float                        mHR   = 0;
-    float                        mHRTL = 0;
-    ActivityWriter               mActivityWriter;
+    SDK::Kernel&             mKernel;
+    CustomMessage::GUISender mSender;
+    bool                     mGUIStarted;
+    SDK::Sensor::Connection  mSensorHR;
+    float                    mHR;
+    float                    mHRTL;
+    ActivityWriter           mActivityWriter;
 
-    virtual void onStart()    override;
-    virtual void onStop()     override;
-    virtual void onStartGUI() override;
-    virtual void onStopGUI()  override;
+    void onStartGUI();
+    void onStopGUI();
 
-    void onSdlNewData(uint16_t                 handle,
-                      const SDK::Sensor::Data* data,
-                      uint16_t                 count,
-                      uint16_t                 stride) override;
+    void onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
     static uint32_t ParseVersion(const char* str);
 };
