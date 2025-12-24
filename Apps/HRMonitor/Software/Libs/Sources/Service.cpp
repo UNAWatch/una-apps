@@ -1,22 +1,26 @@
-#include "Service.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 
-#define LOG_MODULE_PRX      "Service::"
+#include "Service.hpp"
+
+#define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service()
     : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
-    , mGSModel(*this)
+    , mSender(mKernel)
     , mTerminate(false)
     , mGUIStarted(false)
     , mHRSensor(SDK::Sensor::Type::HEART_RATE, this)
     , mActivityWriter(mKernel, "Activity")
+    , mHR(0)
+    , mHRTL(0)
+    , mActivityWriter{}
 {}
 
 void Service::run()
 {
-    LOG_INFO("started\n");
+    LOG_INFO("thread started\n");
 
     mHRSensor.connect(1000, 2000);
 
@@ -34,7 +38,7 @@ void Service::run()
     uint32_t hrAvgCount = 0;
     float hrMax = 0;
 
-    uint32_t startTimeMs = mKernel.app.getTimeMs();
+    uint32_t startTimeMs = mKernel.system.getTimeMs();
 
     while (!mTerminate) {
 
@@ -60,10 +64,10 @@ void Service::run()
             }
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.app.getTimeMs() - startTimeMs > 5000) {
+            if (mKernel.system.getTimeMs() - startTimeMs > 5000) {
                 break;
             }
-            mKernel.app.delay(100);
+            mKernel.system.delay(100);
         }
     }
 
@@ -91,27 +95,33 @@ void Service::run()
 
     mHRSensor.disconnect();
 
-    LOG_INFO("stopped\n");
-
-    exit(0);
+    LOG_INFO("thread stopped\n");
 }
 
-void Service::handleEvent(const G2SEvent::Run& event)
+void Service::onStart()
 {
-    (void) event;
-    mGUIStarted = true;
-    mGSModel.post(S2GEvent::HeartRate{0, 0});
-}
-
-void Service::handleEvent(const G2SEvent::Stop& event)
-{
-    (void) event;
-    mGUIStarted = false;
+    LOG_INFO("called\n");
 }
 
 void Service::onStop()
 {
+    LOG_INFO("called\n");
     mTerminate = true;
+    mGSModel.abortProcessWait();
+}
+
+void Service::onStartGUI()
+{
+    LOG_INFO("GUI started\n");
+    mGUIStarted = true;
+    mGSModel.post(S2GEvent::HeartRate{0, 0});
+}
+
+void Service::onStopGUI()
+{
+    LOG_INFO("GUI stopped\n");
+    mGUIStarted = false;
+    mGSModel.abortProcessWait();
 }
 
 void Service::onSdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first)

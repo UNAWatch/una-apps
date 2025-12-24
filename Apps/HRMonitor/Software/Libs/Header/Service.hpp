@@ -1,16 +1,14 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "SDK/GSModel/GSModel.hpp"
+#include "Commands.hpp"
 #include "SDK/Kernel/KernelProviderService.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
-#include "SDK/SensorLayer/SensorDriverConnection.hpp"
+#include "SDK/SensorLayer/SensorConnection.hpp"
 
 #include "ActivityWriter.hpp"
 
-class Service : public IServiceModelHandler,
-                public SDK::Interface::IUserApp::Callback,
-                public SDK::Interface::ISensorDataListener
+class Service : public SDK::Interface::ISensorDataListener
 {
 public:
     Service();
@@ -18,26 +16,26 @@ public:
     virtual ~Service() = default;
 
     void run();
-    void handleEvent(const G2SEvent::Run& event);
-    void handleEvent(const G2SEvent::Stop& event);
 
 private:
-    void onStop() override;
+    const SDK::Kernel&           mKernel;
+    CustomMessage::ServiceSender mSender;
+    bool                         mTerminate;
+    bool                         mGUIStarted;
+    SDK::Sensor::Connection      mHRSensor;
+    float                        mHR   = 0;
+    float                        mHRTL = 0;
+    ActivityWriter               mActivityWriter;
 
-    void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
-                      const std::vector<SDK::Interface::ISensorData*>& data,
-                      bool                                             first) override;
+    virtual void onStart()    override;
+    virtual void onStop()     override;
+    virtual void onStartGUI() override;
+    virtual void onStopGUI()  override;
 
-    const SDK::Kernel& mKernel;
-    GSModel            mGSModel;
-    bool               mTerminate;
-    bool               mGUIStarted;
-
-    SDK::Sensors::DriverConnection mHRSensor;
-
-    float mHR = 0;
-    float mHRTL = 0;
-    ActivityWriter mActivityWriter;
+    void onSdlNewData(uint16_t                 handle,
+                      const SDK::Sensor::Data* data,
+                      uint16_t                 count,
+                      uint16_t                 stride) override;
 
     static uint32_t ParseVersion(const char* str);
 };

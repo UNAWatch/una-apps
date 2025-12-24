@@ -69,6 +69,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/Commands.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Commands.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
