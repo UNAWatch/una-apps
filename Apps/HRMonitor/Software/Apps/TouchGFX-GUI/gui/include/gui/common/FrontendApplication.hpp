@@ -2,6 +2,7 @@
 #define FRONTENDAPPLICATION_HPP
 
 #include <gui_generated/common/FrontendApplicationBase.hpp>
+#include "SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 class FrontendHeap;
 
@@ -20,9 +21,9 @@ public:
     virtual void handleTickEvent()
     {
 #if defined(SIMULATOR)
-        Simulator::KernelHolder::Get().tick();
+        SDK::Simulator::KernelHolder::Get().tick();
 #endif
-        
+        SDK::TouchGFXCommandProcessor::GetInstance().callCustomMessageHandler();
         model.tick();
         FrontendApplicationBase::handleTickEvent();
     }
@@ -31,7 +32,7 @@ public:
     void handleKeyEvent(uint8_t key)
     {
 #if defined(SIMULATOR)
-        if (Simulator::KernelHolder::Get().keyFilter(key)) {
+        if (SDK::Simulator::KernelHolder::Get().keyFilter(key)) {
             model.handleKeyEvent(key);
             FrontendApplicationBase::handleKeyEvent(key);
         }

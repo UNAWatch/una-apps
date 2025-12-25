@@ -4,14 +4,14 @@
 #include "Service.hpp"
 
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service(SDK::Kernel& kernel)
     : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
     , mSender(mKernel)
     , mGUIStarted(false)
-    , mSensorHR(SDK::Sensor::Type::HEART_RATE)
+    , mSensorHR(SDK::Sensor::Type::HEART_RATE, 1000, 2000)
     , mHR(0)
     , mHRTL(0)
     , mActivityWriter(mKernel, "Activity")
@@ -21,7 +21,7 @@ void Service::run()
 {
     LOG_INFO("thread started\n");
 
-    mSensorHR.connect(1000, 2000);
+    mSensorHR.connect();
 
     ActivityWriter::AppInfo info{};
     info.timestamp = std::time(nullptr);
@@ -146,7 +146,6 @@ void Service::onStopGUI()
 
 void Service::onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
-
     if (mSensorHR.matchesDriver(handle)) {
         if (mGUIStarted) {
             SDK::SensorDataParser::HeartRate parser(data[0]);
