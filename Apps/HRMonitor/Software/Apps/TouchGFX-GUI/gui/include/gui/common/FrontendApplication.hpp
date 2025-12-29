@@ -7,7 +7,7 @@
 class FrontendHeap;
 
 #if defined(SIMULATOR)
-#include "SDK/Simulator/Kernel/KernelBase.hpp"
+#include "SDK/Simulator/Kernel/Kernel.hpp"
 #endif
 
 using namespace touchgfx;
@@ -22,6 +22,10 @@ public:
     {
 #if defined(SIMULATOR)
         SDK::Simulator::KernelHolder::Get().tick();
+        bool stopRequest = SDK::TouchGFXCommandProcessor::GetInstance().waitForFrameTick();
+        if (stopRequest) {
+            return;
+        }
 #endif
         SDK::TouchGFXCommandProcessor::GetInstance().callCustomMessageHandler();
         model.tick();
