@@ -4,7 +4,7 @@
 #include "Service.hpp"
 
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service(SDK::Kernel& kernel)
@@ -98,6 +98,7 @@ void Service::run()
         } else {
             // Just wait some time to see if GUI starts
             if (mKernel.sys.getTimeMs() - startTimeMs > 5000) {
+                LOG_DEBUG("start GUI timeout\n");
                 break;
             }
             mKernel.sys.delay(100);

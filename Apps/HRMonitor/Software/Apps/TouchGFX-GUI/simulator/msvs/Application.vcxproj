@@ -30,6 +30,8 @@
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorConnection.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppComm.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppCore.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppMessageCore.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\KernelMessageDispatcher.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\MessageManager.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Kernel.cpp" />
