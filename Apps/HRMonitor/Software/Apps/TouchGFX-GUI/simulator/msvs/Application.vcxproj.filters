@@ -423,6 +423,9 @@
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppMessageCore.cpp">
       <Filter>SDK\Libs\Source\Simulator\App</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\System.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml">
@@ -952,9 +955,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\App.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppCapabilities.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppMemAllocator.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
@@ -970,22 +970,10 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IApp.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppControl.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppMemAllocator.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Logger.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp">
@@ -1062,6 +1050,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Simulator\Kernel\Kernel.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Simulator\Kernel\Mock\System.hpp">
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

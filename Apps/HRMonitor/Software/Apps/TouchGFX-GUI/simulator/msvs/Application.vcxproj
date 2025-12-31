@@ -37,6 +37,7 @@
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Kernel.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\System.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\OS\OS.cpp" />
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivityWriter.cpp" />
@@ -204,20 +205,15 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISensorDriver.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IVibro.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IApp.hpp" />
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppControl.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppMemAllocator.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\ISensorCore.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\SensorCore.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\App.hpp" />
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppCapabilities.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppMemAllocator.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Backlight.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Buzzer.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\FileSystem.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Logger.hpp" />
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp" />
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp" />
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h" />
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Wrappers\StdLibWrappers.h" />
@@ -244,6 +240,7 @@
     <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Messages\MessageTypes.hpp" />
     <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Messages\SensorLayerMessages.hpp" />
     <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Simulator\Kernel\Kernel.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Simulator\Kernel\Mock\System.hpp" />
     <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\Simulator\OS\OS.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\ActivityWriter.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\GSModelEvents\G2SEvents.hpp" />

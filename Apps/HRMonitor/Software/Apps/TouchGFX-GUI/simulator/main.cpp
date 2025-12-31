@@ -92,10 +92,11 @@ static int runTouchGFX(SDK::App::Comm&         appComm,
     std::thread kernelThread(kernelThreadFunction, &appCore);
 
     touchgfx::HAL::getInstance()->taskEntry();  // Main GUI loop
+	
+    appCore.stopRequest();
 
-    // Stop service kernel simulator and stop its thread
+    // Stop threads
     serviceThread.join();
-
     kernelThread.join();
 
     return EXIT_SUCCESS;
@@ -119,12 +120,15 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
     SDK::Simulator::Sensors::Core sensorCore;
     SDK::App::MessageCore         appMessageCore;
 
+	SDK::Simulator::Mock::SystemService serviceSystem;
     SDK::Simulator::Kernel serviceKernel("service", nullptr);
-	serviceKernel.setIAppComm(appMessageCore.getServiceComm());
+	serviceKernel.setIAppComm(appMessageCore.getAppComm().getServiceComm());
+	serviceKernel.setISystem(&serviceSystem);
 
-    // GUI Kernel handle sensors as it has tick() from tiuchgfx
+    SDK::Simulator::Mock::SystemGUI guiSystem;
     SDK::Simulator::Kernel guiKernel("gui", &sensorCore);
-    guiKernel.setIAppComm(appMessageCore.getGuiComm());
+    guiKernel.setIAppComm(appMessageCore.getAppComm().getGuiComm());
+    guiKernel.setISystem(&guiSystem);
 
     // Save GUI kernel for simulator
     SDK::Simulator::KernelHolder::Create(guiKernel);

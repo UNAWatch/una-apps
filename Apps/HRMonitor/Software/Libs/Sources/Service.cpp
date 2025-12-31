@@ -24,18 +24,18 @@ void Service::run()
     mSensorHR.connect();
 
     ActivityWriter::AppInfo info{};
-    info.timestamp = std::time(nullptr);
+    info.timestamp  = std::time(nullptr);
     info.appVersion = ParseVersion(BUILD_VERSION);
-    info.devID = DEV_ID;
-    info.appID = APP_ID;
+    info.devID      = DEV_ID;
+    info.appID      = APP_ID;
     mActivityWriter.start(info);
 
-    time_t startTime = time(nullptr);
+    time_t startTime    = time(nullptr);
     time_t utcTimestamp = 0;
 
-    float hrAvgSum = 0;
+    float    hrAvgSum   = 0;
     uint32_t hrAvgCount = 0;
-    float hrMax = 0;
+    float    hrMax      = 0;
 
     uint32_t startTimeMs = mKernel.sys.getTimeMs();
 

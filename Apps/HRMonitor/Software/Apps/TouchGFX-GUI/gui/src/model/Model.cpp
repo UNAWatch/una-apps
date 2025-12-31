@@ -6,7 +6,7 @@
 #include "SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 #define LOG_MODULE_PRX      "Model"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
+#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 #if defined(SIMULATOR)
@@ -90,6 +90,11 @@ void Model::onResume()
 }
 
 void Model::onStop()
+{
+    LOG_INFO("called\n");
+}
+
+void Model::onSuspend()
 {
     LOG_INFO("called\n");
 }

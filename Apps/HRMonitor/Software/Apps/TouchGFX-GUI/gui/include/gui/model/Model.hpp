@@ -50,6 +50,7 @@ protected:
     virtual void onStart()   override;
     virtual void onResume()  override;
     virtual void onStop()    override;
+    virtual void onSuspend() override;
 
     // ICustomMessageHandler implementation
     virtual bool customMessageHandler(SDK::MessageBase *msg) override;

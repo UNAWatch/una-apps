@@ -24,6 +24,7 @@ public:
         SDK::Simulator::KernelHolder::Get().tick();
         bool stopRequest = SDK::TouchGFXCommandProcessor::GetInstance().waitForFrameTick();
         if (stopRequest) {
+			SDK::Simulator::KernelHolder::Get().markAsStopped();
             return;
         }
 #endif
