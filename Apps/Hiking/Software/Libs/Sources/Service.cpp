@@ -49,7 +49,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER, skInitialSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
-        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
+        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, skInitialSamplePeriod, skSampleLatency)
         , mName("Hiking")
 {
 }
@@ -244,6 +244,7 @@ void Service::disconnect()
         mSensorGpsSpeed.disconnect();
         mSensorGpsDistance.disconnect();
         mSensorBatteryLevel.disconnect();
+        mSensorWristMotion.disconnect();
 
         mIsSensorsConnected = false;
     }
