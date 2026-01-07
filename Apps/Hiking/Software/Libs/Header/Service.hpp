@@ -3,8 +3,8 @@
 
 #include "SDK/Kernel/Kernel.hpp"
 
-#include "SDK/Interfaces/ISensorDataListener.hpp"
 #include "SDK/SensorLayer/SensorConnection.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
 
 #include "SDK/TrackMap/TrackMapBuilder.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
@@ -15,8 +15,7 @@
 
 #include "Commands.hpp"
 
-
-class Service : public SDK::Interface::ISensorDataListener
+class Service
 {
 public:
     Service(SDK::Kernel &kernel);
@@ -26,7 +25,7 @@ public:
     void run();
 
 private:
-    const SDK::Kernel&      mKernel;
+    SDK::Kernel&            mKernel;
     bool                    mGUIStarted;
     CustomMessage::Sender   mGuiSender;
 
@@ -47,10 +46,7 @@ private:
     void onStopGUI();
 
     // ISensorDataListener implementation
-    void onSdlNewData(uint16_t                 handle,
-                      const SDK::Sensor::Data* data,
-                      uint16_t                 count,
-                      uint16_t                 stride) override;
+    void onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
     // User-defined event handlers
     void handleEvent(const CustomMessage::TrackStart& event);
@@ -72,6 +68,7 @@ private:
     SDK::Sensor::Connection mSensorAltimeter;
     SDK::Sensor::Connection mSensorHr;
     SDK::Sensor::Connection mSensorBatteryLevel;
+    SDK::Sensor::Connection mSensorWristMotion;
     bool mIsSensorsConnected = false;
 
     static constexpr uint32_t skBacklightTimeout    = 5000;
