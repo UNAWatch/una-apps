@@ -1,0 +1,30 @@
+../../../../../../SDK/Libs/Header/SDK/Interfaces/IApp.hpp:87:22:virtual void SDK::Interface::IApp::Callback::onFrame()	1
+../../../../../../SDK/Libs/Header/SDK/Interfaces/IApp.hpp:112:22:virtual void SDK::Interface::IApp::Callback::onStartGUI()	1
+../../../../../../SDK/Libs/Header/SDK/Interfaces/IApp.hpp:119:22:virtual void SDK::Interface::IApp::Callback::onStopGUI()	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlText.hpp:60:9:SDK::Glance::ControlText::~ControlText()	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlImage.hpp:56:9:SDK::Glance::ControlImage::~ControlImage()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:44:31:virtual SDK::Interface::IGlance::Info Service::glanceGetInfo()	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlText.hpp:60:9:virtual SDK::Glance::ControlText::~ControlText()	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlImage.hpp:56:9:virtual SDK::Glance::ControlImage::~ControlImage()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:58:6:virtual void Service::glanceClose()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:64:6:virtual void Service::onCreate()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:69:6:virtual void Service::onStart()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:74:6:virtual void Service::onResume()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:79:6:virtual void Service::onStop()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:85:6:virtual void Service::onPause()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:90:6:virtual void Service::onDestroy()	1
+../../../../../../SDK/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp:50:18:bool SDK::SensorDataParser::FloorCounter::isDataValid() const	2
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:95:6:virtual void Service::onSdlNewData(const SDK::Interface::ISensorDriver*, const std::vector<SDK::Interface::ISensorData*>&, bool)	6
+../../../Libs/Header/Service.hpp:22:5:Service::~Service()	2
+../../../Libs/Header/Service.hpp:22:5:virtual Service::~Service()	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlBase.hpp:43:26:GlanceControl_t& SDK::Glance::Control::control()	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlBase.hpp:37:14:void SDK::Glance::Control::invalidate()	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlText.hpp:111:22:SDK::Glance::ControlText& SDK::Glance::ControlText::setText(const char*)	3
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlText.hpp:132:22:SDK::Glance::ControlText& SDK::Glance::ControlText::pos(GlancePoint_t, GlanceSize_t)	1
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControlText.hpp:277:22:)	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:53:6:virtual void Service::glanceUpdate()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:32:6:void Service::run()	2
+E:\ST\STM32CubeIDE_1.18.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.100.202509120712\tools\bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/include/c++/13.3.1/bits/vector.tcc:445:7:) [with _Args = {const GlanceControl_t&}; _Tp = GlanceControl_t; _Alloc = std::allocator<GlanceControl_t>]	6
+../../../../../../SDK/Libs/Header/SDK/Glance/GlanceControl.hpp:193:21:std::size_t SDK::Glance::Form::append(GlanceType_t)	2
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:116:6:void Service::createGlanceGUI()	1
+G:/temp/0/Una/una-watch-develop/Apps/GlanceFloors/Software/Libs/Source/Service.cpp:12:1:Service::Service()	5

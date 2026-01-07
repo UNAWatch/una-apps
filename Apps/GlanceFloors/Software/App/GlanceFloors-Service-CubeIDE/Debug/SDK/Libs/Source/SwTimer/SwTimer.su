@@ -1,0 +1,17 @@
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:21:1:SDK::SwTimer::SwTimer()	0	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:32:1:SDK::SwTimer::SwTimer(uint32_t)	8	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:43:6:void SDK::SwTimer::setActive(bool)	0	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:52:6:bool SDK::SwTimer::getActive()	0	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:61:6:void SDK::SwTimer::setInterval(uint32_t)	0	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:70:10:uint32_t SDK::SwTimer::getInterval()	0	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:78:6:void SDK::SwTimer::start()	8	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:88:6:void SDK::SwTimer::start(uint32_t)	8	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:97:6:void SDK::SwTimer::stop()	0	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:105:6:void SDK::SwTimer::reset()	8	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:177:10:static uint32_t SDK::SwTimer::passed(uint32_t, uint32_t)	0	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:114:6:static void SDK::SwTimer::wait(uint32_t)	16	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:130:6:bool SDK::SwTimer::check()	16	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:148:6:bool SDK::SwTimer::expired()	8	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:160:10:uint32_t SDK::SwTimer::left()	8	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:195:10:static uint32_t SDK::SwTimer::passed(uint32_t)	8	static
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/SwTimer/SwTimer.cpp:204:10:uint32_t SDK::SwTimer::passed()	0	static

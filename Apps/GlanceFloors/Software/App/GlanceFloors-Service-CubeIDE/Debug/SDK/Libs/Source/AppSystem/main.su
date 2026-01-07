@@ -1,0 +1,2 @@
+../../../../../../SDK/Libs/Header/SDK/Kernel/KernelProviderService.hpp:43:35:static SDK::KernelProviderService& SDK::KernelProviderService::GetInstance()	16	static,ignoring_inline_asm
+G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/AppSystem/EntryPoint/Service/main.cpp:27:5:int main()	176	static
