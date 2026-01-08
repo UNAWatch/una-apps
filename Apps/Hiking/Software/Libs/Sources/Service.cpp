@@ -49,7 +49,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER, skInitialSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
-        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, skInitialSamplePeriod, skSampleLatency)
+        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
         , mName("Hiking")
 {
 }
@@ -244,7 +244,6 @@ void Service::disconnect()
         mSensorGpsSpeed.disconnect();
         mSensorGpsDistance.disconnect();
         mSensorBatteryLevel.disconnect();
-        mSensorWristMotion.disconnect();
 
         mIsSensorsConnected = false;
     }
@@ -366,6 +365,8 @@ void Service::onStartGUI()
     // Subscribe to GPS to get fix
     connectGps();
 
+    mSensorWristMotion.connect();
+
 #if defined(SIMULATOR) || 0
     mGps.fix = true;
 #endif
@@ -376,6 +377,8 @@ void Service::onStartGUI()
 void Service::onStopGUI()
 {
     mGUIStarted = false;
+
+    mSensorWristMotion.disconnect();
 }
 
 void Service::handleEvent(const CustomMessage::TrackStart& event)
