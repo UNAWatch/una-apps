@@ -145,7 +145,7 @@ void Service::run()
                 case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
                     auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
                     SDK::Sensor::DataBatch batch(event->data, event->count, event->stride);
-                    onSdlNewData(event->handle, batch);
+                    handleSensorsData(event->handle, batch);
                 } break;
 
                 default:
@@ -254,7 +254,7 @@ void Service::disconnect()
     }
 }
 
-void Service::onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data)
+void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
     if (mSensorGpsLocation.matchesDriver(handle)) {
         SDK::SensorDataParser::GpsLocation parser(data[0]);

@@ -14,7 +14,7 @@
 #include "icon_60x60.h"
 #include "SDK/FirmwareVersion.hpp"
 #include "SDK/Messages/SensorLayerMessages.hpp"
-#include "SDK/SensorLayer/SensorDataBatch.hpp"
+#include "SDK/Messages/MessageGuard.hpp"
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp"
@@ -22,7 +22,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
-
+#include "SDK/SensorLayer/DataParsers/SensorDataParserWristMotion.hpp"
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
@@ -44,6 +44,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER, skInitialSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
+        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
         , mName("Running")
 {
 }
@@ -138,10 +139,8 @@ void Service::run()
                 // Sensors messages
                 case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
                     auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
-                    this->onSdlNewData(event->handle,
-                                       event->data,
-                                       event->count,
-                                       event->stride);
+                    SDK::Sensor::DataBatch batch(event->data, event->count, event->stride);
+                    handleSensorsData(event->handle, batch);
                 } break;
 
                 default:
@@ -248,15 +247,10 @@ void Service::disconnect()
 }
 
 
-void Service::onSdlNewData(uint16_t                 handle,
-                           const SDK::Sensor::Data* data,
-                           uint16_t                 count,
-                           uint16_t                 stride)
+void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
-    SDK::Sensor::DataBatch batch(data, count, stride);
-
     if (mSensorGpsLocation.matchesDriver(handle)) {
-        SDK::SensorDataParser::GpsLocation parser(batch[0]);
+        SDK::SensorDataParser::GpsLocation parser(data[0]);
         if (parser.isDataValid()) {
             mGps.timestamp = parser.getTimestamp();
             mGps.fix = parser.isCoordinatesValid();
@@ -268,14 +262,14 @@ void Service::onSdlNewData(uint16_t                 handle,
             LOG_DEBUG("Location: fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
         }
     } else if (mSensorGpsSpeed.matchesDriver(handle)) {
-        SDK::SensorDataParser::GpsSpeed parser(batch[0]);
+        SDK::SensorDataParser::GpsSpeed parser(data[0]);
         if (parser.isDataValid()) {
             mSpeed.speed = parser.getSpeed();
             mSpeed.timestamp = parser.getTimestamp();
             LOG_DEBUG("Speed:    %.2f m/s\n", mSpeed.speed);
         }
     } else if (mSensorGpsDistance.matchesDriver(handle)) {
-        SDK::SensorDataParser::GpsDistance parser(batch[0]);
+        SDK::SensorDataParser::GpsDistance parser(data[0]);
         if (parser.isDataValid()) {
             mDistance.distance = parser.getDistance();
             mDistance.timestamp = parser.getTimestamp();
@@ -287,7 +281,7 @@ void Service::onSdlNewData(uint16_t                 handle,
             LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
         }
     } else if (mSensorAltimeter.matchesDriver(handle)) {
-        SDK::SensorDataParser::Altimeter parser(batch[0]);
+        SDK::SensorDataParser::Altimeter parser(data[0]);
         if (parser.isDataValid()) {
             mAltimeter.timestamp = parser.getTimestamp();
             mAltimeter.altitude = parser.getAltitude();
@@ -299,7 +293,7 @@ void Service::onSdlNewData(uint16_t                 handle,
             LOG_DEBUG("Altitude %.2f\n", mAltimeter.altitude);
         }
     } else if (mSensorHr.matchesDriver(handle)) {
-        SDK::SensorDataParser::HeartRate parser(batch[0]);
+        SDK::SensorDataParser::HeartRate parser(data[0]);
         if (parser.isDataValid()) {
             mHr.hr = parser.getBpm();
             mHr.trustLevel = parser.getTrustLevel();
@@ -312,10 +306,21 @@ void Service::onSdlNewData(uint16_t                 handle,
             LOG_DEBUG("HR %.1f, TrustLevel %.1f\n", mHr.hr, mHr.trustLevel);
         }
     } else if (mSensorBatteryLevel.matchesDriver(handle)) {
-        SDK::SensorDataParser::BatteryLevel parser(batch[0]);
+        SDK::SensorDataParser::BatteryLevel parser(data[0]);
         if (parser.isDataValid()) {
             mBattery.level = parser.getCharge();
             LOG_DEBUG("Battery %.1f %%\n", mBattery.level);
+        }
+    } else if (mSensorWristMotion.matchesDriver(handle)) {
+        SDK::SensorDataParser::WristMotion parser(data[0]);
+        if (parser.isDataValid()) {
+            LOG_DEBUG("Wrist Motion detected\n");
+            auto bl = SDK::make_msg<SDK::Message::RequestBacklightSet>(mKernel);
+            if (bl) {
+                bl->brightness       = 100;
+                bl->autoOffTimeoutMs = 5000;
+                bl.send();
+            }
         }
     }
 }
