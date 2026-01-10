@@ -46,7 +46,7 @@ private:
     void onStopGUI();
 
     // ISensorDataListener implementation
-    void onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data);
+    void handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
     // User-defined event handlers
     void handleEvent(const CustomMessage::TrackStart& event);
