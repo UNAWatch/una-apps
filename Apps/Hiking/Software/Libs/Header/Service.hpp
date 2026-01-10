@@ -45,7 +45,6 @@ private:
     void onStartGUI();
     void onStopGUI();
 
-    // ISensorDataListener implementation
     void handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
     // User-defined event handlers
