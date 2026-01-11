@@ -56,7 +56,7 @@ jobs:
           . SDK/Utilities/Scripts/build-cube/setup-environment.sh
           echo "Building app: ${{ matrix.app }}"
           # Discover projects for this app
-          CUBEIDE_PROJECTS=`find ${{ matrix.app }}/Software/ -type d \( -name '*App*' -o -name '*Apps*' \) -exec find {} -type d -maxdepth 1 -mindepth 1 \; 2>/dev/null | grep CubeIDE | sed 's|/$||' | sed 's|$|/|'`
+          CUBEIDE_PROJECTS=`python3 .github/scripts/generate-app-list.py --app ${{ matrix.app }}`
           if [ -z "$CUBEIDE_PROJECTS" ]; then
             echo "ERROR: No CubeIDE projects found for app ${{ matrix.app }}" >&2
             exit 1
