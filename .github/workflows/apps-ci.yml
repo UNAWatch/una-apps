@@ -1,0 +1,105 @@
+name: CI Apps
+
+on:
+  push:
+    branches: [ develop, main ]
+    tags: [ '*' ]
+  pull_request:
+
+env:
+  DOCKER_DRIVER: overlay2
+  APPS_OUT_CONF: Release
+  APPS_EXCLUDED: |
+    Utility1
+    Utility2
+    Utility3
+    Utility4
+    Glance1
+    HRMonitor
+    Alarm
+    Hiking
+
+jobs:
+  prepare:
+    runs-on: sd
+    container: python:3.11-slim
+    outputs:
+      apps: ${{ steps.generate.outputs.apps }}
+    steps:
+      - name: Setup GIT
+        run: apt update && apt install -y git
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CROSS_REPO_PAT }}
+
+      - name: Generate app list
+        id: generate
+        run: python3 .github/scripts/generate-app-list.py
+
+  apps-build:
+    runs-on: sd
+    container: xanderhendriks/stm32cubeide:16.0
+    env:
+      GITHUB_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
+    needs: prepare
+    strategy:
+      matrix:
+        app: ${{ fromJson(needs.prepare.outputs.apps) }}
+    steps:
+      - name: Build app ${{ matrix.app }}
+        run: |
+          echo "Setup environment"
+          . .github/scripts/setup-environment.sh
+          echo "Building app: ${{ matrix.app }}"
+          # Discover projects for this app
+          CUBEIDE_PROJECTS=`find ${{ matrix.app }}/Software/ -type d \( -name '*App*' -o -name '*Apps*' \) -exec find {} -type d -maxdepth 1 -mindepth 1 \; 2>/dev/null | grep CubeIDE | sed 's|/$||' | sed 's|$|/|'`
+          if [ -z "$CUBEIDE_PROJECTS" ]; then
+            echo "ERROR: No CubeIDE projects found for app ${{ matrix.app }}" >&2
+            exit 1
+          fi
+          echo "Projects:"
+          echo "$CUBEIDE_PROJECTS"
+          (echo "$CUBEIDE_PROJECTS" | grep -v Service; echo "$CUBEIDE_PROJECTS" | grep Service) | while IFS= read -r p; do
+            [ -z "$p" ] && continue
+            echo "Building project: $p"
+            .github/scripts/build-cube.sh "$p"
+          done
+          echo "App build complete: ${{ matrix.app }}"
+
+      - name: Upload app artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ matrix.app }}
+          path: ${{ matrix.app }}/Output/${{ env.APPS_OUT_CONF }}/*.uapp
+
+  release:
+    runs-on: sd
+    needs: apps-build
+    if: github.event_name == 'release' || startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack-message: |
+            🚀 UNA Apps release: ${{ github.event.release.tag_name }}
+            📝 ${{ github.event.release.body }}
+            🔗 Download: ${{ github.event.release.html_url }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
