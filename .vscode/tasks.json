@@ -1,0 +1,261 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Clean All",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}/:/workspace",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                "rm -rf /workspace/.vscode/workspace"
+            ],
+                        "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Build Cycling GUI",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/workspace",
+                "-e",
+                "GITHUB_WORKSPACE=/workspace",
+                "-e",
+                "PATH_SDK=/workspace/SDK",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                ". /workspace/SDK/Utilities/Scripts/build-cube/setup-environment.sh && /workspace/SDK/Utilities/Scripts/build-cube/build-cube.sh /workspace/Apps/Cycling/Software/Apps/CyclingGUI-CubeIDE/"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build Cycling Service",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/workspace",
+                "-e",
+                "GITHUB_WORKSPACE=/workspace",
+                "-e",
+                "PATH_SDK=/workspace/SDK",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                ". /workspace/SDK/Utilities/Scripts/build-cube/setup-environment.sh && /workspace/SDK/Utilities/Scripts/build-cube/build-cube.sh /workspace/Apps/Cycling/Software/Apps/CyclingService-CubeIDE/"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build Glance1 Service",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/workspace",
+                "-e",
+                "GITHUB_WORKSPACE=/workspace",
+                "-e",
+                "PATH_SDK=/workspace/SDK",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                ". /workspace/SDK/Utilities/Scripts/build-cube/setup-environment.sh && /workspace/SDK/Utilities/Scripts/build-cube/build-cube.sh /workspace/Apps/Glance1/Software/App/Service-CubeIDE/"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build GlanceARHR Service",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/workspace",
+                "-e",
+                "GITHUB_WORKSPACE=/workspace",
+                "-e",
+                "PATH_SDK=/workspace/SDK",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                ". /workspace/SDK/Utilities/Scripts/build-cube/setup-environment.sh && /workspace/SDK/Utilities/Scripts/build-cube/build-cube.sh /workspace/Apps/GlanceARHR/Software/App/GlanceARHR-Service-CubeIDE/"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build Hiking GUI",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/workspace",
+                "-e",
+                "GITHUB_WORKSPACE=/workspace",
+                "-e",
+                "PATH_SDK=/workspace/SDK",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                ". /workspace/SDK/Utilities/Scripts/build-cube/setup-environment.sh && /workspace/SDK/Utilities/Scripts/build-cube/build-cube.sh /workspace/Apps/Hiking/Software/Apps/HikingGUI-CubeIDE/"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build Hiking Service",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/workspace",
+                "-e",
+                "GITHUB_WORKSPACE=/workspace",
+                "-e",
+                "PATH_SDK=/workspace/SDK",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                ". /workspace/SDK/Utilities/Scripts/build-cube/setup-environment.sh && /workspace/SDK/Utilities/Scripts/build-cube/build-cube.sh /workspace/Apps/Hiking/Software/Apps/HikingService-CubeIDE/"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build All (Core Only)",
+            "dependsOn": [
+                "Build Main Kernel (Core Only)",
+                "Build Cycling GUI",
+                "Build Cycling Service",
+                "Build Glance1 Service",
+                "Build GlanceARHR Service",
+                "Build Hiking GUI",
+                "Build Hiking Service"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc",
+            "options": {
+                "env": {
+                    "EXCLUDE_PRODTEST": "true"
+                }
+            }
+        },
+        {
+            "label": "Build All (Full ProdTest)",
+            "dependsOn": [
+                "Build Main Firmware (Full ProdTest)",
+                "Build Cycling GUI",
+                "Build Cycling Service",
+                "Build Glance1 Service",
+                "Build GlanceARHR Service",
+                "Build Hiking GUI",
+                "Build Hiking Service"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        }
+    ]
+}
