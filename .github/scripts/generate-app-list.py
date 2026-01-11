@@ -5,8 +5,14 @@ import re
 import subprocess
 import sys
 import json
+import argparse
 
-print("Generating app list...")
+parser = argparse.ArgumentParser()
+parser.add_argument('--app', help='Specific app to get projects for')
+args = parser.parse_args()
+
+if not args.app:
+    print("Generating app list...")
 
 # List of excluded CubeIDE projects/apps (can be overridden via APPS_EXCLUDED CI variable)
 excluded_apps_str = os.environ.get('APPS_EXCLUDED', '')
@@ -45,13 +51,21 @@ for p in cubeide_projects:
   app = parts[1]
   apps.setdefault(app, set()).add(p)
 
-if not apps:
-  print("ERROR: No *CubeIDE app projects found by discovery command", file=sys.stderr)
-  print("Discovery output:")
-  for ln in candidates:
-    print("  " + ln)
-  sys.exit(2)
+if args.app:
+    if args.app in apps:
+        projects = list(apps[args.app])
+        print(' '.join(projects))
+    else:
+        print(f"ERROR: No projects found for app {args.app}", file=sys.stderr)
+        sys.exit(2)
+else:
+    if not apps:
+        print("ERROR: No *CubeIDE app projects found by discovery command", file=sys.stderr)
+        print("Discovery output:")
+        for ln in candidates:
+            print("  " + ln)
+        sys.exit(2)
 
-# Output as JSON for GitHub Actions
-apps_json = json.dumps(list(apps.keys()))
-print(f"apps={apps_json}", file=open(os.environ.get('GITHUB_OUTPUT', '/dev/stdout'), 'a'))
+    # Output as JSON for GitHub Actions
+    apps_json = json.dumps(list(apps.keys()))
+    print(f"apps={apps_json}", file=open(os.environ.get('GITHUB_OUTPUT', '/dev/stdout'), 'a'))
