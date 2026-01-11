@@ -35,10 +35,12 @@ candidates = [ln.strip() for ln in out.splitlines() if ln.strip()]
 cubeide_projects = []
 for p in candidates:
   if p.endswith("CubeIDE") or p.endswith("CubeIDE/"):
-    print(f"(Yes): {p}")
+    if not args.app:
+      print(f"(Yes): {p}")
     cubeide_projects.append(p.rstrip("/") + "/")
   else:
-    print(f" (No): {p}")
+    if not args.app:
+      print(f" (No): {p}")
 
 # Exclude specified apps/projects (substring match)
 cubeide_projects = [p for p in cubeide_projects if not any(ex in p for ex in excluded_apps)]
