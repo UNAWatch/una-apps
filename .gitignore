@@ -4,3 +4,4 @@
 # Visual Studio files
 **/Visual Studio 2022/
 **/.vs/
+.vscode/workspace
