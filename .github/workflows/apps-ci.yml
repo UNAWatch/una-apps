@@ -52,7 +52,7 @@ jobs:
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
-          . .github/scripts/setup-environment.sh
+          . SDK/Utilities/Scripts/build-cube/setup-environment.sh
           echo "Building app: ${{ matrix.app }}"
           # Discover projects for this app
           CUBEIDE_PROJECTS=`find ${{ matrix.app }}/Software/ -type d \( -name '*App*' -o -name '*Apps*' \) -exec find {} -type d -maxdepth 1 -mindepth 1 \; 2>/dev/null | grep CubeIDE | sed 's|/$||' | sed 's|$|/|'`
@@ -65,7 +65,7 @@ jobs:
           (echo "$CUBEIDE_PROJECTS" | grep -v Service; echo "$CUBEIDE_PROJECTS" | grep Service) | while IFS= read -r p; do
             [ -z "$p" ] && continue
             echo "Building project: $p"
-            .github/scripts/build-cube.sh "$p"
+            SDK/Utilities/Scripts/build-cube/build-cube.sh "$p"
           done
           echo "App build complete: ${{ matrix.app }}"
 
