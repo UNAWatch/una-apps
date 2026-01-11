@@ -74,7 +74,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-${{ matrix.app }}
-          path: ${{ matrix.app }}/Output/${{ env.APPS_OUT_CONF }}/*.uapp
+          path: Apps/${{ matrix.app }}/Output/${{ env.APPS_OUT_CONF }}/*.uapp
 
   release:
     runs-on: sd
