@@ -16,8 +16,6 @@ env:
     Utility4
     Glance1
     HRMonitor
-    Alarm
-    Hiking
 
 jobs:
   prepare:
