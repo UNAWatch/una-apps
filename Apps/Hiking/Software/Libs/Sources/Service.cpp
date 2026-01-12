@@ -49,7 +49,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER, skInitialSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
-        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
+        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, skInitialSamplePeriod, skSampleLatency)
         , mName("Hiking")
 {
 }
@@ -145,7 +145,7 @@ void Service::run()
                 case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
                     auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
                     SDK::Sensor::DataBatch batch(event->data, event->count, event->stride);
-                    handleSensorsData(event->handle, batch);
+                    onSdlNewData(event->handle, batch);
                 } break;
 
                 default:
@@ -244,6 +244,7 @@ void Service::disconnect()
         mSensorGpsSpeed.disconnect();
         mSensorGpsDistance.disconnect();
         mSensorBatteryLevel.disconnect();
+        mSensorWristMotion.disconnect();
 
         mIsSensorsConnected = false;
     }
@@ -254,7 +255,7 @@ void Service::disconnect()
     }
 }
 
-void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
+void Service::onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
     if (mSensorGpsLocation.matchesDriver(handle)) {
         SDK::SensorDataParser::GpsLocation parser(data[0]);
