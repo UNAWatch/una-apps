@@ -72,7 +72,7 @@ private:
 
     static constexpr uint32_t skBacklightTimeout    = 5000;
     static constexpr uint32_t skInitialSamplePeriod = 1000;
-    static constexpr uint32_t skSamplePeriod        = 10000;
+    static constexpr uint32_t skSamplePeriod        = 1000;
     static constexpr uint32_t skSampleLatency       = 1000;
 
     static constexpr float skMapDistanceThreshold   = 10.0f; // meters
