@@ -62,7 +62,17 @@ void TrackLapView::setDistance(float m)
 
 void TrackLapView::setTimer(std::time_t sec)
 {
-    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec));
+    uint16_t hh = 0;
+    uint8_t mm = 0;
+    uint8_t ss = 0;
+
+    App::Utils::sec2hms(sec, hh, mm, ss);
+    if (hh == 0) {
+        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", mm, ss);
+    } else {
+        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", hh, mm);
+    }
+
     timeValue.invalidate();
 }
 

@@ -32,6 +32,16 @@ void TrackFace3::setLapDistance(float m, bool isImperial)
 
 void TrackFace3::setLapTimer(std::time_t sec)
 {
-    Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d:%02d", App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
+    uint16_t hh = 0;
+    uint8_t mm = 0;
+    uint8_t ss = 0;
+
+    App::Utils::sec2hms(sec, hh, mm, ss);
+    if (hh == 0) {
+        Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d", mm, ss);
+    } else {
+        Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d", hh, mm);
+    }
+
     lapTimeValue.invalidate();
 }
