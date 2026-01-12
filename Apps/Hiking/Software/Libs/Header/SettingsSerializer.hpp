@@ -28,7 +28,7 @@
 #include <cstdbool>
 #include <string>
 
-#include "SDK/Interfaces/IKernel.hpp"
+#include "SDK/Kernel/Kernel.hpp"
 
 #include "Settings.hpp"
 
@@ -46,7 +46,7 @@ public:
      * @param kernel: Reference to the kernel interface.
      * @param pathToFile: Path of the settings file.
      */
-    SettingsSerializer(const IKernel& kernel, const char *pathToFile);
+    SettingsSerializer(const SDK::Kernel& kernel, const char *pathToFile);
 
     /**
      * @brief Destructor.
@@ -68,8 +68,8 @@ public:
     bool load(Settings &settings);
 
 private:
-    /// A constant reference to an IKernel object.
-    const IKernel& mKernel;
+    /// A constant reference to an Kernel object.
+    const SDK::Kernel& mKernel;
 
     /// Path to settings file
     const char *mPath = nullptr;    

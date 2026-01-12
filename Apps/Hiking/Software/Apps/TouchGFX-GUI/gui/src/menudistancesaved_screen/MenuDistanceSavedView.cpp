@@ -19,25 +19,25 @@ void MenuDistanceSavedView::tearDownScreen()
 
 void MenuDistanceSavedView::setDistanceUnits(float km, bool isImperial)
 {
-    float distance = isImperial ? Gui::Utils::km2mi(km) : km;
+    float distance = isImperial ? App::Utils::km2mi(km) : km;
 
-    uint32_t distanceId = Gui::Utils::RoundToNearestIndex(Gui::kDistanceList,
-        Gui::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
+    uint32_t distanceId = App::Menu::RoundToNearestIndex(App::Menu::kDistanceList,
+        App::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
 
-    if (distanceId == Gui::Menu::Settings::Alerts::Distance::ID_OFF) {
+    if (distanceId == App::Menu::Settings::Alerts::Distance::ID_OFF) {
         Unicode::snprintf(msgBuffer, MSG_SIZE, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
     } else {
         if (isImperial) {
-            touchgfx::TypedTextId txt = Gui::kDistanceList[distanceId] > 1 ?
+            touchgfx::TypedTextId txt = App::Menu::kDistanceList[distanceId] > 1 ?
                 T_TEXT_MILES : T_TEXT_MILE;
 
             Unicode::snprintf(msgBuffer, MSG_SIZE, "%d %s",
-                Gui::kDistanceList[distanceId],
+                App::Menu::kDistanceList[distanceId],
                 touchgfx::TypedText(txt).getText());
 
         } else {
             Unicode::snprintf(msgBuffer, MSG_SIZE, "%d %s",
-                Gui::kDistanceList[distanceId],
+                App::Menu::kDistanceList[distanceId],
                 touchgfx::TypedText(T_TEXT_KM).getText());
         }
     }

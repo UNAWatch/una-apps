@@ -28,6 +28,13 @@ void EnterMenuPresenter::deactivate()
     model->setMenuPosEnterMenu(view.getPositionId());
 }
 
+void EnterMenuPresenter::onIdleTimeout()
+{
+    if (view.getPositionId() != App::Menu::ID_START) {
+        model->exitApp();
+    }
+}
+
 void EnterMenuPresenter::onGpsFix(bool acquired)
 {
     view.setGpsFix(acquired);

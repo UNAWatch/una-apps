@@ -11,9 +11,11 @@ public:
 
     virtual void initialize();
 
-    void setHR(float hr);
+    void setHR(float hr, const std::array<uint8_t, 4>& th);
+
 
 protected:
+
 };
 
 #endif // HRBAR_HPP
