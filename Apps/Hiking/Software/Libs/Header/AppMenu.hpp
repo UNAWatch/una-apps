@@ -128,9 +128,9 @@ static constexpr uint16_t kTimeList[Settings::Alerts::Time::ID_COUNT] = { 0,10,2
 
 /**
 * @brief   Round a target value to the nearest value in an array.
-* 
+*
 * Helper function for snapping a metric to the closest value from the menu.
-* 
+*
 * @param   arr: Pointer to the array of values.
 * @param   len: Length of the array.
 * @param   target: Target value to round.
@@ -155,9 +155,9 @@ inline T RoundToNearest(T* arr, size_t len, float target)
 
 /**
  * @brief   Round a target value to the nearest value in an array and return its index.
- * 
+ *
  * Helper function for binding a metric to the nearest index from the menu.
- * 
+ *
  * @param   arr: Pointer to the array of values.
  * @param   len: Length of the array.
  * @param   target: Target value to round.
