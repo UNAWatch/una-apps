@@ -71,7 +71,20 @@ jobs:
           fi
           echo "Projects:"
           echo "$CUBEIDE_PROJECTS"
-          (echo "$CUBEIDE_PROJECTS" | grep -v Service; echo "$CUBEIDE_PROJECTS" | grep Service) | while IFS= read -r p; do
+          projects=()
+          while IFS= read -r p; do
+            projects+=("$p")
+          done <<< "$CUBEIDE_PROJECTS"
+          non_service=()
+          service=()
+          for p in "${projects[@]}"; do
+            if [[ "$p" =~ Service ]]; then
+              service+=("$p")
+            else
+              non_service+=("$p")
+            fi
+          done
+          for p in "${non_service[@]}" "${service[@]}"; do
             [ -z "$p" ] && continue
             echo "Building project: $p"
             SDK/Utilities/Scripts/build-cube/build-cube.sh "$p"
