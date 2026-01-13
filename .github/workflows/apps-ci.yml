@@ -105,11 +105,12 @@ jobs:
         with:
           path: artifacts
 
-      - name: Create release
+      - id: create_release
+        name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: artifacts/**/*
-          generate_release_notes: false
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
 
@@ -118,8 +119,10 @@ jobs:
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           slack-message: |
-            🚀 UNA Apps release: ${{ github.event.release.tag_name }}
-            📝 ${{ github.event.release.body }}
-            🔗 Download: ${{ github.event.release.html_url }}
+            🚀 UNA Apps: ${{ steps.create_release.outputs.name || github.ref_name }} (${{ steps.create_release.outputs.tag_name }})\n
+            📝 Release Notes: \n${{ steps.create_release.outputs.body }}\n
+            👤 Author: ${{ steps.create_release.outputs.author }}\n
+            📅 Created: ${{ steps.create_release.outputs.created_at }}\n
+            🔗 Download: ${{ steps.create_release.outputs.url }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
