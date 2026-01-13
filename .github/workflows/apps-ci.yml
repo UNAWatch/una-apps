@@ -71,24 +71,22 @@ jobs:
           fi
           echo "Projects:"
           echo "$CUBEIDE_PROJECTS"
-          projects=()
-          while IFS= read -r p; do
-            projects+=("$p")
-          done <<< "$CUBEIDE_PROJECTS"
-          non_service=()
-          service=()
-          for p in "${projects[@]}"; do
-            if [[ "$p" =~ Service ]]; then
-              service+=("$p")
+          temp_non="/tmp/non_service_$$"
+          temp_svc="/tmp/service_$$"
+          touch "$temp_non" "$temp_svc"
+          echo "$CUBEIDE_PROJECTS" | while IFS= read -r p; do
+            if echo "$p" | grep -q Service; then
+              echo "$p" >> "$temp_svc"
             else
-              non_service+=("$p")
+              echo "$p" >> "$temp_non"
             fi
           done
-          for p in "${non_service[@]}" "${service[@]}"; do
+          cat "$temp_non" "$temp_svc" | while IFS= read -r p; do
             [ -z "$p" ] && continue
             echo "Building project: $p"
             SDK/Utilities/Scripts/build-cube/build-cube.sh "$p"
           done
+          rm -f "$temp_non" "$temp_svc"
           echo "App build complete: ${{ matrix.app }}"
 
       - name: Upload app artifacts
