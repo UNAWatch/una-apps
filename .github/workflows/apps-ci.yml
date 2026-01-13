@@ -105,6 +105,16 @@ jobs:
         with:
           path: artifacts
 
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y curl jq
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          sudo apt update
+          sudo apt install gh -y
+
       - id: create_release
         name: Release
         uses: softprops/action-gh-release@v2
@@ -114,15 +124,38 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
 
+      - name: Make release immutable
+        run: |
+          gh release edit ${{ github.ref_name }} --draft=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
+
+      - id: get_slack_params
+        name: Get required parameters for slack notification
+        run: |
+          RELEASE_JSON=$(gh release view ${{ github.ref_name }} --json body,author,createdAt,name,url)
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$RELEASE_JSON" | jq -r '.body' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "author=$(echo "$RELEASE_JSON" | jq -r '.author.login')" >> $GITHUB_OUTPUT
+          echo "created_at=$(echo "$RELEASE_JSON" | jq -r '.createdAt')" >> $GITHUB_OUTPUT
+          echo "name=$(echo "$RELEASE_JSON" | jq -r '.name')" >> $GITHUB_OUTPUT
+          echo "url=$(echo "$RELEASE_JSON" | jq -r '.url')" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
+
       - name: Notify Slack
         uses: slackapi/slack-github-action@v1.27.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           slack-message: |
-            🚀 UNA Apps: ${{ steps.create_release.outputs.name || github.ref_name }} (${{ steps.create_release.outputs.tag_name }})\n
-            📝 Release Notes: \n${{ steps.create_release.outputs.body }}\n
-            👤 Author: ${{ steps.create_release.outputs.author }}\n
-            📅 Created: ${{ steps.create_release.outputs.created_at }}\n
-            🔗 Download: ${{ steps.create_release.outputs.url }}
+            🚀 UNA Apps: ${{ steps.get_slack_params.outputs.name }} (tag: ${{ github.ref_name }})
+               >--- 📝 Release Notes: ---<
+            ${{ steps.get_slack_params.outputs.body }}
+               >-------------------------<
+            👤 Author: ${{ steps.get_slack_params.outputs.author }}
+            📅 Created: ${{ steps.get_slack_params.outputs.created_at }}
+               >-------------------------<
+            🔗 Download: ${{ steps.get_slack_params.outputs.url }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
