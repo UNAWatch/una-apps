@@ -74,7 +74,7 @@ jobs:
           temp_non="/tmp/non_service_$$"
           temp_svc="/tmp/service_$$"
           touch "$temp_non" "$temp_svc"
-          echo "$CUBEIDE_PROJECTS" | while IFS= read -r p; do
+          for p in $CUBEIDE_PROJECTS; do
             if echo "$p" | grep -q Service; then
               echo "$p" >> "$temp_svc"
             else
