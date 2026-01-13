@@ -48,6 +48,16 @@ jobs:
       matrix:
         app: ${{ fromJson(needs.prepare.outputs.apps) }}
     steps:
+      - name: Setup GIT
+        run: apt update && apt install -y git
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          token: ${{ secrets.CROSS_REPO_PAT }}
+
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
