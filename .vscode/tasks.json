@@ -22,7 +22,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             }
         },
@@ -51,7 +51,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -81,7 +81,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -111,7 +111,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -141,7 +141,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -171,7 +171,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -201,7 +201,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -231,7 +231,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -261,7 +261,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -291,7 +291,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -321,7 +321,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -351,7 +351,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -381,7 +381,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -411,7 +411,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -441,7 +441,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -471,7 +471,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -501,7 +501,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -531,7 +531,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -561,7 +561,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -591,7 +591,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -621,7 +621,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -651,7 +651,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -681,7 +681,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -711,7 +711,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -741,7 +741,7 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc"
@@ -759,7 +759,7 @@
                 "Build GlanceSteps Service",
                 "Build Hiking GUI",
                 "Build Hiking Service",
-                "Build Alarm GUI",
+                // "Build Alarm GUI",
                 "Build Alarm Service",
                 "Build HRMonitor GUI",
                 "Build HRMonitor Service",
@@ -776,12 +776,12 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": false
+                "isDefault": true
             },
             "presentation": {
                 "echo": true,
                 "reveal": "always",
-                "focus": false,
+                "focus": true,
                 "panel": "shared"
             },
             "problemMatcher": "$gcc",
