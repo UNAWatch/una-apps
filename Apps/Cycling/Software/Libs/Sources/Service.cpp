@@ -333,6 +333,8 @@ void Service::onStartGUI()
     // Subscribe to GPS to get fix
     connectGps();
 
+    mSensorWristMotion.connect();
+
 #if defined(SIMULATOR) || 0
     mGps.fix = true;
 #endif
@@ -343,6 +345,8 @@ void Service::onStartGUI()
 void Service::onStopGUI()
 {
     mGUIStarted = false;
+
+    mSensorWristMotion.disconnect();
 }
 
 void Service::handleEvent(const CustomMessage::TrackStart& event)
