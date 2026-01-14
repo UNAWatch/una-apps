@@ -23,13 +23,6 @@ void TrackLapView::tearDownScreen()
 void TrackLapView::setUnitsImperial(bool isImperial)
 {
     mUnitsImperial = isImperial;
-
-    if (mUnitsImperial) {
-        Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
-    } else {
-        Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
-    }
-    distanceUnits.invalidate();
 }
 
 void TrackLapView::setLapNum(uint32_t n)

@@ -37,7 +37,6 @@ protected:
     touchgfx::TextAreaWithOneWildcard timeValue;
     touchgfx::Line line2;
     touchgfx::PainterABGR2222 line2Painter;
-    touchgfx::TextAreaWithOneWildcard distanceUnits;
     touchgfx::TextAreaWithOneWildcard distanceValue;
     touchgfx::TextAreaWithOneWildcard distanceText;
     touchgfx::Line line1;
@@ -54,8 +53,6 @@ protected:
     touchgfx::Unicode::UnicodeChar timeTextBuffer[TIMETEXT_SIZE];
     static const uint16_t TIMEVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar timeValueBuffer[TIMEVALUE_SIZE];
-    static const uint16_t DISTANCEUNITS_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar distanceUnitsBuffer[DISTANCEUNITS_SIZE];
     static const uint16_t DISTANCEVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar distanceValueBuffer[DISTANCEVALUE_SIZE];
     static const uint16_t DISTANCETEXT_SIZE = 15;

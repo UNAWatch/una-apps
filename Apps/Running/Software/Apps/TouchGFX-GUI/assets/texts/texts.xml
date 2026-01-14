@@ -328,6 +328,9 @@
       <Text Id="TEXT_AVG_DOT_SPEED" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Avg. Speed</Translation>
       </Text>
+      <Text Id="TEXT_AVG_LC_DOT_HR" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">Avg. HR</Translation>
+      </Text>
       <Text Id="TEXT_HR_UC" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">HR</Translation>
       </Text>
@@ -391,7 +394,7 @@
         <Translation Language="GB">2.33</Translation>
       </Text>
       <Text Id="__SingleUse_3KKT" Alignment="Left" TypographyId="Poppins_SemiBold_40">
-        <Translation Language="GB">15:37</Translation>
+        <Translation Language="GB">4:27</Translation>
       </Text>
       <Text Id="__SingleUse_82L0" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">15:37</Translation>
