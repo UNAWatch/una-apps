@@ -147,7 +147,7 @@ protected:
 
     // Kernel settings
     bool mUnitsImperial = false;
-    std::array<uint8_t, 4> mHrThresholds { 90, 100, 110, 120 };
+    std::array<uint8_t, 4> mHrThresholds = kHrThresholdsDefault;
 
     // Application settings
     Settings mSettings {};

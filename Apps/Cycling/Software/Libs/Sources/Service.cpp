@@ -464,7 +464,7 @@ std::tm Service::toLocalTime(std::time_t utc)
 void Service::sendInitialInfoToGui()
 {
     // Settings
-    std::array<uint8_t, 4> hrThresholds { 80, 90, 100, 120 };
+    std::array<uint8_t, 4> hrThresholds = kHrThresholdsDefault;
 
     auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestSystemSettings>();
     if (msg) {

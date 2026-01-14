@@ -312,6 +312,7 @@ bool Model::customMessageHandler(SDK::MessageBase *msg)
             auto *cmsg = static_cast<CustomMessage::SettingsUpd*>(msg);
             mSettings = cmsg->settings;
             mUnitsImperial = cmsg->unitsImperial;
+            mHrThresholds = cmsg->hrThresholds;
         } break;
 
         case CustomMessage::LOCAL_TIME:  {
