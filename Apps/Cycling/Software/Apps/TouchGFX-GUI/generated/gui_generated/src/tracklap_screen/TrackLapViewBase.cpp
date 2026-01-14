@@ -19,7 +19,7 @@ TrackLapViewBase::TrackLapViewBase()
     cross.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CROSSYELLOW_ID));
     add(cross);
 
-    avgSpeedText.setXY(77, 137);
+    avgSpeedText.setXY(71, 137);
     avgSpeedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     avgSpeedText.setLinespacing(0);
     Unicode::snprintf(avgSpeedTextBuffer, AVGSPEEDTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_AVG_DOT_SPEED).getText());
@@ -28,7 +28,7 @@ TrackLapViewBase::TrackLapViewBase()
     avgSpeedText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(avgSpeedText);
 
-    avgSpeedValue.setPosition(60, 163, 120, 44);
+    avgSpeedValue.setPosition(60, 158, 120, 44);
     avgSpeedValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     avgSpeedValue.setLinespacing(0);
     Unicode::snprintf(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());

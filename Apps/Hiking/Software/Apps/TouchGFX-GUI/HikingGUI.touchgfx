@@ -533,8 +533,8 @@
           {
             "Type": "TextArea",
             "Name": "timeText",
-            "X": 93,
-            "Y": 165,
+            "X": 146,
+            "Y": 58,
             "Width": 44,
             "Height": 23,
             "LockPosition": true,
@@ -555,9 +555,9 @@
           {
             "Type": "TextArea",
             "Name": "timeValue",
-            "X": 35,
-            "Y": 185,
-            "Width": 170,
+            "X": 122,
+            "Y": 82,
+            "Width": 100,
             "Height": 44,
             "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_35",
@@ -577,7 +577,7 @@
             "Type": "Line",
             "Name": "line2",
             "X": 35,
-            "Y": 159,
+            "Y": 127,
             "Width": 170,
             "Height": 3,
             "LockPosition": true,
@@ -591,34 +591,13 @@
           },
           {
             "Type": "TextArea",
-            "Name": "distanceUnits",
-            "X": 177,
-            "Y": 136,
-            "Width": 45,
-            "Height": 19,
-            "LockPosition": true,
-            "TextId": "TMP_REGULAR_18_L",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "TEXT_KM",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
             "Name": "distanceValue",
-            "X": 32,
-            "Y": 120,
-            "Width": 138,
-            "Height": 48,
+            "X": 18,
+            "Y": 82,
+            "Width": 100,
+            "Height": 44,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35_R",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -634,9 +613,9 @@
           {
             "Type": "TextArea",
             "Name": "distanceText",
-            "X": 81,
-            "Y": 104,
-            "Width": 79,
+            "X": 50,
+            "Y": 58,
+            "Width": 37,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
@@ -646,9 +625,8 @@
               "Green": 192,
               "Blue": 192
             },
-            "AutoSize": true,
             "Wildcard1": {
-              "TextId": "TEXT_DISTANCE",
+              "TextId": "TEXT_DIST_DOT",
               "UseBuffer": true,
               "BufferSize": 15
             }
@@ -656,16 +634,16 @@
           {
             "Type": "Line",
             "Name": "line1",
-            "X": 35,
-            "Y": 102,
-            "Width": 170,
-            "Height": 3,
+            "X": 119,
+            "Y": 84,
+            "Width": 3,
+            "Height": 44,
             "LockPosition": true,
             "Color": {
               "Green": 128,
               "Blue": 128
             },
-            "EndX": 170.0,
+            "EndY": 44.0,
             "LineWidth": 10.0,
             "LineEndingStyle": "Round"
           },
@@ -673,11 +651,10 @@
             "Type": "TextArea",
             "Name": "stepsValue",
             "X": 35,
-            "Y": 61,
+            "Y": 158,
             "Width": 170,
             "Height": 44,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35",
+            "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -694,10 +671,9 @@
             "Type": "TextArea",
             "Name": "stepsText",
             "X": 96,
-            "Y": 41,
+            "Y": 137,
             "Width": 49,
             "Height": 23,
-            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {

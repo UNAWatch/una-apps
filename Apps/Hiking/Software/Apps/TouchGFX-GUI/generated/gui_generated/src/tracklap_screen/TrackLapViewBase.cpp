@@ -19,7 +19,7 @@ TrackLapViewBase::TrackLapViewBase()
     cross.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CROSSYELLOW_ID));
     add(cross);
 
-    timeText.setXY(93, 165);
+    timeText.setXY(146, 58);
     timeText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timeText.setLinespacing(0);
     Unicode::snprintf(timeTextBuffer, TIMETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_TIME).getText());
@@ -28,7 +28,7 @@ TrackLapViewBase::TrackLapViewBase()
     timeText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(timeText);
 
-    timeValue.setPosition(35, 185, 170, 44);
+    timeValue.setPosition(122, 82, 100, 44);
     timeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timeValue.setLinespacing(0);
     Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
@@ -36,7 +36,7 @@ TrackLapViewBase::TrackLapViewBase()
     timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(timeValue);
 
-    line2.setPosition(35, 159, 170, 3);
+    line2.setPosition(35, 127, 170, 3);
     line2Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
     line2.setPainter(line2Painter);
     line2.setStart(0, 0);
@@ -45,49 +45,40 @@ TrackLapViewBase::TrackLapViewBase()
     line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line2);
 
-    distanceUnits.setPosition(177, 136, 45, 19);
-    distanceUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    distanceUnits.setLinespacing(0);
-    Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
-    distanceUnits.setWildcard(distanceUnitsBuffer);
-    distanceUnits.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
-    add(distanceUnits);
-
-    distanceValue.setPosition(32, 120, 138, 48);
+    distanceValue.setPosition(18, 82, 100, 44);
     distanceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceValue.setLinespacing(0);
     Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_Z0WD).getText());
     distanceValue.setWildcard(distanceValueBuffer);
-    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35_R));
+    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(distanceValue);
 
-    distanceText.setXY(81, 104);
+    distanceText.setPosition(50, 58, 37, 23);
     distanceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceText.setLinespacing(0);
-    Unicode::snprintf(distanceTextBuffer, DISTANCETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DISTANCE).getText());
+    Unicode::snprintf(distanceTextBuffer, DISTANCETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DIST_DOT).getText());
     distanceText.setWildcard(distanceTextBuffer);
-    distanceText.resizeToCurrentText();
     distanceText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(distanceText);
 
-    line1.setPosition(35, 102, 170, 3);
+    line1.setPosition(119, 84, 3, 44);
     line1Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
     line1.setPainter(line1Painter);
     line1.setStart(0, 0);
-    line1.setEnd(170, 0);
+    line1.setEnd(0, 44);
     line1.setLineWidth(10);
     line1.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line1);
 
-    stepsValue.setPosition(35, 61, 170, 44);
+    stepsValue.setPosition(35, 158, 170, 44);
     stepsValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     stepsValue.setLinespacing(0);
     Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_0CJZ).getText());
     stepsValue.setWildcard(stepsValueBuffer);
-    stepsValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    stepsValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40));
     add(stepsValue);
 
-    stepsText.setXY(96, 41);
+    stepsText.setXY(96, 137);
     stepsText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     stepsText.setLinespacing(0);
     Unicode::snprintf(stepsTextBuffer, STEPSTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_STEPS).getText());

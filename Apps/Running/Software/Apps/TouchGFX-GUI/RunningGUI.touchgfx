@@ -410,10 +410,10 @@
           },
           {
             "Type": "TextArea",
-            "Name": "avgPaceText",
-            "X": 77,
-            "Y": 137,
-            "Width": 87,
+            "Name": "avgHrText",
+            "X": 136,
+            "Y": 58,
+            "Width": 66,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
@@ -425,20 +425,20 @@
             },
             "AutoSize": true,
             "Wildcard1": {
-              "TextId": "TEXT_AVG_DOT_PACE",
+              "TextId": "TEXT_AVG_LC_DOT_HR",
               "UseBuffer": true,
               "BufferSize": 15
             }
           },
           {
             "Type": "TextArea",
-            "Name": "avgPaceValue",
-            "X": 60,
-            "Y": 163,
-            "Width": 120,
+            "Name": "avgHrValue",
+            "X": 122,
+            "Y": 82,
+            "Width": 100,
             "Height": 44,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_40",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -470,12 +470,11 @@
           {
             "Type": "TextArea",
             "Name": "timeValue",
-            "X": 123,
-            "Y": 82,
+            "X": 70,
+            "Y": 158,
             "Width": 100,
             "Height": 44,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35",
+            "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -491,11 +490,10 @@
           {
             "Type": "TextArea",
             "Name": "timeText",
-            "X": 146,
-            "Y": 58,
+            "X": 98,
+            "Y": 137,
             "Width": 44,
             "Height": 23,
-            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -534,7 +532,7 @@
             "Width": 100,
             "Height": 44,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_30",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,

@@ -419,11 +419,10 @@
           {
             "Type": "TextArea",
             "Name": "avgSpeedText",
-            "X": 77,
+            "X": 71,
             "Y": 137,
             "Width": 99,
             "Height": 23,
-            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -442,10 +441,9 @@
             "Type": "TextArea",
             "Name": "avgSpeedValue",
             "X": 60,
-            "Y": 163,
+            "Y": 158,
             "Width": 120,
             "Height": 44,
-            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
@@ -482,7 +480,6 @@
             "Y": 82,
             "Width": 100,
             "Height": 44,
-            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
@@ -503,7 +500,6 @@
             "Y": 58,
             "Width": 44,
             "Height": 23,
-            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -541,7 +537,6 @@
             "Y": 82,
             "Width": 100,
             "Height": 44,
-            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_30",
             "TextRotation": "0",
             "Color": {

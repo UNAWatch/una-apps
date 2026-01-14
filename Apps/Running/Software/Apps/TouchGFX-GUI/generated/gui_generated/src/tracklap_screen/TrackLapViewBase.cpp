@@ -19,22 +19,22 @@ TrackLapViewBase::TrackLapViewBase()
     cross.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CROSSYELLOW_ID));
     add(cross);
 
-    avgPaceText.setXY(77, 137);
-    avgPaceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgPaceText.setLinespacing(0);
-    Unicode::snprintf(avgPaceTextBuffer, AVGPACETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_AVG_DOT_PACE).getText());
-    avgPaceText.setWildcard(avgPaceTextBuffer);
-    avgPaceText.resizeToCurrentText();
-    avgPaceText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(avgPaceText);
+    avgHrText.setXY(136, 58);
+    avgHrText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    avgHrText.setLinespacing(0);
+    Unicode::snprintf(avgHrTextBuffer, AVGHRTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_AVG_LC_DOT_HR).getText());
+    avgHrText.setWildcard(avgHrTextBuffer);
+    avgHrText.resizeToCurrentText();
+    avgHrText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(avgHrText);
 
-    avgPaceValue.setPosition(60, 163, 120, 44);
-    avgPaceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgPaceValue.setLinespacing(0);
-    Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
-    avgPaceValue.setWildcard(avgPaceValueBuffer);
-    avgPaceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40));
-    add(avgPaceValue);
+    avgHrValue.setPosition(122, 82, 100, 44);
+    avgHrValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    avgHrValue.setLinespacing(0);
+    Unicode::snprintf(avgHrValueBuffer, AVGHRVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
+    avgHrValue.setWildcard(avgHrValueBuffer);
+    avgHrValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    add(avgHrValue);
 
     line2.setPosition(35, 127, 170, 3);
     line2Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
@@ -45,15 +45,15 @@ TrackLapViewBase::TrackLapViewBase()
     line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line2);
 
-    timeValue.setPosition(123, 82, 100, 44);
+    timeValue.setPosition(70, 158, 100, 44);
     timeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timeValue.setLinespacing(0);
     Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_0CJZ).getText());
     timeValue.setWildcard(timeValueBuffer);
-    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40));
     add(timeValue);
 
-    timeText.setXY(146, 58);
+    timeText.setXY(98, 137);
     timeText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timeText.setLinespacing(0);
     Unicode::snprintf(timeTextBuffer, TIMETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_TIME).getText());
@@ -76,7 +76,7 @@ TrackLapViewBase::TrackLapViewBase()
     distanceValue.setLinespacing(0);
     Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_Z0WD).getText());
     distanceValue.setWildcard(distanceValueBuffer);
-    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
+    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(distanceValue);
 
     distanceText.setXY(50, 58);

@@ -115,6 +115,9 @@
       <Text Id="TEXT_DISTANCE" Alignment="Left" TypographyId="Poppins_Medium_18">
         <Translation Language="GB">Distance</Translation>
       </Text>
+      <Text Id="TEXT_DIST_DOT" Alignment="Left" TypographyId="Poppins_Medium_18">
+        <Translation Language="GB">Dist.</Translation>
+      </Text>
       <Text Id="TEXT_DISTANCE_UC" Alignment="Left" TypographyId="Poppins_Medium_18">
         <Translation Language="GB">DISTANCE</Translation>
       </Text>

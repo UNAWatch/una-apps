@@ -33,8 +33,8 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Image cross;
-    touchgfx::TextAreaWithOneWildcard avgPaceText;
-    touchgfx::TextAreaWithOneWildcard avgPaceValue;
+    touchgfx::TextAreaWithOneWildcard avgHrText;
+    touchgfx::TextAreaWithOneWildcard avgHrValue;
     touchgfx::Line line2;
     touchgfx::PainterABGR2222 line2Painter;
     touchgfx::TextAreaWithOneWildcard timeValue;
@@ -49,10 +49,10 @@ protected:
     /*
      * Wildcard Buffers
      */
-    static const uint16_t AVGPACETEXT_SIZE = 15;
-    touchgfx::Unicode::UnicodeChar avgPaceTextBuffer[AVGPACETEXT_SIZE];
-    static const uint16_t AVGPACEVALUE_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar avgPaceValueBuffer[AVGPACEVALUE_SIZE];
+    static const uint16_t AVGHRTEXT_SIZE = 15;
+    touchgfx::Unicode::UnicodeChar avgHrTextBuffer[AVGHRTEXT_SIZE];
+    static const uint16_t AVGHRVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar avgHrValueBuffer[AVGHRVALUE_SIZE];
     static const uint16_t TIMEVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar timeValueBuffer[TIMEVALUE_SIZE];
     static const uint16_t TIMETEXT_SIZE = 15;
