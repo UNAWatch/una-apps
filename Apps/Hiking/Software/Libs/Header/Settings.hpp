@@ -13,6 +13,7 @@
 #define __SETTINGS_HPP
 
 #include <cstdint>
+#include <array>
 
  /**
   * @struct Settings
@@ -26,5 +27,9 @@ struct Settings {
     uint32_t alertTime = 0;     ///< Activity time threshold. 0 if not use.
 };
 
+/**
+ * @brief   Heart rate thresholds array in beats per minute (BPM).
+ */
+inline constexpr std::array<uint8_t, 4> kHrThresholdsDefault = { 120, 140, 160, 170 };
 
 #endif /* __SETTINGS_HPP */
