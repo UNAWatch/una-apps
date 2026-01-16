@@ -6,11 +6,11 @@ set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/toolchain-arm-none-eabi.cm
 
 project(Running LANGUAGES C CXX ASM)
 
+# Set standards
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
 # Paths
-# /home/sd/dt-prj/una/una-apps/Apps/Running/Software/Apps/Running-CMake
 set(SDK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../SDK")
 set(LIBS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../Libs")
 set(TOUCHGFX_GUI_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../TouchGFX-GUI")
@@ -54,8 +54,6 @@ endif()
 
 message("BUILD_VERSION: ${BUILD_VERSION}")
 
-
-
 # Common compile options (match CubeIDE exactly)
 add_compile_options(
     -mcpu=cortex-m33
@@ -73,58 +71,6 @@ add_compile_options(
     -mthumb
 )
 
-# arm-none-eabi-g++ "/workspace/Apps/Running/Software/Libs/Sources/SettingsSerializer.cpp"
-#-mcpu=cortex-m33
-#-g3 
-#-Os
-#-ffunction-sections
-#-fdata-sections
-#-fno-exceptions
-#-fno-rtti
-#-fno-use-cxa-atexit
-#-Wall
-#-fPIC
-#-fstack-usage
-#-mfpu=fpv5-sp-d16
-#-mfloat-abi=hard
-#-mthumb
-
-#-fcyclomatic-complexity
-
-#-MMD
-#-MP
-#-c
-
-# arm-none-eabi-g++ "/workspace/Apps/Running/Software/Apps/TouchGFX-GUI/generated/fonts/src/VectorFontRendererBuffers.cpp"
-#-mcpu=cortex-m33
-#-std=gnu++17
-#-g3
-#-DLOG_LEVEL=LOG_LEVEL_DEBUG
-#-c
-#-Os
-#-ffunction-sections
-#-fdata-sections
-#-fno-exceptions
-#-fno-rtti
-#-fno-use-cxa-atexit
-#-Wall
-#-fPIC
-#-fstack-usage
-#-fcyclomatic-complexity
-#-MMD
-#-MP
-#-MF"GUI/TouchGFX-GUI/generated/fonts/src/VectorFontRendererBuffers.d"
-#-MT"GUI/TouchGFX-GUI/generated/fonts/src/VectorFontRendererBuffers.o" 
-#-mfpu=fpv5-sp-d16
-#-mfloat-abi=hard
-#-mthumb
-#-o "GUI/TouchGFX-GUI/generated/fonts/src/VectorFontRendererBuffers.o"
-
-# Set standards
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
-#-std=gnu++17
-
 # Common compile definitions
 add_compile_definitions(
     BUILD_VERSION="${BUILD_VERSION}"
@@ -133,15 +79,6 @@ add_compile_definitions(
     APP_ID="${APP_ID}"
     LOG_LEVEL=LOG_LEVEL_DEBUG
 )
-# OK!
-#'-DBUILD_VERSION="0.1.4-rc11-7-6ca6e9c-dirty"'
-#'-DAPP_NAME="Running"'
-#'-DDEV_ID="UNA"'
-#'-DAPP_ID="A12E9F4C8B7D3A65"'
-#-DLOG_LEVEL=LOG_LEVEL_DEBUG
-
-
-
 
 # -----------------------------------------------------------------------------
 # RunningService
@@ -185,14 +122,6 @@ target_include_directories(RunningService.elf PRIVATE
     "${TOUCHGFX_GUI_PATH}/gui/include"
 )
 
-# OK!
-#-I../../../Libs/Header
-#-I"../../../../../../SDK/Libs/Header"
-#-I"../../../../../../SDK/ThirdParty/FitSDKRelease_21.171.00/c"
-#-I"../../../../../../SDK/ThirdParty/coreJSON/source/include"
-#-I../../TouchGFX-GUI/gui/include
-
-
 target_link_libraries(RunningService.elf PRIVATE
     ${SDK_PATH}/libc++/libstdc++.a
 )
@@ -214,32 +143,6 @@ target_link_options(RunningService.elf PRIVATE
     -mthumb
 )
 
-# OK!
-#arm-none-eabi-g++
-#  -mcpu=cortex-m33
-#  -nostartfiles
-#  -nodefaultlibs
-#  -nostdlib
-#  -static
-#  -Wl,--gc-sections
-#  -Wl,--emit-relocs
-#  -Wl,-L../../../../../../SDK/Utilities/Scripts/linker 
-#  -L../../../../../../SDK/libc++
-#  -mfpu=fpv5-sp-d16
-#  -mfloat-abi=hard
-#  -mthumb
-
-#  -l:libstdc++.a
-
-#  -o "RunningService-CubeIDE.elf" @"objects.list" 
-#  -T"/workspace/Apps/Running/Software/Apps/RunningService-CubeIDE/Linker.ld"
-#  -Wl,-Map="RunningService-CubeIDE.map"
-
-# target_link_libraries(RunningService.elf
-#     PRIVATE
-#     -l:libstdc++.a
-#     )
-
 add_custom_command(TARGET RunningService.elf POST_BUILD
     COMMAND python3 ${SCRIPTS_PATH}/app_packer/app_packer.py -e $<TARGET_FILE:RunningService.elf> -o ${CMAKE_CURRENT_BINARY_DIR}/Tmp -ext srv
     COMMENT "Packing RunningService"
@@ -256,8 +159,6 @@ file(GLOB_RECURSE GUI_SRC_SOURCES
     "${TOUCHGFX_GUI_PATH}/generated/images/src/*.cpp"
     "${TOUCHGFX_GUI_PATH}/generated/texts/src/*.cpp"
 )
-string(REPLACE ";" "\n" GUI_SRC_SOURCES_STR "${GUI_SRC_SOURCES}")
-message("GUI SRC:\n${GUI_SRC_SOURCES_STR}")
 
 set(GUI_SOURCES
     ${GUI_SRC_SOURCES}
@@ -298,18 +199,6 @@ target_include_directories(RunningGUI.elf PRIVATE
     "${TOUCHGFX_GUI_PATH}/generated/videos/include"
     "${TOUCHGFX_GUI_PATH}/gui/include"
 )
-# OK!
-#-I../../../Libs/Header
-#-I"../../../../../../SDK/Libs/Header"
-#-I"../../../../../../SDK/Port/TouchGFX"
-#-I"../../../../../../SDK/Port/TouchGFX/generated"
-#-I../../TouchGFX-GUI/touchgfx/framework/include
-#-I../../TouchGFX-GUI/generated/fonts/include
-#-I../../TouchGFX-GUI/generated/gui_generated/include
-#-I../../TouchGFX-GUI/generated/images/include
-#-I../../TouchGFX-GUI/generated/texts/include
-#-I../../TouchGFX-GUI/generated/videos/include
-#-I../../TouchGFX-GUI/gui/include
 
 target_link_libraries(RunningGUI.elf PRIVATE
     ${SDK_PATH}/libc++/libstdc++.a
@@ -333,31 +222,6 @@ target_link_options(RunningGUI.elf PRIVATE
     -mfloat-abi=hard
     -mthumb
 )
-# OK!
-# arm-none-eabi-g++
-#-mcpu=cortex-m33
-#-nostartfiles
-#-Wl,--gc-sections
-#-Wl,--emit-relocs
-#-Wl,-L../../../../../../SDK/Utilities/Scripts/linker 
-#-mfpu=fpv5-sp-d16
-#-mfloat-abi=hard
-#-mthumb
-#-Wl,-Map="RunningGUI-CubeIDE.map"
-#-L../../TouchGFX-GUI/touchgfx/lib/core/cortex_m33/gcc
-#-l:libstdc++.a
-#-l:libtouchgfx-float-abi-hard.a
-#-T"/workspace/Apps/Running/Software/Apps/RunningGUI-CubeIDE/Linker.ld"
-#-nodefaultlibs
-#-nostdlib
-#-static
-#-L../../../../../../SDK/libc++
-
-#-o "RunningGUI-CubeIDE.elf" @"objects.list" 
-
-# target_link_libraries(RunningGUI.elf
-#     PRIVATE
-# )
 
 add_custom_command(TARGET RunningGUI.elf POST_BUILD
     COMMAND python3 ${SCRIPTS_PATH}/app_packer/app_packer.py -e $<TARGET_FILE:RunningGUI.elf> -o ${CMAKE_CURRENT_BINARY_DIR}/Tmp -ext gui
