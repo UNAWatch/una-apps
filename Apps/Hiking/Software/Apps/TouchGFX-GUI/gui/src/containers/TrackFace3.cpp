@@ -29,7 +29,7 @@ void TrackFace3::setLapPace(float spm, bool isImperial, bool gpsFix)
 
 void TrackFace3::setLapDistance(float m, bool isImperial, bool gpsFix)
 {
-    if (gpsFix || m > 0.001) {
+    if (gpsFix || m > 0.001f) {
         if (isImperial) {
             Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", App::Utils::km2mi(m / 1000.0f));
         } else {

@@ -18,9 +18,12 @@ public:
     void setDistance(float m);
     void setTimer(std::time_t sec);
 
+    void setGpsFix(bool state);
+
 protected:
-    bool mUnitsImperial = false;
-    uint16_t mCounter = Gui::Config::kTrackLapScreenTimeout;
+    bool     mUnitsImperial = false;
+    uint16_t mCounter       = Gui::Config::kTrackLapScreenTimeout;
+    bool     mGpsFix        = false;
 
     virtual void handleTickEvent() override;
     virtual void handleKeyEvent(uint8_t key) override;

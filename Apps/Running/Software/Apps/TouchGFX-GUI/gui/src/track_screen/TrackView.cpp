@@ -59,13 +59,13 @@ uint16_t TrackView::getPositionId()
 
 void TrackView::setTrackData(const Track::Data &data, bool isImperial, const std::array<uint8_t, 4>& hrth)
 {
-    trackFace1.setPace(data.pace, isImperial);
-    trackFace1.setDistance(data.distance, isImperial);
+    trackFace1.setPace(data.pace, isImperial, mGpsFix);
+    trackFace1.setDistance(data.distance, isImperial, mGpsFix);
     trackFace1.setTimer(data.totalTime);
 
     trackFace2.setHR(data.HR, data.hrTrustLevel, hrth);
-    trackFace2.setLapPace(data.lapPace, isImperial);
-    trackFace2.setLapDistance(data.lapDistance, isImperial);
+    trackFace2.setLapPace(data.lapPace, isImperial, mGpsFix);
+    trackFace2.setLapDistance(data.lapDistance, isImperial, mGpsFix);
     trackFace2.setLapTimer(data.lapTime);
 }
 

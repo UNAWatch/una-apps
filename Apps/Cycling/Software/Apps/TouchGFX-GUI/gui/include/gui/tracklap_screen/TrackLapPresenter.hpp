@@ -27,7 +27,8 @@ public:
 
     virtual ~TrackLapPresenter() {}
 
-    virtual void onIdleTimeout() override { }
+    virtual void onIdleTimeout()         override {}
+    virtual void onGpsFix(bool acquired) override;
 
 private:
     TrackLapPresenter();
