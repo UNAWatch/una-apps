@@ -30,8 +30,7 @@ void TrackLapView::setLapNum(uint32_t n)
     const uint16_t kBuffSize = 16;
     touchgfx::Unicode::UnicodeChar buffer[kBuffSize] { };
 
-    Unicode::snprintf(buffer, kBuffSize, "%s %u",
-        touchgfx::TypedText(T_TEXT_LAP).getText(), n + 1);
+    Unicode::snprintf(buffer, kBuffSize, "%s %u", touchgfx::TypedText(T_TEXT_LAP).getText(), n + 1);
 
     title.set(buffer);
 }
@@ -44,10 +43,14 @@ void TrackLapView::setSteps(uint32_t steps)
 
 void TrackLapView::setDistance(float m)
 {
-    if (mUnitsImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+    if (mGpsFix || m > 0.001) {
+        if (mUnitsImperial) {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+        } else {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        }
     } else {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");  // km
     }
 
     distanceValue.invalidate();
@@ -60,6 +63,7 @@ void TrackLapView::setTimer(std::time_t sec)
     uint8_t ss = 0;
 
     App::Utils::sec2hms(sec, hh, mm, ss);
+
     if (hh == 0) {
         Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", mm, ss);
     } else {
@@ -67,6 +71,11 @@ void TrackLapView::setTimer(std::time_t sec)
     }
 
     timeValue.invalidate();
+}
+
+void TrackLapView::setGpsFix(bool state)
+{
+    mGpsFix = state;
 }
 
 void TrackLapView::handleTickEvent()

@@ -27,6 +27,7 @@ public:
 
     virtual ~TrackActionPresenter() {}
 
+    virtual void onGpsFix(bool acquired)              override;
     virtual void onTrackData(const Track::Data& data) override;
 
 private:

@@ -25,6 +25,6 @@ void TrackFace4::setBatteryLevel(uint8_t level)
     battery.setBatteryLevel(level);
 
     Unicode::snprintf(valuePercentBuffer, VALUEPERCENT_SIZE, "%d%s", level, touchgfx::TypedText(T_TEXT_PERCENT).getText());
-    valuePercent.invalidate();
 
+    valuePercent.invalidate();
 }

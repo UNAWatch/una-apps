@@ -31,3 +31,8 @@ void TrackActionPresenter::onTrackData(const Track::Data& data)
     view.setAvgHR(data.avgHR);
     view.setElevation(data.elevation);
 }
+
+void TrackActionPresenter::onGpsFix(bool acquired)
+{
+    view.setGpsFix(acquired);
+}

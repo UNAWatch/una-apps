@@ -12,7 +12,7 @@ public:
     virtual void initialize();
 
     void setHR(float hr, float tl, const std::array<uint8_t, 4>& th);
-    void setAvgPace(float spm, bool isImperial);
+    void setAvgPace(float spm, bool isImperial, bool gpsFix);
     void setElevation(float elevation, bool isImperial);
 
 protected:

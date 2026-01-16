@@ -22,6 +22,8 @@ public:
     void setAvgHR(float v);
     void setFloors(uint32_t floors);
 
+    void setGpsFix(bool state);
+
 protected:
     bool mUnitsImperial = false;
     uint16_t mCounter = Gui::Config::kTrackTitleInfoSwitchPeriod;
@@ -29,11 +31,12 @@ protected:
     uint16_t mTitleInfoMsgId = 0;
 
     std::time_t mTimerSec = 0;
-    float mAvgPace = 0.0f;  // s/m
-    float mDistance = 0.0f; // m
-    uint32_t mSteps = 0;
-    float mAvgHr = 0.0f;
-    uint32_t mFloors = 0;
+    float       mAvgPace  = 0.0f;   // s/m
+    float       mDistance = 0.0f;   // m
+    uint32_t    mSteps    = 0;
+    float       mAvgHr    = 0.0f;
+    uint32_t    mFloors   = 0;
+    bool        mGpsFix   = false;
 
     virtual void handleKeyEvent(uint8_t key) override;
     virtual void handleTickEvent() override;

@@ -44,10 +44,14 @@ void TrackLapView::setAvgHR(float hr)
 
 void TrackLapView::setDistance(float m)
 {
-    if (mUnitsImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+    if (mGpsFix || m > 0.001f) {
+        if (mUnitsImperial) {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+        } else {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        }
     } else {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");
     }
 
     distanceValue.invalidate();
@@ -66,6 +70,11 @@ void TrackLapView::setTimer(std::time_t sec)
         Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", hh, mm);
     }
     timeValue.invalidate();
+}
+
+void TrackLapView::setGpsFix(bool state)
+{
+    mGpsFix = state;
 }
 
 void TrackLapView::handleTickEvent()

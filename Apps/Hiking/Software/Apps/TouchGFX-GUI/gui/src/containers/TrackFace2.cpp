@@ -30,13 +30,20 @@ void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
     hrBar.setHR(hr, th);
 }
 
-void TrackFace2::setAvgPace(float spm, bool isImperial)
+void TrackFace2::setAvgPace(float spm, bool isImperial, bool gpsFix)
 {
-    std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
-    if (isImperial) {
-        secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+    if (gpsFix || spm > 0.001) {
+        std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+
+        if (isImperial) {
+            secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+        }
+
+        Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+    } else {
+        Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "---");
     }
-    Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+
     avgPaceValue.invalidate();
 }
 

@@ -21,6 +21,8 @@ public:
     void setAvgHR(float v);
     void setElevation(float m);
 
+    void setGpsFix(bool state);
+
 protected:
     bool mUnitsImperial = false;
     uint16_t mCounter = Gui::Config::kTrackTitleInfoSwitchPeriod;
@@ -32,6 +34,8 @@ protected:
     float mDistance = 0.0f; // m
     float mAvgHr = 0.0f;
     float mElevation = 0.0f; // m
+
+    bool mGpsFix = false;
 
     virtual void handleKeyEvent(uint8_t key) override;
     virtual void handleTickEvent() override;

@@ -17,15 +17,20 @@ void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
     hrBar.setHR(hr, th);
 }
 
-void TrackFace2::setSpeed(float mps, bool isImperial)
+void TrackFace2::setSpeed(float mps, bool isImperial, bool gpsFix)
 {
     float kmPerH = (3.6f * mps);
-    if (isImperial) {
-        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", App::Utils::km2mi(kmPerH)); // mi
-        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_PER_H).getText());
+
+    if (gpsFix || kmPerH > 0.001f) {
+        if (isImperial) {
+            Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", App::Utils::km2mi(kmPerH)); // mi
+            Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_PER_H).getText());
+        } else {
+            Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", kmPerH);
+            Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
+        }
     } else {
-        Unicode::snprintfFloat(speedValueBuffer, SPEEDVALUE_SIZE, "%.1f", kmPerH);
-        Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
+        Unicode::snprintf(speedValueBuffer, SPEEDVALUE_SIZE, "---");
     }
 
     speedValue.invalidate();

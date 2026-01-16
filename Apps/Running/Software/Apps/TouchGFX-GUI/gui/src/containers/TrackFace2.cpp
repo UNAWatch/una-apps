@@ -17,23 +17,35 @@ void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
     hrBar.setHR(hr, th);
 }
 
-void TrackFace2::setLapPace(float spm, bool isImperial)
+void TrackFace2::setLapPace(float spm, bool isImperial, bool gpsFix)
 {
     std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
-    if (isImperial) {
-        secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+
+    if (gpsFix || secPerKm > 0) {
+        if (isImperial) {
+            secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+        }
+
+        Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+    } else {
+        Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "---");
     }
-    Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+
     lapPaceValue.invalidate();
 }
 
-void TrackFace2::setLapDistance(float m, bool isImperial)
+void TrackFace2::setLapDistance(float m, bool isImperial, bool gpsFix)
 {
-    if (isImperial) {
-        Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+    if (gpsFix || m > 0.001f) {
+        if (isImperial) {
+            Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+        } else {
+            Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        }
     } else {
-        Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+        Unicode::snprintf(lapDistValueBuffer, LAPDISTVALUE_SIZE, "---");
     }
+
     lapDistValue.invalidate();
 }
 
