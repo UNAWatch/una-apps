@@ -68,7 +68,6 @@ add_compile_options(
     -fno-use-cxa-atexit
     -Wall
     -fPIC
-    -fstack-usage
     -mfpu=fpv5-sp-d16
     -mfloat-abi=hard
     -mthumb
@@ -201,11 +200,8 @@ target_link_libraries(RunningService.elf PRIVATE
 target_link_options(RunningService.elf PRIVATE
     -mcpu=cortex-m33
     -T "${CMAKE_CURRENT_SOURCE_DIR}/RunningService.ld"
-    -T "${SDK_PATH}/Utilities/Scripts/linker/Main/Sections.ld"
-    -T "${SDK_PATH}/Utilities/Scripts/linker/LibC/libc_exports_0.0.3.ld"
     -Wl,-Map=${CMAKE_BINARY_DIR}/RunningService.elf.map
     -Wl,--gc-sections
-    -Wl,--strip-debug
     -nostartfiles
     -nodefaultlibs
     -nostdlib
@@ -324,11 +320,8 @@ target_link_options(RunningGUI.elf PRIVATE
     -L${TOUCHGFX_GUI_PATH}/touchgfx/lib/core/cortex_m33/gcc
     -mcpu=cortex-m33
     -T "${CMAKE_CURRENT_SOURCE_DIR}/RunningGUI.ld"
-    -T "${SDK_PATH}/Utilities/Scripts/linker/Main/Sections.ld"
-    -T "${SDK_PATH}/Utilities/Scripts/linker/LibC/libc_exports_0.0.3.ld"
     -Wl,-Map=${CMAKE_BINARY_DIR}/RunningGUI.elf.map
     -Wl,--gc-sections
-    -Wl,--strip-debug
     -nostartfiles
     -nodefaultlibs
     -nostdlib
