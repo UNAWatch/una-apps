@@ -34,3 +34,8 @@ void TrackLapPresenter::deactivate()
 //    view.setTimer(data.totalTime);
 //    view.setSteps(data.steps);
 //}
+
+void TrackLapPresenter::onGpsFix(bool acquired)
+{
+    view.setGpsFix(acquired);
+}

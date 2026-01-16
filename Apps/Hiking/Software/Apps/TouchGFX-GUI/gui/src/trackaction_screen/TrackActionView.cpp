@@ -105,6 +105,11 @@ void TrackActionView::setFloors(uint32_t floors)
     updTitleInfo();
 }
 
+void TrackActionView::setGpsFix(bool state)
+{
+    mGpsFix = state;
+}
+
 void TrackActionView::handleKeyEvent(uint8_t key)
 {
     if (key == Gui::Config::Button::L1) {
@@ -172,21 +177,28 @@ void TrackActionView::updTitleInfo()
 
     if (mTitleInfoMsgId == 0) {
         titleInfo.setTitle(T_TEXT_TIMER_UC);
-        Unicode::snprintf(buffer, bufferSize, "%d:%02d",
-            App::Utils::sec2hmsH(mTimerSec), App::Utils::sec2hmsM(mTimerSec));
+        Unicode::snprintf(buffer, bufferSize, "%d:%02d", App::Utils::sec2hmsH(mTimerSec), App::Utils::sec2hmsM(mTimerSec));
     } else if (mTitleInfoMsgId == 1) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_PACE_UC);
-        std::time_t secPerKm = static_cast<std::time_t>(mAvgPace * 1000.0f);
-        if (mUnitsImperial) {
-            secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+        if (mGpsFix || mDistance > 0.001) {
+            std::time_t secPerKm = static_cast<std::time_t>(mAvgPace * 1000.0f);
+            if (mUnitsImperial) {
+                secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+            }
+            Unicode::snprintf(buffer, bufferSize, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+        } else {
+            Unicode::snprintf(buffer, bufferSize, "---");
         }
-        Unicode::snprintf(buffer, bufferSize, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
     } else if (mTitleInfoMsgId == 2) {
         titleInfo.setTitle(T_TEXT_DISTANCE_UC);
-        if (mUnitsImperial) {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", App::Utils::km2mi(mDistance / 1000.0f));    // mi
+        if (mGpsFix || mDistance > 0.001) {
+            if (mUnitsImperial) {
+                Unicode::snprintfFloat(buffer, bufferSize, "%.02f", App::Utils::km2mi(mDistance / 1000.0f));    // mi
+            } else {
+                Unicode::snprintfFloat(buffer, bufferSize, "%.02f", mDistance / 1000.0f); // km
+            }
         } else {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", mDistance / 1000.0f); // km
+            Unicode::snprintf(buffer, bufferSize, "---");
         }
     } else if (mTitleInfoMsgId == 3) {
         titleInfo.setTitle(T_TEXT_STEPS_UC);

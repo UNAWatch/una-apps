@@ -12,7 +12,7 @@ public:
     virtual void initialize();
 
     void setSteps(uint32_t v);
-    void setDistance(float m, bool isImperial);
+    void setDistance(float m, bool isImperial, bool gpsFix);
     void setTimer(std::time_t sec);
 
 protected:
