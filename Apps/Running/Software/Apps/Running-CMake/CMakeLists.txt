@@ -21,8 +21,38 @@ set(SCRIPTS_PATH "${SDK_PATH}/Utilities/Scripts")
 # App Info
 set(APP_ID "A12E9F4C8B7D3A65")
 set(APP_NAME "Running")
-set(BUILD_VERSION "0.1.5")
 set(DEV_ID "UNA")
+
+# Set build version using git describe
+set(BUILD_VERSION "0.0.0-dev")  # Default when version not recognized
+execute_process(COMMAND git rev-parse --git-dir OUTPUT_VARIABLE GIT_DIR ERROR_QUIET)
+if(GIT_DIR)
+    execute_process(COMMAND git rev-parse --short=7 HEAD OUTPUT_VARIABLE COMMIT_HASH OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND git describe --exact-match --tags HEAD RESULT_VARIABLE TAG_RESULT OUTPUT_VARIABLE TAG OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
+    if(TAG_RESULT EQUAL 0)
+        string(REGEX REPLACE "^v" "" TAG "${TAG}")
+        set(BUILD_VERSION "${TAG}")
+    else()
+        execute_process(COMMAND git describe --always --tags --abbrev=7 OUTPUT_VARIABLE DESC OUTPUT_STRIP_TRAILING_WHITESPACE)
+        if(DESC MATCHES "^g")
+            string(REGEX REPLACE "^g" "" HASH "${DESC}")
+            set(BUILD_VERSION "${HASH}")
+        else()
+            string(REGEX MATCH "(.+)-g" _ "${DESC}")
+            set(TAG "${CMAKE_MATCH_1}")
+            string(REGEX MATCH "g(.+)" _ "${DESC}")
+            set(HASH "${CMAKE_MATCH_1}")
+            string(REGEX REPLACE "^v" "" TAG "${TAG}")
+            set(BUILD_VERSION "${TAG}-${HASH}")
+        endif()
+    endif()
+    execute_process(COMMAND git status --porcelain OUTPUT_VARIABLE GIT_STATUS)
+    if(GIT_STATUS)
+        set(BUILD_VERSION "${BUILD_VERSION}-dirty")
+    endif()
+endif()
+
+message("BUILD_VERSION: ${BUILD_VERSION}")
 
 
 
@@ -165,7 +195,6 @@ target_include_directories(RunningService.elf PRIVATE
 
 
 target_link_libraries(RunningService.elf PRIVATE
-    ${SDK_PATH}/libc++/libsupc++.a
     ${SDK_PATH}/libc++/libstdc++.a
 )
 
@@ -287,7 +316,6 @@ target_include_directories(RunningGUI.elf PRIVATE
 #-I../../TouchGFX-GUI/gui/include
 
 target_link_libraries(RunningGUI.elf PRIVATE
-    ${SDK_PATH}/libc++/libsupc++.a
     ${SDK_PATH}/libc++/libstdc++.a
     ${TOUCHGFX_GUI_PATH}/touchgfx/lib/core/cortex_m33/gcc/libtouchgfx-float-abi-hard.a
 )
