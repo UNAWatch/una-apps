@@ -28,13 +28,7 @@ void TrackFace1::setDistance(float m, bool isImperial, bool gpsFix)
             Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
         }
     } else {
-        if (isImperial) {
-            Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---"); // mi
-            Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
-        } else {
-            Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");  // km
-            Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
-        }
+        Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---  ");
     }
 
     distanceValue.invalidate();

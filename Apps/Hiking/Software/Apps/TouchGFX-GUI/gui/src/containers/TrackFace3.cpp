@@ -36,7 +36,7 @@ void TrackFace3::setLapDistance(float m, bool isImperial, bool gpsFix)
             Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", m / 1000.0f);
         }
     } else {
-        Unicode::snprintf(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "---");
+        Unicode::snprintf(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "---  ");
     }
 
     lapDistanceValue.invalidate();
