@@ -99,6 +99,11 @@ void TrackActionView::setElevation(float m)
     updTitleInfo();
 }
 
+void TrackActionView::setGpsFix(bool state)
+{
+    mGpsFix = state;
+}
+
 void TrackActionView::handleKeyEvent(uint8_t key)
 {
     if (key == Gui::Config::Button::L1) {
@@ -170,17 +175,25 @@ void TrackActionView::updTitleInfo()
             App::Utils::sec2hmsH(mTimerSec), App::Utils::sec2hmsM(mTimerSec));
     } else if (mTitleInfoMsgId == 1) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_SPEED);
-        if (mUnitsImperial) {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.1f", App::Utils::km2mi(3.6f * mAvgSpeed));
+        if (mGpsFix || mAvgSpeed > 0.001f) {
+            if (mUnitsImperial) {
+                Unicode::snprintfFloat(buffer, bufferSize, "%.1f", App::Utils::km2mi(3.6f * mAvgSpeed));
+            } else {
+                Unicode::snprintfFloat(buffer, bufferSize, "%.1f", (3.6f * mAvgSpeed));
+            }
         } else {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.1f", (3.6f * mAvgSpeed));
+            Unicode::snprintf(buffer, bufferSize, "---");
         }
     } else if (mTitleInfoMsgId == 2) {
         titleInfo.setTitle(T_TEXT_DISTANCE_UC);
-        if (mUnitsImperial) {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", App::Utils::km2mi(mDistance / 1000.0f));    // mi
+        if (mGpsFix || mDistance > 0.001f) {
+            if (mUnitsImperial) {
+                Unicode::snprintfFloat(buffer, bufferSize, "%.02f", App::Utils::km2mi(mDistance / 1000.0f));    // mi
+            } else {
+                Unicode::snprintfFloat(buffer, bufferSize, "%.02f", mDistance / 1000.0f); // km
+            }
         } else {
-            Unicode::snprintfFloat(buffer, bufferSize, "%.02f", mDistance / 1000.0f); // km
+            Unicode::snprintf(buffer, bufferSize, "---");
         }
     } else if (mTitleInfoMsgId == 3) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_HR);

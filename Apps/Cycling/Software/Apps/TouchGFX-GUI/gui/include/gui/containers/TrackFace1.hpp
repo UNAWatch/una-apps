@@ -11,8 +11,8 @@ public:
 
     virtual void initialize();
 
-    void setSpeed(float mps, bool isImperial);
-    void setDistance(float m, bool isImperial);
+    void setSpeed(float mps, bool isImperial, bool gpsFix);
+    void setDistance(float m, bool isImperial, bool gpsFix);
     void setTimer(std::time_t sec);
 
 protected:
