@@ -507,6 +507,36 @@
             "problemMatcher": "$gcc"
         },
         {
+            "label": "Build Running CMake",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/workspace",
+                "-e",
+                "GITHUB_WORKSPACE=/workspace",
+                "-e",
+                "PATH_SDK=/workspace/SDK",
+                "xanderhendriks/stm32cubeide:16.0",
+                "bash",
+                "-c",
+                ". /workspace/SDK/Utilities/Scripts/build-cube/setup-environment.sh && apt-get install -y cmake && cd /workspace/Apps/Running/Software/Apps/Running-CMake && mkdir -p build && cd build && cmake .. && make"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
             "label": "Build Utility1 GUI",
             "type": "shell",
             "command": "docker",
