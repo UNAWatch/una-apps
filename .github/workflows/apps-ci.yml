@@ -60,6 +60,7 @@ jobs:
         with:
           repository: UNAWatch/una-sdk
           path: SDK
+          ref: feature/cmake-and-apps-migration
           token: ${{ secrets.CROSS_REPO_PAT }}
 
       - name: Build app ${{ matrix.app }}
