@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.21)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -57,27 +57,21 @@ message("BUILD_VERSION: ${BUILD_VERSION}")
 # Common compile options (match CubeIDE exactly)
 add_compile_options(
     -mcpu=cortex-m33
-    # -g3  # Remove debug info to match CubeIDE size
+    -mfpu=fpv5-sp-d16
+    -mfloat-abi=hard
     -Os
+    -fPIC
+    -Wall
     -ffunction-sections
     -fdata-sections
     -fno-exceptions
     -fno-rtti
     -fno-use-cxa-atexit
-    -Wall
-    -fPIC
-    -mfpu=fpv5-sp-d16
-    -mfloat-abi=hard
+    -fstack-usage
+    -nodefaultlibs
+    -nostdlib
     -mthumb
-)
-
-# Common compile definitions
-add_compile_definitions(
-    BUILD_VERSION="${BUILD_VERSION}"
-    APP_NAME="${APP_NAME}"
-    DEV_ID="${DEV_ID}"
-    APP_ID="${APP_ID}"
-    LOG_LEVEL=LOG_LEVEL_DEBUG
+    # -fcyclomatic-complexity
 )
 
 # -----------------------------------------------------------------------------
@@ -122,12 +116,20 @@ target_include_directories(RunningService.elf PRIVATE
     "${TOUCHGFX_GUI_PATH}/gui/include"
 )
 
+target_compile_definitions(RunningService.elf PRIVATE
+    BUILD_VERSION="${BUILD_VERSION}"
+    APP_NAME="${APP_NAME}"
+    DEV_ID="${DEV_ID}"
+    APP_ID="${APP_ID}"
+)
+
 target_link_libraries(RunningService.elf PRIVATE
+    -Wl,--start-group
     ${SDK_PATH}/libc++/libstdc++.a
+    -Wl,--end-group
 )
 
 target_link_options(RunningService.elf PRIVATE
-    -mcpu=cortex-m33
     -T "${CMAKE_CURRENT_SOURCE_DIR}/RunningService.ld"
     -Wl,-Map=${CMAKE_BINARY_DIR}/RunningService.elf.map
     -Wl,--gc-sections
@@ -138,6 +140,7 @@ target_link_options(RunningService.elf PRIVATE
     -L${SDK_PATH}/libc++
     -Wl,--emit-relocs
     -Wl,-L${SDK_PATH}/Utilities/Scripts/linker
+    -mcpu=cortex-m33
     -mfpu=fpv5-sp-d16
     -mfloat-abi=hard
     -mthumb
@@ -201,13 +204,14 @@ target_include_directories(RunningGUI.elf PRIVATE
 )
 
 target_link_libraries(RunningGUI.elf PRIVATE
+    -Wl,--start-group
     ${SDK_PATH}/libc++/libstdc++.a
     ${TOUCHGFX_GUI_PATH}/touchgfx/lib/core/cortex_m33/gcc/libtouchgfx-float-abi-hard.a
+    -Wl,--end-group
 )
 
 target_link_options(RunningGUI.elf PRIVATE
     -L${TOUCHGFX_GUI_PATH}/touchgfx/lib/core/cortex_m33/gcc
-    -mcpu=cortex-m33
     -T "${CMAKE_CURRENT_SOURCE_DIR}/RunningGUI.ld"
     -Wl,-Map=${CMAKE_BINARY_DIR}/RunningGUI.elf.map
     -Wl,--gc-sections
@@ -218,6 +222,7 @@ target_link_options(RunningGUI.elf PRIVATE
     -L${SDK_PATH}/libc++
     -Wl,--emit-relocs
     -Wl,-L${SDK_PATH}/Utilities/Scripts/linker
+    -mcpu=cortex-m33
     -mfpu=fpv5-sp-d16
     -mfloat-abi=hard
     -mthumb

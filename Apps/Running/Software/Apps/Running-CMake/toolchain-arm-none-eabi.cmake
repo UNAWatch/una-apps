@@ -9,6 +9,10 @@ set(CMAKE_SIZE arm-none-eabi-size)
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
+# Use newlib-nano to match CubeIDE minimal libc
+set(CMAKE_C_FLAGS_INIT "-specs=nano.specs")
+set(CMAKE_CXX_FLAGS_INIT "-specs=nano.specs")
+
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
