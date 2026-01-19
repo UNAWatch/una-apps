@@ -1,6 +1,6 @@
 # Watch App CMakeLists.txt - Simplified version using SDK
 cmake_minimum_required(VERSION 3.21)
-include($ENV{WATCH_SDK_PATH}/cmake/watch_project.cmake)
+include($ENV{UNA_SDK}/cmake/watch_project.cmake)
 
 project(Running)
 
