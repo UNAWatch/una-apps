@@ -30,7 +30,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          submodules: recursive
           token: ${{ secrets.CROSS_REPO_PAT }}
 
       - name: Generate app list
@@ -54,7 +53,13 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          submodules: recursive
+          token: ${{ secrets.CROSS_REPO_PAT }}
+
+      - name: Clone UNA SDK
+        uses: actions/checkout@v5
+        with:
+          repository: UNAWatch/una-sdk
+          path: SDK
           token: ${{ secrets.CROSS_REPO_PAT }}
 
       - name: Build app ${{ matrix.app }}
@@ -113,7 +118,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          submodules: recursive
           token: ${{ secrets.CROSS_REPO_PAT }}
 
       - name: Download all artifacts
