@@ -1,3 +1,0 @@
-[submodule "SDK"]
-	path = SDK
-	url = git@github.com:UNAWatch/una-sdk.git
