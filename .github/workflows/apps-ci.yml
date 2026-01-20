@@ -89,6 +89,7 @@ jobs:
           cat "$temp_non" "$temp_svc" | while IFS= read -r p; do
             [ -z "$p" ] && continue
             echo "Building project: $p"
+            export UNA_SDK="SDK/"
             SDK/Utilities/Scripts/build-cube/build-cube.sh "$p"
           done
           rm -f "$temp_non" "$temp_svc"
