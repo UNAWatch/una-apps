@@ -60,6 +60,12 @@ jobs:
           ref: feature/cmake-and-apps-migration
           token: ${{ secrets.CROSS_REPO_PAT }}
 
+      - name: Checkout
+        if: github.ref_type != 'tag'
+        run: |
+          cd SDK/examples
+          git checkout ${{ github.head_ref || github.ref_name }}
+          
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
