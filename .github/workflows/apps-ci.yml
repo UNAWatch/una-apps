@@ -50,7 +50,7 @@ jobs:
       - name: Setup GIT
         run: apt update && apt install -y git
 
-      - name: Checkout
+      - name: Clone
         uses: actions/checkout@v5
         with:
           repository: UNAWatch/una-sdk
@@ -60,6 +60,11 @@ jobs:
           ref: feature/cmake-and-apps-migration
           token: ${{ secrets.CROSS_REPO_PAT }}
 
+      - name: Checkout
+        run: |
+          cd SDK/examples
+          git checkout ${{github.ref}}
+          
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
