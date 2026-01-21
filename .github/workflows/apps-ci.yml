@@ -67,7 +67,7 @@ jobs:
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
-          ls -s SDK ../SDK
+          ln -s SDK ../SDK
           . SDK/Utilities/Scripts/build-cube/find-cube.sh"
           . SDK/Utilities/Scripts/build-cube/una-version.sh"
           echo "Building app: ${{ matrix.app }}"
@@ -92,7 +92,6 @@ jobs:
           cat "$temp_non" "$temp_svc" | while IFS= read -r p; do
             [ -z "$p" ] && continue
             echo "Building project: $p"
-            export UNA_SDK="SDK/"
             SDK/Utilities/Scripts/build-cube/build-cube.sh "$p"
           done
           rm -f "$temp_non" "$temp_svc"
