@@ -102,7 +102,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-${{ matrix.app }}
-          path: Apps/${{ matrix.app }}/Output/*.uapp
+          path: SDK/examples/Apps/${{ matrix.app }}/Output/*.uapp
 
   release:
     runs-on: ubuntu-latest
