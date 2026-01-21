@@ -53,23 +53,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          fetch-depth: 0
-          token: ${{ secrets.CROSS_REPO_PAT }}
-
-      - name: Clone UNA SDK
-        uses: actions/checkout@v5
-        with:
           repository: UNAWatch/una-sdk
           path: SDK
+          fetch-depth: 0
+          submodules: true
           ref: feature/cmake-and-apps-migration
           token: ${{ secrets.CROSS_REPO_PAT }}
 
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
-          ln -s SDK ../SDK
-          . SDK/Utilities/Scripts/build-cube/find-cube.sh
-          . SDK/Utilities/Scripts/build-cube/una-version.sh
+          cd SDK/examples
+          . ../Utilities/Scripts/build-cube/find-cube.sh
+          . ../Utilities/Scripts/build-cube/una-version.sh
           echo "Building app: ${{ matrix.app }}"
           # Discover projects for this app
           CUBEIDE_PROJECTS=`python3 .github/scripts/generate-app-list.py --app ${{ matrix.app }}`
@@ -92,7 +88,7 @@ jobs:
           cat "$temp_non" "$temp_svc" | while IFS= read -r p; do
             [ -z "$p" ] && continue
             echo "Building project: $p"
-            SDK/Utilities/Scripts/build-cube/build-cube.sh "$p"
+            ../Utilities/Scripts/build-cube/build-cube.sh "$p"
           done
           rm -f "$temp_non" "$temp_svc"
           echo "App build complete: ${{ matrix.app }}"
