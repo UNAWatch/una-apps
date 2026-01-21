@@ -68,8 +68,8 @@ jobs:
         run: |
           echo "Setup environment"
           ln -s SDK ../SDK
-          . SDK/Utilities/Scripts/build-cube/find-cube.sh"
-          . SDK/Utilities/Scripts/build-cube/una-version.sh"
+          . SDK/Utilities/Scripts/build-cube/find-cube.sh
+          . SDK/Utilities/Scripts/build-cube/una-version.sh
           echo "Building app: ${{ matrix.app }}"
           # Discover projects for this app
           CUBEIDE_PROJECTS=`python3 .github/scripts/generate-app-list.py --app ${{ matrix.app }}`
