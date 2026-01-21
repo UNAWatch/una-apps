@@ -8,7 +8,6 @@ on:
 
 env:
   UNA_WORKSPACE: ${{ github.env.GITHUB_WORKSPACE }}
-  UNA_SDK: ${{ github.env.GITHUB_WORKSPACE }}/SDK
   DOCKER_DRIVER: overlay2
   APPS_EXCLUDED: |
     Utility1
@@ -68,7 +67,7 @@ jobs:
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
-          ls -s $UNA_SDK /SDK
+          ls -s $UNA_WORKSPACE/SDK /SDK
           . SDK/Utilities/Scripts/build-cube/find-cube.sh"
           . SDK/Utilities/Scripts/build-cube/una-version.sh"
           echo "Building app: ${{ matrix.app }}"
