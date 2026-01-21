@@ -67,7 +67,7 @@ jobs:
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
-          ls -s SDK /SDK
+          ls -s SDK ../SDK
           . SDK/Utilities/Scripts/build-cube/find-cube.sh"
           . SDK/Utilities/Scripts/build-cube/una-version.sh"
           echo "Building app: ${{ matrix.app }}"
