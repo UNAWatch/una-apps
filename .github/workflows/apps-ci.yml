@@ -60,11 +60,6 @@ jobs:
           ref: feature/cmake-and-apps-migration
           token: ${{ secrets.CROSS_REPO_PAT }}
 
-      - name: Checkout
-        run: |
-          cd SDK/examples
-          git checkout ${{github.ref_name}}
-          
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
