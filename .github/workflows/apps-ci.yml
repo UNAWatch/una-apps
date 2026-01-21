@@ -63,7 +63,7 @@ jobs:
       - name: Checkout
         run: |
           cd SDK/examples
-          git checkout ${{github.ref}}
+          git checkout ${{github.ref_name}}
           
       - name: Build app ${{ matrix.app }}
         run: |
