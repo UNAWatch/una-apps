@@ -4,7 +4,6 @@
 #include <ctime>
 
 #include "SDK/Kernel/Kernel.hpp"
-#include "SDK/Interfaces/IGlance.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
 #include "SDK/SensorLayer/SensorConnection.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"

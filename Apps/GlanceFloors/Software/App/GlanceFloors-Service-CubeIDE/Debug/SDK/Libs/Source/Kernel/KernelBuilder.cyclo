@@ -1,3 +1,0 @@
-../../../../../../SDK/Libs/Header/SDK/Kernel/Kernel.hpp:91:13:SDK::Kernel::~Kernel()	1
-../../../../../../SDK/Libs/Header/SDK/Kernel/Kernel.hpp:91:13:virtual SDK::Kernel::~Kernel()	1
-G:/temp/0/Una/una-watch-develop/SDK/Libs/Source/Kernel/KernelBuilder.cpp:24:13:static SDK::Kernel SDK::KernelBuilder::make(const SDK::Interface::IKernel*)	1
