@@ -9,7 +9,7 @@ TrackFace3Base::TrackFace3Base()
 {
     setWidth(240);
     setHeight(240);
-    timerText.setXY(86, 204);
+    timerText.setXY(80, 204);
     timerText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timerText.setLinespacing(0);
     timerText.setWildcard(touchgfx::TypedText(T_TEXT_LAP_TIME).getText());
@@ -42,15 +42,15 @@ TrackFace3Base::TrackFace3Base()
     distanceUnits.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
     add(distanceUnits);
 
-    distanceValue.setPosition(35, 111, 134, 42);
+    distanceValue.setPosition(53, 111, 134, 42);
     distanceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceValue.setLinespacing(0);
     Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "%s", touchgfx::TypedText(T_LAP).getText());
     distanceValue.setWildcard(distanceValueBuffer);
-    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35_R));
+    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(distanceValue);
 
-    distanceText.setXY(68, 88);
+    distanceText.setXY(62, 88);
     distanceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceText.setLinespacing(0);
     Unicode::snprintf(distanceTextBuffer, DISTANCETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_LAP_DISTANCE).getText());
@@ -68,7 +68,7 @@ TrackFace3Base::TrackFace3Base()
     line1.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line1);
 
-    speedUnits.setPosition(160, 51, 52, 19);
+    speedUnits.setPosition(165, 51, 52, 19);
     speedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     speedUnits.setLinespacing(0);
     Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());

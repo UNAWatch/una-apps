@@ -15,30 +15,42 @@ void TrackSummary::initialize()
 
 void TrackSummary::setDistance(float m, bool isImperial)
 {
+    float v = m / 1000.0f;
+
     if (isImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+        v = App::Utils::km2mi(m / 1000.0f); // mi
+    }
+
+    if (v < 100.0f) {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", v);
+    } else {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.01f", v);
+    }
+
+    if (isImperial) {
         Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
     } else {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f); // km
         Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
     }
+
     distanceValue.invalidate();
     distanceUnits.invalidate();
 }
 
 void TrackSummary::setAvgPace(float spm, bool isImperial)
 {
-    std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    std::time_t v = static_cast<std::time_t>(spm * 1000.0f); // sec/km
+
     if (isImperial) {
-        secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+        v = static_cast<std::time_t>(v / App::Utils::km2mi(1.0f)); // sec/mi
     }
-    Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+    Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", App::Utils::sec2hmsM(v), App::Utils::sec2hmsS(v));
     avgPaceValue.invalidate();
 }
 
 void TrackSummary::setTimer(uint32_t sec)
 {
-    Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%d:%02d:%02d",
+    Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%u:%02u:%02u",
         App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
     timerValue.invalidate();
     timerText.invalidate();

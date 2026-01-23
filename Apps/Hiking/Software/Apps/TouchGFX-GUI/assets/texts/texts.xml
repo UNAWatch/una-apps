@@ -364,7 +364,7 @@
     </TextGroup>
     <TextGroup Id="Unsorted">
       <Text Id="__SingleUse_F10I" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">4:46</Translation>
+        <Translation Language="GB">764</Translation>
       </Text>
       <Text Id="__SingleUse_0CJZ" Alignment="Left" TypographyId="Poppins_SemiBold_40">
         <Translation Language="GB">1782</Translation>
@@ -382,7 +382,7 @@
         <Translation Language="GB">7:54</Translation>
       </Text>
       <Text Id="__SingleUse_TMBJ" Alignment="Left" TypographyId="Poppins_SemiBold_40">
-        <Translation Language="GB">14.27</Translation>
+        <Translation Language="GB">44.44</Translation>
       </Text>
       <Text Id="__SingleUse_T3E8" Alignment="Left" TypographyId="Poppins_SemiBold_40">
         <Translation Language="GB">1:35:98</Translation>
@@ -397,10 +397,10 @@
         <Translation Language="GB">735</Translation>
       </Text>
       <Text Id="__SingleUse_8WSQ" Alignment="Left" TypographyId="Poppins_SemiBold_40">
-        <Translation Language="GB">434</Translation>
+        <Translation Language="GB">723456</Translation>
       </Text>
       <Text Id="__SingleUse_4SCV" Alignment="Left" TypographyId="Poppins_SemiBold_40">
-        <Translation Language="GB">14.28</Translation>
+        <Translation Language="GB">44.44</Translation>
       </Text>
       <Text Id="__SingleUse_KERT" Alignment="Left" TypographyId="Poppins_SemiBold_40">
         <Translation Language="GB">0:05:49</Translation>
@@ -421,7 +421,7 @@
         <Translation Language="GB">New Text</Translation>
       </Text>
       <Text Id="__SingleUse_QVDR" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">735</Translation>
+        <Translation Language="GB">35444</Translation>
       </Text>
       <Text Id="__SingleUse_PW8Y" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">165</Translation>
@@ -431,9 +431,6 @@
       </Text>
       <Text Id="__SingleUse_Q886" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">2:03:44</Translation>
-      </Text>
-      <Text Id="__SingleUse_SCJO" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">4:46</Translation>
       </Text>
     </TextGroup>
   </Texts>

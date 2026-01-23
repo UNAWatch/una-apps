@@ -15,24 +15,40 @@ void TrackSummary::initialize()
 
 void TrackSummary::setDistance(float m, bool isImperial)
 {
+    float v = m / 1000.0f;
+
     if (isImperial) {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
+        v = App::Utils::km2mi(m / 1000.0f); // mi
+    }
+
+    if (v < 100.0f) {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", v);
+    } else {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.01f", v);
+    }
+
+    if (isImperial) {
         Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
     } else {
-        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f); // km
         Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
     }
+
     distanceValue.invalidate();
     distanceUnits.invalidate();
 }
 
 void TrackSummary::setAvgSpeed(float mps, bool isImperial)
 {
-    float kmPerH = (3.6f * mps);
+    float v = (3.6f * mps); // km/h
+
     if (isImperial) {
-        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.1f", App::Utils::km2mi(kmPerH)); // mi
+        v = App::Utils::km2mi(v); // mi/h
+    }
+
+    if (v < 100.0f) {
+        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.1f", v);
     } else {
-        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.1f", kmPerH);
+        Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.0f", v);
     }
 
     avgSpeedValue.invalidate();
@@ -41,7 +57,7 @@ void TrackSummary::setAvgSpeed(float mps, bool isImperial)
 void TrackSummary::setElevation(float m, bool isImperial)
 {
     if (isImperial) {
-        m = App::Utils::m2ft(m);
+        m = App::Utils::m2ft(m); // ft
     }
     Unicode::snprintfFloat(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%.0f", m);
     elevationValue.invalidate();
@@ -50,7 +66,7 @@ void TrackSummary::setElevation(float m, bool isImperial)
 
 void TrackSummary::setTimer(uint32_t sec)
 {
-    Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%d:%02d:%02d",
+    Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%u:%02u:%02u",
         App::Utils::sec2hmsH(sec), App::Utils::sec2hmsM(sec), App::Utils::sec2hmsS(sec));
     timerValue.invalidate();
     timerText.invalidate();

@@ -278,12 +278,17 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
     } else if (mSensorGpsDistance.matchesDriver(handle)) {
         SDK::SensorDataParser::GpsDistance parser(data[0]);
         if (parser.isDataValid()) {
-            mDistance.distance = parser.getDistance();
             mDistance.timestamp = parser.getTimestamp();
+            float newValue = parser.getDistance();
 
             if (!mDistance.dataValid) {
-                mDistance.initialDistance = mDistance.distance;
+                mDistance.initialDistance = newValue;
                 mDistance.dataValid = true;
+            }
+
+            // The distance should increase monotonically
+            if (newValue > mDistance.distance) {
+                mDistance.distance = newValue;
             }
             LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
         }
@@ -291,11 +296,16 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
         SDK::SensorDataParser::StepCounter parser(data[0]);
         if (parser.isDataValid()) {
             mStepCounter.timestamp = parser.getTimestamp();
-            mStepCounter.steps = parser.getStepCount();
+            uint32_t newValue = parser.getStepCount();
 
             if (!mStepCounter.dataValid) {
-                mStepCounter.initialSteps = mStepCounter.steps;
+                mStepCounter.initialSteps = newValue;
                 mStepCounter.dataValid = true;
+            }
+
+            // The steps should increase monotonically
+            if (newValue > mStepCounter.steps) {
+                mStepCounter.steps = newValue;
             }
             LOG_DEBUG("Steps %u\n", mStepCounter.steps);
         }
@@ -303,11 +313,16 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
         SDK::SensorDataParser::FloorCounter parser(data[0]);
         if (parser.isDataValid()) {
             mFloorsCounter.timestamp = parser.getTimestamp();
-            mFloorsCounter.floors = parser.getFloorsUp() + parser.getFloorsDown();
+            uint32_t newValue = parser.getFloorsUp() + parser.getFloorsDown();
 
             if (!mFloorsCounter.dataValid) {
-                mFloorsCounter.initialFloors = mFloorsCounter.floors;
+                mFloorsCounter.initialFloors = newValue;
                 mFloorsCounter.dataValid = true;
+            }
+
+            // The floors should increase monotonically
+            if (newValue > mFloorsCounter.floors) {
+                mFloorsCounter.floors = newValue;
             }
             LOG_DEBUG("Floors %u\n", mFloorsCounter.floors);
         }

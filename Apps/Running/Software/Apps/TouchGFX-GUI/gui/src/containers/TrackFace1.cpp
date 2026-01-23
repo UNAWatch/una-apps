@@ -13,14 +13,15 @@ void TrackFace1::initialize()
 
 void TrackFace1::setPace(float spm, bool isImperial, bool gpsFix)
 {
-    std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    if (gpsFix || spm > 0) {
 
-    if (gpsFix || secPerKm > 0) {
+        std::time_t v = static_cast<std::time_t>(spm * 1000.0f); // sec/km
+
         if (isImperial) {
-            secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+            v = static_cast<std::time_t>(v / App::Utils::km2mi(1.0f)); // sec/mi
         }
 
-        Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+        Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%u:%02u", App::Utils::sec2hmsM(v), App::Utils::sec2hmsS(v));
     } else {
         Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "---");
     }
@@ -31,18 +32,30 @@ void TrackFace1::setPace(float spm, bool isImperial, bool gpsFix)
 void TrackFace1::setDistance(float m, bool isImperial, bool gpsFix)
 {
     if (gpsFix || m > 0.001f) {
+
+        float v = m / 1000.0f; // km
+
         if (isImperial) {
-            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
-            Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
+            v = App::Utils::km2mi(m / 1000.0f); // mi
+        }
+
+        if (v < 100.0f) {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", v);
         } else {
-            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
-            Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.01f", v);
         }
     } else {
-        Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---  ");
+        Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");
+    }
+
+    if (isImperial) {
+        Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_MI_DOT).getText());
+    } else {
+        Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
     }
 
     distanceValue.invalidate();
+    distanceUnits.invalidate();
 }
 
 void TrackFace1::setTimer(std::time_t sec)

@@ -12,14 +12,15 @@ void TrackFace3::initialize()
 
 void TrackFace3::setLapPace(float spm, bool isImperial, bool gpsFix)
 {
-    std::time_t sekPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    if (gpsFix || spm > 0.001f) {
 
-    if (gpsFix || sekPerKm > 0) {
+        std::time_t v = static_cast<std::time_t>(spm * 1000.0f); // sec/km
+
         if (isImperial) {
-            sekPerKm = static_cast<std::time_t>(sekPerKm / App::Utils::km2mi(1.0f));
+            v = static_cast<std::time_t>(v / App::Utils::km2mi(1.0f)); // sec/mi
         }
 
-        Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(sekPerKm), App::Utils::sec2hmsS(sekPerKm));
+        Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%u:%02u", App::Utils::sec2hmsM(v), App::Utils::sec2hmsS(v));
     } else {
         Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "---");
     }
@@ -30,13 +31,20 @@ void TrackFace3::setLapPace(float spm, bool isImperial, bool gpsFix)
 void TrackFace3::setLapDistance(float m, bool isImperial, bool gpsFix)
 {
     if (gpsFix || m > 0.001f) {
+
+        float v = m / 1000.0f; // km
+
         if (isImperial) {
-            Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", App::Utils::km2mi(m / 1000.0f));
+            v = App::Utils::km2mi(m / 1000.0f); // mi
+        }
+
+        if (v < 100.0f) {
+            Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.02f", v);
         } else {
-            Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.2f", m / 1000.0f);
+            Unicode::snprintfFloat(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%.01f", v);
         }
     } else {
-        Unicode::snprintf(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "---  ");
+        Unicode::snprintf(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "---");
     }
 
     lapDistanceValue.invalidate();
@@ -50,10 +58,9 @@ void TrackFace3::setLapTimer(std::time_t sec)
 
     App::Utils::sec2hms(sec, hh, mm, ss);
     if (hh == 0) {
-        Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d", mm, ss);
+        Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%u:%02u", mm, ss);
     } else {
-        Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%d:%02d", hh, mm);
+        Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%u:%02u", hh, mm);
     }
-
-    lapTimeValue.invalidate();
+    timerValue.invalidate();
 }

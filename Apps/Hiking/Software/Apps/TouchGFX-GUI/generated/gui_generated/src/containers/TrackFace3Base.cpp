@@ -18,13 +18,13 @@ TrackFace3Base::TrackFace3Base()
     lapTimeText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(lapTimeText);
 
-    lapTimeValue.setPosition(38, 162, 165, 42);
-    lapTimeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    lapTimeValue.setLinespacing(0);
-    Unicode::snprintf(lapTimeValueBuffer, LAPTIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_T3E8).getText());
-    lapTimeValue.setWildcard(lapTimeValueBuffer);
-    lapTimeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
-    add(lapTimeValue);
+    timerValue.setPosition(35, 162, 170, 42);
+    timerValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    timerValue.setLinespacing(0);
+    Unicode::snprintf(timerValueBuffer, TIMERVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_T3E8).getText());
+    timerValue.setWildcard(timerValueBuffer);
+    timerValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    add(timerValue);
 
     line2.setPosition(35, 159, 170, 3);
     line2Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
@@ -35,7 +35,7 @@ TrackFace3Base::TrackFace3Base()
     line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line2);
 
-    lapDistanceUnits.setPosition(177, 128, 45, 19);
+    lapDistanceUnits.setPosition(178, 129, 45, 19);
     lapDistanceUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     lapDistanceUnits.setLinespacing(0);
     Unicode::snprintf(lapDistanceUnitsBuffer, LAPDISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());
@@ -43,12 +43,12 @@ TrackFace3Base::TrackFace3Base()
     lapDistanceUnits.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
     add(lapDistanceUnits);
 
-    lapDistanceValue.setPosition(35, 111, 132, 37);
+    lapDistanceValue.setPosition(53, 111, 134, 42);
     lapDistanceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     lapDistanceValue.setLinespacing(0);
     Unicode::snprintf(lapDistanceValueBuffer, LAPDISTANCEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_TMBJ).getText());
     lapDistanceValue.setWildcard(lapDistanceValueBuffer);
-    lapDistanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35_R));
+    lapDistanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(lapDistanceValue);
 
     lapDistanceText.setXY(62, 88);

@@ -26,7 +26,7 @@ protected:
      * Member Declarations
      */
     touchgfx::TextAreaWithOneWildcard lapTimeText;
-    touchgfx::TextAreaWithOneWildcard lapTimeValue;
+    touchgfx::TextAreaWithOneWildcard timerValue;
     touchgfx::Line line2;
     touchgfx::PainterABGR2222 line2Painter;
     touchgfx::TextAreaWithOneWildcard lapDistanceUnits;
@@ -42,8 +42,8 @@ protected:
      */
     static const uint16_t LAPTIMETEXT_SIZE = 15;
     touchgfx::Unicode::UnicodeChar lapTimeTextBuffer[LAPTIMETEXT_SIZE];
-    static const uint16_t LAPTIMEVALUE_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar lapTimeValueBuffer[LAPTIMEVALUE_SIZE];
+    static const uint16_t TIMERVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar timerValueBuffer[TIMERVALUE_SIZE];
     static const uint16_t LAPDISTANCEUNITS_SIZE = 10;
     touchgfx::Unicode::UnicodeChar lapDistanceUnitsBuffer[LAPDISTANCEUNITS_SIZE];
     static const uint16_t LAPDISTANCEVALUE_SIZE = 10;

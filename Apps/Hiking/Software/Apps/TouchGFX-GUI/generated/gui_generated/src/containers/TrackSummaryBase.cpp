@@ -9,22 +9,6 @@ TrackSummaryBase::TrackSummaryBase()
 {
     setWidth(240);
     setHeight(240);
-    stepsValue.setPosition(127, 118, 100, 32);
-    stepsValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    stepsValue.setLinespacing(0);
-    Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_QVDR).getText());
-    stepsValue.setWildcard(stepsValueBuffer);
-    stepsValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25_L));
-    add(stepsValue);
-
-    stepsText.setPosition(61, 125, 66, 25);
-    stepsText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    stepsText.setLinespacing(0);
-    Unicode::snprintf(stepsTextBuffer, STEPSTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_STEPS_UC).getText());
-    stepsText.setWildcard(stepsTextBuffer);
-    stepsText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
-    add(stepsText);
-
     timerValue.setPosition(91, 180, 126, 33);
     timerValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timerValue.setLinespacing(0);
@@ -41,30 +25,12 @@ TrackSummaryBase::TrackSummaryBase()
     timerText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
     add(timerText);
 
-    avgPaceValue.setPosition(138, 148, 78, 32);
-    avgPaceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgPaceValue.setLinespacing(0);
-    Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_SCJO).getText());
-    avgPaceValue.setWildcard(avgPaceValueBuffer);
-    avgPaceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25_L));
-    avgPaceValue.setVisible(false);
-    add(avgPaceValue);
-
-    avgPaceText.setPosition(36, 155, 100, 21);
-    avgPaceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgPaceText.setLinespacing(0);
-    Unicode::snprintf(avgPaceTextBuffer, AVGPACETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_AVG_PACE_UC).getText());
-    avgPaceText.setWildcard(avgPaceTextBuffer);
-    avgPaceText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18_L));
-    avgPaceText.setVisible(false);
-    add(avgPaceText);
-
-    elevationValue.setPosition(138, 148, 78, 32);
+    elevationValue.setPosition(140, 148, 80, 32);
     elevationValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     elevationValue.setLinespacing(0);
     Unicode::snprintf(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_F10I).getText());
     elevationValue.setWildcard(elevationValueBuffer);
-    elevationValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25_L));
+    elevationValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25));
     add(elevationValue);
 
     elevationText.setPosition(36, 155, 100, 21);
@@ -74,7 +40,23 @@ TrackSummaryBase::TrackSummaryBase()
     elevationText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18_L));
     add(elevationText);
 
-    distanceUnits.setPosition(187, 72, 31, 23);
+    stepsValue.setPosition(127, 118, 100, 32);
+    stepsValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    stepsValue.setLinespacing(0);
+    Unicode::snprintf(stepsValueBuffer, STEPSVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_QVDR).getText());
+    stepsValue.setWildcard(stepsValueBuffer);
+    stepsValue.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_25));
+    add(stepsValue);
+
+    stepsText.setPosition(61, 125, 66, 25);
+    stepsText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    stepsText.setLinespacing(0);
+    Unicode::snprintf(stepsTextBuffer, STEPSTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_STEPS_UC).getText());
+    stepsText.setWildcard(stepsTextBuffer);
+    stepsText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
+    add(stepsText);
+
+    distanceUnits.setPosition(187, 72, 40, 23);
     distanceUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceUnits.setLinespacing(0);
     Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());

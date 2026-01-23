@@ -423,6 +423,7 @@
             "Y": 137,
             "Width": 99,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -444,6 +445,7 @@
             "Y": 158,
             "Width": 120,
             "Height": 44,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
@@ -480,6 +482,7 @@
             "Y": 82,
             "Width": 100,
             "Height": 44,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
@@ -500,6 +503,7 @@
             "Y": 58,
             "Width": 44,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -537,7 +541,8 @@
             "Y": 82,
             "Width": 100,
             "Height": 44,
-            "TextId": "TMP_SEMIBOLD_30",
+            "LockPosition": true,
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -1835,7 +1840,7 @@
             "Name": "distanceUnits",
             "X": 187,
             "Y": 72,
-            "Width": 31,
+            "Width": 40,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_MEDIUM_18_L",
@@ -2063,12 +2068,12 @@
           {
             "Type": "TextArea",
             "Name": "distanceValue",
-            "X": 35,
+            "X": 53,
             "Y": 111,
             "Width": 134,
             "Height": 42,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35_R",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2122,7 +2127,7 @@
           {
             "Type": "TextArea",
             "Name": "speedUnits",
-            "X": 160,
+            "X": 165,
             "Y": 51,
             "Width": 52,
             "Height": 19,
@@ -2164,7 +2169,7 @@
           {
             "Type": "TextArea",
             "Name": "speedText",
-            "X": 98,
+            "X": 92,
             "Y": 10,
             "Width": 56,
             "Height": 23,
@@ -2215,7 +2220,7 @@
           {
             "Type": "TextArea",
             "Name": "elevationUnits",
-            "X": 160,
+            "X": 165,
             "Y": 183,
             "Width": 49,
             "Height": 24,
@@ -2273,12 +2278,12 @@
           {
             "Type": "TextArea",
             "Name": "speedUnits",
-            "X": 160,
+            "X": 165,
             "Y": 129,
             "Width": 50,
             "Height": 24,
             "LockPosition": true,
-            "TextId": "TMP_ITALIC_18",
+            "TextId": "TMP_ITALIC_18_L",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2373,12 +2378,12 @@
           {
             "Type": "TextArea",
             "Name": "hrValue",
-            "X": 64,
+            "X": 75,
             "Y": 29,
             "Width": 90,
             "Height": 44,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_40_R",
+            "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2412,10 +2417,11 @@
           {
             "Type": "TextArea",
             "Name": "timerText",
-            "X": 86,
+            "X": 80,
             "Y": 204,
             "Width": 81,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -2489,12 +2495,12 @@
           {
             "Type": "TextArea",
             "Name": "distanceValue",
-            "X": 35,
+            "X": 53,
             "Y": 111,
             "Width": 134,
             "Height": 42,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35_R",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2510,10 +2516,11 @@
           {
             "Type": "TextArea",
             "Name": "distanceText",
-            "X": 68,
+            "X": 62,
             "Y": 88,
             "Width": 116,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -2547,7 +2554,7 @@
           {
             "Type": "TextArea",
             "Name": "speedUnits",
-            "X": 160,
+            "X": 165,
             "Y": 51,
             "Width": 52,
             "Height": 19,
@@ -2593,6 +2600,7 @@
             "Y": 13,
             "Width": 93,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {

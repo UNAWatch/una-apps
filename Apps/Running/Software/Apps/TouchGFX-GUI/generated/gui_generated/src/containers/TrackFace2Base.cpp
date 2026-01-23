@@ -92,12 +92,12 @@ TrackFace2Base::TrackFace2Base()
     hrText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
     add(hrText);
 
-    hrValue.setPosition(64, 29, 90, 44);
+    hrValue.setPosition(75, 29, 90, 44);
     hrValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     hrValue.setLinespacing(0);
     Unicode::snprintf(hrValueBuffer, HRVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_HFND).getText());
     hrValue.setWildcard(hrValueBuffer);
-    hrValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40_R));
+    hrValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40));
     add(hrValue);
 
     hrBar.setXY(15, 4);

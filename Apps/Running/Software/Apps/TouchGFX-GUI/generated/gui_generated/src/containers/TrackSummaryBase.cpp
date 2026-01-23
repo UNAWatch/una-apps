@@ -30,7 +30,7 @@ TrackSummaryBase::TrackSummaryBase()
     avgPaceValue.setLinespacing(0);
     Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_SCJO).getText());
     avgPaceValue.setWildcard(avgPaceValueBuffer);
-    avgPaceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25_L));
+    avgPaceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25));
     add(avgPaceValue);
 
     avgPaceText.setPosition(36, 155, 100, 21);
@@ -41,7 +41,7 @@ TrackSummaryBase::TrackSummaryBase()
     avgPaceText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18_L));
     add(avgPaceText);
 
-    distanceUnits.setPosition(187, 72, 31, 23);
+    distanceUnits.setPosition(187, 72, 40, 23);
     distanceUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceUnits.setLinespacing(0);
     Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());

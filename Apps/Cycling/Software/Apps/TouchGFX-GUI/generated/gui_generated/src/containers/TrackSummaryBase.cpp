@@ -57,7 +57,7 @@ TrackSummaryBase::TrackSummaryBase()
     avgSpeedText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18_L));
     add(avgSpeedText);
 
-    distanceUnits.setPosition(187, 72, 31, 23);
+    distanceUnits.setPosition(187, 72, 40, 23);
     distanceUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceUnits.setLinespacing(0);
     Unicode::snprintf(distanceUnitsBuffer, DISTANCEUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM).getText());

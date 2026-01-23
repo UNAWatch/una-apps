@@ -23,34 +23,28 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::TextAreaWithOneWildcard stepsValue;
-    touchgfx::TextAreaWithOneWildcard stepsText;
     touchgfx::TextAreaWithOneWildcard timerValue;
     touchgfx::TextAreaWithOneWildcard timerText;
-    touchgfx::TextAreaWithOneWildcard avgPaceValue;
-    touchgfx::TextAreaWithOneWildcard avgPaceText;
     touchgfx::TextAreaWithOneWildcard elevationValue;
     touchgfx::TextAreaWithOneWildcard elevationText;
+    touchgfx::TextAreaWithOneWildcard stepsValue;
+    touchgfx::TextAreaWithOneWildcard stepsText;
     touchgfx::TextAreaWithOneWildcard distanceUnits;
     touchgfx::TextAreaWithOneWildcard distanceValue;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t STEPSVALUE_SIZE = 5;
-    touchgfx::Unicode::UnicodeChar stepsValueBuffer[STEPSVALUE_SIZE];
-    static const uint16_t STEPSTEXT_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar stepsTextBuffer[STEPSTEXT_SIZE];
     static const uint16_t TIMERVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar timerValueBuffer[TIMERVALUE_SIZE];
     static const uint16_t TIMERTEXT_SIZE = 10;
     touchgfx::Unicode::UnicodeChar timerTextBuffer[TIMERTEXT_SIZE];
-    static const uint16_t AVGPACEVALUE_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar avgPaceValueBuffer[AVGPACEVALUE_SIZE];
-    static const uint16_t AVGPACETEXT_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar avgPaceTextBuffer[AVGPACETEXT_SIZE];
     static const uint16_t ELEVATIONVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar elevationValueBuffer[ELEVATIONVALUE_SIZE];
+    static const uint16_t STEPSVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar stepsValueBuffer[STEPSVALUE_SIZE];
+    static const uint16_t STEPSTEXT_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar stepsTextBuffer[STEPSTEXT_SIZE];
     static const uint16_t DISTANCEUNITS_SIZE = 5;
     touchgfx::Unicode::UnicodeChar distanceUnitsBuffer[DISTANCEUNITS_SIZE];
     static const uint16_t DISTANCEVALUE_SIZE = 10;
