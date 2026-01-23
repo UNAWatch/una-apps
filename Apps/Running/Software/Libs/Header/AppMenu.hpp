@@ -85,8 +85,8 @@ enum Id {
     ID_KM_MILL_5,
     ID_KM_MILL_10,
 
-    ID_COUNT,               // Total number of menu items
-    ID_DEFAULT = ID_OFF     // Default selected item
+    ID_COUNT,                   // Total number of menu items
+    ID_DEFAULT = ID_KM_MILL_1   // Default selected item
 };
 } // Settings::Alerts::Distance
 
