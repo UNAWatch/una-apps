@@ -271,12 +271,17 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
     } else if (mSensorGpsDistance.matchesDriver(handle)) {
         SDK::SensorDataParser::GpsDistance parser(data[0]);
         if (parser.isDataValid()) {
-            mDistance.distance = parser.getDistance();
             mDistance.timestamp = parser.getTimestamp();
+            float newValue = parser.getDistance();
 
             if (!mDistance.dataValid) {
-                mDistance.initialDistance = mDistance.distance;
+                mDistance.initialDistance = newValue;
                 mDistance.dataValid = true;
+            }
+
+            // The distance should increase monotonically
+            if (newValue > mDistance.distance) {
+                mDistance.distance = newValue;
             }
             LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
         }
