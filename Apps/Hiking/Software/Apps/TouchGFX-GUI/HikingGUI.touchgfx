@@ -654,6 +654,7 @@
             "Y": 158,
             "Width": 170,
             "Height": 44,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
@@ -674,6 +675,7 @@
             "Y": 137,
             "Width": 49,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -1812,48 +1814,6 @@
         "Components": [
           {
             "Type": "TextArea",
-            "Name": "stepsValue",
-            "X": 127,
-            "Y": 118,
-            "Width": 100,
-            "Height": 32,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_25_L",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_QVDR",
-              "UseBuffer": true,
-              "BufferSize": 5
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "stepsText",
-            "X": 61,
-            "Y": 125,
-            "Width": 66,
-            "Height": 25,
-            "LockPosition": true,
-            "TextId": "TMP_MEDIUM_18",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "TEXT_STEPS_UC",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
             "Name": "timerValue",
             "X": 91,
             "Y": 180,
@@ -1896,57 +1856,13 @@
           },
           {
             "Type": "TextArea",
-            "Name": "avgPaceValue",
-            "X": 138,
-            "Y": 148,
-            "Width": 78,
-            "Height": 32,
-            "Visible": false,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_25_L",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_SCJO",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "avgPaceText",
-            "X": 36,
-            "Y": 155,
-            "Width": 100,
-            "Height": 21,
-            "Visible": false,
-            "LockPosition": true,
-            "TextId": "TMP_MEDIUM_18_L",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "TEXT_AVG_PACE_UC",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
             "Name": "elevationValue",
-            "X": 138,
+            "X": 140,
             "Y": 148,
-            "Width": 78,
+            "Width": 80,
             "Height": 32,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_25_L",
+            "TextId": "TMP_SEMIBOLD_25",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -1980,10 +1896,52 @@
           },
           {
             "Type": "TextArea",
+            "Name": "stepsValue",
+            "X": 127,
+            "Y": 118,
+            "Width": 100,
+            "Height": 32,
+            "LockPosition": true,
+            "TextId": "TMP_MEDIUM_25",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_QVDR",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "stepsText",
+            "X": 61,
+            "Y": 125,
+            "Width": 66,
+            "Height": 25,
+            "LockPosition": true,
+            "TextId": "TMP_MEDIUM_18",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "Wildcard1": {
+              "TextId": "TEXT_STEPS_UC",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
             "Name": "distanceUnits",
             "X": 187,
             "Y": 72,
-            "Width": 31,
+            "Width": 40,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_MEDIUM_18_L",
@@ -2212,12 +2170,12 @@
           {
             "Type": "TextArea",
             "Name": "distanceValue",
-            "X": 35,
+            "X": 53,
             "Y": 111,
             "Width": 134,
             "Height": 42,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35_R",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2271,9 +2229,9 @@
           {
             "Type": "TextArea",
             "Name": "stepsValue",
-            "X": 50,
+            "X": 40,
             "Y": 29,
-            "Width": 140,
+            "Width": 160,
             "Height": 44,
             "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_40",
@@ -2286,7 +2244,7 @@
             "Wildcard1": {
               "TextId": "__SingleUse_8WSQ",
               "UseBuffer": true,
-              "BufferSize": 5
+              "BufferSize": 10
             }
           },
           {
@@ -2343,10 +2301,10 @@
           {
             "Type": "TextArea",
             "Name": "elevationUnits",
-            "X": 159,
-            "Y": 179,
-            "Width": 40,
-            "Height": 25,
+            "X": 165,
+            "Y": 183,
+            "Width": 49,
+            "Height": 24,
             "LockPosition": true,
             "TextId": "TMP_REGULAR_18_L",
             "TextRotation": "0",
@@ -2364,12 +2322,12 @@
           {
             "Type": "TextArea",
             "Name": "elevationValue",
-            "X": 35,
-            "Y": 162,
-            "Width": 119,
+            "X": 70,
+            "Y": 165,
+            "Width": 100,
             "Height": 42,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35_R",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2401,7 +2359,7 @@
           {
             "Type": "TextArea",
             "Name": "avgPaceValue",
-            "X": 50,
+            "X": 51,
             "Y": 111,
             "Width": 140,
             "Height": 48,
@@ -2422,7 +2380,7 @@
           {
             "Type": "TextArea",
             "Name": "avgPaceText",
-            "X": 77,
+            "X": 78,
             "Y": 88,
             "Width": 87,
             "Height": 23,
@@ -2480,12 +2438,12 @@
           {
             "Type": "TextArea",
             "Name": "hrValue",
-            "X": 64,
+            "X": 75,
             "Y": 29,
             "Width": 90,
             "Height": 44,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_40_R",
+            "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2540,10 +2498,10 @@
           },
           {
             "Type": "TextArea",
-            "Name": "lapTimeValue",
-            "X": 38,
+            "Name": "timerValue",
+            "X": 35,
             "Y": 162,
-            "Width": 165,
+            "Width": 170,
             "Height": 42,
             "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_35",
@@ -2578,8 +2536,8 @@
           {
             "Type": "TextArea",
             "Name": "lapDistanceUnits",
-            "X": 177,
-            "Y": 128,
+            "X": 178,
+            "Y": 129,
             "Width": 45,
             "Height": 19,
             "LockPosition": true,
@@ -2599,12 +2557,12 @@
           {
             "Type": "TextArea",
             "Name": "lapDistanceValue",
-            "X": 35,
+            "X": 53,
             "Y": 111,
-            "Width": 132,
-            "Height": 37,
+            "Width": 134,
+            "Height": 42,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35_R",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,

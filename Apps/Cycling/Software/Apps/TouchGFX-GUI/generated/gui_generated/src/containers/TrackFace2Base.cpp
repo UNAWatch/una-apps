@@ -17,7 +17,7 @@ TrackFace2Base::TrackFace2Base()
     elevationText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(elevationText);
 
-    elevationUnits.setPosition(160, 183, 49, 24);
+    elevationUnits.setPosition(165, 183, 49, 24);
     elevationUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     elevationUnits.setLinespacing(0);
     Unicode::snprintf(elevationUnitsBuffer, ELEVATIONUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_M).getText());
@@ -42,12 +42,12 @@ TrackFace2Base::TrackFace2Base()
     line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line2);
 
-    speedUnits.setPosition(160, 129, 50, 24);
+    speedUnits.setPosition(165, 129, 50, 24);
     speedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     speedUnits.setLinespacing(0);
     Unicode::snprintf(speedUnitsBuffer, SPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
     speedUnits.setWildcard(speedUnitsBuffer);
-    speedUnits.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    speedUnits.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18_L));
     add(speedUnits);
 
     speedValue.setPosition(70, 111, 100, 48);
@@ -83,12 +83,12 @@ TrackFace2Base::TrackFace2Base()
     hrText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
     add(hrText);
 
-    hrValue.setPosition(64, 29, 90, 44);
+    hrValue.setPosition(75, 29, 90, 44);
     hrValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     hrValue.setLinespacing(0);
     Unicode::snprintf(hrValueBuffer, HRVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_HFND).getText());
     hrValue.setWildcard(hrValueBuffer);
-    hrValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40_R));
+    hrValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40));
     add(hrValue);
 
     hrBar.setXY(15, 4);

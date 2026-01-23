@@ -12,34 +12,22 @@ void TrackFace2::initialize()
 
 void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
 {
-#if 0   // debug option
-    Unicode::snprintfFloat(hrTextBuffer, HRTEXT_SIZE, "%.0f", tl);
-    hrText.invalidate();
-    if (tl >= 1.0 && hr >= 1.0) {
-        Unicode::snprintfFloat(hrValueBuffer, HRVALUE_SIZE, "%.0f", hr);
-    } else {
-        Unicode::snprintf(hrValueBuffer, HRVALUE_SIZE, "--");
-    }
-    hrValue.invalidate();
-#else
     Unicode::snprintfFloat(hrValueBuffer, HRVALUE_SIZE, "%.0f", hr);
     hrValue.invalidate();
-#endif
-
-
     hrBar.setHR(hr, th);
 }
 
 void TrackFace2::setAvgPace(float spm, bool isImperial, bool gpsFix)
 {
-    if (gpsFix || spm > 0.001) {
-        std::time_t secPerKm = static_cast<std::time_t>(spm * 1000.0f);
+    if (gpsFix || spm > 0.001f) {
+
+        std::time_t v = static_cast<std::time_t>(spm * 1000.0f); // sec/km
 
         if (isImperial) {
-            secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
+            v = static_cast<std::time_t>(v / App::Utils::km2mi(1.0f)); // sec/mi
         }
 
-        Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
+        Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", App::Utils::sec2hmsM(v), App::Utils::sec2hmsS(v));
     } else {
         Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "---");
     }
@@ -47,11 +35,17 @@ void TrackFace2::setAvgPace(float spm, bool isImperial, bool gpsFix)
     avgPaceValue.invalidate();
 }
 
-void TrackFace2::setElevation(float elevation, bool isImperial)
+void TrackFace2::setElevation(float m, bool isImperial)
 {
     if (isImperial) {
-        elevation = App::Utils::m2ft(elevation);
+        m = App::Utils::m2ft(m); // ft
+        Unicode::snprintf(elevationUnitsBuffer, ELEVATIONUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_FT).getText());
+    } else {
+        Unicode::snprintf(elevationUnitsBuffer, ELEVATIONUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_M).getText());
     }
-    Unicode::snprintfFloat(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%.0f", elevation);
+
+    Unicode::snprintfFloat(elevationValueBuffer, ELEVATIONVALUE_SIZE, "%.0f", m);
+
     elevationValue.invalidate();
+    elevationUnits.invalidate();
 }

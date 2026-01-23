@@ -391,10 +391,10 @@
         <Translation Language="GB">0:05:49</Translation>
       </Text>
       <Text Id="__SingleUse_XWWF" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">4.46</Translation>
+        <Translation Language="GB">32.7</Translation>
       </Text>
       <Text Id="__SingleUse_GAMW" Alignment="Left" TypographyId="Poppins_SemiBold_40">
-        <Translation Language="GB">735</Translation>
+        <Translation Language="GB">7897</Translation>
       </Text>
       <Text Id="__SingleUse_0CJZ" Alignment="Left" TypographyId="Poppins_SemiBold_40">
         <Translation Language="GB">15:37</Translation>
@@ -448,7 +448,7 @@
         <Translation Language="GB">2:03:44</Translation>
       </Text>
       <Text Id="__SingleUse_SCJO" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">4:46</Translation>
+        <Translation Language="GB">764</Translation>
       </Text>
     </TextGroup>
   </Texts>

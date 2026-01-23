@@ -50,7 +50,7 @@ protected:
     touchgfx::Unicode::UnicodeChar distanceValueBuffer[DISTANCEVALUE_SIZE];
     static const uint16_t DISTANCETEXT_SIZE = 15;
     touchgfx::Unicode::UnicodeChar distanceTextBuffer[DISTANCETEXT_SIZE];
-    static const uint16_t STEPSVALUE_SIZE = 5;
+    static const uint16_t STEPSVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar stepsValueBuffer[STEPSVALUE_SIZE];
     static const uint16_t STEPSTEXT_SIZE = 15;
     touchgfx::Unicode::UnicodeChar stepsTextBuffer[STEPSTEXT_SIZE];

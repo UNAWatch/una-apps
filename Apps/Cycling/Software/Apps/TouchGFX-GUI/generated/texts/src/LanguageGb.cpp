@@ -137,8 +137,8 @@ KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE = {
     593, // T___SINGLEUSE_NYXL: "99.9"
     524, // T_LAP: "44.44"
     401, // T___SINGLEUSE_LEJI: "0:05:49"
-    583, // T___SINGLEUSE_XWWF: "4.46"
-    644, // T___SINGLEUSE_GAMW: "735"
+    583, // T___SINGLEUSE_XWWF: "32.7"
+    588, // T___SINGLEUSE_GAMW: "7897"
     506, // T___SINGLEUSE_0CJZ: "15:37"
     578, // T___SINGLEUSE_Z0WD: "2.33"
     506, // T___SINGLEUSE_3KKT: "15:37"
@@ -156,5 +156,5 @@ KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE = {
     636, // T___SINGLEUSE_PW8Y: "165"
     632, // T___SINGLEUSE_PZ4I: "117"
     409, // T___SINGLEUSE_Q886: "2:03:44"
-    588  // T___SINGLEUSE_SCJO: "4:46"
+    644  // T___SINGLEUSE_SCJO: "764"
 };

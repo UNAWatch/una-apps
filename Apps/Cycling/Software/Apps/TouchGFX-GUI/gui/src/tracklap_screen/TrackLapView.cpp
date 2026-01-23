@@ -37,14 +37,20 @@ void TrackLapView::setLapNum(uint32_t n)
 
 void TrackLapView::setSpeed(float mps)
 {
-    float kmPerH = (3.6f * mps);
+    if (mGpsFix || mps > 0.001f) {
 
-    if (mGpsFix || kmPerH > 0.001f) {
+        float v = (3.6f * mps); // km/h
+
         if (mUnitsImperial) {
-            Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.2f", App::Utils::km2mi(kmPerH)); // mi
-        } else {
-            Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.2f", kmPerH);
+            v = App::Utils::km2mi(v); // mi/h
         }
+
+        if (v < 100.0f) {
+            Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.1f", v);
+        } else {
+            Unicode::snprintfFloat(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%.0f", v);
+        }
+
     } else {
         Unicode::snprintf(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "---");
     }
@@ -55,11 +61,19 @@ void TrackLapView::setSpeed(float mps)
 void TrackLapView::setDistance(float m)
 {
     if (mGpsFix || m > 0.001f) {
+
+        float v = m / 1000.0f;
+
         if (mUnitsImperial) {
-            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
-        } else {
-            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+            v = App::Utils::km2mi(m / 1000.0f); // mi
         }
+
+        if (v < 100.0f) {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", v);
+        } else {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.01f", v);
+        }
+
     } else {
         Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");
     }
@@ -75,9 +89,9 @@ void TrackLapView::setTimer(std::time_t sec)
 
     App::Utils::sec2hms(sec, hh, mm, ss);
     if (hh == 0) {
-        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", mm, ss);
+        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%u:%02u", mm, ss);
     } else {
-        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", hh, mm);
+        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%u:%02u", hh, mm);
     }
     timeValue.invalidate();
 }

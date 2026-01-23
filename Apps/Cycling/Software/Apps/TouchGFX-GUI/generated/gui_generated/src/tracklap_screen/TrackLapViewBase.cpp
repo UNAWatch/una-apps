@@ -76,7 +76,7 @@ TrackLapViewBase::TrackLapViewBase()
     distanceValue.setLinespacing(0);
     Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_Z0WD).getText());
     distanceValue.setWildcard(distanceValueBuffer);
-    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
+    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(distanceValue);
 
     distanceText.setXY(50, 58);

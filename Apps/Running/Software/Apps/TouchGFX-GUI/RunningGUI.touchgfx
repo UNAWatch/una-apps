@@ -1749,7 +1749,7 @@
             "Width": 78,
             "Height": 32,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_25_L",
+            "TextId": "TMP_SEMIBOLD_25",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -1788,7 +1788,7 @@
             "Name": "distanceUnits",
             "X": 187,
             "Y": 72,
-            "Width": 31,
+            "Width": 40,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_MEDIUM_18_L",
@@ -2016,12 +2016,12 @@
           {
             "Type": "TextArea",
             "Name": "distanceValue",
-            "X": 35,
+            "X": 53,
             "Y": 111,
             "Width": 134,
             "Height": 42,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_35_R",
+            "TextId": "TMP_SEMIBOLD_35",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
@@ -2321,12 +2321,12 @@
           {
             "Type": "TextArea",
             "Name": "hrValue",
-            "X": 64,
+            "X": 75,
             "Y": 29,
             "Width": 90,
             "Height": 44,
             "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_40_R",
+            "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {
               "Red": 192,

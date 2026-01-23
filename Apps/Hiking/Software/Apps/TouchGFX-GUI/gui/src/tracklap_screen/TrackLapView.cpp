@@ -43,14 +43,22 @@ void TrackLapView::setSteps(uint32_t steps)
 
 void TrackLapView::setDistance(float m)
 {
-    if (mGpsFix || m > 0.001) {
+    if (mGpsFix || m > 0.001f) {
+
+        float v = m / 1000.0f;
+
         if (mUnitsImperial) {
-            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", App::Utils::km2mi(m / 1000.0f)); // mi
-        } else {
-            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", m / 1000.0f);  // km
+            v = App::Utils::km2mi(m / 1000.0f); // mi
         }
+
+        if (v < 100.0f) {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", v);
+        } else {
+            Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.01f", v);
+        }
+
     } else {
-        Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");  // km
+        Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");
     }
 
     distanceValue.invalidate();
@@ -63,13 +71,11 @@ void TrackLapView::setTimer(std::time_t sec)
     uint8_t ss = 0;
 
     App::Utils::sec2hms(sec, hh, mm, ss);
-
     if (hh == 0) {
-        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", mm, ss);
+        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%u:%02u", mm, ss);
     } else {
-        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%d:%02d", hh, mm);
+        Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%u:%02u", hh, mm);
     }
-
     timeValue.invalidate();
 }
 
