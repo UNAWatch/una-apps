@@ -7,7 +7,7 @@
 class FrontendHeap;
 
 #if defined(SIMULATOR)
-#include "SDK/Simulator/Kernel/KernelBase.hpp"
+#include "SDK/Simulator/Kernel/Kernel.hpp"
 #endif
 
 using namespace touchgfx;
