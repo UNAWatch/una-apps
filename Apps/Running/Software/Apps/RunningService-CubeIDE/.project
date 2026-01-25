@@ -146,7 +146,7 @@
 		<link>
 			<name>SDK/Libs/Header/FirmwareVersion.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/SDK/Libs/Header/SDK/FirmwareVersion.hpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Header/SDK/FirmwareVersion.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Interfaces</name>
