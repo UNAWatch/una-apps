@@ -41,6 +41,9 @@ public:
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransition();
 
+    // TrackStartConfirmation
+    void gotoTrackStartConfirmationScreenNoTransition();
+
     // Track
     void gotoTrackScreenNoTransition();
 
@@ -87,6 +90,9 @@ protected:
 
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransitionImpl();
+
+    // TrackStartConfirmation
+    void gotoTrackStartConfirmationScreenNoTransitionImpl();
 
     // Track
     void gotoTrackScreenNoTransitionImpl();

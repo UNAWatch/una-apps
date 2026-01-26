@@ -26,14 +26,16 @@
 #include <gui/menutime_screen/MenuTimePresenter.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedView.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedPresenter.hpp>
+#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationView.hpp>
+#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationPresenter.hpp>
 #include <gui/track_screen/TrackView.hpp>
 #include <gui/track_screen/TrackPresenter.hpp>
 #include <gui/tracklap_screen/TrackLapView.hpp>
 #include <gui/tracklap_screen/TrackLapPresenter.hpp>
 #include <gui/trackaction_screen/TrackActionView.hpp>
 #include <gui/trackaction_screen/TrackActionPresenter.hpp>
-#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationView.hpp>
-#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationPresenter.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationPresenter.hpp>
 #include <gui/trackdiscarded_screen/TrackDiscardedView.hpp>
 #include <gui/trackdiscarded_screen/TrackDiscardedPresenter.hpp>
 #include <gui/tracksaved_screen/TrackSavedView.hpp>
@@ -69,14 +71,15 @@ public:
             touchgfx::meta::TypeList< MenuDistanceSavedView,
             touchgfx::meta::TypeList< MenuTimeView,
             touchgfx::meta::TypeList< MenuTimeSavedView,
+            touchgfx::meta::TypeList< TrackDiscardConfirmationView,
             touchgfx::meta::TypeList< TrackView,
             touchgfx::meta::TypeList< TrackLapView,
             touchgfx::meta::TypeList< TrackActionView,
-            touchgfx::meta::TypeList< TrackDiscardConfirmationView,
+            touchgfx::meta::TypeList< TrackStartConfirmationView,
             touchgfx::meta::TypeList< TrackDiscardedView,
             touchgfx::meta::TypeList< TrackSavedView,
             touchgfx::meta::TypeList< TrackSummaryView,
-            touchgfx::meta::Nil > > > > > > > > > > > > >
+            touchgfx::meta::Nil > > > > > > > > > > > > > >
             > GeneratedViewTypes;
 
     /**
@@ -95,14 +98,15 @@ public:
             touchgfx::meta::TypeList< MenuDistanceSavedPresenter,
             touchgfx::meta::TypeList< MenuTimePresenter,
             touchgfx::meta::TypeList< MenuTimeSavedPresenter,
+            touchgfx::meta::TypeList< TrackDiscardConfirmationPresenter,
             touchgfx::meta::TypeList< TrackPresenter,
             touchgfx::meta::TypeList< TrackLapPresenter,
             touchgfx::meta::TypeList< TrackActionPresenter,
-            touchgfx::meta::TypeList< TrackDiscardConfirmationPresenter,
+            touchgfx::meta::TypeList< TrackStartConfirmationPresenter,
             touchgfx::meta::TypeList< TrackDiscardedPresenter,
             touchgfx::meta::TypeList< TrackSavedPresenter,
             touchgfx::meta::TypeList< TrackSummaryPresenter,
-            touchgfx::meta::Nil > > > > > > > > > > > > >
+            touchgfx::meta::Nil > > > > > > > > > > > > > >
             > GeneratedPresenterTypes;
 
     /**

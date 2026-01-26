@@ -15,10 +15,10 @@ TrackDiscardConfirmationViewBase::TrackDiscardConfirmationViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    text.setPosition(35, 88, 170, 80);
+    text.setPosition(35, 94, 170, 52);
     text.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     text.setLinespacing(-5);
-    Unicode::snprintf(textBuffer, TEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DO_YOU_WANT_ACTIVITY).getText());
+    Unicode::snprintf(textBuffer, TEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_START_BEFORE_GPS_FIX).getText());
     text.setWildcard(textBuffer);
     text.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_20));
     add(text);
@@ -49,7 +49,7 @@ void TrackDiscardConfirmationViewBase::setupScreen()
 void TrackDiscardConfirmationViewBase::transitionBegins()
 {
     //Interaction1
-    //When screen transition begins change screen to TrackDiscardConfirmation
-    //Go to TrackDiscardConfirmation with no screen transition
-    application().gotoTrackDiscardConfirmationScreenNoTransition();
+    //When screen transition begins change screen to TrackStartConfirmation
+    //Go to TrackStartConfirmation with no screen transition
+    application().gotoTrackStartConfirmationScreenNoTransition();
 }

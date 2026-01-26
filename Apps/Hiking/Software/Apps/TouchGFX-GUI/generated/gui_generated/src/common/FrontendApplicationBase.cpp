@@ -27,6 +27,8 @@
 #include <gui/menusteps_screen/MenuStepsPresenter.hpp>
 #include <gui/menustepssaved_screen/MenuStepsSavedView.hpp>
 #include <gui/menustepssaved_screen/MenuStepsSavedPresenter.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationPresenter.hpp>
 #include <gui/track_screen/TrackView.hpp>
 #include <gui/track_screen/TrackPresenter.hpp>
 #include <gui/tracklap_screen/TrackLapView.hpp>
@@ -174,6 +176,19 @@ void FrontendApplicationBase::gotoMenuStepsSavedScreenNoTransition()
 void FrontendApplicationBase::gotoMenuStepsSavedScreenNoTransitionImpl()
 {
     touchgfx::makeTransition<MenuStepsSavedView, MenuStepsSavedPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// TrackStartConfirmation
+
+void FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransition()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<TrackStartConfirmationView, TrackStartConfirmationPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 // Track

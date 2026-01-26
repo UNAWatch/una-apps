@@ -472,6 +472,18 @@
     <Filter Include="SDK\Libs\Source\Simulator\App">
       <UniqueIdentifier>{d8112f0f-b2f5-4bc8-a298-75cba19d11f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gui\trackstartconfirmation_screen">
+      <UniqueIdentifier>88477380-472F-01F4-DEEB-A871E9187B11</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\trackstartconfirmation_screen">
+      <UniqueIdentifier>3540C10E-7D47-7D5B-4DAA-76D2F43DBC31</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\trackstartconfirmation_screen">
+      <UniqueIdentifier>1CCA8119-5199-9E80-B941-7024B933641C</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\trackstartconfirmation_screen">
+      <UniqueIdentifier>21B80D6C-FAE4-A79A-38BB-633936AAE4E8</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -1098,6 +1110,24 @@
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\MessageManager.cpp">
       <Filter>SDK\Libs\Source\Simulator\App</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gui\src\trackstartconfirmation_screen\TrackStartConfirmationPresenter.cpp">
+      <Filter>Source Files\gui\trackstartconfirmation_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\trackstartconfirmation_screen\TrackStartConfirmationView.cpp">
+      <Filter>Source Files\gui\trackstartconfirmation_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\trackstartconfirmation_screen\TrackStartConfirmationViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\trackstartconfirmation_screen</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\gui\include\gui\trackstartconfirmation_screen\TrackStartConfirmationPresenter.hpp">
+      <Filter>Header Files\gui\trackstartconfirmation_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackstartconfirmation_screen\TrackStartConfirmationView.hpp">
+      <Filter>Header Files\gui\trackstartconfirmation_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\trackstartconfirmation_screen\TrackStartConfirmationViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\trackstartconfirmation_screen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml">

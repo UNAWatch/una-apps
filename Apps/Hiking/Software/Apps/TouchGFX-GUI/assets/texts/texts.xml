@@ -334,6 +334,9 @@
       <Text Id="TEXT_DO_YOU_WANT_ACTIVITY" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Do you want&#10;to discard&#10;the activity?</Translation>
       </Text>
+      <Text Id="TEXT_START_BEFORE_GPS_FIX" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">Start before&#10;signal acquired?</Translation>
+      </Text>
       <Text Id="TEXT_ACTIVITY_UPLOADED" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Activity has&#10;been uploaded</Translation>
       </Text>

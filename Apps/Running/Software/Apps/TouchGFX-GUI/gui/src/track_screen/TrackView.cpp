@@ -12,7 +12,7 @@ void TrackView::setupScreen()
     buttons.setL1(Buttons::NONE);
     buttons.setL2(Buttons::NONE);
     buttons.setR1(Buttons::NONE);
-    buttons.setR2(Buttons::AMBER);
+    buttons.setR2(Buttons::NONE);
 
     sideBar.setCount(App::Menu::Start::Track::ID_COUNT);
 }
@@ -109,7 +109,7 @@ void TrackView::handleKeyEvent(uint8_t key)
     }
 
     if (key == Gui::Config::Button::R2) {
-        application().gotoTrackLapScreenNoTransition();
+        //application().gotoTrackLapScreenNoTransition();
     }
 }
 
