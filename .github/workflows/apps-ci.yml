@@ -57,7 +57,7 @@ jobs:
           path: SDK
           fetch-depth: 0
           submodules: true
-          ref: feature/cmake-and-apps-migration
+          ref: main
           token: ${{ secrets.CROSS_REPO_PAT }}
 
       - name: Checkout
