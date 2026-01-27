@@ -1,6 +1,19 @@
 # Watch App CMakeLists.txt - Simplified version using SDK
 cmake_minimum_required(VERSION 3.21)
 
+# App configuration
+set(APP_NAME "Running")
+set(DEV_ID "UNA")
+set(APP_ID "A12E9F4C8B7D3A65")
+set(RESOURCES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Resources")
+set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Output")
+set(LIBS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../Libs")
+set(TOUCHGFX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../TouchGFX-GUI")
+
+# Includes all build steps and required tools
+# Sets toolchain before project
+include($ENV{UNA_SDK}/cmake/una-app.cmake)
+
 # Includes sets:
 #              UNA_SDK_SOURCES_COMMON
 #              UNA_SDK_SOURCES_SERVICE
@@ -9,34 +22,66 @@ cmake_minimum_required(VERSION 3.21)
 #              UNA_SDK_INCLUDE_DIRS_SERVICE
 #              UNA_SDK_INCLUDE_DIRS_GUI
 #              SCRIPTS_PATH
-include($ENV{UNA_SDK}/cmake/una-app.cmake)
 include($ENV{UNA_SDK}/cmake/una-sdk.cmake)
 
-# Determine paths
-get_filename_component(APP_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../.." ABSOLUTE)
-
 # Includes LIBS_SOURCES, LIBS_INCLUDE_DIRS
-include(${APP_ROOT}/Software/Libs/libs.cmake)
+include(${LIBS_PATH}/libs.cmake)
 
 # Includes TOUCHGFX_SOURCES, TOUCHGFX_INCLUDE_DIRS
-include(${APP_ROOT}/Software/Apps/TouchGFX-GUI/touchgfx.cmake)
+include(${TOUCHGFX_PATH}/touchgfx.cmake)
 
-project(Running)
+project(${APP_NAME})
 
-# App configuration
-set(APP_ID "A12E9F4C8B7D3A65")
-set(APP_NAME "Running")
-set(DEV_ID "UNA")
+# Set up version
+una_app_setup_version(BUILD_VERSION ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Print variable values to highlight no hidden dependencies
-message("APP_ID: ${APP_ID}")
-message("APP_NAME: ${APP_NAME}")
-message("DEV_ID: ${DEV_ID}")
-message("APP_TYPE: ${APP_TYPE}")
-message("LIBS_PATH: ${LIBS_PATH}")
-message("TOUCHGFX_GUI_PATH: ${TOUCHGFX_GUI_PATH}")
-message("OUTPUT_PATH: ${OUTPUT_PATH}")
-message("RESOURCES_PATH: ${RESOURCES_PATH}")
+# Build service
+set(SERVICE_SOURCES
+    ${LIBS_SOURCES}
+    "${CMAKE_CURRENT_SOURCE_DIR}/syscalls.cpp"
+    ${UNA_SDK_SOURCES_COMMON}
+    ${UNA_SDK_SOURCES_SERVICE}
+)
+set(SERVICE_INCLUDE_DIRS
+    ${LIBS_INCLUDE_DIRS}
+    ${UNA_SDK_INCLUDE_DIRS_COMMON}
+    ${UNA_SDK_INCLUDE_DIRS_SERVICE}
+    "${CMAKE_CURRENT_SOURCE_DIR}/../TouchGFX-GUI/gui/include"
+)
+# Needs:
+# - TARGET_NAME - arg
+# - UNA_APP_SERVICE_RAM_LENGTH - optional
+# - UNA_APP_SERVICE_STACK_SIZE - optional 
+# - BUILD_VERSION
+# - APP_NAME
+# - DEV_ID
+# - APP_ID
+# - SERVICE_INCLUDE_DIRS
+# - SERVICE_SOURCES
+una_app_build_service(${APP_NAME}Service.elf)
+
+
+# GUI Build
+set(GUI_SOURCES
+    ${TOUCHGFX_SOURCES}
+    "${CMAKE_CURRENT_SOURCE_DIR}/PaintImpl.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/syscalls.cpp"
+    ${UNA_SDK_SOURCES_COMMON}
+    ${UNA_SDK_SOURCES_GUI}
+)
+set(GUI_INCLUDE_DIRS
+    ${LIBS_INCLUDE_DIRS}
+    ${UNA_SDK_INCLUDE_DIRS_COMMON}
+    ${UNA_SDK_INCLUDE_DIRS_GUI}
+    ${TOUCHGFX_INCLUDE_DIRS}
+)
+# Needs:
+# - TARGET_NAME - arg
+# - GUI_SOURCES
+# - GUI_INCLUDE_DIRS
+# - UNA_APP_SERVICE_RAM_LENGTH - optional
+# - UNA_APP_SERVICE_STACK_SIZE - optional 
+una_app_build_gui(${APP_NAME}GUI.elf)
 
 # Build the complete app using SDK functions
 una_app_build_app()
