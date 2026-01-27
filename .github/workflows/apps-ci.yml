@@ -57,7 +57,7 @@ jobs:
           path: SDK
           fetch-depth: 0
           submodules: true
-          ref: main
+          ref: develop-update-sdk
           token: ${{ secrets.CROSS_REPO_PAT }}
 
       - name: Checkout
