@@ -124,11 +124,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/SwTimer</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
@@ -177,16 +172,6 @@
 			<name>SDK/Libs/Source/SensorLayer/SensorConnection.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorConnection.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Source/SwTimer/SwTimer.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/SwTimer/SwTimer.cpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Source/SwTimer/SwTimerPort.cpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/SwTimer/SwTimerPort.cpp</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

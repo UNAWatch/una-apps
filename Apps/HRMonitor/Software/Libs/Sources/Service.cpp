@@ -1,44 +1,81 @@
-#include "Service.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
+#include "SDK/Messages/SensorLayerMessages.hpp"
 
-#define LOG_MODULE_PRX      "Service::"
+#include "Service.hpp"
+
+#define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
-Service::Service()
+Service::Service(SDK::Kernel& kernel)
     : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
-    , mGSModel(*this)
-    , mTerminate(false)
+    , mSender(mKernel)
     , mGUIStarted(false)
-    , mHRSensor(SDK::Sensor::Type::HEART_RATE, this)
+    , mSensorHR(SDK::Sensor::Type::HEART_RATE, 1000, 2000)
+    , mHR(0)
+    , mHRTL(0)
     , mActivityWriter(mKernel, "Activity")
 {}
 
 void Service::run()
 {
-    LOG_INFO("started\n");
+    LOG_INFO("thread started\n");
 
-    mHRSensor.connect(1000, 2000);
+    mSensorHR.connect();
 
     ActivityWriter::AppInfo info{};
-    info.timestamp = std::time(nullptr);
+    info.timestamp  = std::time(nullptr);
     info.appVersion = ParseVersion(BUILD_VERSION);
-    info.devID = DEV_ID;
-    info.appID = APP_ID;
+    info.devID      = DEV_ID;
+    info.appID      = APP_ID;
     mActivityWriter.start(info);
 
-    time_t startTime = time(nullptr);
+    time_t startTime    = time(nullptr);
     time_t utcTimestamp = 0;
 
-    float hrAvgSum = 0;
+    float    hrAvgSum   = 0;
     uint32_t hrAvgCount = 0;
-    float hrMax = 0;
+    float    hrMax      = 0;
 
-    uint32_t startTimeMs = mKernel.app.getTimeMs();
+    uint32_t startTimeMs = mKernel.sys.getTimeMs();
 
-    while (!mTerminate) {
+    while (true) {
+        SDK::MessageBase *msg;
+        if (mKernel.comm.getMessage(msg, 1000)) {
+            // Command handling
+            switch (msg->getType()) {
+                // Kernel messages
+                case SDK::MessageType::COMMAND_APP_STOP:
+                    LOG_INFO("Force exit from the application\n");
+                    mSensorHR.disconnect();
+                    // We must release message because this is the last event.
+                    mKernel.comm.releaseMessage(msg);
+                    return;
 
-        mGSModel.process(1000);
+                case SDK::MessageType::COMMAND_APP_NOTIF_GUI_RUN:
+                    LOG_INFO("GUI is now running\n");
+                    onStartGUI();
+                    break;
+
+                case SDK::MessageType::COMMAND_APP_NOTIF_GUI_STOP:
+                    LOG_INFO("GUI has stopped\n");
+                    onStopGUI();
+                    break;
+
+                // Sensors messages
+                case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
+                    auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
+                    SDK::Sensor::DataBatch data(event->data, event->count, event->stride);
+                    onSdlNewData(event->handle, data);
+                } break;
+
+                default:
+                    break;
+            }
+
+            // Release message after processing
+            mKernel.comm.releaseMessage(msg);
+        }
 
         if (mGUIStarted) {
             // Save record to the FIT file
@@ -47,23 +84,24 @@ void Service::run()
                 utcTimestamp = utc;
 
                 ActivityWriter::RecordData fitRecord {};
-                fitRecord.timestamp = utc;
-                fitRecord.heartRate = static_cast<uint8_t>(mHR);
+                fitRecord.timestamp  = utc;
+                fitRecord.heartRate  = static_cast<uint8_t>(mHR);
                 fitRecord.trustLevel = static_cast<uint8_t>(mHRTL);
                 mActivityWriter.addRecord(fitRecord);
 
                 if (mHR > 1) {
                     hrAvgSum += mHR;
-                    hrAvgCount ++;
+                    ++hrAvgCount;
                     hrMax = std::max(hrMax, mHR);
                 }
             }
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.app.getTimeMs() - startTimeMs > 5000) {
+            if (mKernel.sys.getTimeMs() - startTimeMs > 5000) {
+                LOG_DEBUG("start GUI timeout\n");
                 break;
             }
-            mKernel.app.delay(100);
+            mKernel.sys.delay(100);
         }
     }
 
@@ -89,41 +127,34 @@ void Service::run()
 
     mActivityWriter.stop(fitTrack);
 
-    mHRSensor.disconnect();
+    mSensorHR.disconnect();
 
-    LOG_INFO("stopped\n");
-
-    exit(0);
+    LOG_INFO("thread stopped\n");
 }
 
-void Service::handleEvent(const G2SEvent::Run& event)
+void Service::onStartGUI()
 {
-    (void) event;
+    LOG_INFO("GUI started\n");
     mGUIStarted = true;
-    mGSModel.post(S2GEvent::HeartRate{0, 0});
+    mSender.updateHeartRate(0.0f, 0.0f);
 }
 
-void Service::handleEvent(const G2SEvent::Stop& event)
+void Service::onStopGUI()
 {
-    (void) event;
+    LOG_INFO("GUI stopped\n");
     mGUIStarted = false;
 }
 
-void Service::onStop()
+void Service::onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
-    mTerminate = true;
-}
-
-void Service::onSdlNewData(const SDK::Interface::ISensorDriver* sensor, const std::vector<SDK::Interface::ISensorData*>& data, bool first)
-{
-    if (sensor->getType() == SDK::Sensor::Type::HEART_RATE) {
+    if (mSensorHR.matchesDriver(handle)) {
         if (mGUIStarted) {
-            SDK::SensorDataParser::HeartRate hrp { data[0]};
-            if (hrp.isDataValid()) {
-                mHR = hrp.getBpm();
-                mHRTL = hrp.getTrustLevel();
+            SDK::SensorDataParser::HeartRate parser(data[0]);
+            if (parser.isDataValid()) {
+                mHR   = parser.getBpm();
+                mHRTL = parser.getTrustLevel();
 
-                mGSModel.post(S2GEvent::HeartRate{mHR, mHRTL});
+                mSender.updateHeartRate(mHR, mHRTL);
             }
         }
     }

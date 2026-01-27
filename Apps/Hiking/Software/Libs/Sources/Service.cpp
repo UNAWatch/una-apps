@@ -13,7 +13,7 @@
 #include "ActivitySummary.hpp"
 #include "TrackInfo.hpp"
 #include "icon_60x60.h"
-#include "SDK/FirmwareVersion.hpp"
+#include "SDK/Tools/FirmwareVersion.hpp"
 #include "SDK/Messages/SensorLayerMessages.hpp"
 #include "SDK/Messages/MessageGuard.hpp"
 
@@ -233,7 +233,6 @@ void Service::connectAll()
 
 void Service::disconnect()
 {
-
     if (mIsSensorsConnected) {
         LOG_DEBUG("Disconnect from sensors...\n");
 

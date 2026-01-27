@@ -69,9 +69,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/ActivityWriter.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/GSModelEvents</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<name>Libs/Header/Commands.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Commands.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Header/Service.hpp</name>
@@ -102,16 +102,6 @@
 			<name>SDK/ThirdParty/FitSDK</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/GSModelEvents/G2SEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/G2SEvents.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/GSModelEvents/S2GEvents.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/GSModelEvents/S2GEvents.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/FitHelper</name>
@@ -219,9 +209,9 @@
 			<locationURI>SDK_LOC/Libs/Source/Kernel/KernelBuilder.cpp</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Source/SensorLayer/SensorDriverConnection.cpp</name>
+			<name>SDK/Libs/Source/SensorLayer/SensorConnection.cpp</name>
 			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorDriverConnection.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorConnection.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/UnaLogger/Logger.cpp</name>

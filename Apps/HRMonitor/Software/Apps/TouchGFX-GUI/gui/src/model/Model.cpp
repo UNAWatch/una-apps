@@ -1,10 +1,11 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 #include <gui/common/FrontendApplication.hpp>
+
 #include "SDK/Kernel/KernelProviderGUI.hpp"
+#include "SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
-
-#define LOG_MODULE_PRX      "Model::"
+#define LOG_MODULE_PRX      "Model"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
@@ -16,20 +17,20 @@
 #endif
 
 Model::Model()
-    : mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
-    , modelListener(0)
-    , mGSModel(std::static_pointer_cast<IGUIModel>(mKernel.gctrl.getContext()))
+    : modelListener(0)
+    , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
 {
-    mKernel.app.registerApp(this);
-    mGSModel->setGUIHandler(&mKernel, this);
+    SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(this);
+    SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(this);
 
 #if defined(SIMULATOR)
-    LOG_DEBUG("Application is running through simulator! \n");
+    LOG_INFO("Application is running through simulator! \n");
 
-    std::string fileStoreDir = Simulator::KernelHolder::Get().getFsPath();
-    LOG_DEBUG("Path to files created by app:\n   [%s]\n", fileStoreDir.c_str());
+    std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
+    LOG_INFO("Path to files created by app:\n"
+        "       [%s]\n", fileStoreDir.c_str());
 
-    LOG_DEBUG_WP("\n"
+    LOG_INFO("\n"
         "       Keys:                       \n"
         "       ----------------------------\n"
         "       1   L1,                     \n"
@@ -48,31 +49,72 @@ FrontendApplication& Model::application()
 
 void Model::tick()
 {
-    mGSModel->process(0);
+    //LOG_DEBUG("called\n");
+
+    if (mInvalidate) {
+        mInvalidate = false;
+        application().invalidate();
+    }
 }
 
 void Model::exitApp()
 {
-    mGSModel->post(G2SEvent::Stop{});
-    mGSModel->setGUIHandler(nullptr, nullptr);
-    mKernel.app.exit();
-}
+    LOG_INFO("Manually exiting the application\n");
+    // Cleanup recourses
 
-void Model::handleEvent(const S2GEvent::HeartRate& event)
-{
-    //LOG_INFO("hr %.1f, tl %.1f\n", event.heartRate, event.trustLevel);
-    modelListener->updateHR(event.heartRate, event.trustLevel);
+    SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(nullptr);
+    SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(nullptr);
+
+    mKernel.sys.exit(); // No return for real app
+
+    // !!! For TouchGFX Simulator !!!
+    // This function only sets a flag.
+    // The current TouchGFX loop will be completed, meaning that depending
+    // on where this function was called, Model::tick(), Model::handleKeyEvent(),
+    // as well as handleTickEvent() and handleKeyEvent() for the
+    // current screen will be called.
 }
 
 // IUserApp implementation
 void Model::onStart()
 {
-    mGSModel->setGUIHandler(&mKernel, this);
-    mGSModel->post(G2SEvent::Run {});
+    LOG_INFO("called\n");
+}
+
+void Model::onResume()
+{
+    LOG_INFO("called\n");
+
+    // Redraw screen
+    mInvalidate = true;
 }
 
 void Model::onStop()
 {
-    mGSModel->post(G2SEvent::Stop {});
-    mGSModel->setGUIHandler(nullptr, nullptr);
+    LOG_INFO("called\n");
+}
+
+void Model::onSuspend()
+{
+    LOG_INFO("called\n");
+}
+
+// Events from Service
+
+bool Model::customMessageHandler(SDK::MessageBase *msg)
+{
+    switch (msg->getType()) {
+        case CustomMessage::HR_VALUES:  {
+            LOG_DEBUG("Update HR_VALUES\n");
+            auto* m = static_cast<CustomMessage::HRValues*>(msg);
+
+            LOG_DEBUG("hr %.1f, tl %.1f\n", m->heartRate, m->trustLevel);
+            modelListener->updateHR(m->heartRate, m->trustLevel);
+        } break;
+
+        default:
+            break;
+    }
+
+    return true;
 }

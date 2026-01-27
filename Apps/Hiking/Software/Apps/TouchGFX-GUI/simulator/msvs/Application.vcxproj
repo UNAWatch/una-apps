@@ -17,14 +17,11 @@
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\hal\simulator\sdl2\OSWrappers.cpp"/>
     <ClCompile Include="$(ApplicationRoot)\simulator\main.cpp"/>
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp"/>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Platform\OS\OS.cpp"/>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\KernelBase.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Sensors\SensorCore.cpp"/>
-    <ClCompile Include="$(SdkPath)\Libs\Source\SynchManager\SynchManager.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\UnaLogger\Logger.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Wrappers\StdLibWrappers.c"/>
     <ClCompile Include="$(SdkPath)\ThirdParty\coreJSON\source\core_json.c"/>
@@ -37,7 +34,16 @@
     <ClCompile Include="$(SdkPath)\Libs\Source\TrackMap\TrackMapBuilder.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp"/>
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\FitHelper\FitHelper.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorDriverConnection.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorConnection.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppComm.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppCore.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppMessageCore.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\KernelMessageDispatcher.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\MessageManager.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Kernel.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\System.cpp"/>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\OS\OS.cpp"/>
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivitySummarySerializer.cpp"/>
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivityWriter.cpp"/>
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp"/>
@@ -129,6 +135,9 @@
     <ClCompile Include="..\..\generated\gui_generated\src\tracksummary_screen\TrackSummaryViewBase.cpp"/>
     <ClCompile Include="..\..\gui\src\track_screen\TrackView.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\track_screen\TrackViewBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\trackstartconfirmation_screen\TrackStartConfirmationPresenter.cpp"/>
+    <ClCompile Include="..\..\gui\src\trackstartconfirmation_screen\TrackStartConfirmationView.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\trackstartconfirmation_screen\TrackStartConfirmationViewBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml"/>
@@ -418,6 +427,9 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\tracksummary_screen\TrackSummaryViewBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\track_screen\TrackView.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\track_screen\TrackViewBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\trackstartconfirmation_screen\TrackStartConfirmationPresenter.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\trackstartconfirmation_screen\TrackStartConfirmationView.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\trackstartconfirmation_screen\TrackStartConfirmationViewBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc"/>

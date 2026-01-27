@@ -1,43 +1,36 @@
 #ifndef __SERVICE_HPP__
 #define __SERVICE_HPP__
 
-#include "SDK/GSModel/GSModel.hpp"
+#include "Commands.hpp"
 #include "SDK/Kernel/KernelProviderService.hpp"
 #include "SDK/Interfaces/ISensorDataListener.hpp"
-#include "SDK/SensorLayer/SensorDriverConnection.hpp"
+#include "SDK/SensorLayer/SensorConnection.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
 
 #include "ActivityWriter.hpp"
 
-class Service : public IServiceModelHandler,
-                public SDK::Interface::IUserApp::Callback,
-                public SDK::Interface::ISensorDataListener
+class Service
 {
 public:
-    Service();
+    Service(SDK::Kernel& kernel);
 
     virtual ~Service() = default;
 
     void run();
-    void handleEvent(const G2SEvent::Run& event);
-    void handleEvent(const G2SEvent::Stop& event);
 
 private:
-    void onStop() override;
+    SDK::Kernel&             mKernel;
+    CustomMessage::GUISender mSender;
+    bool                     mGUIStarted;
+    SDK::Sensor::Connection  mSensorHR;
+    float                    mHR;
+    float                    mHRTL;
+    ActivityWriter           mActivityWriter;
 
-    void onSdlNewData(const SDK::Interface::ISensorDriver*             sensor,
-                      const std::vector<SDK::Interface::ISensorData*>& data,
-                      bool                                             first) override;
+    void onStartGUI();
+    void onStopGUI();
 
-    const SDK::Kernel& mKernel;
-    GSModel            mGSModel;
-    bool               mTerminate;
-    bool               mGUIStarted;
-
-    SDK::Sensors::DriverConnection mHRSensor;
-
-    float mHR = 0;
-    float mHRTL = 0;
-    ActivityWriter mActivityWriter;
+    void onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
     static uint32_t ParseVersion(const char* str);
 };

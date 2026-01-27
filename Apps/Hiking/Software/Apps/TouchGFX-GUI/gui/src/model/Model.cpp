@@ -3,7 +3,7 @@
 #include <gui/common/FrontendApplication.hpp>
 
 #include "SDK/Kernel/KernelProviderGUI.hpp"
-#include "SDK/../../../Port/TouchGFX/TouchGFXCommandProcessor.hpp"
+#include "SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 #define LOG_MODULE_PRX      "Model"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO

@@ -8,13 +8,14 @@
 #include <simulator/mainBase.hpp>
 #include "touchgfx/Utils.hpp"
 
-#include "SDK/Simulator/Kernel/KernelBase.hpp"
+#include "SDK/Kernel/KernelBuilder.hpp"
+#include "SDK/Simulator/Kernel/Kernel.hpp"
+#include "SDK/Simulator/Sensors/SensorCore.hpp"
 #include "SDK/Kernel/KernelProviderGUI.hpp"
 #include "SDK/Kernel/KernelProviderService.hpp"
-#include "SDK/Platform/OS/OS.hpp"
-#include "SDK/Simulator/Sensors/SensorCore.hpp"
-#include "SDK/Simulator/Kernel/Mock/MockServiceControl.hpp"
-#include "SDK/AppSystem/SvcBootstrap.hpp"
+#include "SDK/Simulator/OS/OS.hpp"
+#include "SDK/Simulator/App/AppCore.hpp"
+#include "SDK/Simulator/App/AppMessageCore.hpp"
 
 #include "gui/common/GuiConfig.hpp"
 #include "Service.hpp"
@@ -28,46 +29,41 @@
 #include "Windows.h"
 #endif
 
-#define LOG_MODULE_PRX      "main::"
+#define LOG_MODULE_PRX      "main"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
 #include "SDK/UnaLogger/Logger.h"
 
 using namespace touchgfx;
 
-static uint32_t LoggerTimeFunc(void)
+// Kernel thread function
+static void kernelThreadFunction(App::Core* appCore)
 {
-#ifdef __linux__
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-
-    return (uint32_t)((ts.tv_sec * 1000ULL) + (ts.tv_nsec / 1000000ULL));
-#else
-    return (uint32_t)GetTickCount64();
-#endif
-}
-
-static void LoggerPrint(const char* str)
-{
-    touchgfx_printf(str);
+    appCore->run();
 }
 
 // Service thread function
-static void runService(SDK::Service::Bootstrap* bootstrap)
+static void serviceThreadFunction(Service* service)
 {
-    LOG_INFO("service thread is started\n");
-
-    bootstrap->run();
+    service->run();
 }
 
-static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBase& guiKernel, int argc, char** argv)
+static int runTouchGFX(SDK::App::Comm&         appComm,
+                       SDK::Simulator::Kernel& srvKernel,
+                       SDK::Simulator::Kernel& guiKernel,
+                       int                     argc,
+                       char**                  argv)
 {
-    // Init KernelHolder and KernelManager
-    Simulator::KernelHolder::Create(guiKernel);
-    SDK::KernelProviderGUI::CreateInstance(guiKernel.getKernel());
+    // Save Service's kernel for global access
+    SDK::KernelProviderService::CreateInstance(&srvKernel.getKernel());
 
-    // Create a service app object and call approproate callbacks
-    SDK::KernelProviderService::CreateInstance(serviceKernel.getKernel());
-    SDK::Service::Bootstrap bootstrap;
+    // Save GUI's kernel for global access
+    SDK::KernelProviderGUI::CreateInstance(&guiKernel.getKernel());
+
+    // Create the Service of the application
+    Service service(SDK::KernelProviderService::GetInstance().getKernel());
+
+	// Create the Application core
+	App::Core appCore(appComm, srvKernel, guiKernel);
 
     //For windows/linux, DMA transfers are simulated
     touchgfx::NoDMA dma;
@@ -88,17 +84,20 @@ static int runTouchGFX(Simulator::KernelBase& serviceKernel, Simulator::KernelBa
     //// to.
     touchgfx_enable_stdio();
 
+    // Initialize Logger with Service's kernel. In real app Service and GUI will have each its own kernel.
+    Logger_init(srvKernel.getKernel().log);
+
     // Start service thread
-    serviceKernel.startApp();
-    std::thread serviceThread(runService, &bootstrap);
+    std::thread serviceThread(serviceThreadFunction, &service);
+    std::thread kernelThread(kernelThreadFunction, &appCore);
 
-    guiKernel.startApp();                           // Start GUI kernel simulator
-    touchgfx::HAL::getInstance()->taskEntry();      // Main GUI loop
-    guiKernel.stopApp();                            // Stop GUI kernel simulator
+    touchgfx::HAL::getInstance()->taskEntry();  // Main GUI loop
+	
+    appCore.stopRequest();
 
-    // Stop service kernel simulator and stop its thread
-    serviceKernel.stopApp();
+    // Stop threads
     serviceThread.join();
+    kernelThread.join();
 
     return EXIT_SUCCESS;
 }
@@ -108,25 +107,35 @@ int main(int argc, char** argv)
 {
 #else
 #include <shellapi.h>
-    #ifdef _UNICODE
-    #error Cannot run in unicode mode
-    #endif
+#ifdef _UNICODE
+#error Cannot run in unicode mode
+#endif
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     int argc;
     char** argv = touchgfx::HALSDL2::getArgv(&argc);
 #endif
 
-    OS::Mutex mutexLog;
-    Logger_init(LoggerPrint);
-    Logger_setMutex(&mutexLog);
-    Logger_setTimeFunc(LoggerTimeFunc);
-
     // Create kernel objects and service control
-    Sensor::Core                  sensorCore;
-    Simulator::MockServiceControl serviceControl;
-    Simulator::KernelBase         serviceKernel(true, serviceControl);
-    Simulator::KernelBase         guiKernel(false, serviceControl, &sensorCore);
+    SDK::Simulator::Sensors::Core sensorCore;
+    SDK::App::MessageCore         appMessageCore;
 
-    return runTouchGFX(serviceKernel, guiKernel, argc, argv);
+	SDK::Simulator::Mock::SystemService serviceSystem;
+    SDK::Simulator::Kernel serviceKernel("service", nullptr);
+	serviceKernel.setIAppComm(appMessageCore.getAppComm().getServiceComm());
+	serviceKernel.setISystem(&serviceSystem);
+
+    SDK::Simulator::Mock::SystemGUI guiSystem;
+    SDK::Simulator::Kernel guiKernel("gui", &sensorCore);
+    guiKernel.setIAppComm(appMessageCore.getAppComm().getGuiComm());
+    guiKernel.setISystem(&guiSystem);
+
+    // Save GUI kernel for simulator
+    SDK::Simulator::KernelHolder::Create(guiKernel);
+
+    return runTouchGFX(appMessageCore.getAppComm(),
+                       serviceKernel,
+                       guiKernel,
+                       argc,
+                       argv);
 }

@@ -315,6 +315,75 @@
         ]
       },
       {
+        "Name": "TrackStartConfirmation",
+        "CanvasBufferSize": 3600,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "text",
+            "X": 35,
+            "Y": 94,
+            "Width": 170,
+            "Height": 52,
+            "LockPosition": true,
+            "TextId": "TMP_SEMIBOLD_20",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "LineSpacing": -5,
+            "Wildcard1": {
+              "TextId": "TEXT_START_BEFORE_GPS_FIX",
+              "UseBuffer": true,
+              "BufferSize": 40
+            }
+          },
+          {
+            "Type": "Image",
+            "Name": "tick",
+            "X": 186,
+            "Y": 60,
+            "Width": 22,
+            "Height": 17,
+            "LockPosition": true,
+            "RelativeFilename": "MenuAssets_Tick.png"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "buttons",
+            "Y": 47,
+            "Width": 240,
+            "Height": 147,
+            "LockPosition": true,
+            "CustomContainerDefinitionName": "Buttons"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "title",
+            "X": 50,
+            "Width": 140,
+            "Height": 41,
+            "LockPosition": true,
+            "CustomContainerDefinitionName": "Title"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerScreenTransitionBegins"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "TrackStartConfirmation"
+            }
+          }
+        ]
+      },
+      {
         "Name": "Track",
         "CanvasBufferSize": 3600,
         "Components": [

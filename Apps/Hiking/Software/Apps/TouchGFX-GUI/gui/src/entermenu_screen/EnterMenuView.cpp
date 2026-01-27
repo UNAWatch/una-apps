@@ -100,10 +100,12 @@ void EnterMenuView::handleKeyEvent(uint8_t key)
 
         switch (id) {
             case App::Menu::ID_START:
-//                if (mGpsFix == true) {
+                if (mGpsFix == true) {
                     presenter->startTrack();
                     application().gotoTrackScreenNoTransition();
-//                }
+                } else {
+                    application().gotoTrackStartConfirmationScreenNoTransition();
+                }
                 break;
             case App::Menu::ID_SETTINGS:
                 application().gotoMenuSettingsScreenNoTransition();
@@ -137,13 +139,13 @@ void EnterMenuView::updBackground()
 {
     uint32_t id = menu.getSelectedItem();
     if (id == App::Menu::ID_START) {
-//        if (mGpsFix == false) {
-//            menu.setBackground(BITMAP_BACKGROUND_GRAY_ID);
-//            menu.getButtons().setR1(Buttons::NONE);
-//        } else {
+        if (mGpsFix == false) {
+            menu.setBackground(BITMAP_BACKGROUND_GRAY_ID);
+            menu.getButtons().setR1(Buttons::NONE);
+        } else {
             menu.setBackground(BITMAP_BACKGROUND_TEAL_ID);
             menu.getButtons().setR1(Buttons::AMBER);
-//        }
+        }
     } else if (id == App::Menu::ID_LAST_ACTIVITY) {
         if (mSummaryAvailable == false) {
             menu.setBackground(BITMAP_BACKGROUND_GRAY_ID);

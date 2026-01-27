@@ -47,6 +47,9 @@ public:
     // MenuStepsSaved
     void gotoMenuStepsSavedScreenNoTransition();
 
+    // TrackStartConfirmation
+    void gotoTrackStartConfirmationScreenNoTransition();
+
     // Track
     void gotoTrackScreenNoTransition();
 
@@ -99,6 +102,9 @@ protected:
 
     // MenuStepsSaved
     void gotoMenuStepsSavedScreenNoTransitionImpl();
+
+    // TrackStartConfirmation
+    void gotoTrackStartConfirmationScreenNoTransitionImpl();
 
     // Track
     void gotoTrackScreenNoTransitionImpl();

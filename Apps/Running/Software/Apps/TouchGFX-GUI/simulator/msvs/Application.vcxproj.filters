@@ -364,17 +364,8 @@
     <Filter Include="SDK\Libs\Source">
       <UniqueIdentifier>{8b2072b3-80a5-4927-833e-58bfd31407d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\Libs\Source\Platform">
-      <UniqueIdentifier>{e129c05a-54b3-46a1-9b0a-b49cb572cdd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SDK\Libs\Source\Platform\OS">
-      <UniqueIdentifier>{965d9f24-fa88-4507-ab81-92f85a21b3aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SDK\Libs\Source\Simulator">
       <UniqueIdentifier>{f3a37b1c-c854-4ba3-b96e-328eb0bf19ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SDK\Libs\Source\SynchManager">
-      <UniqueIdentifier>{d8aeee87-9db7-4f25-882c-a41e4f16c6df}</UniqueIdentifier>
     </Filter>
     <Filter Include="SDK\Libs\Source\UnaLogger">
       <UniqueIdentifier>{b7bff1f9-96da-4789-bffb-93bf6598efd9}</UniqueIdentifier>
@@ -468,6 +459,30 @@
     </Filter>
     <Filter Include="SDK\Libs\Source\SensorLayer">
       <UniqueIdentifier>{50a5fe9a-94d8-447f-97e7-9c8fab22b452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\App">
+      <UniqueIdentifier>{e439ad10-52f0-481e-90df-09921f7a272c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\OS">
+      <UniqueIdentifier>{c64a867d-c7a3-4bdd-99c4-abdaaeed283a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Port">
+      <UniqueIdentifier>{bc5647a6-f65e-49a6-a3b3-16c2ef0420b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Port\TouchGFX">
+      <UniqueIdentifier>{880c652f-6b0e-40ec-9961-cc008d32d1e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui\trackstartconfirmation_screen">
+      <UniqueIdentifier>684A498E-6E05-BEEF-C5BC-BF9F710F4EED</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\trackstartconfirmation_screen">
+      <UniqueIdentifier>C2CF844D-9BCD-29E8-AE28-CB3A0F49FCA7</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\trackstartconfirmation_screen">
+      <UniqueIdentifier>C55ABC64-9380-939D-F1D4-5183CB46421D</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\trackstartconfirmation_screen">
+      <UniqueIdentifier>F53C5E99-978D-7BCE-47B4-2FA97C34903C</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -726,12 +741,6 @@
     <ClCompile Include="..\..\gui\src\containers\PolyLine.cpp">
       <Filter>Source Files\gui\containers</Filter>
     </ClCompile>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Platform\OS\OS.cpp">
-      <Filter>SDK\Libs\Source\Platform\OS</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\KernelBase.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel</Filter>
-    </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp">
       <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
     </ClCompile>
@@ -746,9 +755,6 @@
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Sensors\SensorCore.cpp">
       <Filter>SDK\Libs\Source\Simulator\Sensors</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SdkPath)\Libs\Source\SynchManager\SynchManager.cpp">
-      <Filter>SDK\Libs\Source\SynchManager</Filter>
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\UnaLogger\Logger.cpp">
       <Filter>SDK\Libs\Source\UnaLogger</Filter>
@@ -1062,9 +1068,54 @@
     <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\FitHelper\FitHelper.cpp">
       <Filter>SDK\Libs\Source\FitHelper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorDriverConnection.cpp">
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorConnection.cpp">
       <Filter>SDK\Libs\Source\SensorLayer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppComm.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppCore.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppMessageCore.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\KernelMessageDispatcher.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\MessageManager.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\OS\OS.cpp">
+      <Filter>SDK\Libs\Source\Simulator\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\System.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Kernel.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp">
+      <Filter>SDK\Libs\Source\Port\TouchGFX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\trackstartconfirmation_screen\TrackStartConfirmationPresenter.cpp">
+      <Filter>Source Files\gui\trackstartconfirmation_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\trackstartconfirmation_screen\TrackStartConfirmationView.cpp">
+      <Filter>Source Files\gui\trackstartconfirmation_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\trackstartconfirmation_screen\TrackStartConfirmationViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\trackstartconfirmation_screen</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\gui\include\gui\trackstartconfirmation_screen\TrackStartConfirmationPresenter.hpp">
+      <Filter>Header Files\gui\trackstartconfirmation_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\trackstartconfirmation_screen\TrackStartConfirmationView.hpp">
+      <Filter>Header Files\gui\trackstartconfirmation_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\trackstartconfirmation_screen\TrackStartConfirmationViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\trackstartconfirmation_screen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml">
@@ -1594,24 +1645,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menusettings_screen\MenuSettingsViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\menusettings_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\menusteps_screen\MenuStepsPresenter.hpp">
-      <Filter>Header Files\gui\menusteps_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\menustepssaved_screen\MenuStepsSavedPresenter.hpp">
-      <Filter>Header Files\gui\menustepssaved_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\menustepssaved_screen\MenuStepsSavedView.hpp">
-      <Filter>Header Files\gui\menustepssaved_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menustepssaved_screen\MenuStepsSavedViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\menustepssaved_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\menusteps_screen\MenuStepsView.hpp">
-      <Filter>Header Files\gui\menusteps_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menusteps_screen\MenuStepsViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\menusteps_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\menutime_screen\MenuTimePresenter.hpp">
       <Filter>Header Files\gui\menutime_screen</Filter>
     </ClInclude>
@@ -1703,12 +1736,6 @@
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackFace3Base.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TrackFace4.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TrackFace4Base.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\tracklap_screen\TrackLapPresenter.hpp">

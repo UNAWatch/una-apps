@@ -1,12 +1,14 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include "SDK/GSModel/IGUIModel.hpp"
-#include "SDK/Kernel/Kernel.hpp"
-#include "GSModelEvents/G2SEvents.hpp"
-#include "GSModelEvents/S2GEvents.hpp"
 #include "touchgfx/UIEventListener.hpp"
+
+#include "SDK/Kernel/Kernel.hpp"
+#include "SDK/Interfaces/IGuiLifeCycleCallback.hpp"
+#include "SDK/Interfaces/ICustomMessageHandler.hpp"
+
 #include "gui/common/GuiConfig.hpp"
+#include "Commands.hpp"
 
 #include <vector>
 #include <memory>
@@ -15,8 +17,8 @@ class FrontendApplication;
 class ModelListener;
 
 class Model : public touchgfx::UIEventListener,
-              public SDK::Interface::IUserApp::Callback,
-              public IGUIModelHandler
+              public SDK::Interface::IGuiLifeCycleCallback,
+              public SDK::Interface::ICustomMessageHandler
 {
 public:
     Model();
@@ -37,18 +39,21 @@ public:
     void exitApp();
 
 protected:
+    ModelListener* modelListener;           ///< Pointer to model listener
+
+    // Fields required for for GUI <-> Service communication
+    const SDK::Kernel& mKernel;             ///< Reference to kernel interface
+
+    bool mInvalidate = false;               ///< Request to redraw current screen
 
     // IUserApp implementation
     virtual void onStart()   override;
+    virtual void onResume()  override;
     virtual void onStop()    override;
+    virtual void onSuspend() override;
 
-
-    // IGUIModelHandler implementation
-    void handleEvent(const S2GEvent::HeartRate& event) override;
-
-    const SDK::Kernel&         mKernel;
-    ModelListener*             modelListener;
-    std::shared_ptr<IGUIModel> mGSModel;
+    // ICustomMessageHandler implementation
+    virtual bool customMessageHandler(SDK::MessageBase *msg) override;
 };
 
 #endif // MODEL_HPP

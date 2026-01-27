@@ -30,6 +30,8 @@
 #include <gui/menusteps_screen/MenuStepsPresenter.hpp>
 #include <gui/menustepssaved_screen/MenuStepsSavedView.hpp>
 #include <gui/menustepssaved_screen/MenuStepsSavedPresenter.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationPresenter.hpp>
 #include <gui/track_screen/TrackView.hpp>
 #include <gui/track_screen/TrackPresenter.hpp>
 #include <gui/tracklap_screen/TrackLapView.hpp>
@@ -75,6 +77,7 @@ public:
             touchgfx::meta::TypeList< MenuTimeSavedView,
             touchgfx::meta::TypeList< MenuStepsView,
             touchgfx::meta::TypeList< MenuStepsSavedView,
+            touchgfx::meta::TypeList< TrackStartConfirmationView,
             touchgfx::meta::TypeList< TrackView,
             touchgfx::meta::TypeList< TrackLapView,
             touchgfx::meta::TypeList< TrackActionView,
@@ -82,7 +85,7 @@ public:
             touchgfx::meta::TypeList< TrackDiscardedView,
             touchgfx::meta::TypeList< TrackSavedView,
             touchgfx::meta::TypeList< TrackSummaryView,
-            touchgfx::meta::Nil > > > > > > > > > > > > > > >
+            touchgfx::meta::Nil > > > > > > > > > > > > > > > >
             > GeneratedViewTypes;
 
     /**
@@ -103,6 +106,7 @@ public:
             touchgfx::meta::TypeList< MenuTimeSavedPresenter,
             touchgfx::meta::TypeList< MenuStepsPresenter,
             touchgfx::meta::TypeList< MenuStepsSavedPresenter,
+            touchgfx::meta::TypeList< TrackStartConfirmationPresenter,
             touchgfx::meta::TypeList< TrackPresenter,
             touchgfx::meta::TypeList< TrackLapPresenter,
             touchgfx::meta::TypeList< TrackActionPresenter,
@@ -110,7 +114,7 @@ public:
             touchgfx::meta::TypeList< TrackDiscardedPresenter,
             touchgfx::meta::TypeList< TrackSavedPresenter,
             touchgfx::meta::TypeList< TrackSummaryPresenter,
-            touchgfx::meta::Nil > > > > > > > > > > > > > > >
+            touchgfx::meta::Nil > > > > > > > > > > > > > > > >
             > GeneratedPresenterTypes;
 
     /**
