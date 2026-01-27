@@ -2,13 +2,12 @@
 cmake_minimum_required(VERSION 3.21)
 
 # App configuration
-set(APP_NAME "Running")
+set(APP_NAME "GlanceActivity")
 set(DEV_ID "UNA")
-set(APP_ID "A12E9F4C8B7D3A65")
+set(APP_ID "1122334455667788")
 set(RESOURCES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Resources")
 set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Output")
 set(LIBS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../Libs")
-set(TOUCHGFX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../TouchGFX-GUI")
 
 # Includes all build steps and required tools
 # Sets toolchain before project
@@ -63,6 +62,7 @@ set(SERVICE_INCLUDE_DIRS
 una_app_build_service(${APP_NAME}Service.elf)
 
 
+# GUI Build
 if(DEFINED TOUCHGFX_PATH)
     set(GUI_SOURCES
         ${TOUCHGFX_SOURCES}
