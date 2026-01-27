@@ -1,10 +1,10 @@
 file(GLOB_RECURSE LIBS_SOURCES CONFIGURE_DEPENDS
-    "Sources/*.c"
-    "Sources/*.cpp"
-    "Source/*.c"
-    "Source/*.cpp"
+    ${CMAKE_CURRENT_LIST_DIR}/Sources/*.c
+    ${CMAKE_CURRENT_LIST_DIR}/Sources/*.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Source/*.c
+    ${CMAKE_CURRENT_LIST_DIR}/Source/*.cpp
 )
 
 set(LIBS_INCLUDE_DIRS
-    "Header"
+    ${CMAKE_CURRENT_LIST_DIR}/Header
 )
