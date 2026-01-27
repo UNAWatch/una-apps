@@ -23,16 +23,16 @@
 #include <gui/menutime_screen/MenuTimePresenter.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedView.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedPresenter.hpp>
-#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationView.hpp>
-#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationPresenter.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationPresenter.hpp>
 #include <gui/track_screen/TrackView.hpp>
 #include <gui/track_screen/TrackPresenter.hpp>
 #include <gui/tracklap_screen/TrackLapView.hpp>
 #include <gui/tracklap_screen/TrackLapPresenter.hpp>
 #include <gui/trackaction_screen/TrackActionView.hpp>
 #include <gui/trackaction_screen/TrackActionPresenter.hpp>
-#include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
-#include <gui/trackstartconfirmation_screen/TrackStartConfirmationPresenter.hpp>
+#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationView.hpp>
+#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationPresenter.hpp>
 #include <gui/trackdiscarded_screen/TrackDiscardedView.hpp>
 #include <gui/trackdiscarded_screen/TrackDiscardedPresenter.hpp>
 #include <gui/tracksaved_screen/TrackSavedView.hpp>
@@ -148,17 +148,17 @@ void FrontendApplicationBase::gotoMenuTimeSavedScreenNoTransitionImpl()
     touchgfx::makeTransition<MenuTimeSavedView, MenuTimeSavedPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-// TrackDiscardConfirmation
+// TrackStartConfirmation
 
-void FrontendApplicationBase::gotoTrackDiscardConfirmationScreenNoTransition()
+void FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoTrackDiscardConfirmationScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoTrackDiscardConfirmationScreenNoTransitionImpl()
+void FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<TrackDiscardConfirmationView, TrackDiscardConfirmationPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<TrackStartConfirmationView, TrackStartConfirmationPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 // Track
@@ -200,17 +200,17 @@ void FrontendApplicationBase::gotoTrackActionScreenNoTransitionImpl()
     touchgfx::makeTransition<TrackActionView, TrackActionPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-// TrackStartConfirmation
+// TrackDiscardConfirmation
 
-void FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransition()
+void FrontendApplicationBase::gotoTrackDiscardConfirmationScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoTrackDiscardConfirmationScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoTrackStartConfirmationScreenNoTransitionImpl()
+void FrontendApplicationBase::gotoTrackDiscardConfirmationScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<TrackStartConfirmationView, TrackStartConfirmationPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<TrackDiscardConfirmationView, TrackDiscardConfirmationPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 // TrackDiscarded

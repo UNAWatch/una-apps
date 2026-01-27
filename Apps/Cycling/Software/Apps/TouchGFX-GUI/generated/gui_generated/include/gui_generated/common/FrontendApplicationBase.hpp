@@ -41,8 +41,8 @@ public:
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransition();
 
-    // TrackDiscardConfirmation
-    void gotoTrackDiscardConfirmationScreenNoTransition();
+    // TrackStartConfirmation
+    void gotoTrackStartConfirmationScreenNoTransition();
 
     // Track
     void gotoTrackScreenNoTransition();
@@ -53,8 +53,8 @@ public:
     // TrackAction
     void gotoTrackActionScreenNoTransition();
 
-    // TrackStartConfirmation
-    void gotoTrackStartConfirmationScreenNoTransition();
+    // TrackDiscardConfirmation
+    void gotoTrackDiscardConfirmationScreenNoTransition();
 
     // TrackDiscarded
     void gotoTrackDiscardedScreenNoTransition();
@@ -91,8 +91,8 @@ protected:
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransitionImpl();
 
-    // TrackDiscardConfirmation
-    void gotoTrackDiscardConfirmationScreenNoTransitionImpl();
+    // TrackStartConfirmation
+    void gotoTrackStartConfirmationScreenNoTransitionImpl();
 
     // Track
     void gotoTrackScreenNoTransitionImpl();
@@ -103,8 +103,8 @@ protected:
     // TrackAction
     void gotoTrackActionScreenNoTransitionImpl();
 
-    // TrackStartConfirmation
-    void gotoTrackStartConfirmationScreenNoTransitionImpl();
+    // TrackDiscardConfirmation
+    void gotoTrackDiscardConfirmationScreenNoTransitionImpl();
 
     // TrackDiscarded
     void gotoTrackDiscardedScreenNoTransitionImpl();

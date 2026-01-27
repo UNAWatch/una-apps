@@ -315,7 +315,7 @@
         ]
       },
       {
-        "Name": "TrackDiscardConfirmation",
+        "Name": "TrackStartConfirmation",
         "CanvasBufferSize": 3600,
         "Components": [
           {
@@ -378,7 +378,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "TrackStartConfirmation"
+              "ActionComponent": "TrackDiscardConfirmation"
             }
           }
         ]
@@ -726,7 +726,7 @@
         ]
       },
       {
-        "Name": "TrackStartConfirmation",
+        "Name": "TrackDiscardConfirmation",
         "CanvasBufferSize": 3600,
         "Components": [
           {
@@ -789,7 +789,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "TrackDiscardConfirmation"
+              "ActionComponent": "TrackStartConfirmation"
             }
           }
         ]
