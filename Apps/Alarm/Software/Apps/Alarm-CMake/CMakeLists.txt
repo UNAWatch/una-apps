@@ -1,8 +1,10 @@
 # Watch App CMakeLists.txt - Simplified version using SDK
 cmake_minimum_required(VERSION 3.21)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
 
 # App configuration
 set(APP_NAME "Alarm")
+set(APP_TYPE "Activity")
 set(DEV_ID "UNA")
 set(APP_ID "123456789ABCDEF0")
 set(RESOURCES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Resources")
@@ -14,14 +16,9 @@ set(TOUCHGFX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../TouchGFX-GUI")
 # Sets toolchain before project
 include($ENV{UNA_SDK}/cmake/una-app.cmake)
 
-# Includes sets:
-#              UNA_SDK_SOURCES_COMMON
-#              UNA_SDK_SOURCES_SERVICE
-#              UNA_SDK_SOURCES_GUI
-#              UNA_SDK_INCLUDE_DIRS_COMMON
-#              UNA_SDK_INCLUDE_DIRS_SERVICE
-#              UNA_SDK_INCLUDE_DIRS_GUI
-#              SCRIPTS_PATH
+# Includes sets: SCRIPTS_PATH,
+# UNA_SDK_SOURCES_COMMON, UNA_SDK_SOURCES_SERVICE, UNA_SDK_SOURCES_GUI,
+# UNA_SDK_INCLUDE_DIRS_COMMON, UNA_SDK_INCLUDE_DIRS_SERVICE, UNA_SDK_INCLUDE_DIRS_GUI
 include($ENV{UNA_SDK}/cmake/una-sdk.cmake)
 
 # Includes LIBS_SOURCES, LIBS_INCLUDE_DIRS
