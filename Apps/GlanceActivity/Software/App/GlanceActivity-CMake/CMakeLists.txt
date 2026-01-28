@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 3.21)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
 
 # App configuration
-set(APP_NAME "GlanceActivity")
+set(APP_NAME "GActivityMins")
 set(APP_TYPE "Glance")
 set(DEV_ID "UNA")
-set(APP_ID "1122334455667788")
+set(APP_ID "A1E84D2F7A9C5B60")
 set(RESOURCES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Resources")
 set(OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Output")
 set(LIBS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../Libs")
@@ -36,14 +36,13 @@ una_app_setup_version(BUILD_VERSION ${CMAKE_CURRENT_SOURCE_DIR})
 # Build service
 set(SERVICE_SOURCES
     ${LIBS_SOURCES}
-    "${CMAKE_CURRENT_SOURCE_DIR}/syscalls.cpp"
     ${UNA_SDK_SOURCES_COMMON}
-    ${UNA_SDK_SOURCES_SERVICE}
+    ${UNA_SDK_SOURCES_APPSYSTEM}
+    ${UNA_SDK_SOURCES_SENSOR}
 )
 set(SERVICE_INCLUDE_DIRS
     ${LIBS_INCLUDE_DIRS}
     ${UNA_SDK_INCLUDE_DIRS_COMMON}
-    ${UNA_SDK_INCLUDE_DIRS_SERVICE}
     "${CMAKE_CURRENT_SOURCE_DIR}/../TouchGFX-GUI/gui/include"
 )
 # Needs:
@@ -64,7 +63,6 @@ if(DEFINED TOUCHGFX_PATH)
     set(GUI_SOURCES
         ${TOUCHGFX_SOURCES}
         "${CMAKE_CURRENT_SOURCE_DIR}/PaintImpl.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/syscalls.cpp"
         ${UNA_SDK_SOURCES_COMMON}
         ${UNA_SDK_SOURCES_GUI}
     )
