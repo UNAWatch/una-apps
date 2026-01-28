@@ -43,18 +43,7 @@ set(SERVICE_SOURCES
 set(SERVICE_INCLUDE_DIRS
     ${LIBS_INCLUDE_DIRS}
     ${UNA_SDK_INCLUDE_DIRS_COMMON}
-    "${CMAKE_CURRENT_SOURCE_DIR}/../TouchGFX-GUI/gui/include"
 )
-# Needs:
-# - TARGET_NAME - arg
-# - UNA_APP_SERVICE_RAM_LENGTH - optional
-# - UNA_APP_SERVICE_STACK_SIZE - optional 
-# - BUILD_VERSION
-# - APP_NAME
-# - DEV_ID
-# - APP_ID
-# - SERVICE_INCLUDE_DIRS
-# - SERVICE_SOURCES
 una_app_build_service(${APP_NAME}Service.elf)
 
 
@@ -62,7 +51,6 @@ una_app_build_service(${APP_NAME}Service.elf)
 if(DEFINED TOUCHGFX_PATH)
     set(GUI_SOURCES
         ${TOUCHGFX_SOURCES}
-        "${CMAKE_CURRENT_SOURCE_DIR}/PaintImpl.cpp"
         ${UNA_SDK_SOURCES_COMMON}
         ${UNA_SDK_SOURCES_GUI}
     )
@@ -72,13 +60,6 @@ if(DEFINED TOUCHGFX_PATH)
         ${UNA_SDK_INCLUDE_DIRS_GUI}
         ${TOUCHGFX_INCLUDE_DIRS}
     )
-    
-    # Needs:
-    # - TARGET_NAME - arg
-    # - GUI_SOURCES
-    # - GUI_INCLUDE_DIRS
-    # - UNA_APP_SERVICE_RAM_LENGTH - optional
-    # - UNA_APP_SERVICE_STACK_SIZE - optional 
     una_app_build_gui(${APP_NAME}GUI.elf)
 endif()
 
