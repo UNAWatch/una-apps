@@ -63,13 +63,13 @@ jobs:
       - name: Checkout
         if: github.ref_type != 'tag'
         run: |
-          cd SDK/examples
+          cd SDK/Examples
           git checkout ${{ github.head_ref || github.ref_name }}
           
       - name: Build app ${{ matrix.app }}
         run: |
           echo "Setup environment"
-          cd SDK/examples
+          cd SDK/Examples
           . ../Utilities/Scripts/build-cube/find-cube.sh
           . ../Utilities/Scripts/build-cube/una-version.sh
           echo "Building app: ${{ matrix.app }}"
@@ -103,7 +103,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-${{ matrix.app }}
-          path: SDK/examples/Apps/${{ matrix.app }}/Output/*.uapp
+          path: SDK/Examples/Apps/${{ matrix.app }}/Output/*.uapp
 
   release:
     runs-on: ubuntu-latest
