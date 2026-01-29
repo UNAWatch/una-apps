@@ -43,6 +43,7 @@ set(SERVICE_SOURCES
 set(SERVICE_INCLUDE_DIRS
     ${LIBS_INCLUDE_DIRS}
     ${UNA_SDK_INCLUDE_DIRS_COMMON}
+    ${UNA_SDK_INCLUDE_DIRS_COMMON}
 )
 una_app_build_service(${APP_NAME}Service.elf)
 
