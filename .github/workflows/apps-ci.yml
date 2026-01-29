@@ -71,7 +71,6 @@ jobs:
           echo "Setup environment"
           cd SDK/Examples
           . ../Utilities/Scripts/build-cube/find-cube.sh
-          . ../Utilities/Scripts/build-cube/una-version.sh
           echo "Building app: ${{ matrix.app }}"
           # Discover projects for this app
           CUBEIDE_PROJECTS=`python3 .github/scripts/generate-app-list.py --app ${{ matrix.app }}`
@@ -94,6 +93,7 @@ jobs:
           cat "$temp_non" "$temp_svc" | while IFS= read -r p; do
             [ -z "$p" ] && continue
             echo "Building project: $p"
+            . ../Utilities/Scripts/build-cube/una-version.sh "$p"
             ../Utilities/Scripts/build-cube/build-cube.sh "$p"
           done
           rm -f "$temp_non" "$temp_svc"
