@@ -61,9 +61,9 @@ void Service::run()
                 LOG_INFO("Force exit from the application\n");
             case SDK::MessageType::EVENT_GLANCE_STOP:
                 LOG_INFO("GLANCE has stopped\n");
-                disconnect();
-                mKernel.comm.releaseMessage(msg);
-                return;
+                // disconnect();
+                // mKernel.comm.releaseMessage(msg);
+                // return;
 
             case SDK::MessageType::EVENT_GLANCE_TICK:
                 onGlanceTick();
