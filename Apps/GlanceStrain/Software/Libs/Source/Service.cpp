@@ -35,6 +35,15 @@ void Service::run()
 {
     LOG_INFO("Started\n");
 
+    createGuiControls();
+    if (configGui()) {
+        connect();
+        checkDayRollover();
+
+    } else {
+        return;
+    }
+
     while (true) {
         SDK::MessageBase *msg;
 
@@ -46,16 +55,6 @@ void Service::run()
         switch (msg->getType()) {
             case SDK::MessageType::EVENT_GLANCE_START:
             LOG_INFO("GLANCE is now running\n");
-            if (configGui()) {
-                    createGuiControls();
-                    connect();
-                    checkDayRollover();
-
-                } else {
-                    mKernel.comm.releaseMessage(msg);
-                    mKernel.sys.exit(0);
-                }
-                break;
 
             case SDK::MessageType::COMMAND_APP_STOP:
                 LOG_INFO("Force exit from the application\n");
