@@ -45,6 +45,9 @@ jobs:
       matrix:
         app: ${{ fromJson(needs.prepare.outputs.apps) }}
     steps:
+      - name: Setup GIT
+        run: apt update && apt install -y git
+
       - name: Clone SDK
         uses: actions/checkout@v5
         with:
