@@ -37,7 +37,50 @@ jobs:
         id: generate
         run: python3 .github/scripts/generate-app-list.py
 
-  apps-build:
+  cmake-build:
+    runs-on: ubuntu-latest
+    needs: prepare
+    strategy:
+      matrix:
+        app: ${{ fromJson(needs.prepare.outputs.apps) }}
+    steps:
+      - name: Setup ARM GCC Toolchain
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        with:
+          release: '12.3.Rel1'
+
+      - name: Clone SDK
+        uses: actions/checkout@v5
+        with:
+          repository: UNAWatch/una-sdk
+          path: SDK
+          fetch-depth: 0
+          submodules: true
+          ref: main
+          token: ${{ secrets.CROSS_REPO_PAT }}
+
+      - name: Checkout Examples
+        if: github.ref_type != 'tag'
+        run: |
+          cd SDK/Examples
+          git checkout ${{ github.head_ref || github.ref_name }}
+
+      - name: Build app ${{ matrix.app }} with CMake
+        run: |
+          cd SDK/Examples/Apps/${{ matrix.app }}/Software/Apps/${{ matrix.app }}-CMake
+          export UNA_SDK=$GITHUB_WORKSPACE/SDK
+          mkdir -p build
+          cd build
+          cmake ..
+          make -j$(nproc)
+
+      - name: Upload CMake app artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmake-app-${{ matrix.app }}
+          path: SDK/Examples/Apps/${{ matrix.app }}/Software/Apps/${{ matrix.app }}-CMake/build/*.uapp
+
+  cubeide-build:
     runs-on: ubuntu-latest
     container: xanderhendriks/stm32cubeide:16.0
     env:
@@ -50,7 +93,7 @@ jobs:
       - name: Setup GIT
         run: apt update && apt install -y git
 
-      - name: Clone
+      - name: Clone SDK
         uses: actions/checkout@v5
         with:
           repository: UNAWatch/una-sdk
@@ -60,13 +103,13 @@ jobs:
           ref: main
           token: ${{ secrets.CROSS_REPO_PAT }}
 
-      - name: Checkout
+      - name: Checkout Examples
         if: github.ref_type != 'tag'
         run: |
           cd SDK/Examples
           git checkout ${{ github.head_ref || github.ref_name }}
-          
-      - name: Build app ${{ matrix.app }}
+
+      - name: Build app ${{ matrix.app }} with CubeIDE
         run: |
           echo "Setup environment"
           cd SDK/Examples
@@ -80,8 +123,8 @@ jobs:
           fi
           echo "Projects:"
           echo "$CUBEIDE_PROJECTS"
-          temp_non="/tmp/non_service_$$"
-          temp_svc="/tmp/service_$$"
+          temp_non="/tmp/non_service_$"
+          temp_svc="/tmp/service_$"
           touch "$temp_non" "$temp_svc"
           for p in $CUBEIDE_PROJECTS; do
             if echo "$p" | grep -q Service; then
@@ -99,15 +142,15 @@ jobs:
           rm -f "$temp_non" "$temp_svc"
           echo "App build complete: ${{ matrix.app }}"
 
-      - name: Upload app artifacts
+      - name: Upload CubeIDE app artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-${{ matrix.app }}
+          name: cubeide-app-${{ matrix.app }}
           path: SDK/Examples/Apps/${{ matrix.app }}/Output/*.uapp
 
   release:
     runs-on: ubuntu-latest
-    needs: apps-build
+    needs: [cmake-build, cubeide-build]
     if: github.event_name == 'release' || startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Install dependencies
@@ -151,7 +194,7 @@ jobs:
         run: |
           RELEASE_JSON=$(gh release view ${{ github.ref_name }} --json body,author,createdAt,name,url)
           echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$RELEASE_JSON" | jq -r '.body' >> $GITHUB_OUTPUT
+          echo "$body" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           echo "author=$(echo "$RELEASE_JSON" | jq -r '.author.login')" >> $GITHUB_OUTPUT
           echo "created_at=$(echo "$RELEASE_JSON" | jq -r '.createdAt')" >> $GITHUB_OUTPUT
