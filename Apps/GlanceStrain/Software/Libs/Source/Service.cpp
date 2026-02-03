@@ -56,12 +56,12 @@ void Service::run() {
 
             case SDK::MessageType::COMMAND_APP_STOP:
                 LOG_INFO("Force exit from the application\n");
+                saveJson();
+                disconnect();
+                mKernel.comm.releaseMessage(msg);
+                return;
             case SDK::MessageType::EVENT_GLANCE_STOP:
                 LOG_INFO("GLANCE has stopped\n");
-                saveJson();
-                // disconnect();
-                // mKernel.comm.releaseMessage(msg);
-                // return;
 
             case SDK::MessageType::EVENT_GLANCE_TICK:
                 LOG_DEBUG("Glance tick event\n");
@@ -85,11 +85,11 @@ void Service::run() {
 void Service::connect() {
     if (!mSensorHR.isConnected()) {
         LOG_DEBUG("Connect to HR sensors...\n");
-        mSensorHR.connect();
+        mSensorHR.connect(2000);
     }
     if (!mSensorActivity.isConnected()) {
         LOG_DEBUG("Connect to Activity sensor...\n");
-        mSensorActivity.connect();
+        mSensorActivity.connect(2000);
     }
 }
 
@@ -106,7 +106,8 @@ void Service::disconnect() {
 
 void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data *data, uint16_t count, uint16_t stride) {
     SDK::Sensor::DataBatch batch(data, count, stride);
-
+    
+    LOG_DEBUG("New data from SDL...\n");
     if (mSensorActivity.matchesDriver(handle)) {
         if (count > 0) {
             SDK::SensorDataParser::Activity p(batch[0]);
