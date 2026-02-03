@@ -1,5 +1,7 @@
 #include "Service.hpp"
 #include "SDK/Kernel/KernelProviderService.hpp"
+#include <array>
+#include <memory>
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
@@ -11,6 +13,8 @@
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserActivity.hpp"
+
+#include "SDK/Interfaces/IFileSystem.hpp"
 
 #include "icon_60x60.h"
 #include "icon_30x30.h"
@@ -60,6 +64,7 @@ void Service::run()
                 LOG_INFO("Force exit from the application\n");
             case SDK::MessageType::EVENT_GLANCE_STOP:
                 LOG_INFO("GLANCE has stopped\n");
+                saveJson();
                 // disconnect();
                 // mKernel.comm.releaseMessage(msg);
                 // return;
@@ -248,30 +253,42 @@ void Service::checkDayRollover()
 
 void Service::saveJson()
 {
-    return ;
-    // char json_buf[65536] = {0};
-    // size_t offset = 0;
-    // float avg_hr = (mSampleCount > 0) ? (mSumHR / static_cast<float>(mSampleCount)) : 0.0f;
+    auto json_buf = std::make_shared<std::array<uint8_t, 65536>>();
+    size_t offset = 0;
+    float avg_hr = (mSampleCount > 0) ? (mSumHR / static_cast<float>(mSampleCount)) : 0.0f;
 
-    // offset = std::snprintf(json_buf, sizeof(json_buf),
-    //     "{\"date\":\"%s\",\"total_strain\":%.1f,\"avg_hr\":%.1f,\"max_hr\":%u,\"active_min\":%lu,\"samples\":[",
-    //     mCurrentDate, mTotalStrain, avg_hr, mMaxHR, mActiveMin);
+    offset = std::snprintf(reinterpret_cast<char*>(json_buf->data()), json_buf->size(),
+        "{\"date\":\"%s\",\"total_strain\":%.1f,\"avg_hr\":%.1f,\"max_hr\":%u,\"active_min\":%lu,\"samples\":[",
+        mCurrentDate, mTotalStrain, avg_hr, mMaxHR, mActiveMin);
 
-    // bool first_sample = true;
-    // for (const auto& s : mSamples) {
-    //     if (!first_sample) {
-    //         offset += std::snprintf(json_buf + offset, sizeof(json_buf) - offset, ",");
-    //     } else {
-    //         first_sample = false;
-    //     }
-    //     offset += std::snprintf(json_buf + offset, sizeof(json_buf) - offset,
-    //         "{\"timestamp\":%llu,\"hr\":%hu,\"strain_delta\":%.3f}",
-    //         static_cast<unsigned long long>(s.timestamp), static_cast<unsigned short>(s.hr), s.strain_delta);
-    // }
-    // offset += std::snprintf(json_buf + offset, sizeof(json_buf) - offset, "]}");
+    bool first_sample = true;
+    for (const auto& s : mSamples) {
+        if (!first_sample) {
+            offset += std::snprintf(reinterpret_cast<char*>(json_buf->data()) + offset, json_buf->size() - offset, ",");
+        } else {
+            first_sample = false;
+        }
+        offset += std::snprintf(reinterpret_cast<char*>(json_buf->data()) + offset, json_buf->size() - offset,
+            "{\"timestamp\":%llu,\"hr\":%hu,\"strain_delta\":%.3f}",
+            static_cast<unsigned long long>(s.timestamp), static_cast<unsigned short>(s.hr), s.strain_delta);
+    }
+    offset += std::snprintf(reinterpret_cast<char*>(json_buf->data()) + offset, json_buf->size() - offset, "]}");
 
-    // if (offset > 0 && offset < sizeof(json_buf)) {
-    //     LOG_INFO("Strain JSON: %s\n", json_buf);
-    //     // TODO: Implement file saving using SDK storage API
-    // }
+    if (offset > 0 && offset < json_buf->size()) {
+        auto file = mKernel.fs.file(mJsonPath);
+        if (file && file->open(true, true)) { // write mode, create/override
+            size_t bw;
+            file->write(reinterpret_cast<const char*>(json_buf->data()), offset, bw);
+            if (bw == offset) {
+                LOG_INFO("Saved strain data to %s\n", mJsonPath);
+            } else {
+                LOG_ERROR("Failed to write complete JSON data\n");
+            }
+            file->close();
+        } else {
+            LOG_ERROR("Failed to open file %s for writing\n", mJsonPath);
+        }
+    } else {
+        LOG_ERROR("JSON buffer overflow or empty\n");
+    }
 }
