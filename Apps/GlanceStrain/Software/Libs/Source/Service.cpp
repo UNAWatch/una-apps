@@ -40,7 +40,9 @@ void Service::run()
     LOG_INFO("Started\n");
 
     createGuiControls();
+    LOG_DEBUG("GUI controls created\n");
     if (configGui()) {
+        LOG_DEBUG("GUI configured successfully\n");
         connect();
         checkDayRollover();
 
@@ -70,10 +72,12 @@ void Service::run()
                 // return;
 
             case SDK::MessageType::EVENT_GLANCE_TICK:
+                LOG_DEBUG("Glance tick event\n");
                 onGlanceTick();
                 break;
 
             case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
+                LOG_DEBUG("Sensor data event\n");
                 auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
                 this->onSdlNewData(event->handle,
                                    event->data,
@@ -224,19 +228,22 @@ void Service::createGuiControls()
 
 void Service::checkDayRollover()
 {
+    LOG_DEBUG("Checking day rollover\n");
     std::time_t now_t = std::time(nullptr);
     std::tm tm_now;
     localtime_r(&now_t, &tm_now);
     char now_date[11];
     std::strftime(now_date, sizeof(now_date), "%Y-%m-%d", &tm_now);
+    LOG_DEBUG("Current date: %s\n", now_date);
 
     if (std::strlen(mCurrentDate) == 0 || std::strcmp(mCurrentDate, now_date) != 0) {
+        LOG_DEBUG("Date changed from '%s' to '%s'\n", mCurrentDate, now_date);
         if (std::strlen(mCurrentDate) > 0) {
             saveJson();
         }
         std::strncpy(mCurrentDate, now_date, 10);
         mCurrentDate[10] = '\0';
-        std::snprintf(mJsonPath, sizeof(mJsonPath), "/storage/strain_%s.json", mCurrentDate);
+        std::snprintf(mJsonPath, sizeof(mJsonPath), "strain_%s.json", mCurrentDate);
 
         mTotalStrain = 0.0f;
         mSumHR = 0.0f;
@@ -253,6 +260,7 @@ void Service::checkDayRollover()
 
 void Service::saveJson()
 {
+    LOG_DEBUG("Saving JSON to %s\n", mJsonPath);
     auto json_buf = std::make_shared<std::array<uint8_t, 65536>>();
     size_t offset = 0;
     float avg_hr = (mSampleCount > 0) ? (mSumHR / static_cast<float>(mSampleCount)) : 0.0f;
@@ -260,6 +268,7 @@ void Service::saveJson()
     offset = std::snprintf(reinterpret_cast<char*>(json_buf->data()), json_buf->size(),
         "{\"date\":\"%s\",\"total_strain\":%.1f,\"avg_hr\":%.1f,\"max_hr\":%u,\"active_min\":%lu,\"samples\":[",
         mCurrentDate, mTotalStrain, avg_hr, mMaxHR, mActiveMin);
+    LOG_DEBUG("Initial JSON offset: %zu\n", offset);
 
     bool first_sample = true;
     for (const auto& s : mSamples) {
@@ -272,9 +281,14 @@ void Service::saveJson()
             "{\"timestamp\":%llu,\"hr\":%hu,\"strain_delta\":%.3f}",
             static_cast<unsigned long long>(s.timestamp), static_cast<unsigned short>(s.hr), s.strain_delta);
     }
+    LOG_DEBUG("Samples processed, offset: %zu\n", offset);
     offset += std::snprintf(reinterpret_cast<char*>(json_buf->data()) + offset, json_buf->size() - offset, "]}");
+    LOG_DEBUG("Final JSON offset: %zu\n", offset);
 
     if (offset > 0 && offset < json_buf->size()) {
+        // mKernel.fs.mkdir("/Apps");
+        // mKernel.fs.mkdir("/Apps/strain");
+        // mKernel.fs.mkdir("/Apps/strain/storage");
         auto file = mKernel.fs.file(mJsonPath);
         if (file && file->open(true, true)) { // write mode, create/override
             size_t bw;
