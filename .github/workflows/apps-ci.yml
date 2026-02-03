@@ -22,10 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     container: python:3.11-slim
     outputs:
-      apps: ${{ steps.generate.outputs.apps }}
+      cmake_apps: ${{ steps.generate.outputs.cmake_apps }}
+      cubeide_apps: ${{ steps.generate.outputs.cubeide_apps }}
     steps:
       - name: Setup GIT
-        run: apt update && apt install -y git
+        run: apt update && apt install -y git jq
 
       - name: Checkout
         uses: actions/checkout@v5
@@ -35,7 +36,10 @@ jobs:
 
       - name: Generate app list
         id: generate
-        run: python3 .github/scripts/generate-app-list.py
+        run: |
+          output=$(python3 .github/scripts/generate-app-list.py)
+          echo "cmake_apps=$(echo "$output" | jq -c .cmake_apps)" >> $GITHUB_OUTPUT
+          echo "cubeide_apps=$(echo "$output" | jq -c .cubeide_apps)" >> $GITHUB_OUTPUT
 
   cmake-build:
     runs-on: ubuntu-latest
@@ -43,7 +47,7 @@ jobs:
     needs: prepare
     strategy:
       matrix:
-        app: ${{ fromJson(needs.prepare.outputs.apps) }}
+        app: ${{ fromJson(needs.prepare.outputs.cmake_apps) }}
     steps:
       - name: Setup GIT
         run: apt update && apt install -y git python3-full cmake
@@ -89,7 +93,7 @@ jobs:
     needs: prepare
     strategy:
       matrix:
-        app: ${{ fromJson(needs.prepare.outputs.apps) }}
+        app: ${{ fromJson(needs.prepare.outputs.cubeide_apps) }}
     steps:
       - name: Setup GIT
         run: apt update && apt install -y git
