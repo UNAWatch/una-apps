@@ -1,73 +1,56 @@
 #!/usr/bin/env python3
-
 import os
-import re
-import subprocess
-import sys
 import json
-import argparse
+import sys
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--app', help='Specific app to get projects for')
-args = parser.parse_args()
+base_path = "SDK/Examples/Apps/"
 
-if not args.app:
-    print("Generating app list...")
+def should_exclude_dir(dir_name):
+    # Exclude hidden directories, generated content, output, and build directories
+    exclude_dirs = {'.git', 'generated', 'Output', 'build', 'simulator', 'node_modules', '.vscode', '.github'}
+    return dir_name.startswith('.') or dir_name in exclude_dirs
 
-# List of excluded CubeIDE projects/apps (can be overridden via APPS_EXCLUDED CI variable)
-excluded_apps_str = os.environ.get('APPS_EXCLUDED', '')
-excluded_apps = []
-for line in excluded_apps_str.split('\n'):
-  for item in line.split(','):
-    if item.strip():
-      excluded_apps.append(item.strip())
-
-# User-provided discovery pattern:
-#   find Apps/*/Software/ -type d ( -name "*App*" -o -name "*Apps*" ) -exec find {} -type d -maxdepth 1 -mindepth 1 \; 2>/dev/null
-cmd = "find Apps/*/Software/ -type d \\(" \
-      " -name '*App*' -o -name '*Apps*' \\)" \
-      " -exec find {} -type d -maxdepth 1 -mindepth 1 \\; 2>/dev/null"
-
-out = subprocess.check_output(cmd, shell=True, text=True)
-candidates = [ln.strip() for ln in out.splitlines() if ln.strip()]
-
-# Keep only CubeIDE projects; ignore TouchGFX-GUI entries from the discovery output.
-cubeide_projects = []
-for p in candidates:
-  if p.endswith("CubeIDE") or p.endswith("CubeIDE/"):
-    if not args.app:
-      print(f"(Yes): {p}")
-    cubeide_projects.append(p.rstrip("/") + "/")
-  else:
-    if not args.app:
-      print(f" (No): {p}")
-
-# Exclude specified apps/projects (substring match)
-cubeide_projects = [p for p in cubeide_projects if not any(ex in p for ex in excluded_apps)]
-
-apps = {}
-for p in cubeide_projects:
-  parts = p.split("/")
-  if len(parts) < 2 or parts[0] != "Apps":
-    continue
-  app = parts[1]
-  apps.setdefault(app, set()).add(p)
-
-if args.app:
-    if args.app in apps:
-        projects = list(apps[args.app])
-        print(' '.join(projects))
-    else:
-        print(f"ERROR: No projects found for app {args.app}", file=sys.stderr)
-        sys.exit(2)
+if len(sys.argv) > 1 and sys.argv[1] == '--app':
+    if len(sys.argv) < 3:
+        print("Error: --app requires an app name", file=sys.stderr)
+        sys.exit(1)
+    app_name = sys.argv[2]
+    projects = []
+    for root, dirs, files in os.walk(os.path.join(base_path, app_name)):
+        # Exclude certain directories
+        dirs[:] = [d for d in dirs if not should_exclude_dir(d)]
+        for dir_name in dirs:
+            if dir_name.endswith('-CubeIDE'):
+                projects.append(os.path.join(root, dir_name))
+    print('\n'.join(projects))
 else:
-    if not apps:
-        print("ERROR: No *CubeIDE app projects found by discovery command", file=sys.stderr)
-        print("Discovery output:")
-        for ln in candidates:
-            print("  " + ln)
-        sys.exit(2)
+    cmake_apps = set()
+    cubeide_apps = set()
 
-    # Output as JSON for GitHub Actions
-    apps_json = json.dumps(list(apps.keys()))
-    print(f"apps={apps_json}", file=open(os.environ.get('GITHUB_OUTPUT', '/dev/stdout'), 'a'))
+    for root, dirs, files in os.walk(base_path):
+        # Exclude certain directories
+        dirs[:] = [d for d in dirs if not should_exclude_dir(d)]
+        for dir_name in dirs:
+            if dir_name.endswith('-CMake'):
+                # Get the app name: the directory name under Apps/
+                rel_path = os.path.relpath(root, base_path)
+                if '/' in rel_path:
+                    app_name = rel_path.split('/')[0]
+                else:
+                    # If root is directly Apps/, but shouldn't happen
+                    continue
+                cmake_apps.add(app_name)
+            elif dir_name.endswith('-CubeIDE'):
+                rel_path = os.path.relpath(root, base_path)
+                if '/' in rel_path:
+                    app_name = rel_path.split('/')[0]
+                else:
+                    continue
+                cubeide_apps.add(app_name)
+
+    # Output as JSON
+    output = {
+        'cmake_apps': sorted(list(cmake_apps)),
+        'cubeide_apps': sorted(list(cubeide_apps))
+    }
+    print(json.dumps(output))
