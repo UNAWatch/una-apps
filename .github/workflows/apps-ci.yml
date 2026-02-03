@@ -67,7 +67,7 @@ jobs:
 
       - name: Build app ${{ matrix.app }} with CMake
         run: |
-          cd SDK/Examples/Apps/${{ matrix.app }}/Software/Apps/*-CMake
+          cd SDK/Examples/Apps/${{ matrix.app }}/Software/App{,s}/*-CMake
           export UNA_SDK=$GITHUB_WORKSPACE/SDK
           mkdir -p build
           cd build
