@@ -67,7 +67,7 @@ jobs:
 
       - name: Build app ${{ matrix.app }} with CMake
         run: |
-          cd SDK/Examples/Apps/${{ matrix.app }}/Software/Apps/${{ matrix.app }}-CMake
+          cd SDK/Examples/Apps/${{ matrix.app }}/Software/Apps/*-CMake
           export UNA_SDK=$GITHUB_WORKSPACE/SDK
           mkdir -p build
           cd build
@@ -78,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cmake-app-${{ matrix.app }}
-          path: SDK/Examples/Apps/${{ matrix.app }}/Software/Apps/${{ matrix.app }}-CMake/build/*.uapp
+          path: SDK/Examples/Apps/${{ matrix.app }}/Software/Apps/*-CMake/build/*.uapp
 
   cubeide-build:
     runs-on: ubuntu-latest
