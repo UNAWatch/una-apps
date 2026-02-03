@@ -39,16 +39,12 @@ jobs:
 
   cmake-build:
     runs-on: ubuntu-latest
+    container: xanderhendriks/stm32cubeide:16.0
     needs: prepare
     strategy:
       matrix:
         app: ${{ fromJson(needs.prepare.outputs.apps) }}
     steps:
-      - name: Setup ARM GCC Toolchain
-        uses: carlosperate/arm-none-eabi-gcc-action@v1
-        with:
-          release: '12.3.Rel1'
-
       - name: Clone SDK
         uses: actions/checkout@v5
         with:
