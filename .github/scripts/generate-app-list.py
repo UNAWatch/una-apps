@@ -10,11 +10,20 @@ def should_exclude_dir(dir_name):
     exclude_dirs = {'.git', 'generated', 'Output', 'build', 'simulator', 'node_modules', '.vscode', '.github'}
     return dir_name.startswith('.') or dir_name in exclude_dirs
 
+# Read APPS_EXCLUDED environment variable
+apps_excluded = set()
+excluded_env = os.environ.get('APPS_EXCLUDED', '').strip()
+if excluded_env:
+    apps_excluded = set(line.strip() for line in excluded_env.split('\n') if line.strip())
+
 if len(sys.argv) > 1 and sys.argv[1] == '--app':
     if len(sys.argv) < 3:
         print("Error: --app requires an app name", file=sys.stderr)
         sys.exit(1)
     app_name = sys.argv[2]
+    if app_name in apps_excluded:
+        # App is excluded, output nothing
+        sys.exit(0)
     projects = []
     for root, dirs, files in os.walk(os.path.join(base_path, app_name)):
         # Exclude certain directories
@@ -39,14 +48,16 @@ else:
                 else:
                     # If root is directly Apps/, but shouldn't happen
                     continue
-                cmake_apps.add(app_name)
+                if app_name not in apps_excluded:
+                    cmake_apps.add(app_name)
             elif dir_name.endswith('-CubeIDE'):
                 rel_path = os.path.relpath(root, base_path)
                 if '/' in rel_path:
                     app_name = rel_path.split('/')[0]
                 else:
                     continue
-                cubeide_apps.add(app_name)
+                if app_name not in apps_excluded:
+                    cubeide_apps.add(app_name)
 
     # Output as JSON
     output = {
