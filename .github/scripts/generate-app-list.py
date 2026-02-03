@@ -3,7 +3,8 @@ import os
 import json
 import sys
 
-base_path = "SDK/Examples/Apps/"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+base_path = os.path.join(script_dir, "../../Apps")
 
 def should_exclude_dir(dir_name):
     # Exclude hidden directories, generated content, output, and build directories
