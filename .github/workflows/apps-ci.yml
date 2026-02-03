@@ -46,7 +46,7 @@ jobs:
         app: ${{ fromJson(needs.prepare.outputs.apps) }}
     steps:
       - name: Setup GIT
-        run: apt update && apt install -y git
+        run: apt update && apt install -y git python3-full
 
       - name: Clone SDK
         uses: actions/checkout@v5
@@ -66,6 +66,9 @@ jobs:
 
       - name: Build app ${{ matrix.app }} with CMake
         run: |
+          export PATH=/tmp/bin:/opt/st/stm32cubeide_*/:`find /opt/st/stm32cubeide_* -name arm-none-eabi-objcopy | head -n 1 | xargs dirname`:$PATH
+          export PATH=/tmp/bin:/opt/st/stm32cubeide_*/:`find /opt/st/stm32cubeide_* -name cmake | head -n 1 | xargs dirname`:$PATH
+          export PATH=/tmp/bin:/opt/st/stm32cubeide_*/:`find /opt/st/stm32cubeide_* -name make | head -n 1 | xargs dirname`:$PATH
           cd SDK/Examples/Apps/${{ matrix.app }}/Software/App*/*-CMake
           export UNA_SDK=$GITHUB_WORKSPACE/SDK
           mkdir -p build
