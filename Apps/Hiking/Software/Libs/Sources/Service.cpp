@@ -63,6 +63,9 @@ void Service::run()
 {
     LOG_INFO("Started\n");
 
+    // Initialize time
+    initTime();
+
     // Get settings
     if (!mSettingsSerializer.load(mSettings)) {
         LOG_WARNING("Failed to load settings\n");
@@ -89,7 +92,7 @@ void Service::run()
                     LOG_INFO("Force exit from the application\n");
                     disconnect();   // Cleanup recourses
                     if (mTrackState != Track::State::INACTIVE) {
-                        stopTrack(std::time(nullptr), false);
+                        stopTrack(getExpectedUTC(), false);
                     }
                     // We must release message because this is the last event.
                     mKernel.comm.releaseMessage(msg);
@@ -158,25 +161,16 @@ void Service::run()
         // Periodic process
         if (mGUIStarted) {
             // Update time every second
-            std::time_t utc = std::time(nullptr);
+            std::time_t utc = getExpectedUTC();
 
             if (processedUtc != utc) {
 
-                if (mTrackState != Track::State::INACTIVE) {
-                    if ((processedUtc > utc) || ((utc - processedUtc) > 5)) {
-                        LOG_WARNING("Wrong UTC (%u -> %u). Restart track\n",
-                                static_cast<uint32_t>(processedUtc),
-                                static_cast<uint32_t>(utc));
-                        stopTrack(processedUtc, false);
-                        startTrack(utc);
-                    }
-                }
-
                 processedUtc = utc;
 
-                std::tm tmNow = toLocalTime(utc);
-
+                // Send to GUI real "local time" to display
+                std::tm tmNow = getLocalTime(std::time(nullptr));
                 mGuiSender.time(tmNow);
+
                 mGuiSender.battery(static_cast<uint8_t>(mBattery.level));
 
                 // Update GPS fix
@@ -397,12 +391,16 @@ void Service::onStopGUI()
 
 void Service::handleEvent(const CustomMessage::TrackStart& event)
 {
-    startTrack(std::time(nullptr));
+    // We can synchronize the time because we haven't started the track yet,
+    // and the GPS could have already updated the current time.
+    initTime();
+
+    startTrack(getExpectedUTC());
 }
 
 void Service::handleEvent(const CustomMessage::TrackStop& event)
 {
-    stopTrack(std::time(nullptr), event.discard);
+    stopTrack(getExpectedUTC(), event.discard);
 }
 
 void Service::handleEvent(const CustomMessage::SettingsUpd& event)
@@ -499,9 +497,50 @@ void Service::notifyNewActivity()
     }
 }
 
-std::tm Service::toLocalTime(std::time_t utc)
+void Service::initTime()
 {
-    std::tm tmNow{};
+    // Get UTC
+    mStartUTC = std::time(nullptr);
+
+    // Get local time offset
+    std::tm gmt {};
+    std::tm loc {};
+#if WIN32
+    gmtime_s(&gmt, &mStartUTC);
+    localtime_s(&loc, &mStartUTC);
+#else
+    gmtime_r(&mStartUTC, &gmt);
+    localtime_r(&mStartUTC, &loc);
+#endif
+    std::time_t gmt_t = mktime(&gmt);
+    std::time_t loc_t = mktime(&loc);
+    mStartLocalTimeOffset = static_cast<std::time_t>(difftime(loc_t, gmt_t));
+
+    // Get system ticks
+    mStartMono = mKernel.sys.getTimeMs();
+}
+
+std::time_t Service::getExpectedUTC()
+{
+    return mStartUTC + ((mKernel.sys.getTimeMs() - mStartMono) / 1000);
+}
+
+std::tm Service::getExpectedLocalTime(std::time_t utc)
+{
+    std::tm tmNow {};
+    std::time_t loc = utc + mStartLocalTimeOffset;
+
+#if WIN32
+    gmtime_s(&tmNow, &loc);
+#else
+    gmtime_r(&loc, &tmNow);
+#endif
+    return tmNow;
+}
+
+std::tm Service::getLocalTime(std::time_t utc)
+{
+    std::tm tmNow {};
 #if WIN32
     localtime_s(&tmNow, &utc);
 #else
