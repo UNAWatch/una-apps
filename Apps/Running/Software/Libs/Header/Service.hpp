@@ -56,7 +56,46 @@ private:
     void notifyFirstFix();
     void notifyLapEnd();
     void notifyNewActivity();
-    std::tm toLocalTime(std::time_t utc);
+
+    // Time management
+
+    /// UTC time at the start of the app, in seconds
+    std::time_t mStartUTC;
+
+    /// Local time offset at the start of the app, in seconds
+    std::time_t mStartLocalTimeOffset;
+
+    /// Monotonic time at the start of the app, in milliseconds
+    uint32_t mStartMono;
+
+    /**
+     * @brief Initialize starting timestamps for monotonic tracking.
+     */
+    void initTime();
+
+    /**
+     * @brief Get the expected UTC based on initial timestamp and elapsed time.
+     * @note Monotonically increasing; unaffected by RTC or timezone changes.
+     * @return Expected UTC time.
+     */
+    std::time_t getExpectedUTC();
+
+    /**
+     * @brief Get the expected local time based on initial timestamp and elapsed time.
+     * @param utc Expected UTC time.
+     * @note Monotonically increasing; unaffected by RTC or timezone changes.
+     * @return Corresponding local time.
+     */
+    std::tm getExpectedLocalTime(std::time_t utc);
+
+    /**
+     * @brief Get the current system local time for a given UTC.
+     * @param utc Reference UTC time.
+     * @note Reflects real-time changes; affected by RTC and timezone.
+     * @return Corresponding system local time.
+     */
+    std::tm getLocalTime(std::time_t utc);
+
 
     // Sensors
     SDK::Sensor::Connection mSensorGpsLocation;
