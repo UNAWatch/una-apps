@@ -19,7 +19,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserGpsDistance.hpp"
-#include "SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserPressure.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserWristMotion.hpp"
@@ -41,7 +41,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorGpsLocation(SDK::Sensor::Type::GPS_LOCATION, skInitialSamplePeriod, skSampleLatency)
         , mSensorGpsSpeed(SDK::Sensor::Type::GPS_SPEED, skInitialSamplePeriod, skSampleLatency)
         , mSensorGpsDistance(SDK::Sensor::Type::GPS_DISTANCE, skInitialSamplePeriod, skSampleLatency)
-        , mSensorAltimeter(SDK::Sensor::Type::ALTIMETER, skInitialSamplePeriod, skSampleLatency)
+        , mSensorPressure(SDK::Sensor::Type::PRESSURE, skInitialSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
         , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
@@ -212,7 +212,7 @@ void Service::connectAll()
         mSensorBatteryLevel.connect();
         mSensorGpsSpeed.connect();
         mSensorGpsDistance.connect();
-        mSensorAltimeter.connect();
+        mSensorPressure.connect();
         mSensorHr.connect();
 
         mIsSensorsConnected = true;
@@ -226,7 +226,7 @@ void Service::disconnect()
         LOG_DEBUG("Disconnect from sensors...\n");
 
         mSensorHr.disconnect();
-        mSensorAltimeter.disconnect();
+        mSensorPressure.disconnect();
         mSensorGpsSpeed.disconnect();
         mSensorGpsDistance.disconnect();
         mSensorBatteryLevel.disconnect();
@@ -279,17 +279,21 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
             }
             LOG_DEBUG("Distance: %.2f m\n", mDistance.distance);
         }
-    } else if (mSensorAltimeter.matchesDriver(handle)) {
-        SDK::SensorDataParser::Altimeter parser(data[0]);
+    } else if (mSensorPressure.matchesDriver(handle)) {
+        SDK::SensorDataParser::Pressure parser(data[0]);
         if (parser.isDataValid()) {
             mAltimeter.timestamp = parser.getTimestamp();
-            mAltimeter.altitude = parser.getAltitude();
 
             if (!mAltimeter.dataValid) {
-                mAltimeter.initialAltitude = mAltimeter.altitude;
+                // Save p0
+                mAltimeter.p0 = parser.getP0();
+                mAltimeter.initialAltitude = parser.getAltitude();
                 mAltimeter.dataValid = true;
             }
-            LOG_DEBUG("Altitude %.2f\n", mAltimeter.altitude);
+
+            mAltimeter.altitude = parser.getAltitude(parser.getPressure(), mAltimeter.p0);
+
+            LOG_DEBUG("Altitude %.2f (P0 %f, Pa %f)\n", mAltimeter.altitude, mAltimeter.p0, parser.getPressure());
         }
     } else if (mSensorHr.matchesDriver(handle)) {
         SDK::SensorDataParser::HeartRate parser(data[0]);
