@@ -101,7 +101,7 @@ private:
     SDK::Sensor::Connection mSensorGpsLocation;
     SDK::Sensor::Connection mSensorGpsSpeed;
     SDK::Sensor::Connection mSensorGpsDistance;
-    SDK::Sensor::Connection mSensorAltimeter;
+    SDK::Sensor::Connection mSensorPressure;
     SDK::Sensor::Connection mSensorHr;
     SDK::Sensor::Connection mSensorBatteryLevel;
     SDK::Sensor::Connection mSensorWristMotion;
@@ -161,6 +161,7 @@ private:
 
     struct {
         // Last sensor data
+        float    p0;        // sea-level pressure, Pa
         float    altitude;  // meters
         uint32_t timestamp; // ms
 
@@ -176,6 +177,7 @@ private:
 
         void reset()
         {
+            p0 = 0.0f;
             altitude = 0.0f;
             timestamp = 0;
             dataValid = false;
