@@ -242,6 +242,7 @@ jobs:
           BODY=$(echo "$BODY" | sed 's/@\([a-zA-Z0-9_-]*\)/<https:\/\/github.com\/\1|@\1>/g')
           BODY=$(echo "$BODY" | sed 's/^## \([^$]*\)$/*\1*/')
           BODY=$(echo "$BODY" | sed 's/^* /- /')
+          BODY=$(echo "$BODY" | sed 's/\*\*Full Changelog\*\*:/ *Full Changelog*\n/')
           PAYLOAD=$(jq -c -n --arg name "${{ steps.get_slack_params.outputs.name }}" --arg tag "${{ github.ref_name }}" --arg body "$BODY" --arg author "${{ steps.get_slack_params.outputs.author }}" --arg created "${{ steps.get_slack_params.outputs.created_at }}" --arg url "${{ steps.get_slack_params.outputs.url }}" '{
             text: "UNA Apps release notification",
             blocks: [
