@@ -240,13 +240,16 @@ jobs:
         run: |
           BODY="${{ steps.get_slack_params.outputs.body }}"
           BODY=$(echo "$BODY" | sed 's/@\([a-zA-Z0-9_-]*\)/<https:\/\/github.com\/\1|@\1>/g')
+          BODY=$(echo "$BODY" | sed 's/^## \([^$]*\)$/*\1*/')
+          BODY=$(echo "$BODY" | sed 's/^* /- /')
           PAYLOAD=$(jq -c -n --arg name "${{ steps.get_slack_params.outputs.name }}" --arg tag "${{ github.ref_name }}" --arg body "$BODY" --arg author "${{ steps.get_slack_params.outputs.author }}" --arg created "${{ steps.get_slack_params.outputs.created_at }}" --arg url "${{ steps.get_slack_params.outputs.url }}" '{
+            text: "UNA Apps release notification",
             blocks: [
               {
                 type: "section",
                 text: {
                   type: "mrkdwn",
-                  text: (">--- :roller_coaster: UNA Apps --------<\n" + $name + " (tag: " + $tag + ")\n" + $body + "\n:bust_in_silhouette: Author: " + $author + "\n:date: Created: " + $created + "\n:link: Download: " + $url)
+                  text: ("-------- :roller_coaster: *UNA Apps* --------\n*" + $name + "* (tag: " + $tag + ")\n\n" + $body + "\n\n:bust_in_silhouette: *Author*: " + $author + "\n:date: *Created*: " + $created + "\n\n:link: *Download*: " + $url)
                 }
               }
             ]
