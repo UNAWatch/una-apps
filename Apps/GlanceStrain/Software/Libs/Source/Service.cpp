@@ -35,13 +35,7 @@ void Service::run() {
 
     createGuiControls();
     LOG_DEBUG("GUI controls created\n");
-    if (configGui()) {
-        LOG_DEBUG("GUI configured successfully\n");
-        connect();
-        checkDayRollover();
-    } else {
-        return;
-    }
+
 
     while (true) {
         SDK::MessageBase *msg;
@@ -53,15 +47,23 @@ void Service::run() {
         switch (msg->getType()) {
             case SDK::MessageType::EVENT_GLANCE_START:
                 LOG_INFO("GLANCE is now running\n");
+                    if (configGui()) {
+                    LOG_DEBUG("GUI configured successfully\n");
+                    connect();
+                    checkDayRollover();
+                }
+                break;
 
             case SDK::MessageType::COMMAND_APP_STOP:
                 LOG_INFO("Force exit from the application\n");
-                saveJson();
-                disconnect();
-                mKernel.comm.releaseMessage(msg);
-                return;
+                // saveJson();
+                // disconnect();
+                // mKernel.comm.releaseMessage(msg);
+                // return;
+                break;
             case SDK::MessageType::EVENT_GLANCE_STOP:
                 LOG_INFO("GLANCE has stopped\n");
+                saveJson();
 
             case SDK::MessageType::EVENT_GLANCE_TICK:
                 LOG_DEBUG("Glance tick event\n");
@@ -140,8 +142,6 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data *data, uint1
 }
 
 void Service::onGlanceTick() {
-    checkDayRollover();
-
     // float avg_hr = (mSampleCount > 0) ? (mSumHR / static_cast<float>(mSampleCount)) : 0.0f;
 
     mGlanceValue.print("%.1f", mTotalStrain);
@@ -239,6 +239,8 @@ void Service::checkDayRollover() {
 }
 
 void Service::saveJson() {
+    checkDayRollover();
+
     LOG_DEBUG("Saving JSON to %s\n", mJsonPath);
     auto json_buf = std::make_shared<std::array<uint8_t, 65536>>();
     size_t offset = 0;
