@@ -182,11 +182,35 @@ jobs:
         with:
           path: artifacts
 
+      - name: Prepare cmake zip
+        run: |
+          mkdir -p temp/cmake
+          for dir in artifacts/cmake-app-*; do
+            app=$(basename "$dir" | sed 's/^cmake-app-//')
+            mkdir -p "temp/cmake/$app"
+            cp "$dir"/*.uapp "temp/cmake/$app/" || true
+          done
+          cd temp/cmake
+          zip -r ../../una-apps-cmake-${{ github.ref_name }}.zip .
+
+      - name: Prepare cubeide zip
+        run: |
+          mkdir -p temp/cubeide
+          for dir in artifacts/cubeide-app-*; do
+            app=$(basename "$dir" | sed 's/^cubeide-app-//')
+            mkdir -p "temp/cubeide/$app"
+            cp "$dir"/*.uapp "temp/cubeide/$app/" || true
+          done
+          cd temp/cubeide
+          zip -r ../../una-apps-cubeide-${{ github.ref_name }}.zip .
+
       - id: create_release
         name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/**/*
+          files: |
+            una-apps-cmake-${{ github.ref_name }}.zip
+            una-apps-cubeide-${{ github.ref_name }}.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
