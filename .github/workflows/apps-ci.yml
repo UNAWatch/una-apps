@@ -235,18 +235,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CROSS_REPO_PAT }}
 
+      - id: prepare_slack_payload
+        name: Prepare Slack payload
+        run: |
+          BODY="${{ steps.get_slack_params.outputs.body }}"
+          BODY=$(echo "$BODY" | sed 's/@\([a-zA-Z0-9_-]*\)/<https:\/\/github.com\/\1|@\1>/g')
+          PAYLOAD=$(jq -n --arg name "${{ steps.get_slack_params.outputs.name }}" --arg tag "${{ github.ref_name }}" --arg body "$BODY" --arg author "${{ steps.get_slack_params.outputs.author }}" --arg created "${{ steps.get_slack_params.outputs.created_at }}" --arg url "${{ steps.get_slack_params.outputs.url }}" '{
+            blocks: [
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: (">--- :roller_coaster: UNA Apps --------<\n" + $name + " (tag: " + $tag + ")\n" + $body + "\n:bust_in_silhouette: Author: " + $author + "\n:date: Created: " + $created + "\n:link: Download: " + $url)
+                }
+              }
+            ]
+          }')
+          echo "payload=$PAYLOAD" >> $GITHUB_OUTPUT
+
       - name: Notify Slack
         uses: slackapi/slack-github-action@v1.27.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          slack-message: |
-            🚀 UNA Apps: ${{ steps.get_slack_params.outputs.name }} (tag: ${{ github.ref_name }})
-               >--- 📝 Release Notes: ---<
-            ${{ steps.get_slack_params.outputs.body }}
-               >-------------------------<
-            👤 Author: ${{ steps.get_slack_params.outputs.author }}
-            📅 Created: ${{ steps.get_slack_params.outputs.created_at }}
-               >-------------------------<
-            🔗 Download: ${{ steps.get_slack_params.outputs.url }}
+          payload: ${{ steps.prepare_slack_payload.outputs.payload }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
