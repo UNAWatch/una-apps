@@ -240,7 +240,7 @@ jobs:
         run: |
           BODY="${{ steps.get_slack_params.outputs.body }}"
           BODY=$(echo "$BODY" | sed 's/@\([a-zA-Z0-9_-]*\)/<https:\/\/github.com\/\1|@\1>/g')
-          PAYLOAD=$(jq -n --arg name "${{ steps.get_slack_params.outputs.name }}" --arg tag "${{ github.ref_name }}" --arg body "$BODY" --arg author "${{ steps.get_slack_params.outputs.author }}" --arg created "${{ steps.get_slack_params.outputs.created_at }}" --arg url "${{ steps.get_slack_params.outputs.url }}" '{
+          PAYLOAD=$(jq -c -n --arg name "${{ steps.get_slack_params.outputs.name }}" --arg tag "${{ github.ref_name }}" --arg body "$BODY" --arg author "${{ steps.get_slack_params.outputs.author }}" --arg created "${{ steps.get_slack_params.outputs.created_at }}" --arg url "${{ steps.get_slack_params.outputs.url }}" '{
             blocks: [
               {
                 type: "section",
@@ -251,7 +251,9 @@ jobs:
               }
             ]
           }')
-          echo "payload=$PAYLOAD" >> $GITHUB_OUTPUT
+          echo "payload<<EOF" >> $GITHUB_OUTPUT
+          echo "$PAYLOAD" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Notify Slack
         uses: slackapi/slack-github-action@v1.27.0
