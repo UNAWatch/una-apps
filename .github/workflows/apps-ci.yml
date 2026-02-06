@@ -188,7 +188,7 @@ jobs:
           for dir in artifacts/cmake-app-*; do
             app=$(basename "$dir" | sed 's/^cmake-app-//')
             mkdir -p "temp/cmake/$app"
-            cp "$dir"/*.uapp "temp/cmake/$app/" || true
+            find "$dir" -name "*.uapp" -exec cp {} "temp/cmake/$app/" \;
           done
           cd temp/cmake
           zip -r ../../una-apps-cmake-${{ github.ref_name }}.zip .
@@ -199,7 +199,7 @@ jobs:
           for dir in artifacts/cubeide-app-*; do
             app=$(basename "$dir" | sed 's/^cubeide-app-//')
             mkdir -p "temp/cubeide/$app"
-            cp "$dir"/*.uapp "temp/cubeide/$app/" || true
+            find "$dir" -name "*.uapp" -exec cp {} "temp/cubeide/$app/" \;
           done
           cd temp/cubeide
           zip -r ../../una-apps-cubeide-${{ github.ref_name }}.zip .
