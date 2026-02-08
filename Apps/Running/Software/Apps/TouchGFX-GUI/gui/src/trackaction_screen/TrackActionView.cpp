@@ -121,6 +121,7 @@ void TrackActionView::handleKeyEvent(uint8_t key)
 
         switch (id) {
             case App::Menu::Start::Action::ID_RESUME:
+                presenter->resumeTrack();
                 application().gotoTrackScreenNoTransition();
                 break;
             case App::Menu::Start::Action::ID_SAVE:

@@ -229,9 +229,6 @@ void ActivityWriter::stop(const TrackData& track)
 
     SDK::Interface::IFile* fp = mFile.get();
 
-    // Write Event message - STOP Event
-    AddMessageEvent(track.timestamp, FIT_EVENT_TYPE_STOP);
-
     // Write Session message.
     {
         FIT_SESSION_MESG session_mesg{};

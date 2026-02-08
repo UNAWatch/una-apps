@@ -34,6 +34,8 @@ public:
     virtual void onLapChanged(uint8_t lapEnd) override;
     virtual void onGpsFix(bool acquired) override;
 
+    void saveLap();
+
 private:
     TrackPresenter();
 

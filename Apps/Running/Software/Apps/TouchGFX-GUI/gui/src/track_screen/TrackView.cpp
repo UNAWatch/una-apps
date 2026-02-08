@@ -109,7 +109,8 @@ void TrackView::handleKeyEvent(uint8_t key)
     }
 
     if (key == Gui::Config::Button::R2) {
-        //application().gotoTrackLapScreenNoTransition();
+        presenter->saveLap();
+        application().gotoTrackLapScreenNoTransition();
     }
 }
 

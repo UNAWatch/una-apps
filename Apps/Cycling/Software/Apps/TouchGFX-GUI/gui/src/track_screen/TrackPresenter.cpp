@@ -56,3 +56,8 @@ void TrackPresenter::onGpsFix(bool acquired)
 {
     view.setGpsFix(acquired);
 }
+
+void TrackPresenter::saveLap()
+{
+    model->saveLap();
+}
