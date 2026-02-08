@@ -197,7 +197,7 @@
         <Translation Language="GB">Saved</Translation>
       </Text>
       <Text Id="TEXT_SAVE" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">Save</Translation>
+        <Translation Language="GB">Save &amp; End</Translation>
       </Text>
       <Text Id="TEXT_SIGNAL_ACQUIRED" Alignment="Left" TypographyId="Poppins_Medium_18">
         <Translation Language="GB">Signal Acquired</Translation>
