@@ -172,8 +172,11 @@ void TrackActionView::updTitleInfo()
 
     if (mTitleInfoMsgId == 0) {
         titleInfo.setTitle(T_TEXT_TIMER_UC);
-        Unicode::snprintf(buffer, bufferSize, "%d:%02d",
-            App::Utils::sec2hmsH(mTimerSec), App::Utils::sec2hmsM(mTimerSec));
+        uint16_t hh = 0;
+        uint8_t mm = 0;
+        uint8_t ss = 0;
+        App::Utils::sec2hms(mTimerSec, hh, mm, ss);
+        Unicode::snprintf(buffer, bufferSize, "%u:%02u:%02u", hh, mm, ss);
     } else if (mTitleInfoMsgId == 1) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_PACE_UC);
         std::time_t secPerKm = static_cast<std::time_t>(mAvgPace * 1000.0f);
