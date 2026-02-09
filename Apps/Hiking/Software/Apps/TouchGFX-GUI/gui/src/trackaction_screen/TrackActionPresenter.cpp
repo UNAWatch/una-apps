@@ -16,6 +16,8 @@ void TrackActionPresenter::activate()
     model->resetIdleTimer();
     view.setGpsFix(model->getGpsFix());
     view.setPositionId(model->getMenuPosTrackAction());
+
+    model->trackPause();
 }
 
 void TrackActionPresenter::deactivate()
@@ -31,6 +33,11 @@ void TrackActionPresenter::onTrackData(const Track::Data& data)
     view.setSteps(data.steps);
     view.setAvgHR(data.avgHR);
     view.setFloors(data.floors);
+}
+
+void TrackActionPresenter::resumeTrack()
+{
+    model->trackResume();
 }
 
 void TrackActionPresenter::onGpsFix(bool acquired)

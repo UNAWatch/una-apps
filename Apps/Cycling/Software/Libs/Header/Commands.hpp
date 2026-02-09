@@ -33,6 +33,9 @@ namespace CustomMessage {
     constexpr SDK::MessageType::Type SETTINGS_SAVE      = 0x0000000A;
     constexpr SDK::MessageType::Type TRACK_START        = 0x0000000B;
     constexpr SDK::MessageType::Type TRACK_STOP         = 0x0000000C;
+    constexpr SDK::MessageType::Type TRACK_PAUSE        = 0x0000000D;
+    constexpr SDK::MessageType::Type TRACK_RESUME       = 0x0000000E;
+    constexpr SDK::MessageType::Type MANUAL_LAP         = 0x0000000F;
 
     // Service <-> GUI
     struct SettingsUpd : public SDK::MessageBase {
@@ -127,6 +130,18 @@ namespace CustomMessage {
             : SDK::MessageBase(TRACK_STOP)
             , discard(false)
         {}
+    };
+
+    struct TrackPause : public SDK::MessageBase {
+        TrackPause() : SDK::MessageBase(TRACK_PAUSE) {}
+    };
+
+    struct TrackResume : public SDK::MessageBase {
+        TrackResume() : SDK::MessageBase(TRACK_RESUME) {}
+    };
+
+    struct ManualLap : public SDK::MessageBase {
+        ManualLap() : SDK::MessageBase(MANUAL_LAP) {}
     };
 
 
@@ -268,6 +283,39 @@ public:
         auto *msg = mKernel.comm.allocateMessage<CustomMessage::TrackStop>();
         if (msg) {
             msg->discard = discard;
+            status = mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
+        return status;
+    }
+
+    bool trackPause()
+    {
+        bool status = false;
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::TrackPause>();
+        if (msg) {
+            status = mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
+        return status;
+    }
+
+    bool trackResume()
+    {
+        bool status = false;
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::TrackResume>();
+        if (msg) {
+            status = mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
+        return status;
+    }
+
+    bool manualLap()
+    {
+        bool status = false;
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::ManualLap>();
+        if (msg) {
             status = mKernel.comm.sendMessage(msg);
             mKernel.comm.releaseMessage(msg);
         }

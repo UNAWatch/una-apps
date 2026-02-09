@@ -17,9 +17,9 @@ void TrackLapPresenter::activate()
     const Track::Data& data = model->getTrackData();
 
     view.setLapNum(data.lapNum);
-    view.setDistance(data.distance);
-    view.setTimer(data.totalTime);
-    view.setSteps(data.steps);
+    view.setDistance(data.lapDistance);
+    view.setTimer(data.lapTime);
+    view.setSteps(data.lapSteps);
 }
 
 void TrackLapPresenter::deactivate()

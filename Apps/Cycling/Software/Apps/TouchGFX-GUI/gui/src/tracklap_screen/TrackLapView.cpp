@@ -13,6 +13,7 @@ void TrackLapView::setupScreen()
     buttons.setL2(Buttons::AMBER);
     buttons.setR1(Buttons::NONE);
     buttons.setR2(Buttons::NONE);
+    cross.setVisible(false);
 }
 
 void TrackLapView::tearDownScreen()

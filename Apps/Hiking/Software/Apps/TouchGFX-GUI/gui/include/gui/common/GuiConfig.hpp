@@ -35,7 +35,7 @@ constexpr uint32_t kFrameRate = SDK::Interface::IApp::kFrameRate;
 constexpr uint32_t kMenuAnimationSteps = 4;
 constexpr uint32_t kScreenTimeoutSteps = GUI_CONFIG_MS_2_TICKS(30 * 1000);              // 30s
 constexpr uint32_t kConfirmTimeout = GUI_CONFIG_MS_2_TICKS(1 * 1000);                   // 1s
-constexpr uint32_t kTrackLapScreenTimeout = GUI_CONFIG_MS_2_TICKS(5 * 1000);            // 5s
+constexpr uint32_t kTrackLapScreenTimeout = GUI_CONFIG_MS_2_TICKS(10 * 1000);           // 10s
 constexpr uint32_t kTrackTitleInfoSwitchPeriod = GUI_CONFIG_MS_2_TICKS(3 * 1000);       // 3s
 constexpr uint32_t kTrackActionConfirmScreenTimeout = GUI_CONFIG_MS_2_TICKS(2 * 1000);  // 2s
 

@@ -121,6 +121,7 @@ void TrackActionView::handleKeyEvent(uint8_t key)
 
         switch (id) {
             case App::Menu::Start::Action::ID_RESUME:
+                presenter->resumeTrack();
                 application().gotoTrackScreenNoTransition();
                 break;
             case App::Menu::Start::Action::ID_SAVE:
@@ -171,8 +172,11 @@ void TrackActionView::updTitleInfo()
 
     if (mTitleInfoMsgId == 0) {
         titleInfo.setTitle(T_TEXT_TIMER_UC);
-        Unicode::snprintf(buffer, bufferSize, "%d:%02d",
-            App::Utils::sec2hmsH(mTimerSec), App::Utils::sec2hmsM(mTimerSec));
+        uint16_t hh = 0;
+        uint8_t mm = 0;
+        uint8_t ss = 0;
+        App::Utils::sec2hms(mTimerSec, hh, mm, ss);
+        Unicode::snprintf(buffer, bufferSize, "%u:%02u:%02u", hh, mm, ss);
     } else if (mTitleInfoMsgId == 1) {
         titleInfo.setTitle(T_TEXT_AVG_DOT_SPEED);
         if (mGpsFix || mAvgSpeed > 0.001f) {

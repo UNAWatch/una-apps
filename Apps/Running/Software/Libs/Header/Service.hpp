@@ -13,6 +13,12 @@
 #include "ActivitySummarySerializer.hpp"
 #include "ActivityWriter.hpp"
 
+#include "MonotonicTime.hpp"
+#include "MonotonicCounter.hpp"
+#include "VariableCounter.hpp"
+#include "DeltaCounter.hpp"
+#include "SimpleLPF.hpp"
+
 #include "Commands.hpp"
 
 class Service
@@ -37,7 +43,7 @@ private:
     ActivitySummarySerializer mActivitySummarySerializer;
     ActivityWriter mActivityWriter;
     SDK::TrackMapBuilder mTrackMapBuilder;
-    bool mGotFix;
+
 
     void connectGps();
     void connectAll(); // Except GPS
@@ -51,50 +57,16 @@ private:
     void handleEvent(const CustomMessage::TrackStart& event);
     void handleEvent(const CustomMessage::TrackStop& event);
     void handleEvent(const CustomMessage::SettingsUpd& event);
+    void handleEvent(const CustomMessage::TrackPause& event);
+    void handleEvent(const CustomMessage::TrackResume& event);
+    void handleEvent(const CustomMessage::ManualLap& event);
 
     void setCapabilities();
     void notifyFirstFix();
     void notifyLapEnd();
     void notifyNewActivity();
 
-    // Time management
 
-    /// UTC time at the start of the app, in seconds
-    std::time_t mStartUTC;
-
-    /// Local time offset at the start of the app, in seconds
-    std::time_t mStartLocalTimeOffset;
-
-    /// Monotonic time at the start of the app, in milliseconds
-    uint32_t mStartMono;
-
-    /**
-     * @brief Initialize starting timestamps for monotonic tracking.
-     */
-    void initTime();
-
-    /**
-     * @brief Get the expected UTC based on initial timestamp and elapsed time.
-     * @note Monotonically increasing; unaffected by RTC or timezone changes.
-     * @return Expected UTC time.
-     */
-    std::time_t getExpectedUTC();
-
-    /**
-     * @brief Get the expected local time based on initial timestamp and elapsed time.
-     * @param utc Expected UTC time.
-     * @note Monotonically increasing; unaffected by RTC or timezone changes.
-     * @return Corresponding local time.
-     */
-    std::tm getExpectedLocalTime(std::time_t utc);
-
-    /**
-     * @brief Get the current system local time for a given UTC.
-     * @param utc Reference UTC time.
-     * @note Reflects real-time changes; affected by RTC and timezone.
-     * @return Corresponding system local time.
-     */
-    std::tm getLocalTime(std::time_t utc);
 
 
     // Sensors
@@ -105,7 +77,6 @@ private:
     SDK::Sensor::Connection mSensorHr;
     SDK::Sensor::Connection mSensorBatteryLevel;
     SDK::Sensor::Connection mSensorWristMotion;
-
     bool mIsSensorsConnected = false;
 
     static constexpr uint32_t skBacklightTimeout    = 5000;
@@ -115,9 +86,18 @@ private:
 
     static constexpr float skMapDistanceThreshold = 10.0f; // meters
 
+    SDK::MonotonicTime                  mTimeTracker;
+    SDK::MonotonicCounter<std::time_t>  mTimeCounter;
+    SDK::MonotonicCounter<float>        mDistanceCounter;
+    SDK::VariableCounter                mSpeedCounter;
+    SDK::VariableCounter                mHrCounter;
+    SDK::Filter::SimpleLPF              mAltitudeFilter;
+    SDK::DeltaCounter                   mAltitudeCounter;
+
+    // GPS info
     struct {
-        // Last sensor data
-        bool     fix;           // GPS fix
+        bool     gotFix;        // fix received at least once
+        bool     fix;           // Actual GPS fix
         float    latitude;      // degrees
         float    longitude;     // degrees
         float    altitude;      // meters
@@ -125,6 +105,7 @@ private:
 
         void reset()
         {
+            gotFix    = false;
             fix       = false;
             latitude  = 0.0f;
             longitude = 0.0f;
@@ -133,89 +114,11 @@ private:
         }
     } mGps{};
 
-    struct {
-        float    speed;     // m/s
-        uint32_t timestamp; // ms
+    // Sea-level pressure, Pa
+    float mSeaLevelPressure = 0.0f;
 
-        void reset() {
-            speed     = 0.0f;
-            timestamp = 0;
-        }
-    } mSpeed {};
-
-    struct {
-        float    distance;  // m
-        uint32_t timestamp; // ms
-
-        // Working data
-        bool     dataValid;
-        float    initialDistance; // m
-
-        void reset() {
-            distance  = 0.0f;
-            timestamp = 0;
-            dataValid = false;
-            initialDistance = 0.0f;
-        }
-    } mDistance{};
-
-    struct {
-        // Last sensor data
-        float    p0;        // sea-level pressure, Pa
-        float    altitude;  // meters
-        uint32_t timestamp; // ms
-
-        // Working data
-        bool dataValid;
-        float initialAltitude;
-
-        float ascent;           // m
-        float descent;          // m
-
-        float lapAscent;        // m
-        float lapDescent;       // m
-
-        void reset()
-        {
-            p0 = 0.0f;
-            altitude = 0.0f;
-            timestamp = 0;
-            dataValid = false;
-            initialAltitude = 0.0f;
-            ascent = 0.0f;
-            descent = 0.0f;
-            lapAscent = 0.0f;
-            lapDescent = 0.0f;
-        }
-    } mAltimeter{};
-
-    struct {
-        // Last sensor data
-        float  hr;        // bpm
-        float  trustLevel; // trust level: 0, 1, 2, 3...
-        uint32_t timestamp; // ms
-
-        // Working data
-        float    totalSum;
-        uint32_t totalCnt;
-
-        float    lapSum;
-        uint32_t lapCnt;
-
-        void reset()
-        {
-            hr = 0.0f;
-            timestamp = 0;
-            totalSum = 0.0f;
-            totalCnt = 0;
-            lapSum = 0.0f;
-            lapCnt = 0;
-        }
-    } mHr{};
-
-    struct {
-        float level = 0.0f;
-    } mBattery{};
+    // Current battery level
+    float mBatteryLevel = 0.0f;
 
     Track::State mTrackState = Track::State::INACTIVE;
     std::time_t mTrackStartUTC = 0;
@@ -237,12 +140,16 @@ private:
 
     void sendInitialInfoToGui();
     void startTrack(std::time_t utc);
-    void processTrack(std::time_t utc);
-    void saveLap(std::time_t utc);
-    void stopTrack(std::time_t utc, bool discard);
+    void processTrack();
+    void saveLap();
+    void stopTrack(bool discard);
+    void pauseTrack(bool pause);
     LapDivSource getLapDivSource();
-    uint32_t getCurrentLap();
 
+    inline float getPace(float speed, float th)
+    {
+        return (speed > th) ? (1.0f / speed) : 0.0f;
+    }
 
     // IGlance implementation
     bool                     mGlanceActive = false;

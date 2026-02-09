@@ -227,6 +227,16 @@ bool Model::trackIsActive()
     return mTrackState != Track::State::INACTIVE;
 }
 
+void Model::trackPause()
+{
+    mSrvSender.trackPause();
+}
+
+void Model::trackResume()
+{
+    mSrvSender.trackResume();
+}
+
 bool Model::trackIsPaused()
 {
     return mTrackState == Track::State::PAUSED;
@@ -235,6 +245,11 @@ bool Model::trackIsPaused()
 const Track::Data& Model::getTrackData() const
 {
     return mTrackData;
+}
+
+void Model::saveLap()
+{
+    mSrvSender.manualLap();
 }
 
 void Model::saveTrack()

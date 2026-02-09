@@ -84,8 +84,11 @@ public:
     // Track
     void trackStart();
     bool trackIsActive();
+    void trackPause();
+    void trackResume();
     bool trackIsPaused();
     const Track::Data& getTrackData() const;
+    void saveLap();
     void saveTrack();
     void discardTrack();
     bool trackIsSummaryAvailable();
