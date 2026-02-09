@@ -114,6 +114,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/SettingsSerializer.hpp</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/SimpleLPF.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/SimpleLPF.hpp</locationURI>
+		</link>
+		<link>
 			<name>Libs/Header/TrackInfo.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/TrackInfo.hpp</locationURI>

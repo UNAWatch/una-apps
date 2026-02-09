@@ -17,7 +17,7 @@
 #include "MonotonicCounter.hpp"
 #include "VariableCounter.hpp"
 #include "DeltaCounter.hpp"
-
+#include "SimpleLPF.hpp"
 
 #include "Commands.hpp"
 
@@ -91,6 +91,7 @@ private:
     SDK::MonotonicCounter<float>        mDistanceCounter;
     SDK::VariableCounter                mSpeedCounter;
     SDK::VariableCounter                mHrCounter;
+    SDK::Filter::SimpleLPF              mAltitudeFilter;
     SDK::DeltaCounter                   mAltitudeCounter;
 
     // GPS info

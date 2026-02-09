@@ -46,6 +46,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
         , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
         , mTimeTracker(kernel)
+        , mAltitudeFilter(0.8f)
         , mName("Cycling")
 {
     mTimeCounter.init();
@@ -298,9 +299,10 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
                 mSeaLevelPressure = parser.getP0();
             }
             float altitude = parser.getAltitude(parser.getPressure(), mSeaLevelPressure);
-            mAltitudeCounter.add(altitude);
+            float filtered = mAltitudeFilter.execute(altitude);
+            mAltitudeCounter.add(filtered);
 
-            LOG_DEBUG("Altitude %.2f (P0 %f, Pa %f)\n", altitude, mSeaLevelPressure, parser.getPressure());
+            LOG_DEBUG("Altitude %.2f (Filtered %.2f) (P0 %f, Pa %f)\n", altitude, filtered, mSeaLevelPressure, parser.getPressure());
         }
     } else if (mSensorHr.matchesDriver(handle)) {
         SDK::SensorDataParser::HeartRate parser(data[0]);
@@ -533,6 +535,7 @@ void Service::startTrack(std::time_t utc)
     mDistanceCounter.reset();
     mSpeedCounter.reset();
     mHrCounter.reset();
+    mAltitudeFilter.reset();
     mAltitudeCounter.reset();
 
     mSessionNotEmpty = false;
