@@ -5,6 +5,7 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
+#include <chrono>
 
 #define LOG_MODULE_PRX "Service"
 #define LOG_MODULE_LEVEL LOG_LEVEL_DEBUG
@@ -200,15 +201,11 @@ void Service::run() {
 
             case SDK::MessageType::EVENT_GLANCE_STOP:
                 LOG_INFO("GLANCE has stopped\n");
-                saveFit(true, false);
                 mGlanceActive = false;
-                disconnect();
-                mKernel.comm.releaseMessage(msg);
-                return;
+                break;
 
             case SDK::MessageType::COMMAND_APP_STOP:
                 LOG_INFO("Force exit from the application\n");
-                saveFit(true, true);
                 disconnect();
                 mKernel.comm.releaseMessage(msg);
                 return;
@@ -233,17 +230,18 @@ void Service::run() {
 }
 
 void Service::connect() {
+    const float samplePeriodMs = static_cast<float>(skSamplePeriodSec) * 1000.0f;
     if (!mSensorHR.isConnected()) {
         LOG_DEBUG("Connect to HR sensors...\n");
-        mSensorHR.connect();
+        mSensorHR.connect(samplePeriodMs);
     }
     if (!mSensorActivity.isConnected()) {
         LOG_DEBUG("Connect to Activity sensor...\n");
-        mSensorActivity.connect();
+        mSensorActivity.connect(samplePeriodMs);
     }
     if (!mSensorTouch.isConnected()) {
         LOG_DEBUG("Connect to Touch sensor...\n");
-        mSensorTouch.connect();
+        mSensorTouch.connect(samplePeriodMs);
     }
 }
 
@@ -262,6 +260,9 @@ void Service::disconnect() {
 }
 
 void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint16_t count, uint16_t stride) {
+    std::time_t now = std::time(nullptr);
+    checkDayRollover();
+
     SDK::Sensor::DataBatch batch(data, count, stride);
 
     if (mSensorTouch.matchesDriver(handle)) {
@@ -272,6 +273,7 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
                 if (mIsOnHand != onHand) {
                     mIsOnHand = onHand;
                     if (!mIsOnHand) {
+                        /** @note: save data on watch hand-off */
                         saveFit(true, false);
                     }
                 }
@@ -291,38 +293,31 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
     if (mSensorHR.matchesDriver(handle)) {
         for (uint16_t i = 0; i < count; ++i) {
             SDK::SensorDataParser::HeartRate p(batch[i]);
-            if (p.isDataValid()) {
-                float hrRaw = p.getBpm();
-                uint16_t hr = static_cast<uint16_t>(hrRaw);
-                if (hr >= 50 && hr <= 220) {
-                    float norm = (static_cast<float>(hr) - 60.0f) / 120.0f;
-                    float delta = std::max(0.0f, norm) * 0.75f;
-                    mTotalStrain += delta;
-                    mSumHR += static_cast<float>(hr);
-                    mMaxHR = std::max(mMaxHR, hr);
-                    mSampleCount++;
-                    mLastHr = hr;
-                }
+            if (!p.isDataValid() || !mIsOnHand) continue;
+            float hrRaw = p.getBpm();
+            uint16_t hr = static_cast<uint16_t>(hrRaw);
+            if (hr >= 50 && hr <= 220) {
+                float norm = (static_cast<float>(hr) - 60.0f) / 120.0f;
+                float delta = std::max(0.0f, norm) * 0.75f;
+                mTotalStrain += delta;
+                mSumHR += static_cast<float>(hr);
+                mMaxHR = std::max(mMaxHR, hr);
+                mSampleCount++;
+                mLastHr = hr;
+                mPendingRecords.push_back(
+                    {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
             }
         }
+    }
+
+
+    if ((now - mLastSaveTime) >= skSaveIntervalSec) {
+        saveFit(false, false);
     }
 }
 
 void Service::onGlanceTick() {
-    checkDayRollover();
-
     mGlanceValue.print("%.1f", mTotalStrain);
-
-    std::time_t now = std::time(nullptr);
-    if (mIsOnHand && mGlanceActive && (now - mLastSampleTime) >= skSamplePeriodSec) {
-        mLastSampleTime = now;
-        mPendingRecords.push_back(
-            {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
-    }
-
-    if (mGlanceActive) {
-        saveFit(false, false);
-    }
 
     if (mGlanceUI.isInvalid()) {
         auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
@@ -399,7 +394,6 @@ void Service::checkDayRollover() {
         mSampleCount = 0;
         mPendingRecords.clear();
         mLastSaveTime = 0;
-        mLastSampleTime = 0;
         mDayStart = now_t;
         mFitFileInitialized = false;
 
@@ -515,11 +509,7 @@ void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t time
 void Service::saveFit(bool force, bool finalizeDay) {
     std::time_t now = std::time(nullptr);
 
-    if (!mGlanceActive) {
-        return;
-    }
-
-    if (!force && (now - mLastSaveTime) < skSaveIntervalSec) {
+    if (!force && !mGlanceActive && !mIsOnHand) {
         return;
     }
 

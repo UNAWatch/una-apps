@@ -72,7 +72,6 @@ private:
     uint32_t mSampleCount = 0;
     std::vector<FitRecord> mPendingRecords;
     std::time_t mLastSaveTime = 0;
-    std::time_t mLastSampleTime = 0;
     uint16_t mLastHr = 0;
     char mFitPath[64] = {};
     char mCurrentDate[11] = {};
