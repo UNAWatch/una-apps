@@ -36,8 +36,7 @@ extern "C" {
 namespace {
 constexpr std::time_t kFitEpochOffset = 631065600;
 
-static std::time_t tm2epoch(const std::tm* tm)
-{
+static std::time_t tm2epoch(const std::tm* tm) {
     int y = tm->tm_year + 1900;
     int m = tm->tm_mon + 1;
     int d = tm->tm_mday;
@@ -57,8 +56,7 @@ static std::time_t tm2epoch(const std::tm* tm)
     return static_cast<std::time_t>(secs);
 }
 
-static std::time_t epochToLocal(std::time_t utc)
-{
+static std::time_t epochToLocal(std::time_t utc) {
     std::tm localTime{};
 #if WIN32
     localtime_s(&localTime, &utc);
@@ -68,13 +66,11 @@ static std::time_t epochToLocal(std::time_t utc)
     return tm2epoch(&localTime);
 }
 
-static FIT_DATE_TIME unixToFitTimestamp(std::time_t unixTimestamp)
-{
+static FIT_DATE_TIME unixToFitTimestamp(std::time_t unixTimestamp) {
     return static_cast<FIT_DATE_TIME>(unixTimestamp - kFitEpochOffset);
 }
 
-static void writeFileHeader(SDK::Interface::IFile* fp)
-{
+static void writeFileHeader(SDK::Interface::IFile* fp) {
     FIT_FILE_HDR file_header{};
 
     file_header.header_size = FIT_FILE_HDR_SIZE;
@@ -104,8 +100,7 @@ static void writeFileHeader(SDK::Interface::IFile* fp)
     }
 }
 
-static void writeCRC(SDK::Interface::IFile* fp)
-{
+static void writeCRC(SDK::Interface::IFile* fp) {
     fp->close();
     fp->open(false);
 
@@ -134,194 +129,149 @@ static void writeCRC(SDK::Interface::IFile* fp)
     fp->write(reinterpret_cast<const char*>(&crc), sizeof(FIT_UINT16), bw);
     fp->flush();
 }
-}
+}  // namespace
 
 #include "icon_60x60.h"
 #include "icon_30x30.h"
 
-Service::Service(SDK::Kernel &kernel)
-    : mKernel(kernel)
-    , mName("Strain Score")
-    , mGlanceUI()
-    , mGlanceTitle()
-    , mGlanceValue()
-    , mSensorHR(SDK::Sensor::Type::HEART_RATE)
-    , mSensorActivity(SDK::Sensor::Type::ACTIVITY)
-    , mSensorTouch(SDK::Sensor::Type::TOUCH_DETECT)
-    , mFitFileID(skFileMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FILE_ID])
-    , mFitDeveloper(skDevelopMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID])
-    , mFitRecord(skRecordMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
-    , mFitEvent(skEventMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT])
-    , mFitSession(skSessionMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_SESSION])
-    , mFitActivity(skActivityMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY])
-    , mFitStrainField(skStrainMsgNum, { &mFitRecord })
-    , mFitActiveField(skActiveMsgNum, { &mFitRecord })
-{
+Service::Service(SDK::Kernel& kernel)
+    : mKernel(kernel),
+      mName("Strain Score"),
+      mGlanceUI(),
+      mGlanceTitle(),
+      mGlanceValue(),
+      mSensorHR(SDK::Sensor::Type::HEART_RATE),
+      mSensorActivity(SDK::Sensor::Type::ACTIVITY),
+      mSensorTouch(SDK::Sensor::Type::TOUCH_DETECT),
+      mFitFileID(skFileMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FILE_ID]),
+      mFitDeveloper(skDevelopMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID]),
+      mFitRecord(skRecordMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD]),
+      mFitEvent(skEventMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT]),
+      mFitSession(skSessionMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_SESSION]),
+      mFitActivity(skActivityMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY]),
+      mFitStrainField(skStrainMsgNum, {&mFitRecord}),
+      mFitActiveField(skActiveMsgNum, {&mFitRecord}) {
     mFitFileID.init();
     mFitDeveloper.init();
-    mFitEvent.init({ FIT_EVENT_FIELD_NUM_TIMESTAMP,
-                     FIT_EVENT_FIELD_NUM_EVENT,
-                     FIT_EVENT_FIELD_NUM_EVENT_TYPE });
-    mFitActivity.init({ FIT_ACTIVITY_FIELD_NUM_TIMESTAMP,
-                        FIT_ACTIVITY_FIELD_NUM_TOTAL_TIMER_TIME,
-                        FIT_ACTIVITY_FIELD_NUM_LOCAL_TIMESTAMP,
-                        FIT_ACTIVITY_FIELD_NUM_NUM_SESSIONS });
-    mFitRecord.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
-                      FIT_RECORD_FIELD_NUM_HEART_RATE });
-    mFitSession.init({ FIT_SESSION_FIELD_NUM_TIMESTAMP,
-                       FIT_SESSION_FIELD_NUM_START_TIME,
-                       FIT_SESSION_FIELD_NUM_TOTAL_ELAPSED_TIME,
-                       FIT_SESSION_FIELD_NUM_TOTAL_TIMER_TIME,
-                       FIT_SESSION_FIELD_NUM_MESSAGE_INDEX,
-                       FIT_SESSION_FIELD_NUM_SPORT,
-                       FIT_SESSION_FIELD_NUM_SUB_SPORT,
-                       FIT_SESSION_FIELD_NUM_AVG_HEART_RATE,
-                       FIT_SESSION_FIELD_NUM_MAX_HEART_RATE });
-    mFitStrainField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
-    mFitActiveField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
+    mFitEvent.init({FIT_EVENT_FIELD_NUM_TIMESTAMP, FIT_EVENT_FIELD_NUM_EVENT, FIT_EVENT_FIELD_NUM_EVENT_TYPE});
+    mFitActivity.init({FIT_ACTIVITY_FIELD_NUM_TIMESTAMP, FIT_ACTIVITY_FIELD_NUM_TOTAL_TIMER_TIME,
+                       FIT_ACTIVITY_FIELD_NUM_LOCAL_TIMESTAMP, FIT_ACTIVITY_FIELD_NUM_NUM_SESSIONS});
+    mFitRecord.init({FIT_RECORD_FIELD_NUM_TIMESTAMP, FIT_RECORD_FIELD_NUM_HEART_RATE});
+    mFitSession.init({FIT_SESSION_FIELD_NUM_TIMESTAMP, FIT_SESSION_FIELD_NUM_START_TIME,
+                      FIT_SESSION_FIELD_NUM_TOTAL_ELAPSED_TIME, FIT_SESSION_FIELD_NUM_TOTAL_TIMER_TIME,
+                      FIT_SESSION_FIELD_NUM_MESSAGE_INDEX, FIT_SESSION_FIELD_NUM_SPORT, FIT_SESSION_FIELD_NUM_SUB_SPORT,
+                      FIT_SESSION_FIELD_NUM_AVG_HEART_RATE, FIT_SESSION_FIELD_NUM_MAX_HEART_RATE});
+    mFitStrainField.init({FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME, FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID});
+    mFitActiveField.init({FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME, FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                          FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID});
 }
 
-Service::~Service()
-{
-    disconnect();
-}
+Service::~Service() { disconnect(); }
 
-void Service::run()
-{
+void Service::run() {
     LOG_INFO("Started\n");
 
-    while (true)
-    {
-        SDK::MessageBase *msg;
+    while (true) {
+        SDK::MessageBase* msg;
 
-        if (!mKernel.comm.getMessage(msg))
-        {
+        if (!mKernel.comm.getMessage(msg)) {
             continue;
         }
 
-        switch (msg->getType())
-        {
-        case SDK::MessageType::EVENT_GLANCE_START:
-            LOG_INFO("GLANCE is now running\n");
-            if (configGui())
-            {
-                createGuiControls();
-                mGlanceActive = true;
-                connect();
-                checkDayRollover();
+        switch (msg->getType()) {
+            case SDK::MessageType::EVENT_GLANCE_START:
+                LOG_INFO("GLANCE is now running\n");
+                if (configGui()) {
+                    createGuiControls();
+                    mGlanceActive = true;
+                    connect();
+                    checkDayRollover();
+                    saveFit(true, false);
+                } else {
+                    mKernel.comm.releaseMessage(msg);
+                    return;
+                }
+                break;
+
+            case SDK::MessageType::EVENT_GLANCE_STOP:
+                LOG_INFO("GLANCE has stopped\n");
                 saveFit(true, false);
-            }
-            else
-            {
+                mGlanceActive = false;
+                disconnect();
                 mKernel.comm.releaseMessage(msg);
                 return;
-            }
-            break;
 
-        case SDK::MessageType::EVENT_GLANCE_STOP:
-            LOG_INFO("GLANCE has stopped\n");
-            saveFit(true, false);
-            mGlanceActive = false;
-            disconnect();
-            mKernel.comm.releaseMessage(msg);
-            return;
+            case SDK::MessageType::COMMAND_APP_STOP:
+                LOG_INFO("Force exit from the application\n");
+                saveFit(true, true);
+                disconnect();
+                mKernel.comm.releaseMessage(msg);
+                return;
 
-        case SDK::MessageType::COMMAND_APP_STOP:
-            LOG_INFO("Force exit from the application\n");
-            saveFit(true, true);
-            disconnect();
-            mKernel.comm.releaseMessage(msg);
-            return;
+            case SDK::MessageType::EVENT_GLANCE_TICK:
+                LOG_DEBUG("Glance tick event\n");
+                onGlanceTick();
+                break;
 
-        case SDK::MessageType::EVENT_GLANCE_TICK:
-            LOG_DEBUG("Glance tick event\n");
-            onGlanceTick();
-            break;
+            case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
+                LOG_DEBUG("Sensor data event\n");
+                auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
+                this->onSdlNewData(event->handle, event->data, event->count, event->stride);
+            } break;
 
-        case SDK::MessageType::EVENT_SENSOR_LAYER_DATA:
-        {
-            LOG_DEBUG("Sensor data event\n");
-            auto event = static_cast<SDK::Message::Sensor::EventData *>(msg);
-            this->onSdlNewData(event->handle,
-                               event->data,
-                               event->count,
-                               event->stride);
-        }
-        break;
-
-        default:
-            break;
+            default:
+                break;
         }
 
         mKernel.comm.releaseMessage(msg);
     }
 }
 
-void Service::connect()
-{
-    if (!mSensorHR.isConnected())
-    {
+void Service::connect() {
+    if (!mSensorHR.isConnected()) {
         LOG_DEBUG("Connect to HR sensors...\n");
         mSensorHR.connect();
     }
-    if (!mSensorActivity.isConnected())
-    {
+    if (!mSensorActivity.isConnected()) {
         LOG_DEBUG("Connect to Activity sensor...\n");
         mSensorActivity.connect();
     }
-    if (!mSensorTouch.isConnected())
-    {
+    if (!mSensorTouch.isConnected()) {
         LOG_DEBUG("Connect to Touch sensor...\n");
         mSensorTouch.connect();
     }
 }
 
-void Service::disconnect()
-{
+void Service::disconnect() {
     LOG_DEBUG("Disconnect from sensors...\n");
     saveFit(true, true);
-    if (mSensorHR.isConnected())
-    {
+    if (mSensorHR.isConnected()) {
         mSensorHR.disconnect();
     }
-    if (mSensorActivity.isConnected())
-    {
+    if (mSensorActivity.isConnected()) {
         mSensorActivity.disconnect();
     }
-    if (mSensorTouch.isConnected())
-    {
+    if (mSensorTouch.isConnected()) {
         mSensorTouch.disconnect();
     }
 }
 
-void Service::onSdlNewData(uint16_t handle,
-                           const SDK::Sensor::Data *data,
-                           uint16_t count,
-                           uint16_t stride)
-{
+void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint16_t count, uint16_t stride) {
     SDK::Sensor::DataBatch batch(data, count, stride);
 
-    if (mSensorTouch.matchesDriver(handle))
-    {
-        if (count > 0)
-        {
+    if (mSensorTouch.matchesDriver(handle)) {
+        if (count > 0) {
             SDK::SensorDataParser::Touch p(batch[0]);
-            if (p.isDataValid())
-            {
+            if (p.isDataValid()) {
                 bool onHand = p.isTouched();
-                if (mIsOnHand != onHand)
-                {
+                if (mIsOnHand != onHand) {
                     mIsOnHand = onHand;
-                    if (!mIsOnHand)
-                    {
+                    if (!mIsOnHand) {
                         saveFit(true, false);
                     }
                 }
@@ -329,29 +279,22 @@ void Service::onSdlNewData(uint16_t handle,
         }
     }
 
-    if (mSensorActivity.matchesDriver(handle))
-    {
-        if (count > 0)
-        {
+    if (mSensorActivity.matchesDriver(handle)) {
+        if (count > 0) {
             SDK::SensorDataParser::Activity p(batch[0]);
-            if (p.isDataValid())
-            {
+            if (p.isDataValid()) {
                 mActiveMin = p.getDuration();
             }
         }
     }
 
-    if (mSensorHR.matchesDriver(handle))
-    {
-        for (uint16_t i = 0; i < count; ++i)
-        {
+    if (mSensorHR.matchesDriver(handle)) {
+        for (uint16_t i = 0; i < count; ++i) {
             SDK::SensorDataParser::HeartRate p(batch[i]);
-            if (p.isDataValid())
-            {
+            if (p.isDataValid()) {
                 float hrRaw = p.getBpm();
                 uint16_t hr = static_cast<uint16_t>(hrRaw);
-                if (hr >= 50 && hr <= 220)
-                {
+                if (hr >= 50 && hr <= 220) {
                     float norm = (static_cast<float>(hr) - 60.0f) / 120.0f;
                     float delta = std::max(0.0f, norm) * 0.75f;
                     mTotalStrain += delta;
@@ -365,29 +308,25 @@ void Service::onSdlNewData(uint16_t handle,
     }
 }
 
-void Service::onGlanceTick()
-{
+void Service::onGlanceTick() {
     checkDayRollover();
 
     mGlanceValue.print("%.1f", mTotalStrain);
 
     std::time_t now = std::time(nullptr);
-    if (mIsOnHand && mGlanceActive && (now - mLastSampleTime) >= skSamplePeriodSec)
-    {
+    if (mIsOnHand && mGlanceActive && (now - mLastSampleTime) >= skSamplePeriodSec) {
         mLastSampleTime = now;
-        mPendingRecords.push_back({now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
+        mPendingRecords.push_back(
+            {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
     }
 
-    if (mGlanceActive)
-    {
+    if (mGlanceActive) {
         saveFit(false, false);
     }
 
-    if (mGlanceUI.isInvalid())
-    {
-        auto *upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
-        if (upd)
-        {
+    if (mGlanceUI.isInvalid()) {
+        auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
+        if (upd) {
             upd->name = mName;
             upd->controls = mGlanceUI.data();
             upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
@@ -400,16 +339,12 @@ void Service::onGlanceTick()
     }
 }
 
-bool Service::configGui()
-{
+bool Service::configGui() {
     bool status = false;
-    auto *gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
-    if (gc)
-    {
-        if (mKernel.comm.sendMessage(gc, 100) && gc->getResult() == SDK::MessageResult::SUCCESS)
-        {
-            if (gc->maxControls >= 3)
-            {
+    auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
+    if (gc) {
+        if (mKernel.comm.sendMessage(gc, 100) && gc->getResult() == SDK::MessageResult::SUCCESS) {
+            if (gc->maxControls >= 3) {
                 mGlanceUI.setWidth(gc->width);
                 mGlanceUI.setHeight(gc->height);
                 status = true;
@@ -421,8 +356,7 @@ bool Service::configGui()
     return status;
 }
 
-void Service::createGuiControls()
-{
+void Service::createGuiControls() {
     mGlanceUI.createImage().init({31, 15}, {60, 60}, ICON_60X60_ABGR2222);
 
     mGlanceTitle = mGlanceUI.createText();
@@ -440,8 +374,7 @@ void Service::createGuiControls()
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }
 
-void Service::checkDayRollover()
-{
+void Service::checkDayRollover() {
     LOG_DEBUG("Checking day rollover\n");
     std::time_t now_t = std::time(nullptr);
     std::tm tm_now;
@@ -450,11 +383,9 @@ void Service::checkDayRollover()
     std::strftime(now_date, sizeof(now_date), "%Y-%m-%d", &tm_now);
     LOG_DEBUG("Current date: %s\n", now_date);
 
-    if (std::strlen(mCurrentDate) == 0 || std::strcmp(mCurrentDate, now_date) != 0)
-    {
+    if (std::strlen(mCurrentDate) == 0 || std::strcmp(mCurrentDate, now_date) != 0) {
         LOG_DEBUG("Date changed from '%s' to '%s'\n", mCurrentDate, now_date);
-        if (std::strlen(mCurrentDate) > 0)
-        {
+        if (std::strlen(mCurrentDate) > 0) {
             saveFit(true, true);
         }
         std::strncpy(mCurrentDate, now_date, 10);
@@ -476,8 +407,7 @@ void Service::checkDayRollover()
     }
 }
 
-void Service::writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timestamp)
-{
+void Service::writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timestamp) {
     writeFileHeader(fp);
 
     mFitFileID.writeDef(fp);
@@ -493,8 +423,10 @@ void Service::writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timesta
 
     mFitDeveloper.writeDef(fp);
     FIT_DEVELOPER_DATA_ID_MESG developer{};
-    std::strncpy(reinterpret_cast<char*>(developer.developer_id), DEV_ID, FIT_DEVELOPER_DATA_ID_MESG_DEVELOPER_ID_COUNT);
-    std::strncpy(reinterpret_cast<char*>(developer.application_id), APP_ID, FIT_DEVELOPER_DATA_ID_MESG_APPLICATION_ID_COUNT);
+    std::strncpy(reinterpret_cast<char*>(developer.developer_id), DEV_ID,
+                 FIT_DEVELOPER_DATA_ID_MESG_DEVELOPER_ID_COUNT);
+    std::strncpy(reinterpret_cast<char*>(developer.application_id), APP_ID,
+                 FIT_DEVELOPER_DATA_ID_MESG_APPLICATION_ID_COUNT);
     developer.application_version = SDK::ParseVersion(BUILD_VERSION).u32;
     developer.manufacturer_id = FIT_MANUFACTURER_DEVELOPMENT;
     developer.developer_data_index = 0;
@@ -530,15 +462,12 @@ void Service::writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timesta
     mFitEvent.writeMessage(&start_event, fp);
 }
 
-void Service::appendPendingRecords(SDK::Interface::IFile* fp)
-{
-    if (mPendingRecords.empty())
-    {
+void Service::appendPendingRecords(SDK::Interface::IFile* fp) {
+    if (mPendingRecords.empty()) {
         return;
     }
 
-    for (const auto& rec : mPendingRecords)
-    {
+    for (const auto& rec : mPendingRecords) {
         FIT_RECORD_MESG record_mesg{};
         record_mesg.timestamp = unixToFitTimestamp(rec.timestamp);
         record_mesg.heart_rate = rec.hr;
@@ -554,8 +483,7 @@ void Service::appendPendingRecords(SDK::Interface::IFile* fp)
     mPendingRecords.clear();
 }
 
-void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t timestamp)
-{
+void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t timestamp) {
     float avg_hr = (mSampleCount > 0) ? (mSumHR / static_cast<float>(mSampleCount)) : 0.0f;
 
     FIT_EVENT_MESG stop_event{};
@@ -584,59 +512,49 @@ void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t time
     mFitActivity.writeMessage(&activity_mesg, fp);
 }
 
-void Service::saveFit(bool force, bool finalizeDay)
-{
+void Service::saveFit(bool force, bool finalizeDay) {
     std::time_t now = std::time(nullptr);
 
-    if (!mGlanceActive)
-    {
+    if (!mGlanceActive) {
         return;
     }
 
-    if (!force && (now - mLastSaveTime) < skSaveIntervalSec)
-    {
+    if (!force && (now - mLastSaveTime) < skSaveIntervalSec) {
         return;
     }
 
     auto file = mKernel.fs.file(mFitPath);
-    if (!file)
-    {
+    if (!file) {
         return;
     }
 
     bool isNewFile = !file->exist();
-    if (!file->open(true, isNewFile))
-    {
+    if (!file->open(true, isNewFile)) {
         LOG_ERROR("Failed to open FIT file %s\n", mFitPath);
         return;
     }
 
-    if (!isNewFile)
-    {
+    if (!isNewFile) {
         size_t fileSize = file->size();
-        if (fileSize >= (FIT_FILE_HDR_SIZE + sizeof(FIT_UINT16)))
-        {
+        if (fileSize >= (FIT_FILE_HDR_SIZE + sizeof(FIT_UINT16))) {
             file->truncate(fileSize - sizeof(FIT_UINT16));
         }
 
-        if (file->size() > FIT_FILE_HDR_SIZE)
-        {
+        if (file->size() > FIT_FILE_HDR_SIZE) {
             mFitFileInitialized = true;
         }
 
         file->seek(file->size());
     }
 
-    if (isNewFile || !mFitFileInitialized)
-    {
+    if (isNewFile || !mFitFileInitialized) {
         writeFitDefinitions(file.get(), now);
         mFitFileInitialized = true;
     }
 
     appendPendingRecords(file.get());
 
-    if (finalizeDay)
-    {
+    if (finalizeDay) {
         writeFitSessionSummary(file.get(), now);
     }
 
