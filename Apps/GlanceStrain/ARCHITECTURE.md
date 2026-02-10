@@ -2,15 +2,15 @@
 
 ## Problem Statement
 
-Provide a glance-friendly strain summary that logs heart-rate-derived strain only while the glance is active. Logging must be resilient to off-hand transitions and recover some daily activity from persisted FIT data.
+Provide a glance-friendly strain summary that logs heart-rate-derived strain whenever sensor data arrives and the watch is on-hand. Logging must be resilient to off-hand transitions and recover some daily activity from persisted FIT data.
 
 ## Program Architecture
 
 ### 1) Kernel entry and service lifetime
 
 - `Service` is constructed with a reference to the kernel (`SDK::Kernel`) and runs as the glance service entry point.
-- `Service::run()` is the main loop. It blocks on `mKernel.comm.getMessage()` and reacts to kernel events and commands.
-- The service exits when the glance stops (`EVENT_GLANCE_STOP`) or when the app is forcibly stopped (`COMMAND_APP_STOP`).
+- `Service::run()` is the main loop. It blocks on `mKernel.comm.getMessage()` and reacts to glance/tick/sensor messages. `EVENT_GLANCE_TICK` / `onGlanceTick()` only occur while the glance is active, and are used only for UI refresh.
+- The service does **not** exit on `EVENT_GLANCE_STOP`; it keeps sensors connected and continues acquiring data in the background. Persistence is driven by sensor events, and background saves are allowed when the device is on-hand. The service exits only on `COMMAND_APP_STOP`.
 
 ### 2) Kernel message loop
 
@@ -20,11 +20,11 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
   - Configure glance UI bounds (`configGui()`), build controls (`createGuiControls()`), mark `mGlanceActive = true`.
   - Connect to sensors (`connect()`), handle day rollover (`checkDayRollover()`), and trigger an initial FIT save (`saveFit(true, false)`).
 - `EVENT_GLANCE_TICK`
-  - Refresh display and data (`onGlanceTick()`).
+  - Refresh display (`onGlanceTick()`). These ticks only occur while the glance is active; they do not fire in the background.
 - `EVENT_SENSOR_LAYER_DATA`
   - Dispatch batched sensor samples into `onSdlNewData()`.
 - `EVENT_GLANCE_STOP`
-  - Save, disconnect, and return from `run()`.
+  - Mark the glance inactive and keep sensors connected; sensor-driven saves can continue when on-hand.
 - `COMMAND_APP_STOP`
   - Finalize the FIT session for the day, disconnect, and return from `run()`.
 
@@ -35,7 +35,7 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
   - Icon image
   - Title text ("Strain Score")
   - Value text for current strain score
-- `onGlanceTick()` updates the value text and issues a `RequestGlanceUpdate` when the UI is invalid.
+- `onGlanceTick()` updates the value text and issues a `RequestGlanceUpdate` when the UI is invalid; it only runs while the glance is active.
 
 ### 4) Sensor layer
 
@@ -43,10 +43,12 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
   - `HEART_RATE` → `SensorDataParserHeartRate`
   - `ACTIVITY` → `SensorDataParserActivity`
   - `TOUCH_DETECT` → `SensorDataParserTouch`
+- All three sensor connections are configured with the same sample period (`skSamplePeriodSec`, expressed in ms).
 - `onSdlNewData()` routes incoming batches by sensor handle:
   - Touch updates `mIsOnHand` and triggers `saveFit(true, false)` on off-hand transitions.
   - Activity updates active minutes (`mActiveMin`).
   - Heart rate updates strain accumulators and the most recent valid HR value.
+- Sensor events enforce record cadence via the activity sensor connection interval, day rollover checks, and time-gated FIT saves (including in the background when on-hand).
 
 ### 5) Core strain logic
 
@@ -56,7 +58,7 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
   - `delta = max(0, norm) * 0.75`
 - Running aggregates:
   - `mTotalStrain`, `mSumHR`, `mMaxHR`, `mSampleCount`, `mLastHr`
-- On each glance tick, if glance is active and on-hand, a pending FIT record is captured every 5 seconds.
+- On each activity sensor event, if the watch is on-hand, a pending FIT record is captured at the activity sensor cadence (5 seconds). This is independent of glance activity.
 
 ### 6) Persistence (FIT)
 
@@ -79,11 +81,11 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
 3. **UI**
    - `EVENT_GLANCE_START` calls `configGui()` to fetch sizing via `SDK::Message::RequestGlanceConfig` and initializes [`mGlanceUI`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:56).
    - `createGuiControls()` builds the icon, title, and value text controls and stores them in `mGlanceUI` (see [`Service::createGuiControls()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:424)).
-   - `onGlanceTick()` updates `mGlanceValue` and dispatches `RequestGlanceUpdate` when the form is invalid (see [`Service::onGlanceTick()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368)).
+   - `onGlanceTick()` updates `mGlanceValue` and dispatches `RequestGlanceUpdate` when the form is invalid; it only runs while the glance is active (see [`Service::onGlanceTick()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368)).
 
 4. **Sensor connections**
    - The service owns `SDK::Sensor::Connection` members for heart rate, activity, and touch (see [`mSensorHR`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:60), [`mSensorActivity`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:61), and [`mSensorTouch`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:62)).
-   - `connect()` is called on glance start and `disconnect()` on stop/app stop (see [`Service::connect()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:268) and [`Service::disconnect()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:287)).
+   - `connect()` is called on glance start; `disconnect()` is only called on `COMMAND_APP_STOP` (see [`Service::connect()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:268) and [`Service::disconnect()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:287)).
 
 5. **Handle incoming sensor messages**
    - `EVENT_SENSOR_LAYER_DATA` forwards sensor batches into `Service::onSdlNewData()` (see [`Service::run()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197)).
@@ -96,14 +98,15 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
    - Running totals are stored in `mTotalStrain`, `mSumHR`, `mMaxHR`, `mSampleCount`, and `mLastHr` (see [`Service.hpp`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:68)).
 
 7. **Emit samples and refresh the UI on ticks**
-   - `onGlanceTick()` enforces the `skSamplePeriodSec` cadence (5 seconds) and appends pending records to `mPendingRecords` while glance is active and on-hand (see [`Service::onGlanceTick()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368)).
-   - If `mGlanceActive` is true, `saveFit(false, false)` is invoked to persist at most once per `skSaveIntervalSec` (3600 seconds).
+- `onSdlNewData()` appends pending records to `mPendingRecords` on each activity sensor event, which runs at the `skSamplePeriodSec` cadence (5 seconds), whenever the watch is on-hand, regardless of glance activity (see [`Service::onSdlNewData()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:305)).
+   - `onGlanceTick()` only updates the UI and emits `RequestGlanceUpdate` when invalid (see [`Service::onGlanceTick()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368)).
+   - `saveFit(false, false)` is invoked from sensor events to persist at most once per `skSaveIntervalSec` (3600 seconds), and can run in the background when on-hand.
 
 8. **Persist FIT data and handle day rollover**
    - `checkDayRollover()` updates `mCurrentDate`, rebuilds `mFitPath` as `strain_YYYY-MM-DD.fit`, and resets accumulators when the date changes (see [`Service::checkDayRollover()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443)).
    - `saveFit(force, finalizeDay)` opens or creates the FIT file, writes definitions when needed, appends pending records, and optionally emits a session summary (see [`Service::saveFit()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:587)).
    - FIT message/field helpers are initialized in the constructor (`mFitFileID`, `mFitRecord`, `mFitSession`, `mFitStrainField`, `mFitActiveField`) and used by `writeFitDefinitions()`, `appendPendingRecords()`, and `writeFitSessionSummary()` (see [`Service::Service()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:142) and helper methods nearby).
-   - `saveFit()` exits early if the glance is inactive, so persistence occurs only while the glance is running.
+   - `saveFit()` is triggered by sensor events and can run in the background when the watch is on-hand; it is still time-gated by `skSaveIntervalSec`.
 
 9. **Logs behavior while iterating**
    - Use log output from `Service.cpp` (`LOG_INFO`/`LOG_DEBUG`) to verify event sequencing, day rollover, and save cadence (see [`Service::run()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197) and [`Service::checkDayRollover()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443)).
@@ -131,9 +134,10 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
 
 1. **Kernel starts glance** → `EVENT_GLANCE_START` → UI configured and rendered, sensors connected, daily FIT context initialized.
 2. **Kernel delivers sensor batches** → `EVENT_SENSOR_LAYER_DATA` → `onSdlNewData()` updates HR/active minutes/on-hand state.
-3. **Kernel ticks glance** → `EVENT_GLANCE_TICK` → `onGlanceTick()` updates the UI, pushes periodic FIT records, and triggers `saveFit()` when allowed by cadence.
-4. **Kernel stops glance** → `EVENT_GLANCE_STOP` → immediate save, disconnect, exit.
-5. **Kernel stops app** → `COMMAND_APP_STOP` → finalize session, disconnect, exit.
+3. **Kernel ticks glance** → `EVENT_GLANCE_TICK` → `onGlanceTick()` updates the UI only. This only happens while the glance is active.
+4. **Kernel stops glance** → `EVENT_GLANCE_STOP` → mark glance inactive; sensors stay connected and background acquisition continues while sensor-driven persistence can continue when on-hand.
+5. **No glance ticks while inactive** → no UI refresh occurs, but sensor events continue to drive record emission, rollover checks, and saves when on-hand.
+6. **Kernel stops app** → `COMMAND_APP_STOP` → finalize session, disconnect, exit.
 
 ## Key Interfaces and Data Structures
 
@@ -149,7 +153,7 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
 
 ### Logging cadence
 
-- Record strain samples on a 5-second cadence while the glance is active.
+- Record strain samples on a 5-second cadence while the watch is on-hand; cadence is driven by the activity sensor connection interval, not glance ticks.
 
 ### Persistence and recovery
 
@@ -159,5 +163,5 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain onl
 ### Gating rules
 
 - If `TOUCH_DETECT` reports unworn, treat the state as off-hand, suppress logging, and force an immediate save.
-- Perform disk I/O only while the glance is active.
-- Save on glance start and on glance ticks, but no more often than every 60 minutes unless an off-hand transition triggers an immediate save.
+- Allow disk I/O in the background when the watch is on-hand; sensor events trigger time-gated saves.
+- Save on glance start and on sensor events, but no more often than every 60 minutes unless an off-hand transition triggers an immediate save.
