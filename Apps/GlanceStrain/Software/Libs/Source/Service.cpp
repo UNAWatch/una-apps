@@ -5,7 +5,6 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
-#include <chrono>
 
 #define LOG_MODULE_PRX "Service"
 #define LOG_MODULE_LEVEL LOG_LEVEL_DEBUG
@@ -286,6 +285,10 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
             SDK::SensorDataParser::Activity p(batch[0]);
             if (p.isDataValid()) {
                 mActiveMin = p.getDuration();
+                if (mIsOnHand && mSampleCount > 0) {
+                    mPendingRecords.push_back(
+                        {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
+                }
             }
         }
     }
@@ -304,8 +307,6 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
                 mMaxHR = std::max(mMaxHR, hr);
                 mSampleCount++;
                 mLastHr = hr;
-                mPendingRecords.push_back(
-                    {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
             }
         }
     }
@@ -509,7 +510,7 @@ void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t time
 void Service::saveFit(bool force, bool finalizeDay) {
     std::time_t now = std::time(nullptr);
 
-    if (!force && !mGlanceActive && !mIsOnHand) {
+    if (!force && !mIsOnHand) {
         return;
     }
 
