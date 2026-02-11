@@ -171,7 +171,7 @@ Service::Service(SDK::Kernel& kernel)
                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID});
 }
 
-Service::~Service() { disconnect(); }
+Service::~Service() {}
 
 void Service::run() {
     LOG_INFO("Started\n");
@@ -550,11 +550,19 @@ void Service::saveFit(bool force, bool finalizeDay) {
     }
 
     LOG_DEBUG("saveFit appending %zu pending records\n", mPendingRecords.size());
+    size_t sizeBeforeAppend = file->size();
+    LOG_DEBUG("saveFit size before append=%zu\n", sizeBeforeAppend);
     appendPendingRecords(file.get());
+    size_t sizeAfterAppend = file->size();
+    LOG_DEBUG("saveFit size after append=%zu\n", sizeAfterAppend);
 
     if (finalizeDay) {
+        size_t sizeBeforeSummary = file->size();
+        LOG_DEBUG("saveFit size before summary=%zu\n", sizeBeforeSummary);
         LOG_DEBUG("saveFit writing session summary\n");
         writeFitSessionSummary(file.get(), now);
+        size_t sizeAfterSummary = file->size();
+        LOG_DEBUG("saveFit size after summary=%zu\n", sizeAfterSummary);
     }
 
     file->flush();
