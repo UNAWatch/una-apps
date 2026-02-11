@@ -273,6 +273,7 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
                     mIsOnHand = onHand;
                     if (!mIsOnHand) {
                         /** @note: save data on watch hand-off */
+                        LOG_INFO("Watch hand off, saving data\n");
                         saveFit(true, false);
                     }
                 }
@@ -298,6 +299,7 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
             SDK::SensorDataParser::HeartRate p(batch[i]);
             if (!p.isDataValid() || !mIsOnHand) continue;
             float hrRaw = p.getBpm();
+            LOG_DEBUG("HR: %f\n", hrRaw);
             uint16_t hr = static_cast<uint16_t>(hrRaw);
             if (hr >= 50 && hr <= 220) {
                 float norm = (static_cast<float>(hr) - 60.0f) / 120.0f;
@@ -371,13 +373,11 @@ void Service::createGuiControls() {
 }
 
 void Service::checkDayRollover() {
-    LOG_DEBUG("Checking day rollover\n");
     std::time_t now_t = std::time(nullptr);
     std::tm tm_now;
     localtime_r(&now_t, &tm_now);
     char now_date[11];
     std::strftime(now_date, sizeof(now_date), "%Y-%m-%d", &tm_now);
-    LOG_DEBUG("Current date: %s\n", now_date);
 
     if (std::strlen(mCurrentDate) == 0 || std::strcmp(mCurrentDate, now_date) != 0) {
         LOG_DEBUG("Date changed from '%s' to '%s'\n", mCurrentDate, now_date);
@@ -398,7 +398,7 @@ void Service::checkDayRollover() {
         mDayStart = now_t;
         mFitFileInitialized = false;
 
-        LOG_INFO("New strain day: %s\\n", mCurrentDate);
+        LOG_INFO("New day: %s\\n", mCurrentDate);
     }
 }
 
@@ -510,16 +510,21 @@ void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t time
 void Service::saveFit(bool force, bool finalizeDay) {
     std::time_t now = std::time(nullptr);
 
+    LOG_DEBUG("saveFit start (force=%d, finalizeDay=%d, onHand=%d)\n", force, finalizeDay, mIsOnHand);
+
     if (!force && !mIsOnHand) {
+        LOG_DEBUG("saveFit skipped: watch not on hand\n");
         return;
     }
 
     auto file = mKernel.fs.file(mFitPath);
     if (!file) {
+        LOG_ERROR("saveFit failed: can't access FIT path %s\n", mFitPath);
         return;
     }
 
     bool isNewFile = !file->exist();
+    LOG_DEBUG("saveFit opening file %s (new=%d)\n", mFitPath, isNewFile);
     if (!file->open(true, isNewFile)) {
         LOG_ERROR("Failed to open FIT file %s\n", mFitPath);
         return;
@@ -527,8 +532,10 @@ void Service::saveFit(bool force, bool finalizeDay) {
 
     if (!isNewFile) {
         size_t fileSize = file->size();
+        LOG_DEBUG("saveFit existing file size=%zu\n", fileSize);
         if (fileSize >= (FIT_FILE_HDR_SIZE + sizeof(FIT_UINT16))) {
             file->truncate(fileSize - sizeof(FIT_UINT16));
+            LOG_DEBUG("saveFit truncated CRC, new size=%zu\n", file->size());
         }
 
         if (file->size() > FIT_FILE_HDR_SIZE) {
@@ -539,13 +546,16 @@ void Service::saveFit(bool force, bool finalizeDay) {
     }
 
     if (isNewFile || !mFitFileInitialized) {
+        LOG_DEBUG("saveFit writing FIT definitions\n");
         writeFitDefinitions(file.get(), now);
         mFitFileInitialized = true;
     }
 
+    LOG_DEBUG("saveFit appending %zu pending records\n", mPendingRecords.size());
     appendPendingRecords(file.get());
 
     if (finalizeDay) {
+        LOG_DEBUG("saveFit writing session summary\n");
         writeFitSessionSummary(file.get(), now);
     }
 
@@ -555,4 +565,5 @@ void Service::saveFit(bool force, bool finalizeDay) {
     file->close();
 
     mLastSaveTime = now;
+    LOG_INFO("saveFit complete: %s\n", mFitPath);
 }
