@@ -405,6 +405,9 @@ void Service::checkDayRollover() {
         mDayStart = t_now;
         mFitFileInitialized = false;
         mSessionOpen = false;
+        mSessionIndexInitialized = false;
+        mSessionIndex = 0;
+        mStrainLoaded = false;
 
         LOG_INFO("New day: %s\\n", mCurrentDate);
     }
@@ -437,8 +440,6 @@ void Service::writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timesta
 
     mFitEvent.writeDef(fp);
     mFitActivity.writeDef(fp);
-    mFitRecord.writeDef(fp);
-    mFitSession.writeDef(fp);
 
     mFitStrainField.writeDef(fp);
     FIT_FIELD_DESCRIPTION_MESG strainField{};
@@ -458,6 +459,9 @@ void Service::writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timesta
     activeField.fit_base_type_id = FIT_BASE_TYPE_UINT32;
     mFitActiveField.writeMessage(&activeField, fp);
 
+    mFitRecord.writeDef(fp);
+    mFitSession.writeDef(fp);
+
     FIT_EVENT_MESG start_event{};
     start_event.timestamp = unixToFitTimestamp(timestamp);
     start_event.event = FIT_EVENT_TIMER;
@@ -473,6 +477,229 @@ void Service::startNewSession(SDK::Interface::IFile* fp, std::time_t timestamp) 
     mFitEvent.writeMessage(&start_event, fp);
     mDayStart = timestamp;
     mSessionOpen = true;
+}
+
+void Service::loadSessionIndex(SDK::Interface::IFile* fp) {
+    if (!fp) {
+        return;
+    }
+
+    fp->flush();
+    size_t fileSize = fp->size();
+    if (fileSize < 12) {
+        return;
+    }
+
+    FIT_UINT8 headerSize = 0;
+    size_t br = 0;
+    fp->seek(0);
+    fp->read(reinterpret_cast<char*>(&headerSize), sizeof(FIT_UINT8), br);
+    if (br != sizeof(FIT_UINT8) || headerSize < 12) {
+        return;
+    }
+
+    std::array<FIT_UINT8, 32> header{};
+    size_t toRead = static_cast<size_t>(headerSize - 1);
+    if (toRead > header.size()) {
+        toRead = header.size();
+    }
+    fp->read(reinterpret_cast<char*>(header.data()), toRead, br);
+    if (br != toRead) {
+        return;
+    }
+
+    const size_t dataSize = static_cast<size_t>(header[3]) |
+                            (static_cast<size_t>(header[4]) << 8) |
+                            (static_cast<size_t>(header[5]) << 16) |
+                            (static_cast<size_t>(header[6]) << 24);
+    if (dataSize == 0) {
+        return;
+    }
+
+    size_t dataStart = headerSize;
+    size_t dataEnd = dataStart + dataSize;
+    if (dataEnd > fileSize) {
+        dataEnd = fileSize;
+    }
+
+    struct FitFieldDef {
+        FIT_UINT8 fieldNum;
+        FIT_UINT8 size;
+        FIT_UINT8 baseType;
+    };
+
+    struct FitDevFieldDef {
+        FIT_UINT8 fieldNum;
+        FIT_UINT8 size;
+        FIT_UINT8 devIndex;
+    };
+
+    struct FitLocalDef {
+        bool valid = false;
+        FIT_UINT16 globalMsgNum = 0;
+        bool littleEndian = true;
+        std::array<FitFieldDef, 32> fields{};
+        size_t fieldCount = 0;
+        std::array<FitDevFieldDef, 16> devFields{};
+        size_t devFieldCount = 0;
+    };
+
+    std::array<FitLocalDef, 16> localDefs{};
+    uint16_t lastIndex = 0;
+    uint16_t sessionCount = 0;
+    float lastStrain = 0.0f;
+
+    std::array<FIT_UINT8, 256> fieldBuffer{};
+    size_t pos = dataStart;
+    fp->seek(pos);
+
+    while (pos < dataEnd) {
+        FIT_UINT8 headerByte = 0;
+        fp->read(reinterpret_cast<char*>(&headerByte), sizeof(FIT_UINT8), br);
+        if (br != sizeof(FIT_UINT8)) {
+            break;
+        }
+        pos += 1;
+
+        if (headerByte & 0x40) {
+            const FIT_UINT8 localMsg = headerByte & 0x0F;
+            FitLocalDef def{};
+            FIT_UINT8 reserved = 0;
+            FIT_UINT8 arch = 0;
+            FIT_UINT8 numFields = 0;
+            fp->read(reinterpret_cast<char*>(&reserved), sizeof(FIT_UINT8), br);
+            fp->read(reinterpret_cast<char*>(&arch), sizeof(FIT_UINT8), br);
+            pos += 2;
+            def.littleEndian = (arch == 0);
+
+            FIT_UINT16 globalMsg = 0;
+            fp->read(reinterpret_cast<char*>(&globalMsg), sizeof(FIT_UINT16), br);
+            pos += 2;
+            def.globalMsgNum = def.littleEndian ? globalMsg : static_cast<FIT_UINT16>((globalMsg >> 8) | (globalMsg << 8));
+
+            fp->read(reinterpret_cast<char*>(&numFields), sizeof(FIT_UINT8), br);
+            pos += 1;
+            def.fieldCount = std::min<size_t>(numFields, def.fields.size());
+
+            for (size_t i = 0; i < numFields; ++i) {
+                FitFieldDef field{};
+                fp->read(reinterpret_cast<char*>(&field.fieldNum), sizeof(FIT_UINT8), br);
+                fp->read(reinterpret_cast<char*>(&field.size), sizeof(FIT_UINT8), br);
+                fp->read(reinterpret_cast<char*>(&field.baseType), sizeof(FIT_UINT8), br);
+                pos += 3;
+                if (i < def.fields.size()) {
+                    def.fields[i] = field;
+                }
+            }
+
+            if (headerByte & 0x20) {
+                FIT_UINT8 numDevFields = 0;
+                fp->read(reinterpret_cast<char*>(&numDevFields), sizeof(FIT_UINT8), br);
+                pos += 1;
+                def.devFieldCount = std::min<size_t>(numDevFields, def.devFields.size());
+                for (size_t i = 0; i < numDevFields; ++i) {
+                    FitDevFieldDef devField{};
+                    fp->read(reinterpret_cast<char*>(&devField.fieldNum), sizeof(FIT_UINT8), br);
+                    fp->read(reinterpret_cast<char*>(&devField.size), sizeof(FIT_UINT8), br);
+                    fp->read(reinterpret_cast<char*>(&devField.devIndex), sizeof(FIT_UINT8), br);
+                    pos += 3;
+                    if (i < def.devFields.size()) {
+                        def.devFields[i] = devField;
+                    }
+                }
+            }
+
+            def.valid = true;
+            localDefs[localMsg] = def;
+            continue;
+        }
+
+        FIT_UINT8 localMsg = 0;
+        if (headerByte & 0x80) {
+            localMsg = (headerByte >> 5) & 0x03;
+        } else {
+            localMsg = headerByte & 0x0F;
+        }
+
+        if (localMsg >= localDefs.size() || !localDefs[localMsg].valid) {
+            break;
+        }
+
+        FitLocalDef& def = localDefs[localMsg];
+        if (def.globalMsgNum == FIT_MESG_SESSION) {
+            sessionCount++;
+        }
+
+        for (size_t i = 0; i < def.fieldCount; ++i) {
+            const FitFieldDef& field = def.fields[i];
+            if (field.size == 0) {
+                continue;
+            }
+            size_t readSize = std::min<size_t>(field.size, fieldBuffer.size());
+            fp->read(reinterpret_cast<char*>(fieldBuffer.data()), readSize, br);
+            pos += readSize;
+            if (field.size > readSize) {
+                fp->seek(pos + (field.size - readSize));
+                pos += field.size - readSize;
+            }
+
+            if (def.globalMsgNum == FIT_MESG_SESSION && field.fieldNum == FIT_SESSION_FIELD_NUM_MESSAGE_INDEX) {
+                uint16_t value = 0;
+                if (field.size == 1) {
+                    value = fieldBuffer[0];
+                } else if (field.size >= 2) {
+                    if (def.littleEndian) {
+                        value = static_cast<uint16_t>(fieldBuffer[0]) |
+                                (static_cast<uint16_t>(fieldBuffer[1]) << 8);
+                    } else {
+                        value = static_cast<uint16_t>(fieldBuffer[1]) |
+                                (static_cast<uint16_t>(fieldBuffer[0]) << 8);
+                    }
+                }
+                if (value >= lastIndex) {
+                    lastIndex = value;
+                }
+            }
+        }
+
+        for (size_t i = 0; i < def.devFieldCount; ++i) {
+            const FitDevFieldDef& devField = def.devFields[i];
+            if (devField.size == 0) {
+                continue;
+            }
+            size_t readSize = std::min<size_t>(devField.size, fieldBuffer.size());
+            fp->read(reinterpret_cast<char*>(fieldBuffer.data()), readSize, br);
+            pos += readSize;
+            if (def.globalMsgNum == FIT_MESG_RECORD && devField.devIndex == 0 && devField.fieldNum == 0 &&
+                devField.size >= sizeof(float)) {
+                std::array<FIT_UINT8, sizeof(float)> strainBytes{};
+                std::memcpy(strainBytes.data(), fieldBuffer.data(), sizeof(float));
+                if (!def.littleEndian) {
+                    std::reverse(strainBytes.begin(), strainBytes.end());
+                }
+                float value = 0.0f;
+                std::memcpy(&value, strainBytes.data(), sizeof(float));
+                lastStrain = value;
+            }
+            if (devField.size > readSize) {
+                fp->seek(pos + (devField.size - readSize));
+                pos += devField.size - readSize;
+            }
+        }
+    }
+
+    if (sessionCount > 0) {
+        mSessionIndex = sessionCount;
+        if (!mStrainLoaded) {
+            mTotalStrain = lastStrain;
+            mStrainLoaded = true;
+        }
+    } else {
+        mSessionIndex = 0;
+    }
+    mSessionIndexInitialized = true;
+    LOG_DEBUG("loadSessionIndex: lastIndex=%u, sessionCount=%u, strainLoaded=%d, mSessionIndex=%u\n",
+              static_cast<unsigned>(lastIndex), static_cast<unsigned>(sessionCount), mStrainLoaded, static_cast<unsigned>(mSessionIndex));
 }
 
 void Service::appendPendingRecords(SDK::Interface::IFile* fp) {
@@ -506,7 +733,11 @@ void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t time
     mFitEvent.writeMessage(&stop_event, fp);
 
     FIT_SESSION_MESG session_mesg{};
-    session_mesg.message_index = 0;
+    if (!mSessionIndexInitialized) {
+        mSessionIndex = 0;
+        mSessionIndexInitialized = true;
+    }
+    session_mesg.message_index = mSessionIndex;
     session_mesg.sport = FIT_SPORT_GENERIC;
     session_mesg.sub_sport = FIT_SUB_SPORT_GENERIC;
     session_mesg.timestamp = unixToFitTimestamp(timestamp);
@@ -521,7 +752,8 @@ void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t time
     activity_mesg.timestamp = unixToFitTimestamp(timestamp);
     activity_mesg.local_timestamp = unixToFitTimestamp(epochToLocal(timestamp));
     activity_mesg.total_timer_time = static_cast<FIT_UINT32>((timestamp - mDayStart) * 1000);
-    activity_mesg.num_sessions = 1;
+    mSessionIndex++;
+    activity_mesg.num_sessions = mSessionIndex;
     mFitActivity.writeMessage(&activity_mesg, fp);
 
     mSessionOpen = false;
@@ -553,6 +785,11 @@ void Service::saveFit(bool force, bool finalizeDay) {
     if (!isNewFile) {
         size_t fileSize = file->size();
         LOG_DEBUG("saveFit existing file size=%zu\n", fileSize);
+        if (!mSessionIndexInitialized || !mStrainLoaded) {
+            loadSessionIndex(file.get());
+            mSessionIndexInitialized = true;
+            mStrainLoaded = true;
+        }
         if (fileSize >= (FIT_FILE_HDR_SIZE + sizeof(FIT_UINT16))) {
             file->truncate(fileSize - sizeof(FIT_UINT16));
             LOG_DEBUG("saveFit truncated CRC, new size=%zu\n", file->size());
@@ -572,6 +809,10 @@ void Service::saveFit(bool force, bool finalizeDay) {
         mSessionOpen = true;
         if (mDayStart == 0) {
             mDayStart = now;
+        }
+        if (!mSessionIndexInitialized) {
+            mSessionIndex = 0;
+            mSessionIndexInitialized = true;
         }
     } else if (!mSessionOpen && !mPendingRecords.empty()) {
         startNewSession(file.get(), now);

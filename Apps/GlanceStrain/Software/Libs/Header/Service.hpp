@@ -44,6 +44,7 @@ private:
     void writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timestamp);
     void writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t timestamp);
     void startNewSession(SDK::Interface::IFile* fp, std::time_t timestamp);
+    void loadSessionIndex(SDK::Interface::IFile* fp);
 
     struct FitRecord {
         std::time_t timestamp;
@@ -79,6 +80,9 @@ private:
     char mCurrentDate[11] = {};
     std::time_t mDayStart = 0;
     bool mFitFileInitialized = false;
+    bool mSessionIndexInitialized = false;
+    uint16_t mSessionIndex = 0;
+    bool mStrainLoaded = false;
 
     SDK::Component::FitHelper mFitFileID;
     SDK::Component::FitHelper mFitDeveloper;
