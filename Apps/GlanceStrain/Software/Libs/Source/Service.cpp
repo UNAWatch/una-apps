@@ -103,34 +103,39 @@ static void writeFileHeader(SDK::Interface::IFile* fp) {
 }
 
 static void writeCRC(SDK::Interface::IFile* fp) {
-    fp->close();
-    fp->open(false);
-
     FIT_UINT8 buffer[512];
-    size_t size = fp->size();
+    fp->flush();
+    size_t sizeBefore = fp->size();
     size_t pos = 0;
     uint16_t crc = 0;
 
-    while (pos < size) {
-        size_t toRead = size - pos;
+    LOG_DEBUG("writeCRC sizeBefore=%zu\n", sizeBefore);
+    fp->seek(0);
+
+    while (pos < sizeBefore) {
+        size_t toRead = sizeBefore - pos;
         if (toRead > sizeof(buffer)) {
             toRead = sizeof(buffer);
         }
 
         size_t br;
         fp->read(reinterpret_cast<char*>(buffer), toRead, br);
+        if (br == 0) {
+            LOG_ERROR("writeCRC read failed at pos=%zu sizeBefore=%zu\n", pos, sizeBefore);
+            break;
+        }
         crc = FitCRC_Update16(crc, buffer, static_cast<FIT_UINT32>(br));
         pos += br;
     }
 
-    fp->close();
-    fp->open(true, false);
-    fp->seek(fp->size());
+    fp->seek(sizeBefore);
+    LOG_DEBUG("writeCRC append crc=0x%04x at pos=%zu\n", crc, sizeBefore);
 
     size_t bw;
     fp->write(reinterpret_cast<const char*>(&crc), sizeof(FIT_UINT16), bw);
     fp->flush();
 }
+
 }  // namespace
 
 #include "icon_60x60.h"
@@ -307,6 +312,8 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
                 mSampleCount++;
                 mLastHr = hr;
                 if (mIsOnHand && mSampleCount > 0) {
+                    LOG_DEBUG("strain: %f active_min: %u\n", static_cast<double>(mTotalStrain),
+                              static_cast<unsigned>(mActiveMin));
                     mPendingRecords.push_back(
                         {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
                 }
