@@ -43,6 +43,7 @@ private:
     void appendPendingRecords(SDK::Interface::IFile* fp);
     void writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timestamp);
     void writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t timestamp);
+    void startNewSession(SDK::Interface::IFile* fp, std::time_t timestamp);
 
     struct FitRecord {
         std::time_t timestamp;
@@ -72,6 +73,7 @@ private:
     uint32_t mSampleCount = 0;
     std::vector<FitRecord> mPendingRecords;
     std::time_t mLastSaveTime = 0;
+    bool mSessionOpen = false;
     uint16_t mLastHr = 0;
     char mFitPath[64] = {};
     char mCurrentDate[11] = {};
