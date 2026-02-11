@@ -81,11 +81,13 @@ static void writeFileHeader(SDK::Interface::IFile* fp) {
     fp->flush();
     size_t fileSize = fp->size();
 
+    size_t dataSize = 0;
     if (fileSize > FIT_FILE_HDR_SIZE) {
-        file_header.data_size = static_cast<FIT_UINT32>(fileSize - FIT_FILE_HDR_SIZE);
-    } else {
-        file_header.data_size = 0;
+        dataSize = fileSize - FIT_FILE_HDR_SIZE;
     }
+    LOG_DEBUG("writeFileHeader size=%zu dataSize=%zu header=%u\n", fileSize, dataSize,
+              static_cast<unsigned>(FIT_FILE_HDR_SIZE));
+    file_header.data_size = static_cast<FIT_UINT32>(dataSize);
 
     file_header.crc = FitCRC_Calc16(&file_header, FIT_STRUCT_OFFSET(crc, FIT_FILE_HDR));
 
