@@ -5,6 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
 # App configuration
 set(APP_NAME "GlanceStrain")
 set(APP_TYPE "Glance")
+set(APP_AUTOSTART On)
 set(DEV_ID "UNA")
 set(APP_ID "A1E84D2F7A9C5B60")
 set(RESOURCES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../Resources")
