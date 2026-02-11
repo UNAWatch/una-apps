@@ -176,9 +176,15 @@ Service::~Service() { disconnect(); }
 void Service::run() {
     LOG_INFO("Started\n");
 
-    while (true) {
-        SDK::MessageBase* msg;
+    if (!configGui()) {
+        LOG_ERROR("Can't create glance-gui\n");
+        return;
+    }
+    createGuiControls();
+    connect();
 
+    while (true) {
+        SDK::MessageBase* msg = {nullptr};
         if (!mKernel.comm.getMessage(msg)) {
             continue;
         }
@@ -186,16 +192,7 @@ void Service::run() {
         switch (msg->getType()) {
             case SDK::MessageType::EVENT_GLANCE_START:
                 LOG_INFO("GLANCE is now running\n");
-                if (configGui()) {
-                    createGuiControls();
-                    mGlanceActive = true;
-                    connect();
-                    checkDayRollover();
-                    saveFit(true, false);
-                } else {
-                    mKernel.comm.releaseMessage(msg);
-                    return;
-                }
+                mGlanceActive = true;
                 break;
 
             case SDK::MessageType::EVENT_GLANCE_STOP:
@@ -275,6 +272,8 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
                         /** @note: save data on watch hand-off */
                         LOG_INFO("Watch hand off, saving data\n");
                         saveFit(true, false);
+                    } else {
+                        LOG_INFO("Watch is worn on the wrist\n");
                     }
                 }
             }
@@ -286,10 +285,6 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
             SDK::SensorDataParser::Activity p(batch[0]);
             if (p.isDataValid()) {
                 mActiveMin = p.getDuration();
-                if (mIsOnHand && mSampleCount > 0) {
-                    mPendingRecords.push_back(
-                        {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
-                }
             }
         }
     }
@@ -301,7 +296,7 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
             float hrRaw = p.getBpm();
             LOG_DEBUG("HR: %f\n", hrRaw);
             uint16_t hr = static_cast<uint16_t>(hrRaw);
-            if (hr >= 50 && hr <= 220) {
+            if (hr >= 50 && hr <= 255) {
                 float norm = (static_cast<float>(hr) - 60.0f) / 120.0f;
                 float delta = std::max(0.0f, norm) * 0.75f;
                 mTotalStrain += delta;
@@ -309,10 +304,13 @@ void Service::onSdlNewData(uint16_t handle, const SDK::Sensor::Data* data, uint1
                 mMaxHR = std::max(mMaxHR, hr);
                 mSampleCount++;
                 mLastHr = hr;
+                if (mIsOnHand && mSampleCount > 0) {
+                    mPendingRecords.push_back(
+                        {now, static_cast<uint8_t>(std::min<uint16_t>(mLastHr, 255)), mTotalStrain, mActiveMin});
+                }
             }
         }
     }
-
 
     if ((now - mLastSaveTime) >= skSaveIntervalSec) {
         saveFit(false, false);
