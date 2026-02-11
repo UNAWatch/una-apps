@@ -371,9 +371,9 @@ void Service::createGuiControls() {
 }
 
 void Service::checkDayRollover() {
-    std::time_t now_t = std::time(nullptr);
+    std::time_t t_now = std::time(nullptr);
     std::tm tm_now;
-    localtime_r(&now_t, &tm_now);
+    localtime_r(&t_now, &tm_now);
     char now_date[11];
     std::strftime(now_date, sizeof(now_date), "%Y-%m-%d", &tm_now);
 
@@ -393,8 +393,9 @@ void Service::checkDayRollover() {
         mSampleCount = 0;
         mPendingRecords.clear();
         mLastSaveTime = 0;
-        mDayStart = now_t;
+        mDayStart = t_now;
         mFitFileInitialized = false;
+        mSessionOpen = false;
 
         LOG_INFO("New day: %s\\n", mCurrentDate);
     }
@@ -455,6 +456,16 @@ void Service::writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timesta
     mFitEvent.writeMessage(&start_event, fp);
 }
 
+void Service::startNewSession(SDK::Interface::IFile* fp, std::time_t timestamp) {
+    FIT_EVENT_MESG start_event{};
+    start_event.timestamp = unixToFitTimestamp(timestamp);
+    start_event.event = FIT_EVENT_TIMER;
+    start_event.event_type = FIT_EVENT_TYPE_START;
+    mFitEvent.writeMessage(&start_event, fp);
+    mDayStart = timestamp;
+    mSessionOpen = true;
+}
+
 void Service::appendPendingRecords(SDK::Interface::IFile* fp) {
     if (mPendingRecords.empty()) {
         return;
@@ -503,6 +514,8 @@ void Service::writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t time
     activity_mesg.total_timer_time = static_cast<FIT_UINT32>((timestamp - mDayStart) * 1000);
     activity_mesg.num_sessions = 1;
     mFitActivity.writeMessage(&activity_mesg, fp);
+
+    mSessionOpen = false;
 }
 
 void Service::saveFit(bool force, bool finalizeDay) {
@@ -547,6 +560,12 @@ void Service::saveFit(bool force, bool finalizeDay) {
         LOG_DEBUG("saveFit writing FIT definitions\n");
         writeFitDefinitions(file.get(), now);
         mFitFileInitialized = true;
+        mSessionOpen = true;
+        if (mDayStart == 0) {
+            mDayStart = now;
+        }
+    } else if (!mSessionOpen && !mPendingRecords.empty()) {
+        startNewSession(file.get(), now);
     }
 
     LOG_DEBUG("saveFit appending %zu pending records\n", mPendingRecords.size());
@@ -556,7 +575,7 @@ void Service::saveFit(bool force, bool finalizeDay) {
     size_t sizeAfterAppend = file->size();
     LOG_DEBUG("saveFit size after append=%zu\n", sizeAfterAppend);
 
-    if (finalizeDay) {
+    if (finalizeDay && mSessionOpen) {
         size_t sizeBeforeSummary = file->size();
         LOG_DEBUG("saveFit size before summary=%zu\n", sizeBeforeSummary);
         LOG_DEBUG("saveFit writing session summary\n");
