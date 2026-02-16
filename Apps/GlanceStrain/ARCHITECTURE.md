@@ -70,48 +70,48 @@ Provide a glance-friendly strain summary that logs heart-rate-derived strain whe
 ## Implementation Walktrought
 
 1. **App layout**
-   - Service entry point and logic live in [`Software/Libs/Header/Service.hpp`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:1) and [`Software/Libs/Source/Service.cpp`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:1).
-   - App build wiring is under [`Software/App/GlanceStrain-CMake/CMakeLists.txt`](Examples/Apps/GlanceStrain/Software/App/GlanceStrain-CMake/CMakeLists.txt).
-   - Glance assets are compiled from headers like [`Software/Libs/Header/icon_60x60.h`](Examples/Apps/GlanceStrain/Software/Libs/Header/icon_60x60.h:1) and the PNGs under [`Resources/`](Examples/Apps/GlanceStrain/Resources:1).
+   - Service entry point and logic live in {ref}`Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:1` and {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:1`.
+   - App build wiring is under {ref}`Examples/Apps/GlanceStrain/Software/App/GlanceStrain-CMake/CMakeLists.txt`.
+   - Glance assets are compiled from headers like {ref}`Examples/Apps/GlanceStrain/Software/Libs/Header/icon_60x60.h:1` and the PNGs under {ref}`Examples/Apps/GlanceStrain/Resources:1`.
 
 2. **Entry point**
-   - `Service::run()` in [`Service.cpp`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197) is the main loop and the only entry point called by the kernel.
+   - `Service::run()` in {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197` is the main loop and the only entry point called by the kernel.
    - The loop blocks on `mKernel.comm.getMessage()` and switches on `SDK::MessageType` values (glance start/stop, tick, sensor data, app stop).
 
 3. **UI**
-   - `EVENT_GLANCE_START` calls `configGui()` to fetch sizing via `SDK::Message::RequestGlanceConfig` and initializes [`mGlanceUI`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:56).
-   - `createGuiControls()` builds the icon, title, and value text controls and stores them in `mGlanceUI` (see [`Service::createGuiControls()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:424)).
-   - `onGlanceTick()` updates `mGlanceValue` and dispatches `RequestGlanceUpdate` when the form is invalid; it only runs while the glance is active (see [`Service::onGlanceTick()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368)).
+   - `EVENT_GLANCE_START` calls `configGui()` to fetch sizing via `SDK::Message::RequestGlanceConfig` and initializes {ref}`Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:56`.
+   - `createGuiControls()` builds the icon, title, and value text controls and stores them in `mGlanceUI` (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:424`).
+   - `onGlanceTick()` updates `mGlanceValue` and dispatches `RequestGlanceUpdate` when the form is invalid; it only runs while the glance is active (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368`).
 
 4. **Sensor connections**
-   - The service owns `SDK::Sensor::Connection` members for heart rate, activity, and touch (see [`mSensorHR`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:60), [`mSensorActivity`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:61), and [`mSensorTouch`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:62)).
-   - `connect()` is called on glance start; `disconnect()` is only called on `COMMAND_APP_STOP` (see [`Service::connect()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:268) and [`Service::disconnect()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:287)).
+   - The service owns `SDK::Sensor::Connection` members for heart rate, activity, and touch (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:60`, {ref}`Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:61`, and {ref}`Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:62`).
+   - `connect()` is called on glance start; `disconnect()` is only called on `COMMAND_APP_STOP` (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:268` and {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:287`).
 
 5. **Handle incoming sensor messages**
-   - `EVENT_SENSOR_LAYER_DATA` forwards sensor batches into `Service::onSdlNewData()` (see [`Service::run()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197)).
-   - `onSdlNewData()` uses `SDK::Sensor::DataBatch` and the parser types `SensorDataParser::Touch`, `::Activity`, and `::HeartRate` to validate and decode frames (see [`Service::onSdlNewData()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:305)).
+   - `EVENT_SENSOR_LAYER_DATA` forwards sensor batches into `Service::onSdlNewData()` (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197`).
+   - `onSdlNewData()` uses `SDK::Sensor::DataBatch` and the parser types `SensorDataParser::Touch`, `::Activity`, and `::HeartRate` to validate and decode frames (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:305`).
    - Touch updates `mIsOnHand` and forces an immediate FIT save when the watch is removed (off-hand transition).
    - Activity updates `mActiveMin` from the parsed duration.
 
 6. **Apply the strain calculation and accumulate state**
-   - Heart-rate samples are accepted only in [50, 220]. For each valid sample, `norm = (hr - 60) / 120` and `delta = max(0, norm) * 0.75` (see [`Service::onSdlNewData()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:344)).
-   - Running totals are stored in `mTotalStrain`, `mSumHR`, `mMaxHR`, `mSampleCount`, and `mLastHr` (see [`Service.hpp`](Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:68)).
+   - Heart-rate samples are accepted only in [50, 220]. For each valid sample, `norm = (hr - 60) / 120` and `delta = max(0, norm) * 0.75` (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:344`).
+   - Running totals are stored in `mTotalStrain`, `mSumHR`, `mMaxHR`, `mSampleCount`, and `mLastHr` (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Header/Service.hpp:68`).
 
 7. **Emit samples and refresh the UI on ticks**
-- `onSdlNewData()` appends pending records to `mPendingRecords` on each activity sensor event, which runs at the `skSamplePeriodSec` cadence (5 seconds), whenever the watch is on-hand, regardless of glance activity (see [`Service::onSdlNewData()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:305)).
-   - `onGlanceTick()` only updates the UI and emits `RequestGlanceUpdate` when invalid (see [`Service::onGlanceTick()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368)).
+- `onSdlNewData()` appends pending records to `mPendingRecords` on each activity sensor event, which runs at the `skSamplePeriodSec` cadence (5 seconds), whenever the watch is on-hand, regardless of glance activity (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:305`).
+   - `onGlanceTick()` only updates the UI and emits `RequestGlanceUpdate` when invalid (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:368`).
    - `saveFit(false, false)` is invoked from sensor events to persist at most once per `skSaveIntervalSec` (3600 seconds), and can run in the background when on-hand.
 
 8. **Persist FIT data and handle day rollover**
-   - `checkDayRollover()` updates `mCurrentDate`, rebuilds `mFitPath` as `strain_YYYY-MM-DD.fit`, and resets accumulators when the date changes (see [`Service::checkDayRollover()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443)).
-   - `saveFit(force, finalizeDay)` opens or creates the FIT file, writes definitions when needed, appends pending records, and optionally emits a session summary (see [`Service::saveFit()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:587)).
-   - FIT message/field helpers are initialized in the constructor (`mFitFileID`, `mFitRecord`, `mFitSession`, `mFitStrainField`, `mFitActiveField`) and used by `writeFitDefinitions()`, `appendPendingRecords()`, and `writeFitSessionSummary()` (see [`Service::Service()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:142) and helper methods nearby).
+   - `checkDayRollover()` updates `mCurrentDate`, rebuilds `mFitPath` as `strain_YYYY-MM-DD.fit`, and resets accumulators when the date changes (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443`).
+   - `saveFit(force, finalizeDay)` opens or creates the FIT file, writes definitions when needed, appends pending records, and optionally emits a session summary (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:587`).
+   - FIT message/field helpers are initialized in the constructor (`mFitFileID`, `mFitRecord`, `mFitSession`, `mFitStrainField`, `mFitActiveField`) and used by `writeFitDefinitions()`, `appendPendingRecords()`, and `writeFitSessionSummary()` (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:142` and helper methods nearby).
    - `saveFit()` is triggered by sensor events and can run in the background when the watch is on-hand; it is still time-gated by `skSaveIntervalSec`.
 
 9. **Logs behavior while iterating**
-   - Use log output from `Service.cpp` (`LOG_INFO`/`LOG_DEBUG`) to verify event sequencing, day rollover, and save cadence (see [`Service::run()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197) and [`Service::checkDayRollover()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443)).
-   - Confirm that off-hand transitions force an immediate save by simulating `TOUCH_DETECT` events and watching for `saveFit(true, false)` calls in logs (see [`Service::onSdlNewData()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:305)).
-   - Verify the FIT output location and daily file naming using `mFitPath` after a glance start/rollover (see [`Service::checkDayRollover()`](Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443)).
+   - Use log output from `Service.cpp` (`LOG_INFO`/`LOG_DEBUG`) to verify event sequencing, day rollover, and save cadence (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:197` and {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443`).
+   - Confirm that off-hand transitions force an immediate save by simulating `TOUCH_DETECT` events and watching for `saveFit(true, false)` calls in logs (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:305`).
+   - Verify the FIT output location and daily file naming using `mFitPath` after a glance start/rollover (see {ref}`Examples/Apps/GlanceStrain/Software/Libs/Source/Service.cpp:443`).
 
 ## Common vs App-Specific Components
 
