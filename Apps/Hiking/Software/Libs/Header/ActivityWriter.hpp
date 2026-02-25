@@ -84,6 +84,7 @@ public:
     void pause(std::time_t timestamp);
     void resume(std::time_t timestamp);
     void addRecord(const RecordData& record);
+    void addRecord(const RecordData& record, uint8_t battery);
     void addLap(const LapData& lap);
     void stop(const TrackData& track);
     void discard();
@@ -111,8 +112,6 @@ private:
     SDK::Component::FitHelper mFHFloorField;
     SDK::Component::FitHelper mFHBatteryField;
 
-    uint8_t mIndex;
-
     static constexpr uint8_t skFileMsgNum          =  1;
     static constexpr uint8_t skDevelopMsgNum       =  2;
     static constexpr uint8_t skRecordMsgNum        =  3;
@@ -124,6 +123,8 @@ private:
     static constexpr uint8_t skStepsMsgNum         =  9;
     static constexpr uint8_t skFloorsMsgNum        = 10;
     static constexpr uint8_t skBatteryMsgNum       = 11;
+
+    FIT_RECORD_MESG prepareRecordMsg(const RecordData& record);
 
     void AddMessageEvent(std::time_t t, FIT_EVENT_TYPE type);
 

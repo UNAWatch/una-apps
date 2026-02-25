@@ -52,6 +52,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
         , mTimeTracker(kernel)
         , mAltitudeFilter(0.8f)
+        , mSaveBatteryLevelTimer(TIMER_MINUTES(5))
         , mName("Hiking")
 {
     mTimeCounter.init();
@@ -61,6 +62,8 @@ Service::Service(SDK::Kernel &kernel)
     mAltitudeCounter.init(2.0f);
     mStepCounter.init();
     mFloorCounter.init();
+
+    mSaveBatteryLevelTimer.stop();
 }
 
 Service::~Service()
@@ -85,7 +88,7 @@ void Service::run()
         LOG_WARNING("Failed to load activity summary\n");
     }
 
-    uint32_t startTime = mKernel.sys.getTimeMs();
+    SDK::Timer guiInitTimeout(TIMER_SECONDS(5));
     bool firstFix = false;
 
     std::time_t processedUtc = 0;
@@ -217,7 +220,7 @@ void Service::run()
             // do nothing
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.sys.getTimeMs() - startTime > 5000) {
+            if (guiInitTimeout.expired()) {
                 LOG_INFO("No activities, exiting service\n");
                 return; // Exit app
             }
@@ -585,6 +588,8 @@ void Service::startTrack(std::time_t utc)
 
     mTrackState = Track::State::ACTIVE;
 
+    mSaveBatteryLevelTimer.start();
+
     LOG_INFO("Track started. UTC: %u\n", static_cast<uint32_t>(mTimeCounter.getCurrent()));
     mGuiSender.trackState(mTrackState);
 }
@@ -672,7 +677,11 @@ void Service::processTrack()
         fitRecord.heartRate = mHrCounter.getCurrent();
         fitRecord.altitude  = mAltitudeCounter.getCurrent();
         fitRecord.speed     = mSpeedCounter.getCurrent();
-        mActivityWriter.addRecord(fitRecord);
+        if (mSaveBatteryLevelTimer.tick()) {
+            mActivityWriter.addRecord(fitRecord, static_cast<uint8_t>(mBatteryLevel));
+        } else {
+            mActivityWriter.addRecord(fitRecord);
+        }
 
         mSessionNotEmpty = true;    // Session has at least one record
         mLapNotEmpty = true;        // Lap has at least one record
@@ -843,6 +852,8 @@ void Service::stopTrack(bool discard)
     mGuiSender.trackState(mTrackState);
 
     disconnect();
+
+    mSaveBatteryLevelTimer.stop();
 }
 
 void Service::pauseTrack(bool pause)
