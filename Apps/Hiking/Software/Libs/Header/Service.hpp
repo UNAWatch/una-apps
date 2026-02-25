@@ -140,6 +140,11 @@ private:
             return soc;
         }
 
+        void setSaveRequest()
+        {
+            saveRequest = true;
+        }
+
         bool readyToSave()
         {
             if (!isValid) {
@@ -186,6 +191,8 @@ private:
     };
 
     LapDivSource mLapDivSource{};
+
+    ActivityWriter::RecordData prepareRecordData();
 
     void sendInitialInfoToGui();
     void startTrack(std::time_t utc);
