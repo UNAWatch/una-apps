@@ -518,6 +518,21 @@ void Service::notifyNewActivity()
     }
 }
 
+ActivityWriter::RecordData Service::prepareRecordData()
+{
+    ActivityWriter::RecordData fitRecord{};
+
+    fitRecord.timestamp = mTimeCounter.getCurrent();
+    fitRecord.gotFix    = mGps.gotFix;
+    fitRecord.latitude  = mGps.latitude;
+    fitRecord.longitude = mGps.longitude;
+    fitRecord.heartRate = mHrCounter.getCurrent();
+    fitRecord.altitude  = mAltitudeCounter.getCurrent();
+    fitRecord.speed     = mSpeedCounter.getCurrent();
+
+    return fitRecord;
+}
+
 void Service::sendInitialInfoToGui()
 {
     // Settings
@@ -666,14 +681,7 @@ void Service::processTrack()
 
     if (mTrackState == Track::State::ACTIVE) {
         // Save record to the FIT file
-        ActivityWriter::RecordData fitRecord {};
-        fitRecord.timestamp = mTimeCounter.getCurrent();
-        fitRecord.gotFix    = mGps.gotFix;
-        fitRecord.latitude  = mGps.latitude;
-        fitRecord.longitude = mGps.longitude;
-        fitRecord.heartRate = mHrCounter.getCurrent();
-        fitRecord.altitude  = mAltitudeCounter.getCurrent();
-        fitRecord.speed     = mSpeedCounter.getCurrent();
+        ActivityWriter::RecordData fitRecord = prepareRecordData();
         if (mBatteryLevel.readyToSave()) {
             mActivityWriter.addRecord(fitRecord, static_cast<uint8_t>(mBatteryLevel.getValue()));
         } else {
@@ -786,6 +794,12 @@ void Service::stopTrack(bool discard)
 
         if (mLapNotEmpty) {
             saveLap();
+        }
+
+        mBatteryLevel.setSaveRequest();
+        if (mBatteryLevel.readyToSave()) {
+            ActivityWriter::RecordData fitRecord = prepareRecordData();
+            mActivityWriter.addRecord(fitRecord, static_cast<uint8_t>(mBatteryLevel.getValue()));
         }
 
         mSummary.utc       = mTimeCounter.getCurrent();
