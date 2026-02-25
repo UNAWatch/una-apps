@@ -18,7 +18,7 @@
 #include "VariableCounter.hpp"
 #include "DeltaCounter.hpp"
 #include "SimpleLPF.hpp"
-
+#include "SDK/Timer/Timer.hpp"
 
 #include "Commands.hpp"
 
@@ -123,12 +123,13 @@ private:
     float mSeaLevelPressure = 0.0f;
 
     // Current battery level
-    float mBatteryLevel = 0.0f;
+    float      mBatteryLevel = 0.0f;
+    SDK::Timer mSaveBatteryLevelTimer;
 
     Track::State mTrackState = Track::State::INACTIVE;
-    std::time_t mTrackStartUTC = 0;
-    bool mPreviousGpsFixState = false;
-    std::time_t mTrackProcessTimestamp = 0;
+    std::time_t  mTrackStartUTC = 0;
+    bool         mPreviousGpsFixState = false;
+    std::time_t  mTrackProcessTimestamp = 0;
 
     bool mSessionNotEmpty = false;
     bool mLapNotEmpty = false;
@@ -156,7 +157,6 @@ private:
     {
         return (speed > th) ? (1.0f / speed) : 0.0f;
     }
-
 
     // IGlance implementation
     bool                     mGlanceActive = false;

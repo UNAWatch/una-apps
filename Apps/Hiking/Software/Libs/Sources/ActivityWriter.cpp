@@ -39,7 +39,6 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
     , mFHStepsField(skStepsMsgNum, 0, { &mFHLap, &mFHSession })
 	, mFHFloorField(skFloorsMsgNum, 1, { &mFHLap, &mFHSession })
     , mFHBatteryField(skBatteryMsgNum, 2, {&mFHRecordBattery} )
-    , mIndex(0)
 {
     assert(pathToDir != nullptr);
 
@@ -171,7 +170,6 @@ void ActivityWriter::start(const AppInfo& info)
         mFHStepsField.writeDef(fp);
         FIT_FIELD_DESCRIPTION_MESG steps{};
         strncpy(steps.field_name, "steps", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
-        strncpy(steps.units, "steps", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
         steps.developer_data_index    = 0;
         steps.field_definition_number = mFHStepsField.getFieldID();
         steps.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
@@ -181,16 +179,15 @@ void ActivityWriter::start(const AppInfo& info)
         mFHFloorField.writeDef(fp);
         FIT_FIELD_DESCRIPTION_MESG floors{};
         strncpy(floors.field_name, "floors", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
-        strncpy(floors.units, "floors", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
         floors.developer_data_index    = 0;
         floors.field_definition_number = mFHFloorField.getFieldID();
         floors.fit_base_type_id        = FIT_BASE_TYPE_UINT32;
         mFHFloorField.writeMessage(&floors, fp);
 
-        // Field 2: "battery percent"
+        // Field 2: "battery level in percents"
         mFHBatteryField.writeDef(fp);
         FIT_FIELD_DESCRIPTION_MESG batt{};
-        strncpy(batt.field_name, "batt", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
+        strncpy(batt.field_name, "batteryLevel", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
         strncpy(batt.units, "%", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
         batt.developer_data_index    = 0;
         batt.field_definition_number = mFHBatteryField.getFieldID();
@@ -230,7 +227,37 @@ void ActivityWriter::resume(std::time_t timestamp)
     AddMessageEvent(timestamp, FIT_EVENT_TYPE_START);
 }
 
+FIT_RECORD_MESG ActivityWriter::prepareRecordMsg(const RecordData& record)
+{
+    FIT_RECORD_MESG msg;
+
+    Fit_InitMesg(fit_mesg_defs[FIT_MESG_RECORD], &msg);
+
+    msg.timestamp = unixToFitTimestamp(record.timestamp);
+    if (record.gotFix) {
+        msg.position_lat  = ConvertDegreesToSemicircles(record.latitude);
+        msg.position_long = ConvertDegreesToSemicircles(record.longitude);
+    }
+
+    msg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
+    msg.heart_rate        = static_cast<FIT_UINT8>(record.heartRate);
+    msg.enhanced_speed    = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
+
+    return msg;
+}
+
 void ActivityWriter::addRecord(const RecordData& record)
+{
+    if (!mFile) {
+        return;
+    }
+
+    const FIT_RECORD_MESG msg = prepareRecordMsg(record);
+
+    mFHRecord.writeMessage(&msg, mFile.get());
+}
+
+void ActivityWriter::addRecord(const RecordData& record, uint8_t battery)
 {
     if (!mFile) {
         return;
@@ -238,28 +265,12 @@ void ActivityWriter::addRecord(const RecordData& record)
 
     SDK::Interface::IFile* fp = mFile.get();
 
-    FIT_RECORD_MESG record_mesg{};
+    const FIT_RECORD_MESG msg = prepareRecordMsg(record);
 
-    record_mesg.timestamp = unixToFitTimestamp(record.timestamp);
-    if (record.gotFix) {
-        record_mesg.position_lat  = ConvertDegreesToSemicircles(record.latitude);
-        record_mesg.position_long = ConvertDegreesToSemicircles(record.longitude);
-    }
-    record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
-    record_mesg.heart_rate        = static_cast<FIT_UINT8>(record.heartRate);
-    record_mesg.enhanced_speed    = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
+    mFHRecordBattery.writeMessage(&msg, fp);
 
-    if (++mIndex % 10 == 0) {
-//        mFHRecordBattery.writeDef(fp);
-        mFHRecordBattery.writeMessage(&record_mesg, fp);
-
-        FIT_UINT8 index = mIndex;
-        mFHRecordBattery.writeFieldMessage(0, &index, fp);
-
-//        mFHRecord.writeDef(fp);
-    } else {
-        mFHRecord.writeMessage(&record_mesg, fp);
-    }
+    const FIT_UINT8 soc = battery;
+    mFHRecordBattery.writeFieldMessage(0, &soc, fp);
 }
 
 void ActivityWriter::addLap(const LapData& lap)
