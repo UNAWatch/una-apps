@@ -52,7 +52,6 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
         , mTimeTracker(kernel)
         , mAltitudeFilter(0.8f)
-        , mSaveBatteryLevelTimer(TIMER_MINUTES(5))
         , mName("Hiking")
 {
     mTimeCounter.init();
@@ -62,8 +61,6 @@ Service::Service(SDK::Kernel &kernel)
     mAltitudeCounter.init(2.0f);
     mStepCounter.init();
     mFloorCounter.init();
-
-    mSaveBatteryLevelTimer.stop();
 }
 
 Service::~Service()
@@ -198,7 +195,7 @@ void Service::run()
                 std::tm tmNow = mTimeTracker.getLocalTime(std::time(nullptr));
                 mGuiSender.time(tmNow);
 
-                mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel));
+                mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getValue()));
 
                 // Update GPS fix
                 if (mPreviousGpsFixState != mGps.fix) {
@@ -337,8 +334,8 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
     } else if (mSensorBatteryLevel.matchesDriver(handle)) {
         SDK::SensorDataParser::BatteryLevel parser(data[0]);
         if (parser.isDataValid()) {
-            mBatteryLevel = parser.getCharge();
-            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel);
+            mBatteryLevel.setValue(parser.getCharge());
+            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel.getValue());
         }
     } else if (mSensorWristMotion.matchesDriver(handle)) {
         SDK::SensorDataParser::WristMotion parser(data[0]);
@@ -546,7 +543,7 @@ void Service::sendInitialInfoToGui()
     mGuiSender.summary(std::make_shared<const ActivitySummary>(mSummary));
 
     // Battery level
-    mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel));
+    mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getValue()));
 }
 
 void Service::startTrack(std::time_t utc)
@@ -564,6 +561,8 @@ void Service::startTrack(std::time_t utc)
     mAltitudeCounter.reset();
     mStepCounter.reset();
     mFloorCounter.reset();
+    mBatteryLevel.reset();
+    mGps.reset();
 
     mSessionNotEmpty = false;
     mLapNotEmpty = false;
@@ -587,8 +586,6 @@ void Service::startTrack(std::time_t utc)
     mActivityWriter.start(info);
 
     mTrackState = Track::State::ACTIVE;
-
-    mSaveBatteryLevelTimer.start();
 
     LOG_INFO("Track started. UTC: %u\n", static_cast<uint32_t>(mTimeCounter.getCurrent()));
     mGuiSender.trackState(mTrackState);
@@ -677,8 +674,8 @@ void Service::processTrack()
         fitRecord.heartRate = mHrCounter.getCurrent();
         fitRecord.altitude  = mAltitudeCounter.getCurrent();
         fitRecord.speed     = mSpeedCounter.getCurrent();
-        if (mSaveBatteryLevelTimer.tick()) {
-            mActivityWriter.addRecord(fitRecord, static_cast<uint8_t>(mBatteryLevel));
+        if (mBatteryLevel.readyToSave()) {
+            mActivityWriter.addRecord(fitRecord, static_cast<uint8_t>(mBatteryLevel.getValue()));
         } else {
             mActivityWriter.addRecord(fitRecord);
         }
@@ -853,7 +850,7 @@ void Service::stopTrack(bool discard)
 
     disconnect();
 
-    mSaveBatteryLevelTimer.stop();
+    mBatteryLevel.timer.stop();
 }
 
 void Service::pauseTrack(bool pause)

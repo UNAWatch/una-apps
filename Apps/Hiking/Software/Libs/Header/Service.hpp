@@ -123,8 +123,50 @@ private:
     float mSeaLevelPressure = 0.0f;
 
     // Current battery level
-    float      mBatteryLevel = 0.0f;
-    SDK::Timer mSaveBatteryLevelTimer;
+    struct {
+        SDK::Timer timer;
+        float      soc;
+        bool       isValid;
+        bool       saveRequest;
+
+        void setValue(float v)
+        {
+            soc   = v;
+            isValid = true;
+        }
+
+        float getValue()
+        {
+            return soc;
+        }
+
+        bool readyToSave()
+        {
+            if (!isValid) {
+                return false;
+            }
+
+            if (timer.tick()) {
+                saveRequest = true;
+            }
+
+            if (!saveRequest) {
+                return false;
+            }
+
+            saveRequest = false;
+
+            return true;
+        }
+
+        void reset()
+        {
+            timer.start(TIMER_MINUTES(5));
+            soc         = 0.0f;
+            isValid     = false;
+            saveRequest = true;
+        }
+    } mBatteryLevel{};
 
     Track::State mTrackState = Track::State::INACTIVE;
     std::time_t  mTrackStartUTC = 0;
