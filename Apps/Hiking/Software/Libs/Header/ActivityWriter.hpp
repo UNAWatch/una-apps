@@ -106,18 +106,24 @@ private:
     SDK::Component::FitHelper mFHEvent;
     SDK::Component::FitHelper mFHActivity;
     SDK::Component::FitHelper mFHRecord;
+    SDK::Component::FitHelper mFHRecordBattery;
     SDK::Component::FitHelper mFHStepsField;
     SDK::Component::FitHelper mFHFloorField;
+    SDK::Component::FitHelper mFHBatteryField;
 
-    static constexpr uint8_t skFileMsgNum     = 1;
-    static constexpr uint8_t skDevelopMsgNum  = 2;
-    static constexpr uint8_t skRecordMsgNum   = 3;
-    static constexpr uint8_t skLapMsgNum      = 4;
-    static constexpr uint8_t skSessionMsgNum  = 5;
-    static constexpr uint8_t skActivityMsgNum = 6;
-    static constexpr uint8_t skEventMsgNum    = 7;
-    static constexpr uint8_t skStepsMsgNum    = 8;
-    static constexpr uint8_t skFloorsMsgNum   = 9;
+    uint8_t mIndex;
+
+    static constexpr uint8_t skFileMsgNum          =  1;
+    static constexpr uint8_t skDevelopMsgNum       =  2;
+    static constexpr uint8_t skRecordMsgNum        =  3;
+    static constexpr uint8_t skRecordBatteryMsgNum =  4;
+    static constexpr uint8_t skLapMsgNum           =  5;
+    static constexpr uint8_t skSessionMsgNum       =  6;
+    static constexpr uint8_t skActivityMsgNum      =  7;
+    static constexpr uint8_t skEventMsgNum         =  8;
+    static constexpr uint8_t skStepsMsgNum         =  9;
+    static constexpr uint8_t skFloorsMsgNum        = 10;
+    static constexpr uint8_t skBatteryMsgNum       = 11;
 
     void AddMessageEvent(std::time_t t, FIT_EVENT_TYPE type);
 
