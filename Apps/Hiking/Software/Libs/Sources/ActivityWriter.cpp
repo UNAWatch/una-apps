@@ -28,17 +28,19 @@ extern "C" {
 
 ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
     : mKernel(kernel), mPath(pathToDir)
-    , mFHFileID(skFileMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FILE_ID])
-    , mFHDeveloper(skDevelopMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID])
-    , mFHLap(skLapMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_LAP])
-    , mFHSession(skSessionMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_SESSION])
-    , mFHEvent(skEventMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT])
-    , mFHActivity(skActivityMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY])
-    , mFHRecord(skRecordMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
-    , mFHRecordBattery(skRecordBatteryMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
-    , mFHStepsField(skStepsMsgNum, 0, { &mFHLap, &mFHSession })
-	, mFHFloorField(skFloorsMsgNum, 1, { &mFHLap, &mFHSession })
-    , mFHBatteryField(skBatteryMsgNum, 2, {&mFHRecordBattery} )
+    , mFHFileID(static_cast<uint8_t>(MsgNumber::FILE), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FILE_ID])
+    , mFHDeveloper(static_cast<uint8_t>(MsgNumber::DEVELOP), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID])
+    , mFHLap(static_cast<uint8_t>(MsgNumber::LAP), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_LAP])
+    , mFHSession(static_cast<uint8_t>(MsgNumber::SESSION), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_SESSION])
+    , mFHEvent(static_cast<uint8_t>(MsgNumber::EVENT), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT])
+    , mFHActivity(static_cast<uint8_t>(MsgNumber::ACTIVITY), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY])
+    , mFHRecord(static_cast<uint8_t>(MsgNumber::RECORD), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHRecordG(static_cast<uint8_t>(MsgNumber::RECORD_G), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHRecordB(static_cast<uint8_t>(MsgNumber::RECORD_B), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHRecordGB(static_cast<uint8_t>(MsgNumber::RECORD_GB), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHStepsField(static_cast<uint8_t>(MsgNumber::STEPS), 0, { &mFHLap, &mFHSession })
+    , mFHFloorField(static_cast<uint8_t>(MsgNumber::FLOORS), 1, { &mFHLap, &mFHSession })
+    , mFHBatteryField(static_cast<uint8_t>(MsgNumber::BATTERY), 2, { &mFHRecordB, &mFHRecordGB })
 {
     assert(pathToDir != nullptr);
 
@@ -85,18 +87,28 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
                        FIT_ACTIVITY_FIELD_NUM_NUM_SESSIONS });
 
     mFHRecord.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
-                     FIT_RECORD_FIELD_NUM_POSITION_LAT,
-                     FIT_RECORD_FIELD_NUM_POSITION_LONG,
                      FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
                      FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
                      FIT_RECORD_FIELD_NUM_HEART_RATE });
 
-    mFHRecordBattery.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
-                            FIT_RECORD_FIELD_NUM_POSITION_LAT,
-                            FIT_RECORD_FIELD_NUM_POSITION_LONG,
-                            FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
-                            FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
-                            FIT_RECORD_FIELD_NUM_HEART_RATE });
+    mFHRecordG.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
+                      FIT_RECORD_FIELD_NUM_POSITION_LAT,
+                      FIT_RECORD_FIELD_NUM_POSITION_LONG,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
+                      FIT_RECORD_FIELD_NUM_HEART_RATE });
+
+    mFHRecordB.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
+                      FIT_RECORD_FIELD_NUM_HEART_RATE });
+
+    mFHRecordGB.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
+                       FIT_RECORD_FIELD_NUM_POSITION_LAT,
+                       FIT_RECORD_FIELD_NUM_POSITION_LONG,
+                       FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
+                       FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
+                       FIT_RECORD_FIELD_NUM_HEART_RATE });
 
     mFHStepsField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
                          FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
@@ -198,7 +210,9 @@ void ActivityWriter::start(const AppInfo& info)
     mFHEvent.writeDef(fp);
     mFHActivity.writeDef(fp);
 	mFHRecord.writeDef(fp);
-	mFHRecordBattery.writeDef(fp);
+    mFHRecordG.writeDef(fp);
+    mFHRecordB.writeDef(fp);
+    mFHRecordGB.writeDef(fp);
 
     mFHLap.writeDef(fp);
     mFHSession.writeDef(fp);
@@ -254,7 +268,11 @@ void ActivityWriter::addRecord(const RecordData& record)
 
     const FIT_RECORD_MESG msg = prepareRecordMsg(record);
 
-    mFHRecord.writeMessage(&msg, mFile.get());
+    if (record.gotFix) {
+        mFHRecordG.writeMessage(&msg, mFile.get());
+    } else {
+        mFHRecord.writeMessage(&msg, mFile.get());
+    }
 }
 
 void ActivityWriter::addRecord(const RecordData& record, uint8_t battery)
@@ -266,11 +284,15 @@ void ActivityWriter::addRecord(const RecordData& record, uint8_t battery)
     SDK::Interface::IFile* fp = mFile.get();
 
     const FIT_RECORD_MESG msg = prepareRecordMsg(record);
+    const FIT_UINT8       soc = battery;
 
-    mFHRecordBattery.writeMessage(&msg, fp);
-
-    const FIT_UINT8 soc = battery;
-    mFHRecordBattery.writeFieldMessage(0, &soc, fp);
+    if (record.gotFix) {
+        mFHRecordGB.writeMessage(&msg, mFile.get());
+        mFHRecordGB.writeFieldMessage(0, &soc, fp);
+    } else {
+        mFHRecordB.writeMessage(&msg, mFile.get());
+        mFHRecordB.writeFieldMessage(0, &soc, fp);
+    }
 }
 
 void ActivityWriter::addLap(const LapData& lap)

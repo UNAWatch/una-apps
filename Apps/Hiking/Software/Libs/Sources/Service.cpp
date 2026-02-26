@@ -844,7 +844,6 @@ void Service::stopTrack(bool discard)
 
         mActivityWriter.stop(fitTrack);
 
-
         notifyNewActivity();
     } else {
         mActivityWriter.discard();
