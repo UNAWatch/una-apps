@@ -248,14 +248,23 @@ FIT_RECORD_MESG ActivityWriter::prepareRecordMsg(const RecordData& record)
     Fit_InitMesg(fit_mesg_defs[FIT_MESG_RECORD], &msg);
 
     msg.timestamp = unixToFitTimestamp(record.timestamp);
-    if (record.gotFix) {
-        msg.position_lat  = ConvertDegreesToSemicircles(record.latitude);
-        msg.position_long = ConvertDegreesToSemicircles(record.longitude);
+
+    if (record.has(RecordData::Field::COORDS)) {
+        msg.position_lat   = ConvertDegreesToSemicircles(record.latitude);
+        msg.position_long  = ConvertDegreesToSemicircles(record.longitude);
     }
 
-    msg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
-    msg.heart_rate        = static_cast<FIT_UINT8>(record.heartRate);
-    msg.enhanced_speed    = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
+    if (record.has(RecordData::Field::SPEED)) {
+        msg.enhanced_speed = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
+    }
+
+    if (record.has(RecordData::Field::ALTITUDE)) {
+        msg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
+    }
+
+    if (record.has(RecordData::Field::HEART_RATE)) {
+        msg.heart_rate = static_cast<FIT_UINT8>(record.heartRate);
+    }
 
     return msg;
 }
@@ -268,30 +277,21 @@ void ActivityWriter::addRecord(const RecordData& record)
 
     const FIT_RECORD_MESG msg = prepareRecordMsg(record);
 
-    if (record.gotFix) {
-        mFHRecordG.writeMessage(&msg, mFile.get());
+    if (record.has(RecordData::Field::BATTERY)) {
+        const FIT_UINT8 soc = record.battery;
+        if (record.has(RecordData::Field::COORDS)) {
+            mFHRecordGB.writeMessage(&msg, mFile.get());
+            mFHRecordGB.writeFieldMessage(0, &soc, mFile.get());
+        } else {
+            mFHRecordB.writeMessage(&msg, mFile.get());
+            mFHRecordB.writeFieldMessage(0, &soc, mFile.get());
+        }
     } else {
-        mFHRecord.writeMessage(&msg, mFile.get());
-    }
-}
-
-void ActivityWriter::addRecord(const RecordData& record, uint8_t battery)
-{
-    if (!mFile) {
-        return;
-    }
-
-    SDK::Interface::IFile* fp = mFile.get();
-
-    const FIT_RECORD_MESG msg = prepareRecordMsg(record);
-    const FIT_UINT8       soc = battery;
-
-    if (record.gotFix) {
-        mFHRecordGB.writeMessage(&msg, mFile.get());
-        mFHRecordGB.writeFieldMessage(0, &soc, fp);
-    } else {
-        mFHRecordB.writeMessage(&msg, mFile.get());
-        mFHRecordB.writeFieldMessage(0, &soc, fp);
+        if (record.has(RecordData::Field::COORDS)) {
+            mFHRecordG.writeMessage(&msg, mFile.get());
+        } else {
+            mFHRecord.writeMessage(&msg, mFile.get());
+        }
     }
 }
 
@@ -300,7 +300,6 @@ void ActivityWriter::addLap(const LapData& lap)
     if (!mFile) {
         return;
     }
-    SDK::Interface::IFile* fp = mFile.get();
 
     FIT_LAP_MESG lap_mesg{};
     Fit_InitMesg(fit_mesg_defs[FIT_MESG_LAP], &lap_mesg);
@@ -322,6 +321,8 @@ void ActivityWriter::addLap(const LapData& lap)
 
     lap_mesg.total_ascent = static_cast<FIT_UINT16>(lap.ascent); // 1 * m + 0
     lap_mesg.total_descent = static_cast<FIT_UINT16>(lap.descent); // 1 * m + 0
+
+    SDK::Interface::IFile* fp = mFile.get();
 
     mFHLap.writeMessage(&lap_mesg, fp);
 

@@ -37,14 +37,37 @@ public:
     };
 
     struct RecordData {
-        std::time_t timestamp;  // UTC
-        bool        gotFix;
-        float       latitude;   // degrees
-        float       longitude;  // degrees
-        float       altitude;   // absolute altitude in m
-        float       heartRate;  // Heart rate in beats per minute.
-		float       speed;      // m/s
-    };              
+        enum class Field : uint8_t {
+            COORDS     = 1u << 0, // lat/long valid as a group
+            SPEED      = 1u << 1,
+            ALTITUDE   = 1u << 2,
+            HEART_RATE = 1u << 3,
+            BATTERY    = 1u << 4,
+        };
+
+        void set(Field f)                 { mFlags |= mask(f); }
+        void clear(Field f)               { mFlags &= static_cast<uint8_t>(~mask(f)); }
+        void set(Field f, bool state)     { state ? set(f) : clear(f); }
+        bool has(Field f) const           { return (mFlags & mask(f)) != 0; }
+        void clearAll()                   { mFlags = 0; }
+
+        std::time_t timestamp = 0;  // UTC
+
+        float   latitude  = 0.0f;   // degrees
+        float   longitude = 0.0f;   // degrees
+        float   speed     = 0.0f;   // m/s
+        float   altitude  = 0.0f;   // m
+        float   heartRate = 0.0f;   // bpm
+        uint8_t battery   = 0;      // %
+
+    private:
+        static constexpr uint8_t mask(Field f)
+        {
+            return static_cast<uint8_t>(f);
+        }
+
+        uint8_t mFlags = 0;
+    };
 
     struct LapData {
         std::time_t timestamp;  // UTC
@@ -84,7 +107,6 @@ public:
     void pause(std::time_t timestamp);
     void resume(std::time_t timestamp);
     void addRecord(const RecordData& record);
-    void addRecord(const RecordData& record, uint8_t battery);
     void addLap(const LapData& lap);
     void stop(const TrackData& track);
     void discard();
