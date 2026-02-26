@@ -123,28 +123,78 @@ private:
     float mSeaLevelPressure = 0.0f;
 
     // Current battery level
-    struct {
+    /**
+     * @brief Battery state-of-charge (SoC) sampling and throttled FIT logging helper.
+     *
+     * Keeps the latest SoC value and decides when it should be written to the FIT file:
+     * - periodically (every 5 minutes), and/or
+     * - on demand via a forced save request.
+     *
+     * The first valid value is written immediately after @ref reset() because @ref saveRequest
+     * is set to true there.
+     */
+    struct
+    {
+        /** @brief Periodic save timer (5 minutes by default). */
         SDK::Timer timer;
-        float      soc;
-        bool       isValid;
-        bool       saveRequest;
 
+        /** @brief Last known state of charge value, in percent. */
+        float soc;
+
+        /** @brief Indicates that @ref soc contains a valid value. */
+        bool isValid;
+
+        /**
+         * @brief Indicates a pending forced save request.
+         *
+         * When set, the next call to @ref readyToSave() will return true (if the value is valid),
+         * and this flag will be cleared.
+         *
+         * Mark battery level to be written with the next record (forced save).
+         */
+        bool saveRequest;
+
+        /**
+         * @brief Update the stored SoC value.
+         * @param v State of charge, in percent.
+         */
         void setValue(float v)
         {
-            soc   = v;
+            soc     = v;
             isValid = true;
         }
 
+        /**
+         * @brief Get the stored SoC value.
+         * @return State of charge, in percent.
+         */
         float getValue()
         {
             return soc;
         }
 
+        /**
+         * @brief Request a forced SoC write.
+         *
+         * Sets @ref saveRequest so that the next record can include the battery field,
+         * bypassing the periodic interval if needed.
+         */
         void setSaveRequest()
         {
             saveRequest = true;
         }
 
+        /**
+         * @brief Check whether SoC should be written now.
+         *
+         * Returns true when:
+         * - a valid value is available, and
+         * - either the periodic timer has elapsed or a forced save was requested.
+         *
+         * When it returns true, the internal save request flag is cleared.
+         *
+         * @return True if SoC should be written with the current/next record.
+         */
         bool readyToSave()
         {
             if (!isValid) {
@@ -160,16 +210,20 @@ private:
             }
 
             saveRequest = false;
-
             return true;
         }
 
+        /**
+         * @brief Reset internal state and start periodic saving.
+         *
+         * Starts a 5-minute timer, clears validity, and requests an initial save.
+         */
         void reset()
         {
             timer.start(TIMER_MINUTES(5));
             soc         = 0.0f;
             isValid     = false;
-            saveRequest = true;
+            saveRequest = false;
         }
     } mBatteryLevel{};
 

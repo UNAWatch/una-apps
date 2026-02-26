@@ -522,13 +522,24 @@ ActivityWriter::RecordData Service::prepareRecordData()
 {
     ActivityWriter::RecordData fitRecord{};
 
-    fitRecord.timestamp = mTimeCounter.getCurrent();
-    fitRecord.gotFix    = mGps.gotFix;
-    fitRecord.latitude  = mGps.latitude;
-    fitRecord.longitude = mGps.longitude;
-    fitRecord.heartRate = mHrCounter.getCurrent();
-    fitRecord.altitude  = mAltitudeCounter.getCurrent();
-    fitRecord.speed     = mSpeedCounter.getCurrent();
+    fitRecord.timestamp    = mTimeCounter.getCurrent();
+
+    fitRecord.set(ActivityWriter::RecordData::Field::COORDS, mGps.fix);
+    fitRecord.latitude     = mGps.latitude;
+    fitRecord.longitude    = mGps.longitude;
+
+    fitRecord.set(ActivityWriter::RecordData::Field::SPEED, mSpeedCounter.isValid());
+    fitRecord.speed        = mSpeedCounter.getCurrent();
+
+    fitRecord.set(ActivityWriter::RecordData::Field::ALTITUDE, mAltitudeCounter.isValid());
+    fitRecord.altitude     = mAltitudeCounter.getCurrent();
+
+    bool hasHeartRate = (mHrCounter.getCurrent() > 20 && mTrackData.hrTrustLevel >= 1 && mTrackData.hrTrustLevel <= 3);
+    fitRecord.set(ActivityWriter::RecordData::Field::HEART_RATE, hasHeartRate);
+    fitRecord.heartRate    = mHrCounter.getCurrent();
+
+    fitRecord.set(ActivityWriter::RecordData::Field::BATTERY, mBatteryLevel.readyToSave());
+    fitRecord.battery      = static_cast<uint8_t>(mBatteryLevel.getValue());
 
     return fitRecord;
 }
@@ -577,6 +588,7 @@ void Service::startTrack(std::time_t utc)
     mStepCounter.reset();
     mFloorCounter.reset();
     mBatteryLevel.reset();
+    mBatteryLevel.setSaveRequest();
     mGps.reset();
 
     mSessionNotEmpty = false;
@@ -645,13 +657,11 @@ void Service::processTrack()
 #endif
     mTrackData.maxLapSpeed = mSpeedCounter.getLapMaximum();
 
-
     // Pace, s/m
     const float kMinSpeed = mSpeedCounter.getMinValid();
     mTrackData.pace = getPace(mTrackData.speed, kMinSpeed);
     mTrackData.avgPace = getPace(mTrackData.avgSpeed, kMinSpeed);
     mTrackData.lapPace = getPace(mTrackData.avgLapSpeed, kMinSpeed);
-
 
     // HR
     mTrackData.HR = mHrCounter.getCurrent();
@@ -660,33 +670,24 @@ void Service::processTrack()
     mTrackData.avgLapHR = mHrCounter.getLapAverage();
     mTrackData.maxLapHR = mHrCounter.getLapMaximum();
 
-
     // Altitude, m
     mTrackData.elevation = mAltitudeCounter.getCurrent();
-
 
     // Steps
     mTrackData.steps = mStepCounter.getValueActive();
     mTrackData.lapSteps = mStepCounter.getLapValueActive();
 
-
     // Floors
     mTrackData.floors = mFloorCounter.getValueActive();;
     mTrackData.lapFloors = mFloorCounter.getLapValueActive();
 
-
     // Update GUI
     mGuiSender.trackData(mTrackData);
-
 
     if (mTrackState == Track::State::ACTIVE) {
         // Save record to the FIT file
         ActivityWriter::RecordData fitRecord = prepareRecordData();
-        if (mBatteryLevel.readyToSave()) {
-            mActivityWriter.addRecord(fitRecord, static_cast<uint8_t>(mBatteryLevel.getValue()));
-        } else {
-            mActivityWriter.addRecord(fitRecord);
-        }
+        mActivityWriter.addRecord(fitRecord);
 
         mSessionNotEmpty = true;    // Session has at least one record
         mLapNotEmpty = true;        // Lap has at least one record
@@ -714,9 +715,7 @@ void Service::processTrack()
             mGuiSender.lapEnd(mTrackData.lapNum);
             notifyLapEnd();
         }
-
     }
-
 }
 
 void Service::saveLap()
@@ -797,10 +796,8 @@ void Service::stopTrack(bool discard)
         }
 
         mBatteryLevel.setSaveRequest();
-        if (mBatteryLevel.readyToSave()) {
-            ActivityWriter::RecordData fitRecord = prepareRecordData();
-            mActivityWriter.addRecord(fitRecord, static_cast<uint8_t>(mBatteryLevel.getValue()));
-        }
+        ActivityWriter::RecordData fitRecord = prepareRecordData();
+        mActivityWriter.addRecord(fitRecord);
 
         mSummary.utc       = mTimeCounter.getCurrent();
         mSummary.time      = mTimeCounter.getValueActive();
