@@ -106,23 +106,30 @@ private:
     SDK::Component::FitHelper mFHSession;
     SDK::Component::FitHelper mFHEvent;
     SDK::Component::FitHelper mFHActivity;
-    SDK::Component::FitHelper mFHRecord;
-    SDK::Component::FitHelper mFHRecordBattery;
+    SDK::Component::FitHelper mFHRecord;    // Record
+    SDK::Component::FitHelper mFHRecordG;   // Record + GPS
+    SDK::Component::FitHelper mFHRecordB;   // Record + Battery
+    SDK::Component::FitHelper mFHRecordGB;  // Record + GPS + Battery
+
     SDK::Component::FitHelper mFHStepsField;
     SDK::Component::FitHelper mFHFloorField;
     SDK::Component::FitHelper mFHBatteryField;
 
-    static constexpr uint8_t skFileMsgNum          =  1;
-    static constexpr uint8_t skDevelopMsgNum       =  2;
-    static constexpr uint8_t skRecordMsgNum        =  3;
-    static constexpr uint8_t skRecordBatteryMsgNum =  4;
-    static constexpr uint8_t skLapMsgNum           =  5;
-    static constexpr uint8_t skSessionMsgNum       =  6;
-    static constexpr uint8_t skActivityMsgNum      =  7;
-    static constexpr uint8_t skEventMsgNum         =  8;
-    static constexpr uint8_t skStepsMsgNum         =  9;
-    static constexpr uint8_t skFloorsMsgNum        = 10;
-    static constexpr uint8_t skBatteryMsgNum       = 11;
+    enum class MsgNumber {
+        FILE = 1,
+        DEVELOP,
+        RECORD,
+        RECORD_G,
+        RECORD_B,
+        RECORD_GB,
+        LAP,
+        SESSION,
+        ACTIVITY,
+        EVENT,
+        STEPS,
+        FLOORS,
+        BATTERY
+    };
 
     FIT_RECORD_MESG prepareRecordMsg(const RecordData& record);
 
