@@ -78,7 +78,7 @@ void Service::run()
         LOG_WARNING("Failed to load activity summary\n");
     }
 
-    uint32_t startTime = mKernel.sys.getTimeMs();
+    SDK::Timer guiInitTimeout(TIMER_SECONDS(5));
     bool firstFix = false;
 
     std::time_t processedUtc = 0;
@@ -212,7 +212,7 @@ void Service::run()
             // do nothing
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.sys.getTimeMs() - startTime > 5000) {
+            if (guiInitTimeout.expired()) {
                 LOG_INFO("No activities, exiting service\n");
                 return; // Exit app
             }
@@ -562,6 +562,7 @@ void Service::startTrack(std::time_t utc)
     mDistanceCounter.reset();
     mSpeedCounter.reset();
     mHrCounter.reset();
+    mAltitudeFilter.reset();
     mAltitudeCounter.reset();
     mBatteryLevel.reset();
     mBatteryLevel.setSaveRequest();
