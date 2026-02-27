@@ -28,13 +28,17 @@ extern "C" {
 
 ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
     : mKernel(kernel), mPath(pathToDir)
-    , mFHFileID(skFileMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FILE_ID])
-    , mFHDeveloper(skDevelopMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID])
-    , mFHLap(skLapMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_LAP])
-    , mFHSession(skSessionMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_SESSION])
-    , mFHEvent(skEventMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT])
-    , mFHActivity(skActivityMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY])
-    , mFHRecord(skRecordMsgNum, (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHFileID(static_cast<uint8_t>(MsgNumber::FILE), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_FILE_ID])
+    , mFHDeveloper(static_cast<uint8_t>(MsgNumber::DEVELOP), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_DEVELOPER_DATA_ID])
+    , mFHLap(static_cast<uint8_t>(MsgNumber::LAP), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_LAP])
+    , mFHSession(static_cast<uint8_t>(MsgNumber::SESSION), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_SESSION])
+    , mFHEvent(static_cast<uint8_t>(MsgNumber::EVENT), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_EVENT])
+    , mFHActivity(static_cast<uint8_t>(MsgNumber::ACTIVITY), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_ACTIVITY])
+    , mFHRecord(static_cast<uint8_t>(MsgNumber::RECORD), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHRecordG(static_cast<uint8_t>(MsgNumber::RECORD_G), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHRecordB(static_cast<uint8_t>(MsgNumber::RECORD_B), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHRecordGB(static_cast<uint8_t>(MsgNumber::RECORD_GB), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
+    , mFHBatteryField(static_cast<uint8_t>(MsgNumber::BATTERY), 0, { &mFHRecordB, &mFHRecordGB })
 {
     assert(pathToDir != nullptr);
 
@@ -81,11 +85,34 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
                        FIT_ACTIVITY_FIELD_NUM_NUM_SESSIONS });
 
     mFHRecord.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
-                     FIT_RECORD_FIELD_NUM_POSITION_LAT,
-                     FIT_RECORD_FIELD_NUM_POSITION_LONG,
                      FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
                      FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
                      FIT_RECORD_FIELD_NUM_HEART_RATE });
+
+    mFHRecordG.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
+                      FIT_RECORD_FIELD_NUM_POSITION_LAT,
+                      FIT_RECORD_FIELD_NUM_POSITION_LONG,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
+                      FIT_RECORD_FIELD_NUM_HEART_RATE });
+
+    mFHRecordB.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
+                      FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
+                      FIT_RECORD_FIELD_NUM_HEART_RATE });
+
+    mFHRecordGB.init({ FIT_RECORD_FIELD_NUM_TIMESTAMP,
+                       FIT_RECORD_FIELD_NUM_POSITION_LAT,
+                       FIT_RECORD_FIELD_NUM_POSITION_LONG,
+                       FIT_RECORD_FIELD_NUM_ENHANCED_ALTITUDE,
+                       FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
+                       FIT_RECORD_FIELD_NUM_HEART_RATE });
+
+    mFHBatteryField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
+                           FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                           FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -135,9 +162,26 @@ void ActivityWriter::start(const AppInfo& info)
         mFHDeveloper.writeMessage(&developer, fp);
     }
 
+    // Additional fields
+    {
+        // Field 0: "battery level in percents"
+        mFHBatteryField.writeDef(fp);
+        FIT_FIELD_DESCRIPTION_MESG batt{};
+        strncpy(batt.field_name, "batteryLevel", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
+        strncpy(batt.units, "%", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
+        batt.developer_data_index    = 0;
+        batt.field_definition_number = mFHBatteryField.getFieldID();
+        batt.fit_base_type_id        = FIT_BASE_TYPE_UINT8;
+        mFHBatteryField.writeMessage(&batt, fp);
+    }
+
     mFHEvent.writeDef(fp);
     mFHActivity.writeDef(fp);
-	mFHRecord.writeDef(fp);
+
+    mFHRecord.writeDef(fp);
+    mFHRecordG.writeDef(fp);
+    mFHRecordB.writeDef(fp);
+    mFHRecordGB.writeDef(fp);
 
     mFHLap.writeDef(fp);
     mFHSession.writeDef(fp);
@@ -166,26 +210,58 @@ void ActivityWriter::resume(std::time_t timestamp)
     AddMessageEvent(timestamp, FIT_EVENT_TYPE_START);
 }
 
+FIT_RECORD_MESG ActivityWriter::prepareRecordMsg(const RecordData& record)
+{
+    FIT_RECORD_MESG msg;
+
+    Fit_InitMesg(fit_mesg_defs[FIT_MESG_RECORD], &msg);
+
+    msg.timestamp = unixToFitTimestamp(record.timestamp);
+
+    if (record.has(RecordData::Field::COORDS)) {
+        msg.position_lat   = ConvertDegreesToSemicircles(record.latitude);
+        msg.position_long  = ConvertDegreesToSemicircles(record.longitude);
+    }
+
+    if (record.has(RecordData::Field::SPEED)) {
+        msg.enhanced_speed = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
+    }
+
+    if (record.has(RecordData::Field::ALTITUDE)) {
+        msg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
+    }
+
+    if (record.has(RecordData::Field::HEART_RATE)) {
+        msg.heart_rate = static_cast<FIT_UINT8>(record.heartRate);
+    }
+
+    return msg;
+}
+
 void ActivityWriter::addRecord(const RecordData& record)
 {
     if (!mFile) {
         return;
     }
 
-    SDK::Interface::IFile* fp = mFile.get();
+    const FIT_RECORD_MESG msg = prepareRecordMsg(record);
 
-    FIT_RECORD_MESG record_mesg{};
-
-    record_mesg.timestamp         = unixToFitTimestamp(record.timestamp);
-    if (record.gotFix) {
-        record_mesg.position_lat      = ConvertDegreesToSemicircles(record.latitude);
-        record_mesg.position_long     = ConvertDegreesToSemicircles(record.longitude);
+    if (record.has(RecordData::Field::BATTERY)) {
+        const FIT_UINT8 soc = record.battery;
+        if (record.has(RecordData::Field::COORDS)) {
+            mFHRecordGB.writeMessage(&msg, mFile.get());
+            mFHRecordGB.writeFieldMessage(0, &soc, mFile.get());
+        } else {
+            mFHRecordB.writeMessage(&msg, mFile.get());
+            mFHRecordB.writeFieldMessage(0, &soc, mFile.get());
+        }
+    } else {
+        if (record.has(RecordData::Field::COORDS)) {
+            mFHRecordG.writeMessage(&msg, mFile.get());
+        } else {
+            mFHRecord.writeMessage(&msg, mFile.get());
+        }
     }
-    record_mesg.enhanced_altitude = static_cast<FIT_UINT32>((record.altitude + 500) * 5);   // 5 * m + 500
-    record_mesg.heart_rate        = static_cast<FIT_UINT8>(record.heartRate);
-    record_mesg.enhanced_speed    = static_cast<FIT_UINT32>(record.speed * 1000); // 1000 * m/s + 0
-
-	mFHRecord.writeMessage(&record_mesg, fp);
 }
 
 void ActivityWriter::addLap(const LapData& lap)
