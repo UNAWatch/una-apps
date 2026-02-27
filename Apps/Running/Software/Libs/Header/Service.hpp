@@ -97,7 +97,6 @@ private:
 
     // GPS info
     struct {
-        bool     gotFix;        // fix received at least once
         bool     fix;           // Actual GPS fix
         float    latitude;      // degrees
         float    longitude;     // degrees
@@ -106,7 +105,6 @@ private:
 
         void reset()
         {
-            gotFix    = false;
             fix       = false;
             latitude  = 0.0f;
             longitude = 0.0f;
