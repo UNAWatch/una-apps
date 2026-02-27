@@ -190,7 +190,7 @@ void Service::run()
                 std::tm tmNow = mTimeTracker.getLocalTime(std::time(nullptr));
                 mGuiSender.time(tmNow);
 
-                mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel));
+                mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getValue()));
 
                 // Update GPS fix
                 if (mPreviousGpsFixState != mGps.fix) {
@@ -314,8 +314,8 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
     } else if (mSensorBatteryLevel.matchesDriver(handle)) {
         SDK::SensorDataParser::BatteryLevel parser(data[0]);
         if (parser.isDataValid()) {
-            mBatteryLevel = parser.getCharge();
-            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel);
+            mBatteryLevel.setValue(parser.getCharge());
+            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel.getValue());
         }
     } else if (mSensorWristMotion.matchesDriver(handle)) {
         SDK::SensorDataParser::WristMotion parser(data[0]);
@@ -498,6 +498,32 @@ void Service::notifyNewActivity()
     }
 }
 
+ActivityWriter::RecordData Service::prepareRecordData()
+{
+    ActivityWriter::RecordData fitRecord{};
+
+    fitRecord.timestamp    = mTimeCounter.getCurrent();
+
+    fitRecord.set(ActivityWriter::RecordData::Field::COORDS, mGps.fix);
+    fitRecord.latitude     = mGps.latitude;
+    fitRecord.longitude    = mGps.longitude;
+
+    fitRecord.set(ActivityWriter::RecordData::Field::SPEED, mSpeedCounter.isValid());
+    fitRecord.speed        = mSpeedCounter.getCurrent();
+
+    fitRecord.set(ActivityWriter::RecordData::Field::ALTITUDE, mAltitudeCounter.isValid());
+    fitRecord.altitude     = mAltitudeCounter.getCurrent();
+
+    bool hasHeartRate = (mHrCounter.getCurrent() > 20 && mTrackData.hrTrustLevel >= 1 && mTrackData.hrTrustLevel <= 3);
+    fitRecord.set(ActivityWriter::RecordData::Field::HEART_RATE, hasHeartRate);
+    fitRecord.heartRate    = mHrCounter.getCurrent();
+
+    fitRecord.set(ActivityWriter::RecordData::Field::BATTERY, mBatteryLevel.readyToSave());
+    fitRecord.battery      = static_cast<uint8_t>(mBatteryLevel.getValue());
+
+    return fitRecord;
+}
+
 void Service::sendInitialInfoToGui()
 {
     // Settings
@@ -522,7 +548,7 @@ void Service::sendInitialInfoToGui()
     mGuiSender.summary(std::make_shared<const ActivitySummary>(mSummary));
 
     // Battery level
-    mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel));
+    mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getValue()));
 }
 
 void Service::startTrack(std::time_t utc)
@@ -537,6 +563,9 @@ void Service::startTrack(std::time_t utc)
     mSpeedCounter.reset();
     mHrCounter.reset();
     mAltitudeCounter.reset();
+    mBatteryLevel.reset();
+    mBatteryLevel.setSaveRequest();
+    mGps.reset();
 
     mSessionNotEmpty = false;
     mLapNotEmpty = false;
@@ -629,14 +658,7 @@ void Service::processTrack()
 
     if (mTrackState == Track::State::ACTIVE) {
         // Save record to the FIT file
-        ActivityWriter::RecordData fitRecord {};
-        fitRecord.timestamp = mTimeCounter.getCurrent();
-        fitRecord.gotFix    = mGps.gotFix;
-        fitRecord.latitude  = mGps.latitude;
-        fitRecord.longitude = mGps.longitude;
-        fitRecord.heartRate = mHrCounter.getCurrent();
-        fitRecord.altitude  = mAltitudeCounter.getCurrent();
-        fitRecord.speed     = mSpeedCounter.getCurrent();
+        ActivityWriter::RecordData fitRecord = prepareRecordData();
         mActivityWriter.addRecord(fitRecord);
 
         mSessionNotEmpty = true;    // Session has at least one record
@@ -733,6 +755,10 @@ void Service::stopTrack(bool discard)
         if (mLapNotEmpty) {
             saveLap();
         }
+
+        mBatteryLevel.setSaveRequest();
+        ActivityWriter::RecordData fitRecord = prepareRecordData();
+        mActivityWriter.addRecord(fitRecord);
 
         mSummary.utc       = mTimeCounter.getCurrent();
         mSummary.time      = mTimeCounter.getValueActive();

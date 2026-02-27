@@ -234,6 +234,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Source/Timer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Source/TrackMap</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -412,6 +417,11 @@
 			<name>SDK/Libs/Source/SensorLayer/SensorConnection.cpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Source/SensorLayer/SensorConnection.cpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Source/Timer/Timer.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Libs/Source/Timer/Timer.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/TrackMap/TrackMapBuilder.cpp</name>

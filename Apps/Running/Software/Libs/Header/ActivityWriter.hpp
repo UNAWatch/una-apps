@@ -37,14 +37,37 @@ public:
     };
 
     struct RecordData {
-        std::time_t timestamp;  // UTC
-        bool        gotFix;
-        float       latitude;   // degrees
-        float       longitude;  // degrees
-        float       altitude;   // absolute altitude in m
-        float       heartRate;  // Heart rate in beats per minute.
-		float       speed;      // m/s
-    };              
+        enum class Field : uint8_t {
+            COORDS     = 1u << 0, // lat/long valid as a group
+            SPEED      = 1u << 1,
+            ALTITUDE   = 1u << 2,
+            HEART_RATE = 1u << 3,
+            BATTERY    = 1u << 4,
+        };
+
+        void set(Field f)                 { mFlags |= mask(f); }
+        void clear(Field f)               { mFlags &= static_cast<uint8_t>(~mask(f)); }
+        void set(Field f, bool state)     { state ? set(f) : clear(f); }
+        bool has(Field f) const           { return (mFlags & mask(f)) != 0; }
+        void clearAll()                   { mFlags = 0; }
+
+        std::time_t timestamp = 0;  // UTC
+
+        float   latitude  = 0.0f;   // degrees
+        float   longitude = 0.0f;   // degrees
+        float   speed     = 0.0f;   // m/s
+        float   altitude  = 0.0f;   // m
+        float   heartRate = 0.0f;   // bpm
+        uint8_t battery   = 0;      // %
+
+    private:
+        static constexpr uint8_t mask(Field f)
+        {
+            return static_cast<uint8_t>(f);
+        }
+
+        uint8_t mFlags = 0;
+    };
 
     struct LapData {
         std::time_t timestamp;  // UTC
@@ -101,15 +124,28 @@ private:
     SDK::Component::FitHelper mFHSession;
     SDK::Component::FitHelper mFHEvent;
     SDK::Component::FitHelper mFHActivity;
-    SDK::Component::FitHelper mFHRecord;
+    SDK::Component::FitHelper mFHRecord;    // Record
+    SDK::Component::FitHelper mFHRecordG;   // Record + GPS
+    SDK::Component::FitHelper mFHRecordB;   // Record + Battery
+    SDK::Component::FitHelper mFHRecordGB;  // Record + GPS + Battery
 
-    static constexpr uint8_t skFileMsgNum     = 1;
-    static constexpr uint8_t skDevelopMsgNum  = 2;
-    static constexpr uint8_t skRecordMsgNum   = 3;
-    static constexpr uint8_t skLapMsgNum      = 4;
-    static constexpr uint8_t skSessionMsgNum  = 5;
-    static constexpr uint8_t skActivityMsgNum = 6;
-    static constexpr uint8_t skEventMsgNum    = 7;
+    SDK::Component::FitHelper mFHBatteryField;
+
+    enum class MsgNumber {
+        FILE = 1,
+        DEVELOP,
+        RECORD,
+        RECORD_G,
+        RECORD_B,
+        RECORD_GB,
+        LAP,
+        SESSION,
+        ACTIVITY,
+        EVENT,
+        BATTERY
+    };
+
+    FIT_RECORD_MESG prepareRecordMsg(const RecordData& record);
 
     void AddMessageEvent(std::time_t t, FIT_EVENT_TYPE type);
 
@@ -126,7 +162,6 @@ private:
 
     void WriteFileHeader(SDK::Interface::IFile* fp);
     void WriteCRC(SDK::Interface::IFile* fp);
-
 };
 
 #endif /* __ACTIVITY_WRITER_HPP */
