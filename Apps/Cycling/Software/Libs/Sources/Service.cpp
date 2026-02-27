@@ -274,7 +274,6 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
             mGps.fix = parser.isCoordinatesValid();
 
             if (mGps.fix) { // Do not change position if no fix
-                mGps.gotFix = true;
                 parser.getCoordinates(mGps.latitude, mGps.longitude, mGps.altitude);
             }
             LOG_DEBUG("Location: fix %u, lat %f, lon %f\n", mGps.fix, mGps.latitude, mGps.longitude);
@@ -601,7 +600,7 @@ void Service::processTrack()
     // Creating map
     SDK::TrackMapBuilder::GpsPoint newPoint{ mGps.latitude, mGps.longitude };
     // Add point to the track map
-    if (mGps.gotFix) {
+    if (mGps.fix) {
         mTrackMapBuilder.addPoint(newPoint);
     }
 
