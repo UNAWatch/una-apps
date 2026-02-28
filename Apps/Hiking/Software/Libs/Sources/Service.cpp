@@ -25,6 +25,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryMetrics.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserWristMotion.hpp"
 
 #define LOG_MODULE_PRX      "Service"
@@ -49,6 +50,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorPressure(SDK::Sensor::Type::PRESSURE, skInitialSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
+        , mSensorBatteryMetrics(SDK::Sensor::Type::BATTERY_METRICS, skInitialSamplePeriod, skSampleLatency)
         , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
         , mTimeTracker(kernel)
         , mAltitudeFilter(0.8f)
@@ -195,7 +197,7 @@ void Service::run()
                 std::tm tmNow = mTimeTracker.getLocalTime(std::time(nullptr));
                 mGuiSender.time(tmNow);
 
-                mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getValue()));
+                mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getLevel()));
 
                 // Update GPS fix
                 if (mPreviousGpsFixState != mGps.fix) {
@@ -239,6 +241,7 @@ void Service::connectAll()
         LOG_DEBUG("Connect to sensors...\n");
 
         mSensorBatteryLevel.connect();
+        mSensorBatteryMetrics.connect();
         mSensorGpsSpeed.connect();
         mSensorGpsDistance.connect();
         mSensorStepCounter.connect();
@@ -262,6 +265,7 @@ void Service::disconnect()
         mSensorGpsSpeed.disconnect();
         mSensorGpsDistance.disconnect();
         mSensorBatteryLevel.disconnect();
+        mSensorBatteryMetrics.disconnect();
 
         mIsSensorsConnected = false;
     }
@@ -333,8 +337,14 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
     } else if (mSensorBatteryLevel.matchesDriver(handle)) {
         SDK::SensorDataParser::BatteryLevel parser(data[0]);
         if (parser.isDataValid()) {
-            mBatteryLevel.setValue(parser.getCharge());
+            mBatteryLevel.setLevel(parser.getCharge());
             LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel.getValue());
+        }
+    } else if (mSensorBatteryMetrics.matchesDriver(handle)) {
+        SDK::SensorDataParser::BatteryMetrics parser(data[0]);
+        if (parser.isDataValid()) {
+            mBatteryLevel.setVoltage(parser.getVoltage());
+            LOG_DEBUG("Battery voltage %.1f V\n", mBatteryLevel.getVoltage());
         }
     } else if (mSensorWristMotion.matchesDriver(handle)) {
         SDK::SensorDataParser::WristMotion parser(data[0]);
@@ -538,7 +548,8 @@ ActivityWriter::RecordData Service::prepareRecordData()
     fitRecord.heartRate    = mHrCounter.getCurrent();
 
     fitRecord.set(ActivityWriter::RecordData::Field::BATTERY, mBatteryLevel.readyToSave());
-    fitRecord.battery      = static_cast<uint8_t>(mBatteryLevel.getValue());
+    fitRecord.batteryLevel   = static_cast<uint8_t>(mBatteryLevel.getLevel());
+    fitRecord.batteryVoltage = static_cast<uint8_t>(mBatteryLevel.getVoltage());
 
     return fitRecord;
 }
@@ -568,7 +579,7 @@ void Service::sendInitialInfoToGui()
     mGuiSender.summary(std::make_shared<const ActivitySummary>(mSummary));
 
     // Battery level
-    mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getValue()));
+    mGuiSender.battery(static_cast<uint8_t>(mBatteryLevel.getLevel()));
 }
 
 void Service::startTrack(std::time_t utc)

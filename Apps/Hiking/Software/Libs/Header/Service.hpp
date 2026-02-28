@@ -79,6 +79,7 @@ private:
     SDK::Sensor::Connection mSensorPressure;
     SDK::Sensor::Connection mSensorHr;
     SDK::Sensor::Connection mSensorBatteryLevel;
+    SDK::Sensor::Connection mSensorBatteryMetrics;
     SDK::Sensor::Connection mSensorWristMotion;
     bool mIsSensorsConnected = false;
 
@@ -139,8 +140,14 @@ private:
         /** @brief Last known state of charge value, in percent. */
         float soc;
 
+        /** @brief Last known state of charge value, in volts. */
+        float voltage;
+
         /** @brief Indicates that @ref soc contains a valid value. */
-        bool isValid;
+        bool isLevelValid;
+
+        /** @brief Indicates that @ref voltage contains a valid value. */
+        bool isVoltageValid;
 
         /**
          * @brief Indicates a pending forced save request.
@@ -156,19 +163,38 @@ private:
          * @brief Update the stored SoC value.
          * @param v State of charge, in percent.
          */
-        void setValue(float v)
+        void setLevel(float v)
         {
-            soc     = v;
-            isValid = true;
+            soc          = v;
+            isLevelValid = true;
+        }
+
+        /**
+         * @brief Update the stored Voltage value.
+         * @param v Battery voltage, in volts.
+         */
+        void setVoltage(float v)
+        {
+            voltage        = v;
+            isVoltageValid = true;
         }
 
         /**
          * @brief Get the stored SoC value.
          * @return State of charge, in percent.
          */
-        float getValue()
+        float getLevel()
         {
             return soc;
+        }
+
+        /**
+         * @brief Get the stored Voltage value.
+         * @return Battery voltage, in volts.
+         */
+        float getVoltage()
+        {
+            return voltage;
         }
 
         /**
@@ -195,7 +221,7 @@ private:
          */
         bool readyToSave()
         {
-            if (!isValid) {
+            if (!isLevelValid || !isVoltageValid) {
                 return false;
             }
 
@@ -219,9 +245,10 @@ private:
         void reset()
         {
             timer.start(TIMER_MINUTES(5));
-            soc         = 0.0f;
-            isValid     = false;
-            saveRequest = false;
+            soc            = 0.0f;
+            isLevelValid   = false;
+            isVoltageValid = false;
+            saveRequest    = false;
         }
     } mBatteryLevel{};
 
