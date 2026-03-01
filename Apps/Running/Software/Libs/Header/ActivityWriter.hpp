@@ -51,14 +51,14 @@ public:
         bool has(Field f) const           { return (mFlags & mask(f)) != 0; }
         void clearAll()                   { mFlags = 0; }
 
-        std::time_t timestamp = 0;  // UTC
-
-        float   latitude  = 0.0f;   // degrees
-        float   longitude = 0.0f;   // degrees
-        float   speed     = 0.0f;   // m/s
-        float   altitude  = 0.0f;   // m
-        float   heartRate = 0.0f;   // bpm
-        uint8_t battery   = 0;      // %
+        std::time_t timestamp;      // UTC
+        float       latitude;       // degrees
+        float       longitude;      // degrees
+        float       speed;          // m/s
+        float       altitude;       // m
+        float       heartRate;      // bpm
+        uint8_t     batteryLevel;   // %
+        uint16_t    batteryVoltage; // mV
 
     private:
         static constexpr uint8_t mask(Field f)
@@ -129,7 +129,8 @@ private:
     SDK::Component::FitHelper mFHRecordB;   // Record + Battery
     SDK::Component::FitHelper mFHRecordGB;  // Record + GPS + Battery
 
-    SDK::Component::FitHelper mFHBatteryField;
+    SDK::Component::FitHelper mFHBatteryLevelField;
+    SDK::Component::FitHelper mFHBatteryVoltageField;
 
     enum class MsgNumber {
         FILE = 1,

@@ -38,7 +38,8 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
     , mFHRecordG(static_cast<uint8_t>(MsgNumber::RECORD_G), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
     , mFHRecordB(static_cast<uint8_t>(MsgNumber::RECORD_B), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
     , mFHRecordGB(static_cast<uint8_t>(MsgNumber::RECORD_GB), (FIT_MESG_DEF*)fit_mesg_defs[FIT_MESG_RECORD])
-    , mFHBatteryField(static_cast<uint8_t>(MsgNumber::BATTERY), 0, { &mFHRecordB, &mFHRecordGB })
+    , mFHBatteryLevelField(static_cast<uint8_t>(MsgNumber::BATTERY), 2, { &mFHRecordB, &mFHRecordGB })
+    , mFHBatteryVoltageField(static_cast<uint8_t>(MsgNumber::BATTERY), 3, { &mFHRecordB, &mFHRecordGB })
 {
     assert(pathToDir != nullptr);
 
@@ -108,11 +109,17 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
                        FIT_RECORD_FIELD_NUM_ENHANCED_SPEED,
                        FIT_RECORD_FIELD_NUM_HEART_RATE });
 
-    mFHBatteryField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
-                           FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
+    mFHBatteryLevelField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
+                                FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                                FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                                FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                                FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
+
+    mFHBatteryVoltageField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
+                                  FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                                  FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                                  FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                                  FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -165,14 +172,24 @@ void ActivityWriter::start(const AppInfo& info)
     // Additional fields
     {
         // Field 0: "battery level in percents"
-        mFHBatteryField.writeDef(fp);
-        FIT_FIELD_DESCRIPTION_MESG batt{};
-        strncpy(batt.field_name, "batteryLevel", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
-        strncpy(batt.units, "%", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
-        batt.developer_data_index    = 0;
-        batt.field_definition_number = mFHBatteryField.getFieldID();
-        batt.fit_base_type_id        = FIT_BASE_TYPE_UINT8;
-        mFHBatteryField.writeMessage(&batt, fp);
+        mFHBatteryLevelField.writeDef(fp);
+        FIT_FIELD_DESCRIPTION_MESG battLevel{};
+        strncpy(battLevel.field_name, "batteryLevel", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
+        strncpy(battLevel.units, "%", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
+        battLevel.developer_data_index    = 0;
+        battLevel.field_definition_number = mFHBatteryLevelField.getFieldID();
+        battLevel.fit_base_type_id        = FIT_BASE_TYPE_UINT8;
+        mFHBatteryLevelField.writeMessage(&battLevel, fp);
+
+        // Field 1: "battery voltage in mV"
+        mFHBatteryVoltageField.writeDef(fp);
+        FIT_FIELD_DESCRIPTION_MESG battVoltage{};
+        strncpy(battVoltage.field_name, "battVoltage", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
+        strncpy(battVoltage.units, "mV", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
+        battVoltage.developer_data_index    = 0;
+        battVoltage.field_definition_number = mFHBatteryVoltageField.getFieldID();
+        battVoltage.fit_base_type_id        = FIT_BASE_TYPE_UINT16;
+        mFHBatteryVoltageField.writeMessage(&battVoltage, fp);
     }
 
     mFHEvent.writeDef(fp);
@@ -247,13 +264,16 @@ void ActivityWriter::addRecord(const RecordData& record)
     const FIT_RECORD_MESG msg = prepareRecordMsg(record);
 
     if (record.has(RecordData::Field::BATTERY)) {
-        const FIT_UINT8 soc = record.battery;
+        const FIT_UINT8  soc     = record.batteryLevel;
+        const FIT_UINT16 voltage = record.batteryVoltage;
         if (record.has(RecordData::Field::COORDS)) {
             mFHRecordGB.writeMessage(&msg, mFile.get());
             mFHRecordGB.writeFieldMessage(0, &soc, mFile.get());
+            mFHRecordGB.writeFieldMessage(1, &voltage, mFile.get());
         } else {
             mFHRecordB.writeMessage(&msg, mFile.get());
             mFHRecordB.writeFieldMessage(0, &soc, mFile.get());
+            mFHRecordGB.writeFieldMessage(1, &voltage, mFile.get());
         }
     } else {
         if (record.has(RecordData::Field::COORDS)) {
