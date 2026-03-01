@@ -549,7 +549,7 @@ ActivityWriter::RecordData Service::prepareRecordData()
 
     fitRecord.set(ActivityWriter::RecordData::Field::BATTERY, mBatteryLevel.readyToSave());
     fitRecord.batteryLevel   = static_cast<uint8_t>(mBatteryLevel.getLevel());
-    fitRecord.batteryVoltage = static_cast<uint8_t>(mBatteryLevel.getVoltage());
+    fitRecord.batteryVoltage = static_cast<uint16_t>(mBatteryLevel.getVoltage() * 1000);
 
     return fitRecord;
 }
