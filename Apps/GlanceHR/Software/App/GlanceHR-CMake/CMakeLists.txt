@@ -4,6 +4,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
 
 # App configuration
 set(APP_NAME "GlanceHR")
+set(APP_USER_NAME "Live HR")
 set(APP_TYPE "Glance")
 set(DEV_ID "UNA")
 set(APP_ID "A1358F7C2E9D4BA6")

@@ -7,22 +7,19 @@
 
 #include "SDK/Messages/CommandMessages.hpp"
 #include "SDK/Messages/SensorLayerMessages.hpp"
-#include "SDK/SensorLayer/SensorDataBatch.hpp"
+#include "SDK/Messages/MessageGuard.hpp"
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp"
 
 #include "icon_60x60.h"
-#include "icon_30x30.h"
 
 Service::Service(SDK::Kernel &kernel)
-        : mKernel(kernel)
-        , mName("Steps")
-        , mMaxControls(0)
-        , mGlanceUI()
-        , mGlanceTitle()
-        , mGlanceValue()
-        , mSensorPedo(SDK::Sensor::Type::STEP_COUNTER)
-        , mDataReceived(false)
+    : mKernel(kernel)
+    , mGlanceUI()
+    , mGlanceTitle()
+    , mGlanceValue()
+    , mSensorPedo(SDK::Sensor::Type::STEP_COUNTER)
+    , mDataReceived(false)
 {
 }
 
@@ -72,10 +69,8 @@ void Service::run()
 
             case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
                 auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
-                this->onSdlNewData(event->handle,
-                                   event->data,
-                                   event->count,
-                                   event->stride);
+                SDK::Sensor::DataBatch batch(event->data, event->count, event->stride);
+                handleSensorsData(event->handle, batch);
                 } break;
 
             default:
@@ -103,15 +98,11 @@ void Service::disconnect()
     }
 }
 
-void Service::onSdlNewData(uint16_t                 handle,
-                           const SDK::Sensor::Data* data,
-                           uint16_t                 count,
-                           uint16_t                 stride)
-{
-    SDK::Sensor::DataBatch batch(data, count, stride);
+void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 
+{
     if (mSensorPedo.matchesDriver(handle)) {
-        SDK::SensorDataParser::StepCounter p(batch[0]);
+        SDK::SensorDataParser::StepCounter p(data[0]);
 
         if (p.isDataValid()) {
             LOG_DEBUG("steps = %d\n", p.getStepCount());
@@ -135,14 +126,11 @@ void Service::onGlanceTick()
     //LOG_DEBUG("Glance tick\n");
 
     if (mGlanceUI.isInvalid()) {
-        auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
-        if (upd) {
-            upd->name = mName;
-            upd->controls = mGlanceUI.data();
+        if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
+            upd->name           = APP_NAME;
+            upd->controls       = mGlanceUI.data();
             upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
-
-            mKernel.comm.sendMessage(upd, 100);
-            mKernel.comm.releaseMessage(upd);
+            upd.send(100);
         }
 
         mGlanceUI.setValid();
@@ -153,17 +141,14 @@ bool Service::configGui()
 {
     bool status = false;
     // Get Glance configuration
-    auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
-    if (gc) {
-        if (mKernel.comm.sendMessage(gc, 100) && gc->getResult() == SDK::MessageResult::SUCCESS) {
+    if (auto gc = SDK::make_msg<SDK::Message::RequestGlanceConfig>(mKernel)) {
+        if (gc.send(100) && gc.ok()) {
             if (gc->maxControls >= 3) {
-                mMaxControls = gc->maxControls;
                 mGlanceUI.setWidth(gc->width);
                 mGlanceUI.setHeight(gc->height);
                 status = true;
             }
         }
-        mKernel.comm.releaseMessage(gc);
     }
 
     return status;
