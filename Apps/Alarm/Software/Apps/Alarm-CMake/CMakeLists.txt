@@ -4,6 +4,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
 
 # App configuration
 set(APP_NAME "Alarm")
+set(APP_USER_NAME "Alarm")
 set(APP_TYPE "Activity")
 set(DEV_ID "UNA")
 set(APP_ID "123456789ABCDEF0")
