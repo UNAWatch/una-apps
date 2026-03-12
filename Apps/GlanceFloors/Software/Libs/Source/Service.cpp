@@ -6,23 +6,20 @@
 
 #include "SDK/Messages/CommandMessages.hpp"
 #include "SDK/Messages/SensorLayerMessages.hpp"
-#include "SDK/SensorLayer/SensorDataBatch.hpp"
+#include "SDK/Messages/MessageGuard.hpp"
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
 #include "icon_60x60.h"
-#include "icon_30x30.h"
 
 Service::Service(SDK::Kernel &kernel)
-        : mKernel(kernel)
-        , mName("Floors")
-        , mMaxControls(0)
-        , mGlanceUI()
-        , mGlanceTitle()
-        , mGlanceValue()
-        , mSensorFloors(SDK::Sensor::Type::FLOOR_COUNTER)
-        , mFloorsValue(0)
-        , mDataReceived(false)
+    : mKernel(kernel)
+    , mGlanceUI()
+    , mGlanceTitle()
+    , mGlanceValue()
+    , mSensorFloors(SDK::Sensor::Type::FLOOR_COUNTER)
+    , mFloorsValue(0)
+    , mDataReceived(false)
 {
 }
 
@@ -72,10 +69,8 @@ void Service::run()
 
             case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
                 auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
-                this->onSdlNewData(event->handle,
-                                   event->data,
-                                   event->count,
-                                   event->stride);
+                SDK::Sensor::DataBatch batch(event->data, event->count, event->stride);
+                handleSensorsData(event->handle, batch);
                 } break;
 
             default:
@@ -103,15 +98,10 @@ void Service::disconnect()
     }
 }
 
-void Service::onSdlNewData(uint16_t                 handle,
-                           const SDK::Sensor::Data* data,
-                           uint16_t                 count,
-                           uint16_t                 stride)
+void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
-    SDK::Sensor::DataBatch batch(data, count, stride);
-
     if (mSensorFloors.matchesDriver(handle)) {
-        SDK::SensorDataParser::FloorCounter p(batch[0]);
+        SDK::SensorDataParser::FloorCounter p(data[0]);
         if (p.isDataValid()) {
             LOG_DEBUG("up = %d down = %d\n", p.getFloorsUp(), p.getFloorsDown());
             uint32_t newValue = p.getFloorsDown() + p.getFloorsUp();
@@ -134,14 +124,11 @@ void Service::onGlanceTick()
     //LOG_DEBUG("Glance tick\n");
 
     if (mGlanceUI.isInvalid()) {
-        auto* upd = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceUpdate>();
-        if (upd) {
-            upd->name = mName;
-            upd->controls = mGlanceUI.data();
+        if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
+            upd->name           = APP_NAME;
+            upd->controls       = mGlanceUI.data();
             upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
-
-            mKernel.comm.sendMessage(upd, 100);
-            mKernel.comm.releaseMessage(upd);
+            upd.send(100);
         }
 
         mGlanceUI.setValid();
@@ -152,17 +139,14 @@ bool Service::configGui()
 {
     bool status = false;
     // Get Glance configuration
-    auto* gc = mKernel.comm.allocateMessage<SDK::Message::RequestGlanceConfig>();
-    if (gc) {
-        if (mKernel.comm.sendMessage(gc, 100) && gc->getResult() == SDK::MessageResult::SUCCESS) {
+    if (auto gc = SDK::make_msg<SDK::Message::RequestGlanceConfig>(mKernel)) {
+        if (gc.send(100) && gc.ok()) {
             if (gc->maxControls >= 3) {
-                mMaxControls = gc->maxControls;
                 mGlanceUI.setWidth(gc->width);
                 mGlanceUI.setHeight(gc->height);
                 status = true;
             }
         }
-        mKernel.comm.releaseMessage(gc);
     }
 
     return status;
@@ -176,7 +160,7 @@ void Service::createGuiControls()
     mGlanceTitle.pos({ 70, 0 }, { 100, 25 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
-        .setText(mName)
+        .setText("Floors")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     mGlanceValue = mGlanceUI.createText();

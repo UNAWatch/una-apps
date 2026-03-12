@@ -16,6 +16,7 @@ env:
     Utility4
     Glance1
     HRMonitor
+    GlanceStrain
 
 jobs:
   prepare:

@@ -6,9 +6,9 @@
 #include "SDK/Kernel/Kernel.hpp"
 #include "SDK/Glance/GlanceControl.hpp"
 #include "SDK/SensorLayer/SensorConnection.hpp"
-#include "SDK/Interfaces/ISensorDataListener.hpp"
+#include "SDK/SensorLayer/SensorDataBatch.hpp"
 
-class Service : public SDK::Interface::ISensorDataListener
+class Service
 {
 public:
     Service(SDK::Kernel &kernel);
@@ -20,11 +20,7 @@ private:
     void connect();
     void disconnect();
 
-    // ISensorDataListener implementation
-    void onSdlNewData(uint16_t                 handle,
-                      const SDK::Sensor::Data* data,
-                      uint16_t                 count,
-                      uint16_t                 stride) override;
+    void handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
     void glanceUpdate();
 
@@ -35,8 +31,6 @@ private:
     static constexpr char skTextCalculating[] = "Calculating...";
 
     const SDK::Kernel&       mKernel;
-    const char*              mName;
-    uint32_t                 mMaxControls;
     SDK::Glance::Form        mGlanceUI;
     SDK::Glance::ControlText mGlanceTitle;
     SDK::Glance::ControlText mGlanceValue;

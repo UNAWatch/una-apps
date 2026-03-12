@@ -1,5 +1,4 @@
 #include "Service.hpp"
-#include "SDK/Kernel/KernelProviderService.hpp"
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
@@ -7,7 +6,6 @@
 
 #include "SDK/Messages/CommandMessages.hpp"
 #include "SDK/Messages/SensorLayerMessages.hpp"
-#include "SDK/SensorLayer/SensorDataBatch.hpp"
 #include "SDK/Messages/MessageGuard.hpp"
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
@@ -16,8 +14,6 @@
 
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
-    , mName("Battery")
-    , mMaxControls(0)
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValue()
@@ -124,9 +120,8 @@ void Service::onGlanceTick()
     //LOG_DEBUG("Glance tick\n");
 
     if (mGlanceUI.isInvalid()) {
-        auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel);
-        if (upd) {
-            upd->name           = mName;
+        if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
+            upd->name           = APP_NAME;
             upd->controls       = mGlanceUI.data();
             upd->controlsNumber = static_cast<uint32_t>(mGlanceUI.size());
             upd.send(100);
@@ -140,11 +135,9 @@ bool Service::configGui()
 {
     bool status = false;
     // Get Glance configuration
-    auto gc = SDK::make_msg<SDK::Message::RequestGlanceConfig>(mKernel);
-    if (gc) {
+    if (auto gc = SDK::make_msg<SDK::Message::RequestGlanceConfig>(mKernel)) {
         if (gc.send(100) && gc.ok()) {
             if (gc->maxControls >= 3) {
-                mMaxControls = gc->maxControls;
                 mGlanceUI.setWidth(gc->width);
                 mGlanceUI.setHeight(gc->height);
                 status = true;

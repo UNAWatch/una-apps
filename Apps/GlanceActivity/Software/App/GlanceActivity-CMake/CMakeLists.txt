@@ -4,6 +4,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
 
 # App configuration
 set(APP_NAME "GActivityMins")
+set(APP_USER_NAME "Activity Min.")
 set(APP_TYPE "Glance")
 set(DEV_ID "UNA")
 set(APP_ID "A1E84D2F7A9C5B60")

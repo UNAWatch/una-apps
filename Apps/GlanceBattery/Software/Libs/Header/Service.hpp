@@ -29,8 +29,6 @@ private:
     void createGuiControls();
 
     const SDK::Kernel&       mKernel;
-    const char*              mName;
-    uint32_t                 mMaxControls;
     SDK::Glance::Form        mGlanceUI;
     SDK::Glance::ControlText mGlanceTitle;
     SDK::Glance::ControlText mGlanceValue;

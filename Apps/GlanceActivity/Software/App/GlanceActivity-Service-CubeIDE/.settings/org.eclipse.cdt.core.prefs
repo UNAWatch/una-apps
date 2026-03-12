@@ -24,7 +24,7 @@ environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.7
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_ID__/value=A1E84D2F7A9C5B60
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/operation=replace
-environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/value=GActivityMins
+environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__APP_NAME__/value=Activity Min.
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/delimiter=;
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/operation=replace
 environment/project/com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.767823000/__BUILD_VERSION__/value=0.1.0
