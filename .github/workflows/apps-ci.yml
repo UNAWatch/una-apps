@@ -51,7 +51,7 @@ jobs:
         app: ${{ fromJson(needs.prepare.outputs.cmake_apps) }}
     steps:
       - name: Setup GIT
-        run: apt update && apt install -y git python3-full python3-pip python-is-python3 cmake
+        run: apt update && apt install -y git python3-full python3-pip python-is-python3 cmake strace
 
       - name: Clone SDK
         uses: actions/checkout@v5
@@ -90,7 +90,7 @@ jobs:
           ls -lah ../..
           ls -lah ../../..
           ls -lah ../../../..
-          make -j$(nproc) V=sc
+          strace make -j$(nproc) V=sc
 
       - name: Upload CMake app artifacts
         uses: actions/upload-artifact@v4
