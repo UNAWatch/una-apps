@@ -76,6 +76,9 @@ jobs:
         run: |
           export PATH=/tmp/bin:/opt/st/stm32cubeide_*/:`find /opt/st/stm32cubeide_* -name arm-none-eabi-objcopy | head -n 1 | xargs dirname`:$PATH
           export PATH=/tmp/bin:/opt/st/stm32cubeide_*/:`find /opt/st/stm32cubeide_* -name make | head -n 1 | xargs dirname`:$PATH
+          chmod +x $(find /opt/st/stm32cubeide_* -name make | head -n 1)
+          chmod +x $(find /opt/st/stm32cubeide_* -name arm-none-eabi-gcc | head -n 1)
+          chmod +x $(find /opt/st/stm32cubeide_* -name arm-none-eabi-g++ | head -n 1)
           cd SDK/Examples/Apps/${{ matrix.app }}/Software/App*/*-CMake
           export UNA_SDK=$GITHUB_WORKSPACE/SDK
           mkdir -p build
