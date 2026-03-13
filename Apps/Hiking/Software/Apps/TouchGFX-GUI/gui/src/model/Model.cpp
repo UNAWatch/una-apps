@@ -192,7 +192,7 @@ bool Model::isUnitsImperial()
     return mUnitsImperial;
 }
 
-const std::array<uint8_t, 4>& Model::getHrThresholds() const
+const std::array<uint8_t, kHrThresholdsCount>& Model::getHrThresholds() const
 {
     return mHrThresholds;
 }
@@ -325,9 +325,9 @@ bool Model::customMessageHandler(SDK::MessageBase *msg)
         case CustomMessage::SETTINGS_UPDATE:  {
             LOG_DEBUG("SETTINGS_UPDATE\n");
             auto *cmsg = static_cast<CustomMessage::SettingsUpd*>(msg);
-            mSettings = cmsg->settings;
+            mSettings      = cmsg->settings;
             mUnitsImperial = cmsg->unitsImperial;
-            mHrThresholds = cmsg->hrThresholds;
+            mHrThresholds  = cmsg->hrThresholds;
         } break;
 
         case CustomMessage::LOCAL_TIME:  {

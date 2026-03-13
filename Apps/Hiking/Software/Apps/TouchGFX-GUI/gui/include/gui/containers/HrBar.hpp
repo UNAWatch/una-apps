@@ -3,6 +3,8 @@
 
 #include <gui_generated/containers/HrBarBase.hpp>
 
+#include <array>
+
 class HrBar : public HrBarBase
 {
 public:
@@ -11,11 +13,10 @@ public:
 
     virtual void initialize();
 
-    void setHR(float hr, const std::array<uint8_t, 4>& th);
-
+    void setHR(float hr, const uint8_t* buff, uint8_t size);
 
 protected:
-
+    const std::array<touchgfx::Image*, 5> mZones;
 };
 
 #endif // HRBAR_HPP

@@ -4,6 +4,7 @@
 #include "SDK/Messages/MessageBase.hpp"
 #include "SDK/Messages/MessageTypes.hpp"
 #include "SDK/Messages/CommandMessages.hpp"
+#include "SDK/Messages/MessageGuard.hpp"
 #include "SDK/Kernel/Kernel.hpp"
 
 // Application types
@@ -44,7 +45,7 @@ namespace CustomMessage {
 
         // Kernel settings
         bool unitsImperial;
-        std::array<uint8_t, 4> hrThresholds;
+        std::array<uint8_t, kHrThresholdsCount> hrThresholds;
 
         SettingsUpd()
             : SDK::MessageBase(SETTINGS_UPDATE)
@@ -155,18 +156,16 @@ public:
     virtual ~Sender() = default;
 
     // Service --> GUI
-    bool settingsUpd(Settings settings, bool units, std::array<uint8_t, 4> th)
+    bool settingsUpd(Settings settings, bool units, std::array<uint8_t, kHrThresholdsCount> th)
     {
-        bool status = false;
-        auto *msg = mKernel.comm.allocateMessage<CustomMessage::SettingsUpd>();
-        if (msg) {
-            msg->settings = settings;
+        if (auto msg = SDK::make_msg<CustomMessage::SettingsUpd>(mKernel)) {
+            msg->settings      = settings;
             msg->unitsImperial = units;
-            msg->hrThresholds = th;
-            status = mKernel.comm.sendMessage(msg);
-            mKernel.comm.releaseMessage(msg);
+            msg->hrThresholds  = th;
+            return msg.send();
         }
-        return status;
+
+        return false;
     }
 
     bool time(std::tm localTime)
