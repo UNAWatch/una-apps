@@ -81,7 +81,13 @@ jobs:
           mkdir -p build
           cd build
           cmake ..
-          make -j$(nproc)
+          pwd
+          ls -lah .
+          ls -lah ..
+          ls -lah ../..
+          ls -lah ../../..
+          ls -lah ../../../..
+          make -j$(nproc) V=sc
 
       - name: Upload CMake app artifacts
         uses: actions/upload-artifact@v4
