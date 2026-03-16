@@ -338,7 +338,7 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
         SDK::SensorDataParser::BatteryLevel parser(data[0]);
         if (parser.isDataValid()) {
             mBatteryLevel.setLevel(parser.getCharge());
-            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel.getValue());
+            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel.getLevel());
         }
     } else if (mSensorBatteryMetrics.matchesDriver(handle)) {
         SDK::SensorDataParser::BatteryMetrics parser(data[0]);
@@ -572,11 +572,13 @@ void Service::sendInitialInfoToGui()
                 uint8_t i = 0;
                 for (; i < msg->heartRateCount; ++i) {
                     hrThresholds[i] = msg->heartRateTh[i];
+                    LOG_DEBUG("HR: %d\n", static_cast<int>(hrThresholds[i]));
                 }
 
                 // Complete the array elements to the full number
                 for (; i < kHrThresholdsCount; ++i) {
                     hrThresholds[i] = hrThresholds[i - 1] + 20;
+                    LOG_DEBUG("HR: %d\n", static_cast<int>(hrThresholds[i]));
                 }
             }
         }

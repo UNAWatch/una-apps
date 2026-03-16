@@ -13,10 +13,10 @@ public:
 
     virtual void initialize();
 
-    void setHR(float hr, const uint8_t* buff, uint8_t size);
+    void setHR(float hr, const uint8_t* th, uint8_t count);
 
 protected:
-    const std::array<touchgfx::Image*, 5> mZones;
+    const std::array<touchgfx::Image*, 5> mBars;
 };
 
 #endif // HRBAR_HPP
