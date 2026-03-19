@@ -10,11 +10,11 @@ void TrackFace2::initialize()
     TrackFace2Base::initialize();
 }
 
-void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, 4>& th)
+void TrackFace2::setHR(float hr, float tl, const std::array<uint8_t, kHrThresholdsCount>& th)
 {
     Unicode::snprintfFloat(hrValueBuffer, HRVALUE_SIZE, "%.0f", hr);
     hrValue.invalidate();
-    hrBar.setHR(hr, th);
+    hrBar.setHR(hr, th.data(), kHrThresholdsCount);
 }
 
 void TrackFace2::setLapPace(float spm, bool isImperial, bool gpsFix)

@@ -192,7 +192,7 @@ bool Model::isUnitsImperial()
     return mUnitsImperial;
 }
 
-const std::array<uint8_t, 4>& Model::getHrThresholds() const
+const std::array<uint8_t, kHrThresholdsCount>& Model::getHrThresholds() const
 {
     return mHrThresholds;
 }

@@ -74,7 +74,7 @@ public:
 
     // Settings
     bool isUnitsImperial();
-    const std::array<uint8_t, 4>& getHrThresholds() const;
+    const std::array<uint8_t, kHrThresholdsCount>& getHrThresholds() const;
     const Settings& getSettings() const;
     void setSettings(const Settings& sett);
 
@@ -150,7 +150,7 @@ protected:
 
     // Kernel settings
     bool mUnitsImperial = false;
-    std::array<uint8_t, 4> mHrThresholds = kHrThresholdsDefault;
+    std::array<uint8_t, kHrThresholdsCount> mHrThresholds = kHrThresholdsDefault;
 
     // Application settings
     Settings mSettings {};
