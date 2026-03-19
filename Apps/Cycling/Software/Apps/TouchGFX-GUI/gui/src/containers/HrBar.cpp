@@ -1,8 +1,8 @@
 #include <gui/containers/HrBar.hpp>
 
 HrBar::HrBar()
+    : mBars{&hr1, &hr2, &hr3, &hr4, &hr5}
 {
-
 }
 
 void HrBar::initialize()
@@ -10,29 +10,33 @@ void HrBar::initialize()
     HrBarBase::initialize();
 }
 
-void HrBar::setHR(float hr, const std::array<uint8_t, 4>& th)
+void HrBar::setHR(float hr, const uint8_t* th, uint8_t count)
 {
-    hr1.setVisible(false);
-    hr2.setVisible(false);
-    hr3.setVisible(false);
-    hr4.setVisible(false);
-    hr5.setVisible(false);
-
-    if (hr > th[3]) {
-        hr5.setVisible(true);
-    } else if (hr > th[2]) {
-        hr4.setVisible(true);
-    } else if (hr > th[1]) {
-        hr3.setVisible(true);
-    } else if (hr > th[0]) {
-        hr2.setVisible(true);
-    } else { 
-        hr1.setVisible(true);
+    if (th == nullptr || count == 0) {
+        return;
     }
 
-    hr1.invalidate();
-    hr2.invalidate();
-    hr3.invalidate();
-    hr4.invalidate();
-    hr5.invalidate();
+    if (count > mBars.size()) {
+        count = static_cast<uint8_t>(mBars.size());
+    }
+
+    for (auto* bar : mBars) {
+        bar->setVisible(false);
+    }
+
+    int activeBar = mBars.size() - 1;
+    for (int i = count - 1; i >= 0; --i) {
+        if (hr > th[i]) {
+            break;
+        }
+        --activeBar;
+    }
+
+    if (activeBar >= 0) {
+        mBars[activeBar]->setVisible(true);
+    }
+
+    for (auto* bar : mBars) {
+        bar->invalidate();
+    }
 }

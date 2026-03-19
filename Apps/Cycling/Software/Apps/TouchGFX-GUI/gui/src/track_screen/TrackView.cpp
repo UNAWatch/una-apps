@@ -62,7 +62,7 @@ uint16_t TrackView::getPositionId()
     return sideBar.getActiveId();
 }
 
-void TrackView::setTrackData(const Track::Data &data, bool isImperial, const std::array<uint8_t, 4>& hrth)
+void TrackView::setTrackData(const Track::Data &data, bool isImperial, const std::array<uint8_t, kHrThresholdsCount>& hrth)
 {
     trackFace1.setSpeed(data.speed, isImperial, mGpsFix);
     trackFace1.setDistance(data.distance, isImperial, mGpsFix);

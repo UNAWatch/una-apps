@@ -536,19 +536,31 @@ ActivityWriter::RecordData Service::prepareRecordData()
 void Service::sendInitialInfoToGui()
 {
     // Settings
-    std::array<uint8_t, 4> hrThresholds = kHrThresholdsDefault;
+    std::array<uint8_t, kHrThresholdsCount> hrThresholds = kHrThresholdsDefault;
 
-    auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestSystemSettings>();
-    if (msg) {
-        if(mKernel.comm.sendMessage(msg, 100) && msg->getResult() == SDK::MessageResult::SUCCESS) {
+    if (auto msg = SDK::make_msg<SDK::Message::RequestSystemSettings>(mKernel)) {
+        if (msg.send(100) && msg.ok()) {
             mUnits = msg->imperialUnits;
-            if (msg->heartRateCount >= 4) {
-                for (uint8_t i = 0; i < 4; i++) {
+
+            if (msg->heartRateCount > kHrThresholdsCount) {
+                msg->heartRateCount = kHrThresholdsCount;
+            }
+
+            if (msg->heartRateCount > 0) {
+                // Copy received elements
+                uint8_t i = 0;
+                for (; i < msg->heartRateCount; ++i) {
                     hrThresholds[i] = msg->heartRateTh[i];
+                    LOG_DEBUG("HR: %d\n", static_cast<int>(hrThresholds[i]));
+                }
+
+                // Complete the array elements to the full number
+                for (; i < kHrThresholdsCount; ++i) {
+                    hrThresholds[i] = hrThresholds[i - 1] + 20;
+                    LOG_DEBUG("HR: %d\n", static_cast<int>(hrThresholds[i]));
                 }
             }
         }
-        mKernel.comm.releaseMessage(msg);
     }
 
     mGuiSender.settingsUpd(mSettings, mUnits, hrThresholds);
