@@ -20,7 +20,7 @@ extern "C" {
 }
 
 #define LOG_MODULE_PRX      "ActivityWriter"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 #include "SDK/FitHelper/FitHelper.hpp"
