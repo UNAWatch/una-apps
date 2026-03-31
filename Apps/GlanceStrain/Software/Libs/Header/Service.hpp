@@ -14,7 +14,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserActivity.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserTouch.hpp"
-#include "SDK/FitHelper/FitHelper.hpp"
+#include "ActivityWriter.hpp"
 
 class Service : public SDK::Interface::ISensorDataListener
 {
@@ -38,20 +38,7 @@ private:
     void onGlanceTick();
     bool configGui();
     void createGuiControls();
-    void saveFit(bool force, bool finalizeDay);
     void checkDayRollover();
-    void appendPendingRecords(SDK::Interface::IFile* fp);
-    void writeFitDefinitions(SDK::Interface::IFile* fp, std::time_t timestamp);
-    void writeFitSessionSummary(SDK::Interface::IFile* fp, std::time_t timestamp);
-    void startNewSession(SDK::Interface::IFile* fp, std::time_t timestamp);
-    void loadSessionIndex(SDK::Interface::IFile* fp);
-
-    struct FitRecord {
-        std::time_t timestamp;
-        uint8_t     hr;
-        float       strain_delta;
-        uint32_t    active_min;
-    };
 
     const SDK::Kernel&       mKernel;
     const char*              mName;
@@ -72,35 +59,11 @@ private:
     uint16_t mMaxHR = 0;
     uint32_t mActiveMin = 0;
     uint32_t mSampleCount = 0;
-    std::vector<FitRecord> mPendingRecords;
-    std::time_t mLastSaveTime = 0;
-    bool mSessionOpen = false;
     uint16_t mLastHr = 0;
-    char mFitPath[64] = {};
     char mCurrentDate[11] = {};
     std::time_t mDayStart = 0;
-    bool mFitFileInitialized = false;
-    bool mSessionIndexInitialized = false;
-    uint16_t mSessionIndex = 0;
-    bool mStrainLoaded = false;
 
-    SDK::Component::FitHelper mFitFileID;
-    SDK::Component::FitHelper mFitDeveloper;
-    SDK::Component::FitHelper mFitRecord;
-    SDK::Component::FitHelper mFitEvent;
-    SDK::Component::FitHelper mFitSession;
-    SDK::Component::FitHelper mFitActivity;
-    SDK::Component::FitHelper mFitStrainField;
-    SDK::Component::FitHelper mFitActiveField;
-
-    static constexpr uint8_t skFileMsgNum     = 1;
-    static constexpr uint8_t skDevelopMsgNum  = 2;
-    static constexpr uint8_t skRecordMsgNum   = 3;
-    static constexpr uint8_t skEventMsgNum    = 4;
-    static constexpr uint8_t skSessionMsgNum  = 5;
-    static constexpr uint8_t skActivityMsgNum = 6;
-    static constexpr uint8_t skStrainMsgNum   = 7;
-    static constexpr uint8_t skActiveMsgNum   = 8;
+    ActivityWriter mActivityWriter;
 
     static constexpr uint32_t skSamplePeriodSec = 5;
     static constexpr uint32_t skSaveIntervalSec = 3600;
