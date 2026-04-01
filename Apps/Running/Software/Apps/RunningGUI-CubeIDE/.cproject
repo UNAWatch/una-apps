@@ -66,7 +66,7 @@
 									<listOptionValue builtIn="false" value="&quot;${UNA_SDK}/Libs/Header&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${UNA_SDK}/Port/TouchGFX&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${UNA_SDK}/Port/TouchGFX/generated&quot;"/>
-									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="&quot;${UNA_SDK}/ThirdParty/touchgfx/framework/include&quot;"/>
 									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/generated/fonts/include"/>
 									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/generated/gui_generated/include"/>
 									<listOptionValue builtIn="false" value="../../TouchGFX-GUI/generated/images/include"/>
