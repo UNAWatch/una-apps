@@ -17,5 +17,5 @@ set(TOUCHGFX_INCLUDE_DIRS
 )
 
 set(TOUCHGFX_LIBS
-     $ENV{UNA_SDK}/ThirdParty/touchgfx/lib/core/cortex_m33/gcc/libtouchgfx-float-abi-hard.a
+    $ENV{UNA_SDK}/ThirdParty/touchgfx/lib/core/cortex_m33/gcc/libtouchgfx-float-abi-hard.a
 )
