@@ -88,6 +88,8 @@ void Service::run()
     }
 
     SDK::Timer guiInitTimeout(TIMER_SECONDS(5));
+    guiInitTimeout.start();
+
     bool firstFix = false;
 
     std::time_t processedUtc = 0;
@@ -582,7 +584,7 @@ void Service::sendInitialInfoToGui()
 
     mGuiSender.settingsUpd(mSettings, mUnits, hrThresholds);
 
-    LOG_DEBUG("Settings: units %u, th: %u-%u-%u-%u\n", mUnits, hrThresholds[0], hrThresholds[1], hrThresholds[2], hrThresholds[3]);
+    LOG_DEBUG("Settings: units %u, th: %u-%u-%u-%u-%u\n", mUnits, hrThresholds[0], hrThresholds[1], hrThresholds[2], hrThresholds[3], hrThresholds[4]);
     // Summary
     mGuiSender.summary(std::make_shared<const ActivitySummary>(mSummary));
 

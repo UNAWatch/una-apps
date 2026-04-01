@@ -81,6 +81,8 @@ void Service::run()
     }
 
     SDK::Timer guiInitTimeout(TIMER_SECONDS(5));
+    guiInitTimeout.start();
+
     bool firstFix = false;
 
     std::time_t processedUtc = 0;

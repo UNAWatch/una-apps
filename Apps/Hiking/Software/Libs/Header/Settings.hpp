@@ -27,11 +27,11 @@ struct Settings {
     uint32_t alertTime     = 0;     ///< Activity time threshold. 0 if not use.
 };
 
-static constexpr uint8_t kHrThresholdsCount = 5;
+static constexpr uint8_t kHrThresholdsCount = 6;
 
 /**
  * @brief   Heart rate thresholds array in beats per minute (BPM).
  */
-inline constexpr std::array<uint8_t, kHrThresholdsCount> kHrThresholdsDefault = { 100, 120, 140, 160, 170 };
+inline constexpr std::array<uint8_t, kHrThresholdsCount> kHrThresholdsDefault = { 95, 114, 133, 152, 171, 190 };
 
 #endif /* __SETTINGS_HPP */
