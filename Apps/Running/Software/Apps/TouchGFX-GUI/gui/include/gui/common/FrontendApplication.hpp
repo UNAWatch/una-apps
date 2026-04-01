@@ -8,6 +8,7 @@ class FrontendHeap;
 
 #if defined(SIMULATOR)
 #include "SDK/Simulator/Kernel/Kernel.hpp"
+#include "SDK/Simulator/Components/InstanceSensorLayer.hpp"
 #endif
 
 using namespace touchgfx;
@@ -32,6 +33,7 @@ public:
     void handleKeyEvent(uint8_t key)
     {
 #if defined(SIMULATOR)
+        Instance::SensorLayer::getInstance().handlerButtons(key);
         if (SDK::Simulator::KernelHolder::Get().keyFilter(key)) {
             model.handleKeyEvent(key);
             FrontendApplicationBase::handleKeyEvent(key);

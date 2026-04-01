@@ -352,10 +352,6 @@ void Service::onStartGUI()
 
     mSensorWristMotion.connect();
 
-#if defined(SIMULATOR) || 0
-    mGps.fix = true;
-#endif
-
     sendInitialInfoToGui();
 }
 

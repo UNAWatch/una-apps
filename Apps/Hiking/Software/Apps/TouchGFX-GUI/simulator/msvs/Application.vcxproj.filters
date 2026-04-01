@@ -400,9 +400,6 @@
     <Filter Include="SDK\Libs\Source\Simulator\Kernel">
       <UniqueIdentifier>{31af974c-bc20-4bc4-b2c2-e17bd81ea7bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDK\Libs\Source\Simulator\Sensors">
-      <UniqueIdentifier>{c8892568-768e-4825-838f-a90aa533ce63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SDK\Libs\Source\Simulator\Kernel\Mock">
       <UniqueIdentifier>{d85bbeea-167f-4c7d-bdfd-2b1086994a6f}</UniqueIdentifier>
     </Filter>
@@ -420,9 +417,6 @@
     </Filter>
     <Filter Include="SDK\Libs\Header\Simulator\Kernel\Mock">
       <UniqueIdentifier>{d7152964-b9ee-428a-adda-c9bc99434d07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SDK\Libs\Header\Simulator\Sensors">
-      <UniqueIdentifier>{47483096-3e2f-4950-971a-2bb65a81dd0a}</UniqueIdentifier>
     </Filter>
     <Filter Include="SDK\Libs\Header\SynchManager">
       <UniqueIdentifier>{94578671-151e-4ee4-aba0-e4badca371ab}</UniqueIdentifier>
@@ -507,6 +501,24 @@
     </Filter>
     <Filter Include="Header Files\generated\gui_generated\trackstartconfirmation_screen">
       <UniqueIdentifier>C1DE7009-D19C-A60A-B2E6-0E2A7AEAB2BE</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Components">
+      <UniqueIdentifier>{42249b05-77bc-41d0-9f47-fa02b337a975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Components\Sensors">
+      <UniqueIdentifier>{ea1796c2-2c2b-4213-bfcb-bb8abe331374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Components\Sensors\Gps">
+      <UniqueIdentifier>{e026a777-ef2e-4d9d-ab78-42d024e31430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Components\Sensors\HeartRate">
+      <UniqueIdentifier>{972e4538-d73d-4242-9c01-7238da07675a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Components\Sensors\Imu">
+      <UniqueIdentifier>{3711fad0-35c4-4c3a-b6e8-48ec36558803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Source\Simulator\Components\Simulator">
+      <UniqueIdentifier>{0bdabd9d-8e0a-49b2-97c8-e5dfc6b7120b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -800,9 +812,6 @@
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp">
       <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Sensors\SensorCore.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Sensors</Filter>
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\UnaLogger\Logger.cpp">
       <Filter>SDK\Libs\Source\UnaLogger</Filter>
@@ -1137,39 +1146,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\track_screen\TrackViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\track_screen</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\FitHelper\FitHelper.cpp">
-      <Filter>SDK\Libs\Source\FitHelper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp">
-      <Filter>SDK\Libs\Source\Port\TouchGFX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorConnection.cpp">
-      <Filter>SDK\Libs\Source\SensorLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppComm.cpp">
-      <Filter>SDK\Libs\Source\Simulator\App</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppCore.cpp">
-      <Filter>SDK\Libs\Source\Simulator\App</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppMessageCore.cpp">
-      <Filter>SDK\Libs\Source\Simulator\App</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\KernelMessageDispatcher.cpp">
-      <Filter>SDK\Libs\Source\Simulator\App</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\MessageManager.cpp">
-      <Filter>SDK\Libs\Source\Simulator\App</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\OS\OS.cpp">
-      <Filter>SDK\Libs\Source\Simulator\OS</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Kernel.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\System.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\trackstartconfirmation_screen\TrackStartConfirmationPresenter.cpp">
       <Filter>Source Files\gui\trackstartconfirmation_screen</Filter>
     </ClCompile>
@@ -1188,6 +1164,102 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\trackstartconfirmation_screen\TrackStartConfirmationViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\trackstartconfirmation_screen</Filter>
     </ClInclude>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\AppCore.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\AppMessageCore.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\DualAppComm.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\KernelMessageDispatcher.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\MessageManager.cpp">
+      <Filter>SDK\Libs\Source\Simulator\App</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\OS\OS.cpp">
+      <Filter>SDK\Libs\Source\Simulator\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\OS\SwTimer.cpp">
+      <Filter>SDK\Libs\Source\Simulator\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\OS\OneShotTimer.cpp">
+      <Filter>SDK\Libs\Source\Simulator\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\System.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Kernel.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\ComponentSimulator.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\InstanceSensorLayer.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SampleRateAdapter.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorDataQueue.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorDataSample.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorDriver.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorListener.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorManager.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\SensorLayer\SensorConnection.cpp">
+      <Filter>SDK\Libs\Source\SensorLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Imu\ImuStepCounter.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\Imu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Imu\ImuWristMotion.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\Imu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\HeartRate\SensorHeartRateMetrics.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\HeartRate</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\HeartRate\SensorHeartRate.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\HeartRate</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsAltimeter.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\Gps</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsDistance.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\Gps</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsLocation.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\Gps</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsSpeed.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors\Gps</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Simulator\GpsStepCounterSimulator.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Simulator</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\SensorPressure.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\SensorBatteryLevel.cpp">
+      <Filter>SDK\Libs\Source\Simulator\Components\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SdkPath)\Libs\Source\FitHelper\FitHelper.cpp">
+      <Filter>SDK\Libs\Source\FitHelper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml">
@@ -1924,12 +1996,6 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\SensorCore.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\ISensorCore.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SynchManager\SynchManager.hpp">
       <Filter>SDK\Libs\Header\SynchManager</Filter>
     </ClInclude>
@@ -2041,8 +2107,11 @@
     <ClInclude Include="..\..\..\..\Libs\Header\AppUtils.hpp">
       <Filter>Libs\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\FitHelper\FitHelper.hpp">
-      <Filter>SDK\Libs\Header\FitHelper</Filter>
+    <ClInclude Include="$(ApplicationRoot)\simulator\ConfigurationSimulator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\FitHelper\FitHelper.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

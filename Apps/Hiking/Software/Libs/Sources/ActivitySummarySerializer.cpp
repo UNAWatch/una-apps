@@ -128,8 +128,20 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
 
     // If any fields are missing, just ignore it.
 
-    reader.get("utc", summary.utc);
+#if defined(SIMULATOR)
+#if defined(_USE_32BIT_TIME_T)
+    uint32_t tmp;
+#else
+    uint64_t tmp;
+#endif
+    reader.get("time", tmp);
+    summary.time = static_cast<time_t>(tmp);
+    reader.get("utc", tmp);
+    summary.utc = static_cast<time_t>(tmp);
+#else
     reader.get("time", summary.time);
+    reader.get("utc", summary.utc);
+#endif
     reader.get("distance", summary.distance);
     reader.get("speed_avg", summary.speedAvg);
     reader.get("steps", summary.steps);

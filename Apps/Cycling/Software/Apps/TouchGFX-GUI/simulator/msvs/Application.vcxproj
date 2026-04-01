@@ -18,10 +18,10 @@
     <ClCompile Include="$(ApplicationRoot)\simulator\main.cpp"/>
     <ClCompile Include="$(ApplicationRoot)\generated\simulator\src\mainBase.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp"/>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp"/>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Sensors\SensorCore.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Buzzer.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Timer\Timer.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\UnaLogger\Logger.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Wrappers\StdLibWrappers.c"/>
     <ClCompile Include="$(SdkPath)\ThirdParty\coreJSON\source\core_json.c"/>
@@ -29,21 +29,43 @@
     <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_convert.c"/>
     <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_crc.c"/>
     <ClCompile Include="$(SdkPath)\ThirdParty\FitSDKRelease_21.171.00\c\fit_product.c"/>
-    <ClCompile Include="$(SdkPath)\Libs\Source\JSON\JsonStreamReader.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\JSON\JsonStreamWriter.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\TrackMap\TrackMapBuilder.cpp"/>
     <ClCompile Include="$(SdkPath)\Libs\Source\Kernel\KernelBuilder.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\FitHelper\FitHelper.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\SensorLayer\SensorConnection.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppComm.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppCore.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\AppMessageCore.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\KernelMessageDispatcher.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\App\MessageManager.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Kernel.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\Kernel\Mock\System.cpp"/>
-    <ClCompile Include="..\..\..\..\..\..\..\SDK\Libs\Source\Simulator\OS\OS.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\FitHelper\FitHelper.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\SensorLayer\SensorConnection.cpp"/>
+	<ClCompile Include="$(SdkPath)\Libs\Source\Timer\Timner.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\AppCore.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\AppMessageCore.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\KernelMessageDispatcher.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\MessageManager.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\DualAppComm.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorManager.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorDataSample.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorDataQueue.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SampleRateAdapter.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\InstanceSensorLayer.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsSpeed.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsLocation.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsDistance.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Gps\GpsAltimeter.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\HeartRate\SensorHeartRateMetrics.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\SensorBatteryLevel.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\HeartRate\SensorHeartRate.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\SensorPressure.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Imu\ImuWristMotion.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\Imu\ImuStepCounter.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\ComponentSimulator.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Simulator\GpsStepCounterSimulator.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorListener.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\SensorDriver.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Kernel.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\System.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\OS\OS.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\OS\SwTimer.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\OS\OneShotTimer.cpp"/>
+    <ClCompile Include="$(SdkPath)\Libs\Source\JSON\JsonStreamReader.cpp"/>
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivitySummarySerializer.cpp"/>
     <ClCompile Include="..\..\..\..\Libs\Sources\ActivityWriter.cpp"/>
     <ClCompile Include="..\..\..\..\Libs\Sources\Service.cpp"/>
@@ -138,6 +160,7 @@
     <None Include="$(ApplicationRoot)\config\msvs\Application.props"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(ApplicationRoot)\simulator\ConfigurationSimulator.hpp"/>
     <ClInclude Include="$(TouchGFXReleasePath)\framework\include\common\AbstractPartition.hpp"/>
     <ClInclude Include="$(TouchGFXReleasePath)\framework\include\common\Meta.hpp"/>
     <ClInclude Include="$(TouchGFXReleasePath)\framework\include\common\Partition.hpp"/>
@@ -284,11 +307,8 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockUserApp.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\MockUserAppMemAllocator.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp"/>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp"/>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\ISensorCore.hpp"/>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\SensorCore.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SynchManager\SynchManager.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Wrappers\StdLibWrappers.h"/>
@@ -301,7 +321,7 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderGUI.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelProviderService.hpp"/>
-    <ClInclude Include="..\..\..\..\..\..\..\SDK\Libs\Header\SDK\FitHelper\FitHelper.hpp"/>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\FitHelper\FitHelper.hpp"/>
     <ClInclude Include="..\..\..\..\Libs\Header\ActivitySummary.hpp"/>
     <ClInclude Include="..\..\..\..\Libs\Header\ActivitySummarySerializer.hpp"/>
     <ClInclude Include="..\..\..\..\Libs\Header\ActivityWriter.hpp"/>
@@ -461,12 +481,12 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;APP_ID="ABCDEF1234567890";DEV_ID="UNA Simulator";BUILD_VERSION="1.2.3";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <PreprocessorDefinitions>WIN32;_SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;APP_ID="ABCDEF1234567890";DEV_ID="UNA Simulator";BUILD_VERSION="1.2.3";NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <DisableSpecificWarnings>4355</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../gui/include;../../../../Libs/Header;$(SdkPath)/ThirdParty/FitSDKRelease_21.171.00/c;$(SdkPath)/ThirdParty/FitSDKRelease_21.171.00/cpp;$(SdkPath)/ThirdParty/coreJSON/source/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -489,7 +509,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ApplicationRoot)\gui\include;$(ApplicationRoot)\generated\images\include;$(ApplicationRoot)\generated\bitmaps\include;$(ApplicationRoot)\generated\fonts\include;$(ApplicationRoot)\generated\texts\include;$(ApplicationRoot)\generated\videos\include;$(ApplicationRoot)\generated\gui_generated\include;$(ApplicationRoot)\generated\simulator\include;$(TouchGFXReleasePath)\framework\common\include;$(TouchGFXReleasePath)\framework\mvp\include;$(TouchGFXReleasePath)\framework\include\platform\hal\simulator\sdl2\vendor;$(TouchGFXReleasePath)\3rdparty\libjpeg\include;$(TouchGFXReleasePath)\framework\include;../../gui/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ApplicationRoot)\simulator;(ApplicationRoot)\gui\include;$(ApplicationRoot)\generated\images\include;$(ApplicationRoot)\generated\bitmaps\include;$(ApplicationRoot)\generated\fonts\include;$(ApplicationRoot)\generated\texts\include;$(ApplicationRoot)\generated\videos\include;$(ApplicationRoot)\generated\gui_generated\include;$(ApplicationRoot)\generated\simulator\include;$(TouchGFXReleasePath)\framework\common\include;$(TouchGFXReleasePath)\framework\mvp\include;$(TouchGFXReleasePath)\framework\include\platform\hal\simulator\sdl2\vendor;$(TouchGFXReleasePath)\3rdparty\libjpeg\include;$(TouchGFXReleasePath)\framework\include;../../gui/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
