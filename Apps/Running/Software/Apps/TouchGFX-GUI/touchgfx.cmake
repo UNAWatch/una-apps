@@ -7,7 +7,7 @@ file(GLOB_RECURSE TOUCHGFX_SOURCES
 )
 
 set(TOUCHGFX_INCLUDE_DIRS
-     $ENV{UNA_SDK}/ThirdParty/touchgfx/framework/include
+    $ENV{UNA_SDK}/ThirdParty/touchgfx/framework/include
     ${CMAKE_CURRENT_LIST_DIR}/generated/fonts/include
     ${CMAKE_CURRENT_LIST_DIR}/generated/gui_generated/include
     ${CMAKE_CURRENT_LIST_DIR}/generated/images/include
