@@ -1272,7 +1272,7 @@
     "SelectedColorDepth": 8,
     "StartupScreenName": "Main",
     "SelectedStartupLanguage": "GB",
-    "TouchGfxPath": "touchgfx",
+    "TouchGfxPath": "../../../../../../ThirdParty/touchgfx",
     "UIPath": ".",
     "AvailableColorDepths": [
       8
@@ -1331,5 +1331,5 @@
     "OptionalComponents": [],
     "AdditionalFeatures": []
   },
-  "Version": "4.25.0"
+  "Version": "4.26.0"
 }

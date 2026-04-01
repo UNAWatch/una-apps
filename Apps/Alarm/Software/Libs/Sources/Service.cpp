@@ -36,7 +36,7 @@ void Service::run()
     while (true) {
         std::tm tmNow{};
         time_t t = time(nullptr);
-#if SIMULATOR
+#if defined(SIMULATOR)
         localtime_s(&tmNow, &t);    // TODO: adjust fo real function
 #else
         localtime_r(&t, &tmNow);

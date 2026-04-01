@@ -31,14 +31,23 @@ Model::Model()
     LOG_INFO("Path to files created by app:\n"
         "       [%s]\n", fileStoreDir.c_str());
 
-    LOG_INFO("\n"
-        "       Keys:                       \n"
-        "       ----------------------------\n"
-        "       1   L1,                     \n"
-        "       2   L2,                     \n"
-        "       3   R1,                     \n"
-        "       4   R2,                     \n"
-        "       z   L1+R2                   \n"
+	LOG_INFO("\n"
+        "---------------------------------------------------\n"
+        "|   For Simulation Button use keybaord Keys.      |\n"
+        "|       Keys Keybaord:                            |\n"
+        "|       1   L1,                                   |\n"
+        "|       2   L2,                                   |\n"
+        "|       3   R1,                                   |\n"
+        "|       4   R2,                                   |\n"
+        "|                  /---------\\                    |\n"
+        "|                 /           \\                   |\n"
+        "| BUTTON UP   L1 |             | R1 BUTTON SELECT |\n"
+        "|                |     UNA     |                  |\n"
+        "|                |    WATCH    |                  |\n"
+        "| BUTTON DOWN L2 |             | R2 BUTTON BACK   |\n"
+        "|                 \\           /                   |\n"
+        "|                  \\---------/                    |\n"
+        "---------------------------------------------------\n"
     );
 #endif
 }
