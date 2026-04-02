@@ -24,6 +24,7 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryMetrics.hpp"
 #include "SDK/SensorLayer/DataParsers/SensorDataParserWristMotion.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserFusion.hpp"
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
@@ -46,16 +47,22 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryMetrics(SDK::Sensor::Type::BATTERY_METRICS, skInitialSamplePeriod, skSampleLatency)
-        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
+        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 0)
+        , mSensorFusion(SDK::Sensor::Type::FUSION, 1000.0f / skFusionSampleRateHz, 10)
         , mTimeTracker(kernel)
         , mAltitudeFilter(0.8f)
+        , mAltitudeCounter()
         , mName("Running")
+        , mWristWakeupDetector({skFusionSampleRateHz, 2.0f, 80.0f, 20, 3.0f})
+
 {
     mTimeCounter.init();
     mDistanceCounter.init();
     mSpeedCounter.init(0.5f, 300.0f);
     mHrCounter.init(20.0f, 300.0f);
     mAltitudeCounter.init(2.0f);
+
+    mWristWakeupDetector.setListener(this);
 }
 
 Service::~Service()
@@ -243,6 +250,7 @@ void Service::connectAll()
         mSensorGpsDistance.connect();
         mSensorPressure.connect();
         mSensorHr.connect();
+        mSensorFusion.connect();
 
         mIsSensorsConnected = true;
     }
@@ -254,6 +262,7 @@ void Service::disconnect()
     if (mIsSensorsConnected) {
         LOG_DEBUG("Disconnect from sensors...\n");
 
+        mSensorFusion.disconnect();
         mSensorHr.disconnect();
         mSensorPressure.disconnect();
         mSensorGpsSpeed.disconnect();
@@ -320,7 +329,7 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
         SDK::SensorDataParser::BatteryLevel parser(data[0]);
         if (parser.isDataValid()) {
             mBatteryLevel.setLevel(parser.getCharge());
-            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel.getValue());
+            LOG_DEBUG("Battery %.1f %%\n", mBatteryLevel.getLevel());
         }
     } else if (mSensorBatteryMetrics.matchesDriver(handle)) {
         SDK::SensorDataParser::BatteryMetrics parser(data[0]);
@@ -332,13 +341,23 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
         SDK::SensorDataParser::WristMotion parser(data[0]);
         if (parser.isDataValid()) {
             LOG_DEBUG("Wrist Motion detected\n");
-            auto bl = SDK::make_msg<SDK::Message::RequestBacklightSet>(mKernel);
-            if (bl) {
-                bl->brightness       = 100;
-                bl->autoOffTimeoutMs = 5000;
-                bl.send();
+            backlightOn();
+        }
+    } else if (mSensorFusion.matchesDriver(handle)) {
+        ImuSample batch[data.size()];
+        uint16_t i = 0;
+        uint32_t time = data[0].getTimestamp();
+        for (; i < data.size(); i++) {
+            SDK::SensorDataParser::Fusion parser(data[i]);
+            if (parser.isDataValid()) {
+                SDK::SensorDataParser::Fusion::Data sample {};
+                parser.getData(sample);
+                batch[i].azG   = sample.accel.z;
+                batch[i].gxDps = sample.gyro.x;
+                //LOG_DEBUG("AX: %.3f, GX: %.3f\n", sample.accel.z, sample.gyro.x);
             }
         }
+        mWristWakeupDetector.addBatch(batch, i, time);
     }
 }
 
@@ -505,6 +524,16 @@ void Service::notifyNewActivity()
     }
 }
 
+void Service::backlightOn()
+{
+    auto bl = SDK::make_msg<SDK::Message::RequestBacklightSet>(mKernel);
+    if (bl) {
+        bl->brightness       = 100;
+        bl->autoOffTimeoutMs = 5000;
+        bl.send();
+    }
+}
+
 ActivityWriter::RecordData Service::prepareRecordData()
 {
     ActivityWriter::RecordData fitRecord{};
@@ -599,6 +628,8 @@ void Service::startTrack(std::time_t utc)
 
     // Determinate Lap split source
     mLapDivSource = getLapDivSource();
+
+    mWristWakeupDetector.reset();
 
     connectAll();
 
@@ -954,4 +985,10 @@ void Service::createGuiControls()
 #endif
         mGlanceTime.print("%s %d, %d:%02d", App::Utils::DayShort[tmNow.tm_wday], tmNow.tm_mday, tmNow.tm_hour, tmNow.tm_min);
     }
+}
+
+void Service::onWristWakeup(uint32_t timestampMs)
+{
+    LOG_DEBUG("Wrist Motion detected\n");
+    backlightOn();
 }

@@ -129,6 +129,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/VariableCounter.hpp</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/WristWakeupDetector.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/WristWakeupDetector.hpp</locationURI>
+		</link>
+		<link>
 			<name>Libs/Sources/ActivitySummarySerializer.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/ActivitySummarySerializer.cpp</locationURI>
@@ -147,6 +152,11 @@
 			<name>Libs/Sources/SettingsSerializer.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/SettingsSerializer.cpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Sources/WristWakeupDetector.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/WristWakeupDetector.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header</name>
