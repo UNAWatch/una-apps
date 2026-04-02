@@ -21,8 +21,9 @@
 #include "SDK/Timer/Timer.hpp"
 
 #include "Commands.hpp"
+#include "WristWakeupDetector.hpp"
 
-class Service
+class Service : public WristWakeupDetector::IListener
 {
 public:
     Service(SDK::Kernel &kernel);
@@ -66,6 +67,7 @@ private:
     void notifyFirstFix();
     void notifyLapEnd();
     void notifyNewActivity();
+    void backlightOn();
 
 
 
@@ -79,6 +81,7 @@ private:
     SDK::Sensor::Connection mSensorBatteryLevel;
     SDK::Sensor::Connection mSensorBatteryMetrics;
     SDK::Sensor::Connection mSensorWristMotion;
+    SDK::Sensor::Connection mSensorFusion;
     bool mIsSensorsConnected = false;
 
     static constexpr uint32_t skBacklightTimeout    = 5000;
@@ -292,6 +295,11 @@ private:
     void onGlanceTick();
     bool configGui();
     void createGuiControls();
+
+
+    static constexpr float skFusionSampleRateHz = 50.0f;
+    WristWakeupDetector mWristWakeupDetector;
+    virtual void onWristWakeup(uint32_t timestampMs) override;
 };
 
 #endif  // __SERVICE_HPP__
