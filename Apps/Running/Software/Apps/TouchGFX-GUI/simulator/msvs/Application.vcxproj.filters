@@ -2455,6 +2455,9 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Filters\SimpleLPF.hpp">
       <Filter>SDK\Libs\Header\Filters</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Libs\Header\Commands.hpp">
+      <Filter>Libs\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc">

@@ -407,6 +407,7 @@
     <ClInclude Include="..\..\..\..\Libs\Header\ActivitySummary.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\ActivitySummarySerializer.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\ActivityWriter.hpp" />
+    <ClInclude Include="..\..\..\..\Libs\Header\Commands.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\Service.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\Settings.hpp" />
     <ClInclude Include="..\..\..\..\Libs\Header\SettingsSerializer.hpp" />
