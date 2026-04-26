@@ -59,10 +59,10 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 0)
         , mSensorFusion(SDK::Sensor::Type::FUSION_RAW, 1000.0f / skFusionSampleRateHz, 100)
         , mTimeTracker(kernel.sys)
-        , mBatterySoc(kernel.sys)
-        , mBatteryVoltage(kernel.sys)
         , mAltitudeFilter(0.8f)
         , mAltitudeCounter()
+        , mBatterySoc(kernel.sys)
+        , mBatteryVoltage(kernel.sys)
         , mWristTiltDetector()
 
 {
@@ -75,7 +75,6 @@ Service::Service(SDK::Kernel &kernel)
     WristTiltDetector::Config config{};
     config.sampleRateHz = skFusionSampleRateHz;
     mWristTiltDetector.setConfig(config);
-
 
     mWristTiltDetector.setListener(this);
 }
@@ -193,7 +192,6 @@ void Service::run()
             std::time_t utc = mTimeTracker.getExpectedUTC();
 
             if (processedUtc != utc) {
-
                 processedUtc = utc;
 
                 // Send to GUI real "local time" to display
@@ -305,7 +303,6 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
         SDK::SensorDataParser::Pressure parser(data[0]);
         if (parser.isDataValid()) {
             if (!mAltitudeCounter.isValid()) {
-                // Save p0
                 mSeaLevelPressure = parser.getP0();
             }
             float altitude = parser.getAltitude(parser.getPressure(), mSeaLevelPressure);
@@ -594,14 +591,11 @@ void Service::sendInitialInfoToGui()
                 msg->heartRateCount = CustomMessage::kHrThresholdsCount;
             }
 
-            LOG_INFO("msg->heartRateCount: %d\n", msg->heartRateCount);
-
             if (msg->heartRateCount > 0) {
                 // Copy received elements
                 uint8_t i = 0;
                 for (; i < msg->heartRateCount; ++i) {
                     hrThresholds[i] = msg->heartRateTh[i];
-                    LOG_DEBUG("HR: %d\n", static_cast<int>(hrThresholds[i]));
                 }
 
                 // Complete the array elements to the full number
@@ -611,18 +605,13 @@ void Service::sendInitialInfoToGui()
                     } else {
                         hrThresholds[i] = CustomMessage::kHrThresholdsDefault[0];
                     }
-                    LOG_DEBUG("HR: %d\n", static_cast<int>(hrThresholds[i]));
                 }
             }
         }
     }
 
     mGuiSender.settingsUpd(mSettings, mIsImperial, hrThresholds, CustomMessage::kHrThresholdsCount);
-
-    // Summary
     mGuiSender.summary(&mSummary);
-
-    // Battery level
     mGuiSender.battery(static_cast<uint8_t>(mBatterySoc.get()));
 }
 
@@ -668,7 +657,6 @@ void Service::startTrack(std::time_t utc)
 
     // Configure TrackMapBuilder
     mTrackMapBuilder.reset();
-
     SDK::TrackMapBuilder::GpsPoint startGpsPoint{ mGps.latitude, mGps.longitude };
     mTrackMapBuilder.setDistanceThreshold(startGpsPoint, skMapDistanceThreshold);
 
@@ -695,15 +683,12 @@ void Service::processTrack()
 {
     LOG_DEBUG("Time: %u / %u\n", static_cast<uint32_t>(mTimeCounter.getValueActive()), static_cast<uint32_t>(mTimeCounter.getValueTotal()));
 
-    // GPS
     // Creating map
     SDK::TrackMapBuilder::GpsPoint newPoint{ mGps.latitude, mGps.longitude };
     // Add point to the track map
     if (mGps.fix && mTrackState == Track::State::ACTIVE) {
         mTrackMapBuilder.addPoint(newPoint);
     }
-
-    // Collect data for GUI
 
     // Time, s
     mTrackData.totalTime = mTimeCounter.getValueActive();
@@ -820,7 +805,6 @@ void Service::saveLap()
     LOG_INFO("Heart rate: %.0f / %.0f bpm\n", mHrCounter.getLapAverage(), mHrCounter.getLapMaximum());
     LOG_INFO("Ascent/Descent: %.1f / %.1f m\n", mAltitudeCounter.getLapAscent(), mAltitudeCounter.getLapDescent());
 
-
     // Reset lap counters
     mTimeCounter.resetLap();
     mDistanceCounter.resetLap();
@@ -838,6 +822,19 @@ void Service::saveLap()
     mTrackData.maxLapHR = 0.0f;
 
     mLapNotEmpty = false;
+}
+
+void Service::buildPartialSummary()
+{
+    mSummary.utc       = mTimeCounter.getCurrent();
+    mSummary.time      = mTimeCounter.getValueActive();
+    mSummary.distance  = mDistanceCounter.getValueActive();
+    mSummary.speedAvg  = mSpeedCounter.getAverage();
+    mSummary.elevation = mAltitudeCounter.getCurrent();
+    mSummary.paceAvg   = getPace(mSpeedCounter.getAverage(), mSpeedCounter.getMinValid());
+    mSummary.hrMax     = mHrCounter.getMaximum();
+    mSummary.hrAvg     = mHrCounter.getAverage();
+    mSummary.map       = mTrackMapBuilder.build(skMapMaxPoints);
 }
 
 void Service::stopTrack(bool discard)
@@ -877,10 +874,10 @@ void Service::stopTrack(bool discard)
         fitTrack.duration  = mTimeCounter.getValueActive();
         fitTrack.elapsed   = mTimeCounter.getValueTotal();
 
-        fitTrack.distance  = mDistanceCounter.getValueActive();    // m
+        fitTrack.distance  = mDistanceCounter.getValueActive();
 
-        fitTrack.speedAvg  = mSpeedCounter.getAverage();    // m/s
-        fitTrack.speedMax  = mSpeedCounter.getMaximum();    // m/s
+        fitTrack.speedAvg  = mSpeedCounter.getAverage();
+        fitTrack.speedMax  = mSpeedCounter.getMaximum();
 
         fitTrack.hrAvg     = mHrCounter.getAverage();
         fitTrack.hrMax     = mHrCounter.getMaximum();
@@ -963,18 +960,6 @@ void Service::onWristTilt(uint32_t timestampMs)
     backlightOn();
 }
 
-void Service::buildPartialSummary()
-{
-    mSummary.utc       = mTimeCounter.getCurrent();
-    mSummary.time      = mTimeCounter.getValueActive();
-    mSummary.distance  = mDistanceCounter.getValueActive();
-    mSummary.speedAvg  = mSpeedCounter.getAverage();
-    mSummary.elevation = mAltitudeCounter.getCurrent();
-    mSummary.paceAvg   = getPace(mSpeedCounter.getAverage(), mSpeedCounter.getMinValid());
-    mSummary.hrMax     = mHrCounter.getMaximum();
-    mSummary.hrAvg     = mHrCounter.getAverage();
-    mSummary.map       = mTrackMapBuilder.build(skMapMaxPoints);
-}
 
 // =============================================================================
 // Interval training state machine

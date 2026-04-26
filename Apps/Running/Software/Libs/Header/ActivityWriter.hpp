@@ -30,10 +30,10 @@ extern "C" {
 class ActivityWriter {
 public:
     struct AppInfo {
-        std::time_t timestamp;  // UTC
-        uint32_t appVersion;    // Application version 4 bytes LE [patch, minor, major, 0]
-        std::string devID;      // Developer ID (max len 16)
-        std::string appID;      // Application ID (max len 16)
+        std::time_t timestamp  = 0;  // UTC
+        uint32_t    appVersion = 0;  // Application version 4 bytes LE [patch, minor, major, 0]
+        std::string devID;           // Developer ID (max len 16)
+        std::string appID;           // Application ID (max len 16)
     };
 
     struct RecordData {
@@ -51,14 +51,14 @@ public:
         bool has(Field f) const           { return (mFlags & mask(f)) != 0; }
         void clearAll()                   { mFlags = 0; }
 
-        std::time_t timestamp;      // UTC
-        float       latitude;       // degrees
-        float       longitude;      // degrees
-        float       speed;          // m/s
-        float       altitude;       // m
-        float       heartRate;      // bpm
-        uint8_t     batteryLevel;   // %
-        uint16_t    batteryVoltage; // mV
+        std::time_t timestamp      = 0;     // UTC
+        float       latitude       = 0.0f;  // degrees
+        float       longitude      = 0.0f;  // degrees
+        float       speed          = 0.0f;  // m/s
+        float       altitude       = 0.0f;  // m
+        float       heartRate      = 0.0f;  // bpm
+        uint8_t     batteryLevel   = 0;     // %
+        uint16_t    batteryVoltage = 0;     // mV
 
     private:
         static constexpr uint8_t mask(Field f)
@@ -70,31 +70,31 @@ public:
     };
 
     struct LapData {
-        std::time_t timestamp;  // UTC
-        std::time_t timeStart;  // UTC
-        std::time_t duration;   // seconds
-        std::time_t elapsed;    // seconds
-        float distance;         // m
-        float speedAvg;         // m/s
-        float speedMax;         // m/s
-        float hrAvg;            // bpm
-        float hrMax;            // bpm
-        float ascent;           // m
-        float descent;          // m
+        std::time_t timestamp = 0;      // UTC
+        std::time_t timeStart = 0;      // UTC
+        std::time_t duration  = 0;      // seconds
+        std::time_t elapsed   = 0;      // seconds
+        float       distance  = 0.0f;   // m
+        float       speedAvg  = 0.0f;   // m/s
+        float       speedMax  = 0.0f;   // m/s
+        float       hrAvg     = 0.0f;   // bpm
+        float       hrMax     = 0.0f;   // bpm
+        float       ascent    = 0.0f;   // m
+        float       descent   = 0.0f;   // m
     };
 
     struct TrackData {
-        std::time_t timestamp;  // UTC
-        std::time_t timeStart;  // UTC
-        std::time_t duration;   // seconds
-        std::time_t elapsed;    // seconds
-        float distance;         // m
-        float speedAvg;         // m/s
-        float speedMax;         // m/s
-        float hrAvg;            // bpm
-        float hrMax;            // bpm
-        float ascent;           // m
-        float descent;          // m
+        std::time_t timestamp = 0;      // UTC
+        std::time_t timeStart = 0;      // UTC
+        std::time_t duration  = 0;      // seconds
+        std::time_t elapsed   = 0;      // seconds
+        float       distance  = 0.0f;   // m
+        float       speedAvg  = 0.0f;   // m/s
+        float       speedMax  = 0.0f;   // m/s
+        float       hrAvg     = 0.0f;   // bpm
+        float       hrMax     = 0.0f;   // bpm
+        float       ascent    = 0.0f;   // m
+        float       descent   = 0.0f;   // m
     };
 
     ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir);
