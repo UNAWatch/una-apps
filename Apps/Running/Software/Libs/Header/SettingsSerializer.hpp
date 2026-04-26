@@ -13,8 +13,8 @@
  *     "version":1,
  *     "auto_pause_en":false,
  *     "phone_notif_en":true,
- *     "alert_distance":0.0,
- *     "alert_time":0,
+ *     "alert_distance_id":0,
+ *     "alert_time_id":0,
  *     "intervals":{
  *         "repeats_num":0,
  *         "run_metric":"TIME",
