@@ -8,9 +8,9 @@
 #include <mvp/View.hpp>
 #include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
+#include <gui/containers/Buttons.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <gui/containers/Buttons.hpp>
 #include <gui/containers/Title.hpp>
 
 class TrackDiscardConfirmationViewBase : public touchgfx::View<TrackDiscardConfirmationPresenter>
@@ -30,16 +30,16 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::TextAreaWithOneWildcard text;
-    touchgfx::Image tick;
     Buttons buttons;
+    touchgfx::TextAreaWithOneWildcard questionText;
+    touchgfx::Image tick;
     Title title;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t TEXT_SIZE = 40;
-    touchgfx::Unicode::UnicodeChar textBuffer[TEXT_SIZE];
+    static const uint16_t QUESTIONTEXT_SIZE = 40;
+    touchgfx::Unicode::UnicodeChar questionTextBuffer[QUESTIONTEXT_SIZE];
 
 private:
 

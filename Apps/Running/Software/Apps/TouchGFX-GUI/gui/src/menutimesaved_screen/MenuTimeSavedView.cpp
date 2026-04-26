@@ -1,8 +1,11 @@
-#include <gui/menutimesaved_screen/MenuTimeSavedView.hpp>
+﻿#include <gui/menutimesaved_screen/MenuTimeSavedView.hpp>
+
+
+static constexpr uint16_t kDismissTicks = SDK::Utils::secToTicks(1, App::Config::kFrameRate);
 
 MenuTimeSavedView::MenuTimeSavedView()
+    : mDismissCb(this, &MenuTimeSavedView::onDismiss)
 {
-
 }
 
 void MenuTimeSavedView::setupScreen()
@@ -10,32 +13,30 @@ void MenuTimeSavedView::setupScreen()
     MenuTimeSavedViewBase::setupScreen();
 
     title.set(T_TEXT_TIME_UC);
+
+    mDismissTimer.setDuration(kDismissTicks);
+    mDismissTimer.setCallback(mDismissCb);
+    mDismissTimer.start();
 }
 
 void MenuTimeSavedView::tearDownScreen()
 {
+    mDismissTimer.stop();
     MenuTimeSavedViewBase::tearDownScreen();
 }
 
-void MenuTimeSavedView::setTime(uint32_t minutes)
+void MenuTimeSavedView::setTime(Menu::Id id)
 {
-    uint32_t timeId = App::Menu::RoundToNearestIndex(App::Menu::kTimeList,
-        App::Menu::Settings::Alerts::Time::ID_COUNT, static_cast<float>(minutes));
-
-    if (timeId == App::Menu::Settings::Alerts::Time::ID_OFF) {
-        Unicode::snprintf(msgBuffer, MSG_SIZE, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
+    if (id == Menu::ID_OFF) {
+        Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
     } else {
-        Unicode::snprintf(msgBuffer, MSG_SIZE, "%d %s", minutes, touchgfx::TypedText(T_TEXT_MIN_DOT).getText());
+        Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%d %s",
+            Menu::kValues[id], touchgfx::TypedText(T_TEXT_MIN).getText());
     }
-    msg.invalidate();
+    messageText.invalidate();
 }
 
-void MenuTimeSavedView::handleTickEvent()
+void MenuTimeSavedView::onDismiss()
 {
-    if (mCounter > 0) {
-        mCounter--;
-    }
-    if (mCounter == 0) {
-        application().gotoMenuAlertsScreenNoTransition();
-    }
+    application().gotoMenuAlertsScreenNoTransition();
 }

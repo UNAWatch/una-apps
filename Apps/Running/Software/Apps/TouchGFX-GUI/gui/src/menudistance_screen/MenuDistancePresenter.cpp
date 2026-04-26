@@ -10,7 +10,7 @@ MenuDistancePresenter::MenuDistancePresenter(MenuDistanceView& v)
 void MenuDistancePresenter::activate()
 {
     // Set current menu position and units
-    view.setDistanceUnits(model->getSettings().alertDistance, model->isUnitsImperial());
+    view.setDistanceUnits(model->getSettings().alertDistanceId, model->isUnitsImperial());
 
     // Reset idle timer
     model->resetIdleTimer();
@@ -21,9 +21,9 @@ void MenuDistancePresenter::deactivate()
 
 }
 
-void MenuDistancePresenter::saveDistance(float km)
+void MenuDistancePresenter::saveDistance(Settings::Alerts::Distance::Id id)
 {
     Settings sett = model->getSettings();
-    sett.alertDistance = km;
-    model->setSettings(sett);
+    sett.alertDistanceId = id;
+    model->saveSettings(sett);
 }

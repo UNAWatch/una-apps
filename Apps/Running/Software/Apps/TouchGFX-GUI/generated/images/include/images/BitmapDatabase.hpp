@@ -6,46 +6,26 @@
 #include <touchgfx/hal/Types.hpp>
 #include <touchgfx/Bitmap.hpp>
 
-const uint16_t BITMAP_BACKGROUND_GRAY_ID = 0;
-const uint16_t BITMAP_BACKGROUND_TEAL_ID = 1;
-const uint16_t BITMAP_BACKGROUND_TEALDARK_ID = 2;
-const uint16_t BITMAP_BATTERYBIG_GRAY1_ID = 3;
-const uint16_t BITMAP_BATTERYBIG_GRAY2_ID = 4;
-const uint16_t BITMAP_BATTERYBIG_GRAY3_ID = 5;
-const uint16_t BITMAP_BATTERYBIG_GREEN1_ID = 6;
-const uint16_t BITMAP_BATTERYBIG_GREEN2_ID = 7;
-const uint16_t BITMAP_BATTERYBIG_GREEN3_ID = 8;
-const uint16_t BITMAP_BATTERYBIG_RED1_ID = 9;
-const uint16_t BITMAP_BUTTON_L1_ID = 10;
-const uint16_t BITMAP_BUTTON_L1A_ID = 11;
-const uint16_t BITMAP_BUTTON_L1R_ID = 12;
-const uint16_t BITMAP_BUTTON_L2_ID = 13;
-const uint16_t BITMAP_BUTTON_L2A_ID = 14;
-const uint16_t BITMAP_BUTTON_L2R__ID = 15;
-const uint16_t BITMAP_BUTTON_R1_ID = 16;
-const uint16_t BITMAP_BUTTON_R1A_ID = 17;
-const uint16_t BITMAP_BUTTON_R1R_ID = 18;
-const uint16_t BITMAP_BUTTON_R2_ID = 19;
-const uint16_t BITMAP_BUTTON_R2A_ID = 20;
-const uint16_t BITMAP_BUTTON_R2R_ID = 21;
-const uint16_t BITMAP_HEART_ID = 22;
-const uint16_t BITMAP_HR_1_ID = 23;
-const uint16_t BITMAP_HR_2_ID = 24;
-const uint16_t BITMAP_HR_3_ID = 25;
-const uint16_t BITMAP_HR_4_ID = 26;
-const uint16_t BITMAP_HR_5_ID = 27;
-const uint16_t BITMAP_HR_GROUP_ID = 28;
-const uint16_t BITMAP_MENUASSETS_CIRCLECROSS_ID = 29;
-const uint16_t BITMAP_MENUASSETS_CIRCLETICK_ID = 30;
-const uint16_t BITMAP_MENUASSETS_CROSS_ID = 31;
-const uint16_t BITMAP_MENUASSETS_CROSSYELLOW_ID = 32;
-const uint16_t BITMAP_MENUASSETS_TICK_ID = 33;
-const uint16_t BITMAP_SIDEBARBIG_ID = 34;
-const uint16_t BITMAP_SIDEBARSMALL_ID = 35;
-const uint16_t BITMAP_TOGGLE_DEF_ID = 36;
-const uint16_t BITMAP_TOGGLE_HANDLE_ID = 37;
-const uint16_t BITMAP_TOGGLE_OFF_ID = 38;
-const uint16_t BITMAP_TOGGLE_ON_ID = 39;
+const uint16_t BITMAP_CIRCLECROSS_50X50_ID = 0;
+const uint16_t BITMAP_CIRCLETICK_50X50_ID = 1;
+const uint16_t BITMAP_CLOCK_16X19_ID = 2;
+const uint16_t BITMAP_CROSSAMBER_17X17_ID = 3;
+const uint16_t BITMAP_CROSSWHITE_17X17_ID = 4;
+const uint16_t BITMAP_HEART_30X30_ID = 5;
+const uint16_t BITMAP_HEART_46X39_ID = 6;
+const uint16_t BITMAP_HEARTRATEZONE1_ID = 7;
+const uint16_t BITMAP_HEARTRATEZONE2_ID = 8;
+const uint16_t BITMAP_HEARTRATEZONE3_ID = 9;
+const uint16_t BITMAP_HEARTRATEZONE4_ID = 10;
+const uint16_t BITMAP_HEARTRATEZONE5_ID = 11;
+const uint16_t BITMAP_HEARTRATEZONEGROUP_ID = 12;
+const uint16_t BITMAP_INTERVALS_24X26_ID = 13;
+const uint16_t BITMAP_INTERVALS_40X43_ID = 14;
+const uint16_t BITMAP_PACE_30X30_ID = 15;
+const uint16_t BITMAP_PAUSE_14X14_ID = 16;
+const uint16_t BITMAP_RUNNINGMAN_30X30_ID = 17;
+const uint16_t BITMAP_RUNNINGMAN_46X46_ID = 18;
+const uint16_t BITMAP_TICKAMBER_22X17_ID = 19;
 
 namespace BitmapDatabase
 {

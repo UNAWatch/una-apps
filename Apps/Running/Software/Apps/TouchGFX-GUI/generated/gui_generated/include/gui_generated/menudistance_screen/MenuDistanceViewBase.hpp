@@ -8,8 +8,8 @@
 #include <mvp/View.hpp>
 #include <gui/menudistance_screen/MenuDistancePresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
+#include <gui/containers/MainMenuLayout.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <gui/containers/Menu.hpp>
 
 class MenuDistanceViewBase : public touchgfx::View<MenuDistancePresenter>
 {
@@ -28,8 +28,8 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
+    MainMenuLayout menuLayout;
     touchgfx::Image tick;
-    Menu menu;
 
 private:
 

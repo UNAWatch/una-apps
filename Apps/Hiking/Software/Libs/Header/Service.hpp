@@ -13,11 +13,11 @@
 #include "ActivitySummarySerializer.hpp"
 #include "ActivityWriter.hpp"
 
-#include "MonotonicTime.hpp"
-#include "MonotonicCounter.hpp"
-#include "VariableCounter.hpp"
-#include "DeltaCounter.hpp"
-#include "SimpleLPF.hpp"
+#include "SDK/Metrics/MonotonicTime.hpp"
+#include "SDK/Metrics/MonotonicCounter.hpp"
+#include "SDK/Metrics/VariableCounter.hpp"
+#include "SDK/Metrics/DeltaCounter.hpp"
+#include "SDK/Filters/SimpleLPF.hpp"
 #include "SDK/Timer/Timer.hpp"
 
 #include "Commands.hpp"
@@ -90,15 +90,15 @@ private:
 
     static constexpr float skMapDistanceThreshold   = 10.0f; // meters
 
-    SDK::MonotonicTime                  mTimeTracker;
-    SDK::MonotonicCounter<std::time_t>  mTimeCounter;
-    SDK::MonotonicCounter<float>        mDistanceCounter;
-    SDK::VariableCounter                mSpeedCounter;
-    SDK::VariableCounter                mHrCounter;
-    SDK::Filter::SimpleLPF              mAltitudeFilter;
-    SDK::DeltaCounter                   mAltitudeCounter;
-    SDK::MonotonicCounter<uint32_t>     mStepCounter;
-    SDK::MonotonicCounter<uint32_t>     mFloorCounter;
+    SDK::Metric::MonotonicTime<SDK::Interface::ISystem>  mTimeTracker;
+    SDK::Metric::MonotonicCounter<std::time_t>  mTimeCounter;
+    SDK::Metric::MonotonicCounter<float>        mDistanceCounter;
+    SDK::Metric::VariableCounter                mSpeedCounter;
+    SDK::Metric::VariableCounter                mHrCounter;
+    SDK::Filter::SimpleLPF                      mAltitudeFilter;
+    SDK::Metric::DeltaCounter                   mAltitudeCounter;
+    SDK::Metric::MonotonicCounter<uint32_t>     mStepCounter;
+    SDK::Metric::MonotonicCounter<uint32_t>     mFloorCounter;
 
     // GPS info
     struct {

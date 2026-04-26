@@ -26,8 +26,8 @@
  ******************************************************************************
  */
 
-#ifndef __ACTIVITY_SUMMARY_SERIALIZER_HPP
-#define __ACTIVITY_SUMMARY_SERIALIZER_HPP
+#ifndef ACTIVITY_SUMMARY_SERIALIZER_HPP
+#define ACTIVITY_SUMMARY_SERIALIZER_HPP
 
 #include "SDK/Kernel/Kernel.hpp"
 
@@ -75,4 +75,4 @@ private:
     const char* mPath = nullptr;
 };
 
-#endif /* __ACTIVITY_SUMMARY_SERIALIZER_HPP */
+#endif // ACTIVITY_SUMMARY_SERIALIZER_HPP

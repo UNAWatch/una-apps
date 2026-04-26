@@ -15,9 +15,6 @@ MenuDistanceSavedViewBase::MenuDistanceSavedViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    title.setXY(50, 0);
-    add(title);
-
     savedText.setXY(73, 150);
     savedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     savedText.setLinespacing(0);
@@ -27,16 +24,19 @@ MenuDistanceSavedViewBase::MenuDistanceSavedViewBase()
     add(savedText);
 
     icon.setXY(95, 95);
-    icon.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CIRCLETICK_ID));
+    icon.setBitmap(touchgfx::Bitmap(BITMAP_CIRCLETICK_50X50_ID));
     add(icon);
 
-    msg.setPosition(60, 53, 120, 32);
-    msg.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    msg.setLinespacing(0);
-    Unicode::snprintf(msgBuffer, MSG_SIZE, "%s", touchgfx::TypedText(T_INITIALTEXT).getText());
-    msg.setWildcard(msgBuffer);
-    msg.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_25));
-    add(msg);
+    messageText.setPosition(60, 53, 120, 32);
+    messageText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    messageText.setLinespacing(0);
+    messageTextBuffer[0] = 0;
+    messageText.setWildcard(messageTextBuffer);
+    messageText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_25));
+    add(messageText);
+
+    title.setXY(50, 0);
+    add(title);
 }
 
 MenuDistanceSavedViewBase::~MenuDistanceSavedViewBase()

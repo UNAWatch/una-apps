@@ -9,8 +9,8 @@
  ******************************************************************************
  */
 
-#ifndef __ACTIVITY_WRITER_HPP
-#define __ACTIVITY_WRITER_HPP
+#ifndef ACTIVITY_WRITER_HPP
+#define ACTIVITY_WRITER_HPP
 
 #include <cstdint>
 #include <cstdbool>
@@ -165,4 +165,4 @@ private:
     void WriteCRC(SDK::Interface::IFile* fp);
 };
 
-#endif /* __ACTIVITY_WRITER_HPP */
+#endif // ACTIVITY_WRITER_HPP

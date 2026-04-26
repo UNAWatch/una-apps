@@ -52,7 +52,7 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skInitialSamplePeriod, skSampleLatency)
         , mSensorBatteryMetrics(SDK::Sensor::Type::BATTERY_METRICS, skInitialSamplePeriod, skSampleLatency)
         , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
-        , mTimeTracker(kernel)
+        , mTimeTracker(kernel.sys)
         , mAltitudeFilter(0.8f)
         , mName("Hiking")
 {

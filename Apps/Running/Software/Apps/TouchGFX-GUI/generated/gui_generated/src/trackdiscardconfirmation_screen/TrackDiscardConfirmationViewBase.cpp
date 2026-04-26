@@ -15,20 +15,20 @@ TrackDiscardConfirmationViewBase::TrackDiscardConfirmationViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    text.setPosition(35, 88, 170, 80);
-    text.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    text.setLinespacing(-5);
-    Unicode::snprintf(textBuffer, TEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DO_YOU_WANT_ACTIVITY).getText());
-    text.setWildcard(textBuffer);
-    text.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_20));
-    add(text);
-
-    tick.setXY(186, 60);
-    tick.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_TICK_ID));
-    add(tick);
-
     buttons.setXY(0, 47);
     add(buttons);
+
+    questionText.setPosition(35, 88, 170, 80);
+    questionText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    questionText.setLinespacing(-5);
+    Unicode::snprintf(questionTextBuffer, QUESTIONTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DO_YOU_WANT_ACTIVITY).getText());
+    questionText.setWildcard(questionTextBuffer);
+    questionText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_20));
+    add(questionText);
+
+    tick.setXY(186, 60);
+    tick.setBitmap(touchgfx::Bitmap(BITMAP_TICKAMBER_22X17_ID));
+    add(tick);
 
     title.setXY(50, 0);
     add(title);

@@ -1,8 +1,19 @@
 #include <gui/containers/Toggle.hpp>
 
-Toggle::Toggle()
-{
+// Default colors — must match the values set in ToggleBase constructor.
+// PainterABGR2222 has no getColor(), so they cannot be read back at runtime.
+static constexpr uint32_t kDefaultRailOff     = 0x000000u;
+static constexpr uint32_t kDefaultRailOn      = 0xC08000u;
+static constexpr uint32_t kDefaultHandleColor = 0xC0C0C0u;
 
+// -----------------------------------------------------------------------------
+
+Toggle::Toggle()
+    : mRailOnColor(kDefaultRailOn)
+    , mRailOffColor(kDefaultRailOff)
+    , mHandleOnColor(kDefaultHandleColor)
+    , mHandleOffColor(kDefaultHandleColor)
+{
 }
 
 void Toggle::initialize()
@@ -10,26 +21,18 @@ void Toggle::initialize()
     ToggleBase::initialize();
 }
 
+// -----------------------------------------------------------------------------
+
 void Toggle::setState(bool state)
 {
     mState = state;
-    railOn.setVisible(mState);
-    if (mIsGray) {
-        railOff.setVisible(false);
-        railOffGray.setVisible(!mState);
-    }
-    else {
-        railOff.setVisible(!mState);
-        railOffGray.setVisible(false);
-    }
 
-    if (mState) {
-        handle.setX(30);
-    }
-    else {
-        handle.setX(0);
-    }
-    invalidate();
+    railPainter.setColor(mState ? mRailOnColor : mRailOffColor);
+    rail.invalidate();
+
+    handlePainter.setColor(mState ? mHandleOnColor : mHandleOffColor);
+    handle.setX(mState ? kHandleOnX : kHandleOffX);
+    handle.invalidate();
 }
 
 bool Toggle::getState() const
@@ -37,8 +40,24 @@ bool Toggle::getState() const
     return mState;
 }
 
-void Toggle::setBackgroundGray(bool setGray)
+// -----------------------------------------------------------------------------
+
+void Toggle::setRailOnColor(touchgfx::colortype color)
 {
-    mIsGray = setGray;
-    setState(mState);
+    mRailOnColor = color;
+}
+
+void Toggle::setRailOffColor(touchgfx::colortype color)
+{
+    mRailOffColor = color;
+}
+
+void Toggle::setHandleOnColor(touchgfx::colortype color)
+{
+    mHandleOnColor = color;
+}
+
+void Toggle::setHandleOffColor(touchgfx::colortype color)
+{
+    mHandleOffColor = color;
 }
