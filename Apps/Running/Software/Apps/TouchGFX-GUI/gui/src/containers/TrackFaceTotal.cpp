@@ -1,5 +1,4 @@
 #include <gui/containers/TrackFaceTotal.hpp>
-#include <SDK/Utils/Utils.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
 TrackFaceTotal::TrackFaceTotal()

@@ -1,6 +1,5 @@
 #include <gui/containers/TrackFaceIntervals.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
-#include <SDK/Utils/Utils.hpp>
 
 TrackFaceIntervals::TrackFaceIntervals()
 {

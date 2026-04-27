@@ -1,5 +1,4 @@
 #include <gui/containers/TrackFaceLap.hpp>
-#include <SDK/Utils/Utils.hpp>
 
 TrackFaceLap::TrackFaceLap()
 {
