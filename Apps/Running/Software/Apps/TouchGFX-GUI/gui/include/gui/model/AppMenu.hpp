@@ -9,8 +9,8 @@
  ******************************************************************************
  */
 
-#ifndef __APP_MENU_HPP
-#define __APP_MENU_HPP
+#ifndef APP_MENU_HPP
+#define APP_MENU_HPP
 
 #include <cstdint>
 #include "Settings.hpp"
@@ -187,4 +187,4 @@ struct Nav : Position<Root> {
 
 } // namespace App::MenuNav
 
-#endif /* __APP_MENU_HPP */
+#endif // APP_MENU_HPP

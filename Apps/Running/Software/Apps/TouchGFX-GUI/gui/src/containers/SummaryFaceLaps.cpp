@@ -1,5 +1,4 @@
 #include <gui/containers/SummaryFaceLaps.hpp>
-#include <SDK/Utils/Utils.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
 static constexpr uint32_t skListAnimationSteps = App::Config::kMenuAnimationSteps / 2;

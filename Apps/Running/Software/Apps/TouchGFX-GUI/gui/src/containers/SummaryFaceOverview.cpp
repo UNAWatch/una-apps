@@ -1,5 +1,4 @@
 #include <gui/containers/SummaryFaceOverview.hpp>
-#include <SDK/Utils/Utils.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
 SummaryFaceOverview::SummaryFaceOverview()
