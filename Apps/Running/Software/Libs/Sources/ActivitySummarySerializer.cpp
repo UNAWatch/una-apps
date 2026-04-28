@@ -12,6 +12,7 @@
 #include "ActivitySummarySerializer.hpp"
 
 #include <cassert>
+#include <cinttypes>
 #include <cstdlib>
 
 #include "SDK/JSON/JsonStreamWriter.hpp"
@@ -170,14 +171,14 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
         LapSummary lap{};
 
         uint32_t dur = 0;
-        snprintf(query, sizeof(query), "laps[%lu].dur", i);
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].dur", i);
         reader.get(query, dur);
         lap.duration = static_cast<time_t>(dur);
 
-        snprintf(query, sizeof(query), "laps[%lu].dist", i);
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].dist", i);
         reader.get(query, lap.distance);
 
-        snprintf(query, sizeof(query), "laps[%lu].pace", i);
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].pace", i);
         reader.get(query, lap.paceAvg);
 
         summary.laps.push_back(lap);

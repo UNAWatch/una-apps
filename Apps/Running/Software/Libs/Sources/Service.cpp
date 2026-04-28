@@ -749,7 +749,7 @@ void Service::processTrack()
             switchLap = mDistanceCounter.getLapValueActive() >= Settings::Alerts::Distance::toMeters(mSettings.alertDistanceId, mIsImperial);
             break;
         case LapDivSource::TIME:
-            switchLap = mTimeCounter.getLapValueActive() >= Settings::Alerts::Time::toSeconds(mSettings.alertTimeId);
+            switchLap = static_cast<uint32_t>(mTimeCounter.getLapValueActive()) >= Settings::Alerts::Time::toSeconds(mSettings.alertTimeId);
             break;
 
         case LapDivSource::OFF:
