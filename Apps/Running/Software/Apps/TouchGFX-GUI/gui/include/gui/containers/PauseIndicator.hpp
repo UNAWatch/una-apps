@@ -9,8 +9,8 @@
  * Displays a pause icon alongside an elapsed time in H:MM:SS / MM:SS format.
  *
  * @code
- * pauseIndicator.setTime(7424); // → "2:03:44"
- * pauseIndicator.setTime(125);  // → "02:05"
+ * pauseIndicator.setTime(7424); // -> "2:03:44"
+ * pauseIndicator.setTime(125);  // -> "02:05"
  * @endcode
  */
 class PauseIndicator : public PauseIndicatorBase

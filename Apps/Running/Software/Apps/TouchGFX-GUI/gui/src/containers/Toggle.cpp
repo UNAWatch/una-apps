@@ -1,6 +1,6 @@
 #include <gui/containers/Toggle.hpp>
 
-// Default colors — must match the values set in ToggleBase constructor.
+// Default colors -- must match the values set in ToggleBase constructor.
 // PainterABGR2222 has no getColor(), so they cannot be read back at runtime.
 static constexpr uint32_t kDefaultRailOff     = 0x000000u;
 static constexpr uint32_t kDefaultRailOn      = 0xC08000u;

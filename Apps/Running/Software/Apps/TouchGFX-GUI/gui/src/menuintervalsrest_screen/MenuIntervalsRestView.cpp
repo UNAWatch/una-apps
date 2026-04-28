@@ -1,4 +1,4 @@
-﻿#include <gui/menuintervalsrest_screen/MenuIntervalsRestView.hpp>
+#include <gui/menuintervalsrest_screen/MenuIntervalsRestView.hpp>
 
 MenuIntervalsRestView::MenuIntervalsRestView() :
     mUpdateItemCb(this, &MenuIntervalsRestView::updateItem),

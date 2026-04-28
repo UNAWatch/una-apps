@@ -1,10 +1,10 @@
-﻿#include <gui/trackintervalsalert_screen/TrackIntervalsAlertView.hpp>
+#include <gui/trackintervalsalert_screen/TrackIntervalsAlertView.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
 // Auto-dismiss duration: 5 seconds
 static constexpr uint16_t kDismissTicksDuration = SDK::Utils::secToTicks(5, App::Config::kFrameRate);
 
-// Accent colors — must match TrackFaceIntervals
+// Accent colors -- must match TrackFaceIntervals
 static constexpr uint32_t kColorNeutral = SDK::GUI::Color::WHITE;
 static constexpr uint32_t kColorRun     = SDK::GUI::Color::CYAN;
 static constexpr uint32_t kColorRest    = SDK::GUI::Color::YELLOW_DARK;
@@ -65,7 +65,7 @@ void TrackIntervalsAlertView::setPhase(Track::IntervalsPhase phase,
     intervalsTimer.setColor(color);
     intervalsTimer.setLineVisible(false);
 
-    // Repeat counter — only meaningful during RUN / REST
+    // Repeat counter -- only meaningful during RUN / REST
     const bool showRepeats = (phase == Track::IntervalsPhase::RUN ||
                               phase == Track::IntervalsPhase::REST);
     repeatsText.setVisible(showRepeats);

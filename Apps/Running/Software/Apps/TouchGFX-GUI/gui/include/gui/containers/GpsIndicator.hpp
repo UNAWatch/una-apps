@@ -23,8 +23,8 @@ public:
 
     /**
      * @brief Update GPS fix state.
-     * @param acquired true  = fix obtained → indicator hides (solid off).
-     *                 false = searching   → indicator blinks at period rate.
+     * @param acquired true  = fix obtained -> indicator hides (solid off).
+     *                 false = searching   -> indicator blinks at period rate.
      */
     void setAcquired(bool acquired);
 

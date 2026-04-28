@@ -22,8 +22,8 @@
 
 
 // ---------------------------------------------------------------------------
-// App::Config — application-level constants (timing, frame rate).
-// Screens include this transitively via Presenter → ModelListener → Model.hpp.
+// App::Config -- application-level constants (timing, frame rate).
+// Screens include this transitively via Presenter -> ModelListener -> Model.hpp.
 // ---------------------------------------------------------------------------
 namespace App::Config
 {
@@ -37,14 +37,14 @@ constexpr uint8_t kHrThresholdsCount = CustomMessage::kHrThresholdsCount;
 } // namespace App::Config
 
 // ---------------------------------------------------------------------------
-// App::Display — minimum valid values for on-screen display.
+// App::Display -- minimum valid values for on-screen display.
 // Below these thresholds the widget shows "---" instead of a number.
 // ---------------------------------------------------------------------------
 namespace App::Display
 {
-constexpr float kMinDist = 0.0f;   ///< km or mi  — negative = no data
-constexpr float kMinPace = 30.0f;  ///< sec/km or sec/mi — below any human running pace
-constexpr float kMinHR = 20.0f;    ///< bpm — below physiological minimum
+constexpr float kMinDist = 0.0f;   ///< km or mi  -- negative = no data
+constexpr float kMinPace = 30.0f;  ///< sec/km or sec/mi -- below any human running pace
+constexpr float kMinHR = 20.0f;    ///< bpm -- below physiological minimum
 } // namespace App::Display
 
 

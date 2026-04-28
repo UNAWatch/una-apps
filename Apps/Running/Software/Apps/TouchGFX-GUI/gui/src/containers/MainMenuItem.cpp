@@ -45,7 +45,7 @@ void MainMenuItem::apply(const MenuItemConfig &cfg)
     MenuItemRenderer::applyTip(tipText, tipTextBuffer, TIPTEXT_SIZE,
         cfg.tipId, tipType, cfg.tipText, cfg.tipColor, cfg.tipChar);
 
-    // Static icon only — ICON_EXT falls back to static if iconId is set
+    // Static icon only -- ICON_EXT falls back to static if iconId is set
     if (cfg.iconId != BITMAP_INVALID) {
         MenuItemRenderer::applyStaticIcon(icon, cfg.iconId);
     }
@@ -58,7 +58,7 @@ void MainMenuItem::renderStyle(const MenuItemConfig &cfg,
 {
     // Reset all optional widgets to Designer defaults before applying the active style.
     // This prevents stale geometry (height/Y set by a previous style) from leaking
-    // into the current render — especially important when containers are reused by
+    // into the current render -- especially important when containers are reused by
     // the scroll wheel.
     labelText.setVisible(true);
     tipText.setVisible(false);
@@ -108,7 +108,7 @@ void MainMenuItem::renderStyle(const MenuItemConfig &cfg,
                                  layout.icon.w, layout.icon.h);
                 icon.setVisible(true);
             } else {
-                // No icon available — fall back to simple layout
+                // No icon available -- fall back to simple layout
                 labelText.setWidth(getWidth());
                 labelText.setX(0);
             }

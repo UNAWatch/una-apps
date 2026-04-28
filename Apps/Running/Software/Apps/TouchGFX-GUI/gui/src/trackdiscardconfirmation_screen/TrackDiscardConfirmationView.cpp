@@ -1,4 +1,4 @@
-﻿#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationView.hpp>
+#include <gui/trackdiscardconfirmation_screen/TrackDiscardConfirmationView.hpp>
 
 TrackDiscardConfirmationView::TrackDiscardConfirmationView()
 {

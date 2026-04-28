@@ -1,4 +1,4 @@
-﻿#include <gui/menudistance_screen/MenuDistanceView.hpp>
+#include <gui/menudistance_screen/MenuDistanceView.hpp>
 
 MenuDistanceView::MenuDistanceView() :
     mUpdateItemCb(this, &MenuDistanceView::updateItem),

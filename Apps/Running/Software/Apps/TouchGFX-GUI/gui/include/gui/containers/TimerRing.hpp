@@ -6,26 +6,26 @@
 /**
  * @brief Animated arc-based ring for countdown / count-up timers.
  *
- * Wraps two Circle widgets from the Designer — `track` (background ring)
- * and `progress` (animated arc) — plus their PainterABGR2222 painters.
+ * Wraps two Circle widgets from the Designer -- `track` (background ring)
+ * and `progress` (animated arc) -- plus their PainterABGR2222 painters.
  *
  * Arc direction (always clockwise):
- *   FILL  — progress.End moves from track.Start toward track.End as value grows.
- *   DRAIN — progress.Start moves from track.Start toward track.End as value shrinks;
+ *   FILL  -- progress.End moves from track.Start toward track.End as value grows.
+ *   DRAIN -- progress.Start moves from track.Start toward track.End as value shrinks;
  *            progress.End stays fixed at track.End.
  *
  * Animation is tick-driven at a configurable speed (units per second).
  * At 60 fps, speed = 60 means one full unit per tick.
  *
  * Designer requirements:
- *   Circle            "track"            — background ring
- *   Circle            "progress"         — animated progress arc
- *   PainterABGR2222   "trackPainter"     — track colour
- *   PainterABGR2222   "progressPainter"  — progress colour
+ *   Circle            "track"            -- background ring
+ *   Circle            "progress"         -- animated progress arc
+ *   PainterABGR2222   "trackPainter"     -- track colour
+ *   PainterABGR2222   "progressPainter"  -- progress colour
  *
  * @code
  * ring.setMaxValue(60);           // 60-second countdown
- * ring.setSpeed(1.0f);            // 1 unit/s → 60 s to complete
+ * ring.setSpeed(1.0f);            // 1 unit/s -> 60 s to complete
  * ring.setMode(TimerRing::DRAIN);
  * ring.setProgressColor(0xC08000);
  * ring.setValue(60);              // start full
@@ -39,8 +39,8 @@ public:
     /** Determines which arc endpoint moves as the value changes. */
     enum Mode
     {
-        FILL,   ///< End moves track.Start → track.End  (0 → max: empty → full)
-        DRAIN,  ///< Start moves track.Start → track.End  (max → 0: full → empty)
+        FILL,   ///< End moves track.Start -> track.End  (0 -> max: empty -> full)
+        DRAIN,  ///< Start moves track.Start -> track.End  (max -> 0: full -> empty)
     };
 
     TimerRing();
@@ -71,8 +71,8 @@ public:
      * @brief Animation speed in value-units per second.
      *
      * Examples (at any fps):
-     *   speed = 1,  max = 60   → 60-second countdown
-     *   speed = 30, max = 100  → ~3.3-second animation
+     *   speed = 1,  max = 60   -> 60-second countdown
+     *   speed = 30, max = 100  -> ~3.3-second animation
      */
     void setSpeed(float unitsPerSecond);
 
@@ -130,7 +130,7 @@ public:
 
     int32_t getValue()    const { return mValue; }
     int32_t getTarget()   const { return mTarget; }
-    float   getProgress() const; ///< Normalised [0.0 … 1.0]
+    float   getProgress() const; ///< Normalised [0.0 ... 1.0]
     bool    isAnimating() const { return mAnimating; }
     bool    isPaused()    const { return mPaused; }
     Mode    getMode()     const { return mMode; }

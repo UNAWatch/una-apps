@@ -8,11 +8,11 @@
  * @brief Center item for MainMenu's scroll wheel.
  *
  * Supports all display styles defined by MenuItemConfig::Style:
- *   SIMPLE   — centered labelText only
- *   TOGGLE   — labelText + interactive toggle switch
- *   TIP      — labelText + smaller hint line below
- *   ICON     — static bitmap + labelText
- *   ICON_EXT — dynamic (external raw pixels) bitmap + labelText
+ *   SIMPLE   -- centered labelText only
+ *   TOGGLE   -- labelText + interactive toggle switch
+ *   TIP      -- labelText + smaller hint line below
+ *   ICON     -- static bitmap + labelText
+ *   ICON_EXT -- dynamic (external raw pixels) bitmap + labelText
  *
  * Layout resolution priority:
  *   MenuItemConfig::centerLayout  >  MainMenu::setCenterItemLayout()  >  built-in defaults
@@ -41,7 +41,7 @@ private:
     const CenterItemLayout *mpLayout       = nullptr;
     BitmapId                mDynamicIconId = BITMAP_INVALID;
 
-    // Designer defaults — captured in initialize() from the generated base widgets
+    // Designer defaults -- captured in initialize() from the generated base widgets
     TypedTextId mDefaultMsgType = TYPED_TEXT_INVALID;
     TypedTextId mDefaultTipType = TYPED_TEXT_INVALID;
 

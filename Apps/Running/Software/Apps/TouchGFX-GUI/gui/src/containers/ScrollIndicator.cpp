@@ -65,7 +65,7 @@ void ScrollIndicator::stopAnimation()
         mAnimationRunning = false;
     }
 
-    // Always clean up the overflow handle — it may be visible from a
+    // Always clean up the overflow handle -- it may be visible from a
     // wrap-around animation that was interrupted before it could hide itself.
     if (mAnimWrap) {
         handleOvf.setVisible(false);
@@ -128,7 +128,7 @@ void ScrollIndicator::animateToId(int16_t index, int16_t animationSteps)
             handleOvf.invalidate();
             mAnimWrap = false;
         }
-        // Timer is already registered — no need to re-register.
+        // Timer is already registered -- no need to re-register.
     } else {
         touchgfx::Application::getInstance()->registerTimerWidget(this);
     }

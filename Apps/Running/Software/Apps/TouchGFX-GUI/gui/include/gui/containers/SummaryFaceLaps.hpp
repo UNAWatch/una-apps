@@ -62,7 +62,7 @@ public:
     uint8_t getPageCount()  const { return mNumPages; }
 
 protected:
-    /** @brief ScrollList callback — formats and writes data for item at @p itemIndex. */
+    /** @brief ScrollList callback -- formats and writes data for item at @p itemIndex. */
     virtual void scrollListUpdateItem(LapListItem& item, int16_t itemIndex) override;
 
     const std::vector<LapSummary>* mLaps        = nullptr;

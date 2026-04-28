@@ -1,4 +1,4 @@
-﻿#include <gui/trackintervalscountdown_screen/TrackIntervalsCountdownView.hpp>
+#include <gui/trackintervalscountdown_screen/TrackIntervalsCountdownView.hpp>
 
 TrackIntervalsCountdownView::TrackIntervalsCountdownView() :
     mTimerValueChangedCb(this, &TrackIntervalsCountdownView::onTimerValueChanged),

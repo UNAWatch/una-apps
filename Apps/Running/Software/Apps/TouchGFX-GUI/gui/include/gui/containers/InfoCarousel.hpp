@@ -7,8 +7,8 @@
 /**
  * @brief Cycling info panel that periodically rotates through a set of data slots.
  *
- * The component registers itself as a TouchGFX timer widget lazily — only when
- * count > 1 — and unregisters in the destructor. This is safe because the
+ * The component registers itself as a TouchGFX timer widget lazily -- only when
+ * count > 1 -- and unregisters in the destructor. This is safe because the
  * Application outlives all screens.
  *
  * Typical setup in View::setupScreen():

@@ -11,7 +11,7 @@
  * the caller (typically @c SummaryFaceLaps::scrollListUpdateItem) before being
  * written via the setters below.
  *
- * Passing an empty (zero-terminated) buffer to any setter clears that field —
+ * Passing an empty (zero-terminated) buffer to any setter clears that field --
  * this is used for padding rows beyond the last real lap.
  */
 class LapListItem : public LapListItemBase

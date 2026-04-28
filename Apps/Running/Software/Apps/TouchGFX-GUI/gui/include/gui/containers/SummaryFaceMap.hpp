@@ -8,7 +8,7 @@
  * @brief Summary face showing the GPS track map and total distance.
  *
  * One of four swipeable faces on the TrackSummary screen.
- * All values are display-ready — unit conversion is the view's responsibility.
+ * All values are display-ready -- unit conversion is the view's responsibility.
  */
 class SummaryFaceMap : public SummaryFaceMapBase
 {

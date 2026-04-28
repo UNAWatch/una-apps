@@ -38,7 +38,7 @@ public:
     void setPhaseTime(std::time_t sec, Track::IntervalsMetric metric);
 
     /**
-     * @brief Update the timer for distance metric — always shows "km/mi remaining".
+     * @brief Update the timer for distance metric -- always shows "km/mi remaining".
      * @param dist       Already-converted value in km or mi (view's responsibility).
      * @param isImperial Selects unit label.
      */
@@ -49,14 +49,14 @@ public:
     // -------------------------------------------------------------------------
 
     /**
-     * @brief Update pace — visible only during RUN phase.
+     * @brief Update pace -- visible only during RUN phase.
      * @param pace Already-converted value in sec/km or sec/mi (view's responsibility).
      *             Pass a value < App::Display::kMinPace to show "---" (no GPS / no data).
      */
     void setPace(float pace);
 
     /**
-     * @brief Update heart rate — visible during REST phase.
+     * @brief Update heart rate -- visible during REST phase.
      * @param hr Heart rate in bpm. Pass a value < App::Display::kMinHR to show "---".
      */
     void setHR(float hr);

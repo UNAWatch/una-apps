@@ -1,4 +1,4 @@
-﻿#include <gui/menuintervalsruntime_screen/MenuIntervalsRunTimeView.hpp>
+#include <gui/menuintervalsruntime_screen/MenuIntervalsRunTimeView.hpp>
 
 MenuIntervalsRunTimeView::MenuIntervalsRunTimeView() :
     mUpdateItemCb(this, &MenuIntervalsRunTimeView::updateItem),
@@ -27,7 +27,7 @@ void MenuIntervalsRunTimeView::setupScreen()
     menuLayout.setTitle(T_TEXT_TIME_UC);
     menuLayout.setUpdateItemCallback(mUpdateItemCb);
     menuLayout.setUpdateCenterItemCallback(mUpdateCenterItemCb);
-    // start in STAGE_MIN — setTime() will selectItem after activate()
+    // start in STAGE_MIN -- setTime() will selectItem after activate()
     menuLayout.setNumberOfItems(Menu::kCountMin);
     menuLayout.invalidate();
 }

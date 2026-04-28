@@ -8,13 +8,13 @@
  * @brief Surrounding item for MainMenu's scroll wheel.
  *
  * Supports display styles defined by MenuItemConfig::Style:
- *   SIMPLE   — centered labelText only
- *   TIP      — labelText + smaller hint line below
- *   ICON     — static bitmap + labelText
+ *   SIMPLE   -- centered labelText only
+ *   TIP      -- labelText + smaller hint line below
+ *   ICON     -- static bitmap + labelText
  *
  * Note: TOGGLE and ICON_EXT styles gracefully degrade:
- *   - TOGGLE  → rendered as SIMPLE (toggle is only interactive in the center item)
- *   - ICON_EXT → rendered as ICON if iconId is set, otherwise as SIMPLE
+ *   - TOGGLE  -> rendered as SIMPLE (toggle is only interactive in the center item)
+ *   - ICON_EXT -> rendered as ICON if iconId is set, otherwise as SIMPLE
  *
  * Layout resolution priority:
  *   MenuItemConfig::itemLayout  >  MainMenu::setItemLayout()  >  built-in defaults
@@ -42,7 +42,7 @@ public:
 private:
     const ItemLayout *mpLayout = nullptr;
 
-    // Designer defaults — captured in initialize() from the generated base widgets
+    // Designer defaults -- captured in initialize() from the generated base widgets
     TypedTextId mDefaultMsgType = TYPED_TEXT_INVALID;
     TypedTextId mDefaultTipType = TYPED_TEXT_INVALID;
 

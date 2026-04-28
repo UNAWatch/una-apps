@@ -1,4 +1,4 @@
-﻿#include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
+#include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
 
 TrackStartConfirmationView::TrackStartConfirmationView()
 {

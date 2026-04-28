@@ -60,7 +60,7 @@ void SummaryFaceLaps::scrollDown()
 {
     if (canScrollDown()) {
         ++mCurrentPage;
-        // Select last item of new window — always outside previous window.
+        // Select last item of new window -- always outside previous window.
         scrollList.animateToItem(
             static_cast<int16_t>(mCurrentPage * kPageSize + kVisible - 1), skListAnimationSteps);
     }
@@ -70,7 +70,7 @@ void SummaryFaceLaps::scrollUp()
 {
     if (canScrollUp()) {
         --mCurrentPage;
-        // Select first item of new window — always outside previous window.
+        // Select first item of new window -- always outside previous window.
         scrollList.animateToItem(
             static_cast<int16_t>(mCurrentPage * kPageSize), skListAnimationSteps);
     }

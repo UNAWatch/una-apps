@@ -1,4 +1,4 @@
-﻿#include <gui/main_screen/MainView.hpp>
+#include <gui/main_screen/MainView.hpp>
 #include <images/BitmapDatabase.hpp>
 
 

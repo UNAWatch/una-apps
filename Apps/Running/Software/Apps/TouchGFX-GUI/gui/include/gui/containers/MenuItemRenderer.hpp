@@ -11,7 +11,7 @@
 /**
  * @brief Stateless rendering helpers shared between menu item types.
  *
- * Header-only — no .cpp required.
+ * Header-only -- no .cpp required.
  * All methods are static. Not intended to be instantiated.
  */
 struct MenuItemRenderer
@@ -21,7 +21,7 @@ struct MenuItemRenderer
      *
      * Text source priority: textId (TypedText) > rawText > clear.
      *
-     * Always writes to @p buffer — clears it when neither source is provided.
+     * Always writes to @p buffer -- clears it when neither source is provided.
      * This is important for scroll-wheel items, where the same container is
      * reused for different items and must not retain stale text.
      *
@@ -53,7 +53,7 @@ struct MenuItemRenderer
             touchgfx::Unicode::fromUTF8(
                 reinterpret_cast<const uint8_t*>(charText), buffer, bufSize);
         } else {
-            buffer[0] = 0;  // no content — clear to prevent stale text from a previous item
+            buffer[0] = 0;  // no content -- clear to prevent stale text from a previous item
         }
 
         if (typeId != TYPED_TEXT_INVALID) {
@@ -153,7 +153,7 @@ struct MenuItemRenderer
      * Falls back to centering @p tipArea at the same mid-Y as @p mainText when
      * either font is unavailable.
      *
-     * @param mainText  Main text area — must already have Y and font set.
+     * @param mainText  Main text area -- must already have Y and font set.
      * @param tipArea   Tip text area to position.
      */
     static void alignBaselineY(const touchgfx::TextArea &mainText,

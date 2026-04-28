@@ -26,7 +26,7 @@ void HeartRateZone::setHR(float hr, const uint8_t* thresholds, uint8_t threshold
 
     // Walk thresholds from highest to lowest; the first threshold that hr exceeds
     // determines the active zone. activeZone starts at the top and decrements
-    // until a matching threshold is found (or goes negative — no zone shown).
+    // until a matching threshold is found (or goes negative -- no zone shown).
     int activeZone = kZoneCount - 1;
     for (int i = thresholdCount - 1; i >= 0; --i) {
         if (hr > thresholds[i]) {

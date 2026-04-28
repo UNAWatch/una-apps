@@ -38,7 +38,7 @@ void CountdownTimer::stop()
 void CountdownTimer::reset()
 {
     mCounter = mDuration;
-    // Timer stays registered — no unregister/register cycle needed.
+    // Timer stays registered -- no unregister/register cycle needed.
 }
 
 // ---- Tick ------------------------------------------------------------------

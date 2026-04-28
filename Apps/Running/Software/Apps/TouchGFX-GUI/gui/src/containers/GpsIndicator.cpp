@@ -14,7 +14,7 @@ GpsIndicator::~GpsIndicator()
 void GpsIndicator::initialize()
 {
     GpsIndicatorBase::initialize();
-    setVisible(false);  // start from the OFF phase — no phantom flash on screen re-entry
+    setVisible(false);  // start from the OFF phase -- no phantom flash on screen re-entry
     registerTimer();
 }
 
@@ -27,14 +27,14 @@ void GpsIndicator::setAcquired(bool acquired)
 {
     mAcquired = acquired;
     if (!acquired) {
-        registerTimer();  // GPS lost — resume blinking
+        registerTimer();  // GPS lost -- resume blinking
     }
     // When acquired: timer keeps running; handleTickEvent hides and unregisters.
 }
 
 void GpsIndicator::handleTickEvent()
 {
-    // Already hidden after acquiring fix — nothing left to do.
+    // Already hidden after acquiring fix -- nothing left to do.
     if (mAcquired && !isVisible()) {
         unregisterTimer();
         mCounter = 0;

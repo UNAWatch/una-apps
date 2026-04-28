@@ -31,9 +31,9 @@ public:
     enum Color
     {
         NONE  = 0, ///< Indicator hidden
-        WHITE,     ///< White  — neutral action  (#C0C0C0)
-        AMBER,     ///< Amber  — primary action  (#C08000)
-        RED,       ///< Red    — warning / destructive action  (#C00000)
+        WHITE,     ///< White  -- neutral action  (#C0C0C0)
+        AMBER,     ///< Amber  -- primary action  (#C08000)
+        RED,       ///< Red    -- warning / destructive action  (#C00000)
     };
 
     void setL1(Color color = NONE); ///< Top-left button

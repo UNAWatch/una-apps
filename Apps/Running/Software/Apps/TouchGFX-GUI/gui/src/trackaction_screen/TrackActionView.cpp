@@ -1,4 +1,4 @@
-﻿#include <gui/trackaction_screen/TrackActionView.hpp>
+#include <gui/trackaction_screen/TrackActionView.hpp>
 
 constexpr uint16_t kTrackTitleInfoSwitchPeriod = SDK::Utils::secToTicks(3, App::Config::kFrameRate);
 
@@ -40,7 +40,7 @@ void TrackActionView::tearDownScreen()
     TrackActionViewBase::tearDownScreen();
 }
 
-// ---- Presenter → View ------------------------------------------------------
+// ---- Presenter -> View ------------------------------------------------------
 
 void TrackActionView::setPositionId(uint16_t id)
 {

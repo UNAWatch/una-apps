@@ -58,7 +58,7 @@ void TrackFaceIntervals::setPhase(Track::IntervalsPhase phase, uint8_t repeat, u
     title.set(titleId);
     intervalsTimer.setColor(color);
 
-    // Repeats counter — only during RUN / REST
+    // Repeats counter -- only during RUN / REST
     const bool showRepeats = (phase == Track::IntervalsPhase::RUN || phase == Track::IntervalsPhase::REST);
     repeatsText.setVisible(showRepeats);
     if (showRepeats) {

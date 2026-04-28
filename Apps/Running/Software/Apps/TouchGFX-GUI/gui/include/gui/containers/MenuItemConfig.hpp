@@ -127,7 +127,7 @@ struct ItemLayout
 struct MenuItemConfig
 {
     /**
-     * @brief Visual style — defines which widgets are shown.
+     * @brief Visual style -- defines which widgets are shown.
      */
     enum Style
     {

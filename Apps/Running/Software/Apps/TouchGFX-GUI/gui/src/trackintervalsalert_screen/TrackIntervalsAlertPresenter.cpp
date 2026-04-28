@@ -8,7 +8,7 @@ TrackIntervalsAlertPresenter::TrackIntervalsAlertPresenter(TrackIntervalsAlertVi
 
 void TrackIntervalsAlertPresenter::activate()
 {
-    // Use the snapshot carried by the alert message, not getTrackData().intervals —
+    // Use the snapshot carried by the alert message, not getTrackData().intervals --
     // the latter may not be updated yet when this screen activates.
     const Track::IntervalsData& iv = model->getPendingAlertIntervals();
 

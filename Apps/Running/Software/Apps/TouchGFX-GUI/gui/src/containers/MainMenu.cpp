@@ -64,7 +64,7 @@ void MainMenu::selectItem(int16_t itemIndex)
         return;
     }
 
-    // Instant jump — no animation, no mid callback
+    // Instant jump -- no animation, no mid callback
     wheel.animateToItem(itemIndex, 0);
     scrollIndicator.setActiveId(wheel.getSelectedItem());
 }

@@ -1,4 +1,4 @@
-﻿#include <gui/menuintervalsresttime_screen/MenuIntervalsRestTimeView.hpp>
+#include <gui/menuintervalsresttime_screen/MenuIntervalsRestTimeView.hpp>
 
 MenuIntervalsRestTimeView::MenuIntervalsRestTimeView() :
     mUpdateItemCb(this, &MenuIntervalsRestTimeView::updateItem),
@@ -27,7 +27,7 @@ void MenuIntervalsRestTimeView::setupScreen()
     menuLayout.setTitle(T_TEXT_TIME_UC);
     menuLayout.setUpdateItemCallback(mUpdateItemCb);
     menuLayout.setUpdateCenterItemCallback(mUpdateCenterItemCb);
-    // start in STAGE_MIN — setTime() will selectItem after activate()
+    // start in STAGE_MIN -- setTime() will selectItem after activate()
     menuLayout.setNumberOfItems(Menu::kCountMin);
     menuLayout.invalidate();
 }

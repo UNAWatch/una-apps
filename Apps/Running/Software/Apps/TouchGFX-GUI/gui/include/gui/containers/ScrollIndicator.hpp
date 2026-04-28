@@ -34,7 +34,7 @@ struct ScrollIndicatorConfig
  *
  * Renders a sliding arc handle on a circular rail that tracks the currently
  * selected item in a list. Supports smooth animated transitions including
- * wrap-around (last → first and first → last) using a dual-handle technique.
+ * wrap-around (last -> first and first -> last) using a dual-handle technique.
  *
  * The geometry (circle center, radius, line width) is fixed by the
  * Designer-generated base. Only the arc range and colours are configurable
@@ -60,10 +60,10 @@ public:
     // Predefined configs
     // ------------------------------------------------------------------
 
-    /** Config matching the Big indicator: 76° rail, 18° handle. */
+    /** Config matching the Big indicator: 76 deg rail, 18 deg handle. */
     static constexpr ScrollIndicatorConfig kBig   = { 18.0f, 232.0f, 308.0f, 0xC0C0C0u, 0x404040u };
 
-    /** Config matching the Small indicator: 36° rail, 10° handle. */
+    /** Config matching the Small indicator: 36 deg rail, 10 deg handle. */
     static constexpr ScrollIndicatorConfig kSmall = { 10.0f, 252.0f, 288.0f, 0xC0C0C0u, 0x404040u };
 
     // ------------------------------------------------------------------
@@ -105,7 +105,7 @@ public:
     virtual void handleTickEvent() override;
 
 protected:
-    // Arc geometry — mirrors ScrollIndicatorConfig, updated by setConfig()
+    // Arc geometry -- mirrors ScrollIndicatorConfig, updated by setConfig()
     float mHandleLen = 18.0f;
     float mRailMin   = 232.0f;
     float mRailMax   = 308.0f;

@@ -8,7 +8,7 @@
  * @brief Summary face showing overall session metrics: distance, average pace and elapsed time.
  *
  * One of four swipeable faces on the TrackSummary screen.
- * All values are display-ready — unit conversion is the view's responsibility.
+ * All values are display-ready -- unit conversion is the view's responsibility.
  */
 class SummaryFaceOverview : public SummaryFaceOverviewBase
 {

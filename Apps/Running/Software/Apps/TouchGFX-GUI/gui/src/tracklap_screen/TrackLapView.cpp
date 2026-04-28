@@ -1,4 +1,4 @@
-﻿#include <gui/tracklap_screen/TrackLapView.hpp>
+#include <gui/tracklap_screen/TrackLapView.hpp>
 
 
 static constexpr uint16_t kDismissTicks = SDK::Utils::secToTicks(5, App::Config::kFrameRate);

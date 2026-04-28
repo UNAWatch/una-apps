@@ -1,4 +1,4 @@
-﻿#include <gui/menutimesaved_screen/MenuTimeSavedView.hpp>
+#include <gui/menutimesaved_screen/MenuTimeSavedView.hpp>
 
 
 static constexpr uint16_t kDismissTicks = SDK::Utils::secToTicks(1, App::Config::kFrameRate);

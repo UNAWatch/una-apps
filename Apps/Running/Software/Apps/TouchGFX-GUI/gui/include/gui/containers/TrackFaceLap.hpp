@@ -7,7 +7,7 @@
  * @brief Track face showing current lap metrics and heart rate zone.
  *
  * Displays lap pace, lap distance, lap elapsed time and an HR zone bar.
- * All distance/pace values are display-ready — unit conversion is the view's responsibility.
+ * All distance/pace values are display-ready -- unit conversion is the view's responsibility.
  */
 class TrackFaceLap : public TrackFaceLapBase
 {
@@ -40,7 +40,7 @@ public:
      */
     void setDistance(float dist);
 
-    /** @brief Display current lap elapsed time as "M:SS" (or "H:MM" when ≥ 1 h). */
+    /** @brief Display current lap elapsed time as "M:SS" (or "H:MM" when >= 1 h). */
     void setTimer(std::time_t sec);
 
 protected:

@@ -65,7 +65,7 @@ void MainMenuCenterItem::renderStyle(const MenuItemConfig &cfg,
 {
     // Reset all optional widgets to Designer defaults before applying the active style.
     // This prevents stale geometry (height/Y set by a previous style) from leaking
-    // into the current render — especially important when containers are reused by
+    // into the current render -- especially important when containers are reused by
     // the scroll wheel.
     labelText.setVisible(true);
     tipText.setVisible(false);
@@ -125,7 +125,7 @@ void MainMenuCenterItem::renderStyle(const MenuItemConfig &cfg,
                                  layout.icon.w, layout.icon.h);
                 icon.setVisible(true);
             } else {
-                // No icon data — fall back to simple layout
+                // No icon data -- fall back to simple layout
                 labelText.setWidth(getWidth());
                 labelText.setX(0);
                 MenuItemRenderer::centerTextY(labelText, getHeight());

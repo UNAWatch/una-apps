@@ -16,17 +16,17 @@
 #include "Settings.hpp"
 
 // =============================================================================
-// App::MenuNav  —  Navigation state with hierarchical position tracking.
+// App::MenuNav  --  Navigation state with hierarchical position tracking.
 //
 // Usage in Model:
 //   App::MenuNav::Nav mMenu {};
 //   App::MenuNav::Nav& menu() { return mMenu; }
 //
 // Usage in Presenter:
-//   activate()   — view.setPositionId(model->menu().get());           // root level
+//   activate()   -- view.setPositionId(model->menu().get());           // root level
 //                  view.setPositionId(model->menu().intervals.get());  // sub-level
 //                  model->menu().intervals.resetChildren();
-//   deactivate() — model->menu().set(view.getPositionId());
+//   deactivate() -- model->menu().set(view.getPositionId());
 //                  model->menu().reset(); // full tree reset (e.g. on idle timeout)
 // =============================================================================
 namespace App::MenuNav
@@ -50,8 +50,8 @@ struct Position {
 // -----------------------------------------------------------------------------
 // Menu descriptors
 // Each struct describes one menu screen:
-//   enum Id     — ordered item list (ID_COUNT and ID_DEFAULT required)
-//   kValues[]   — optional: domain values mapped 1-to-1 to enum items
+//   enum Id     -- ordered item list (ID_COUNT and ID_DEFAULT required)
+//   kValues[]   -- optional: domain values mapped 1-to-1 to enum items
 // -----------------------------------------------------------------------------
 
 struct Root {
@@ -65,7 +65,7 @@ struct Root {
             ID_COUNT, ID_DEFAULT = ID_START
         };
 
-        // Dynamic menu: Open + x1..x20 — no fixed enum, items built at runtime
+        // Dynamic menu: Open + x1..x20 -- no fixed enum, items built at runtime
         struct Repeats {
             static constexpr uint16_t kMaxRepeats = 20;          // x1..x20
             static constexpr uint16_t kMaxCount   = kMaxRepeats + 1; // + Open
@@ -81,7 +81,7 @@ struct Root {
         };
 
         // 2-part time picker (shared by RunTime / RestTime screens)
-        // Items are built at runtime — no fixed enum.
+        // Items are built at runtime -- no fixed enum.
         struct TimePicker {
             static constexpr uint16_t kMaxMin   = 5;    ///< Max minutes: 0..5
             static constexpr uint16_t kStepMin  = 1;
@@ -94,12 +94,12 @@ struct Root {
 
         // 2-part distance picker (shared by RunDistance / RestDistance screens)
         // Stage WHOLE: pick whole km (0..10) or mi (0..6)
-        // Stage FRAC:  pick decimal in 0.05-unit steps (0.00..0.95 → 20 items)
+        // Stage FRAC:  pick decimal in 0.05-unit steps (0.00..0.95 -> 20 items)
         struct DistancePicker {
             static constexpr uint16_t kMaxWholeKm   = 10;
             static constexpr uint16_t kMaxWholeMi   = 6;
-            static constexpr uint16_t kCountWholeKm = kMaxWholeKm + 1;  ///< 0..10 → 11 items
-            static constexpr uint16_t kCountWholeMi = kMaxWholeMi + 1;  ///< 0..6  → 7 items
+            static constexpr uint16_t kCountWholeKm = kMaxWholeKm + 1;  ///< 0..10 -> 11 items
+            static constexpr uint16_t kCountWholeMi = kMaxWholeMi + 1;  ///< 0..6  -> 7 items
 
             static constexpr float    kFracStep  = 0.05f;  ///< Units (km or mi) per index step
             static constexpr uint16_t kCountFrac = 20;     ///< 0.00..0.95 in 0.05 steps
@@ -143,15 +143,15 @@ struct TrackView {
 // Nav
 // Hierarchical navigation state. Each node inherits Position<TMenu> to provide
 // get() / set() / reset() for its own index, and adds:
-//   resetChildren() — resets all direct child nodes to their defaults
-//   reset()         — resets own position + all children (full subtree)
+//   resetChildren() -- resets all direct child nodes to their defaults
+//   reset()         -- resets own position + all children (full subtree)
 //
-// Leaf nodes are plain Position<TMenu> — no children, reset() already defined.
+// Leaf nodes are plain Position<TMenu> -- no children, reset() already defined.
 // xNav structs are created only for nodes that have children.
 // -----------------------------------------------------------------------------
 struct Nav : Position<Root> {
 
-    // TrackView node — Action is a child (entered from any TrackView page)
+    // TrackView node -- Action is a child (entered from any TrackView page)
     struct TrackViewNav : Position<TrackView> {
         Position<TrackView::Action> action;
 
@@ -159,7 +159,7 @@ struct Nav : Position<Root> {
         void reset()         { Position<TrackView>::reset(); resetChildren(); }
     };
 
-    // Intervals node — repeats picker and run/rest metric pickers are children
+    // Intervals node -- repeats picker and run/rest metric pickers are children
     struct IntervalsNav : Position<Root::Intervals> {
         Position<Root::Intervals::Repeats> repeats;
         Position<Root::Intervals::Metric>  run;
@@ -169,7 +169,7 @@ struct Nav : Position<Root> {
         void reset()         { Position<Root::Intervals>::reset(); resetChildren(); }
     };
 
-    // Settings node — alerts picker is a child
+    // Settings node -- alerts picker is a child
     struct SettingsNav : Position<Root::Settings> {
         Position<Root::Settings::Alerts> alerts;
 

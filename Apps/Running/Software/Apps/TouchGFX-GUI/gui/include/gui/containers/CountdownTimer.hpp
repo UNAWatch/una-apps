@@ -31,7 +31,7 @@
  *   // callback:
  *   void onDismiss() { application().gotoXxxScreenNoTransition(); }
  *
- *   // handleKeyEvent (optional — manual dismiss):
+ *   // handleKeyEvent (optional -- manual dismiss):
  *   mDismissTimer.stop();
  *   application().gotoXxxScreenNoTransition();
  * @endcode

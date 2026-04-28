@@ -1,4 +1,4 @@
-﻿#include <gui/trackdiscarded_screen/TrackDiscardedView.hpp>
+#include <gui/trackdiscarded_screen/TrackDiscardedView.hpp>
 
 
 static constexpr uint16_t kDismissTicks = SDK::Utils::secToTicks(2, App::Config::kFrameRate);

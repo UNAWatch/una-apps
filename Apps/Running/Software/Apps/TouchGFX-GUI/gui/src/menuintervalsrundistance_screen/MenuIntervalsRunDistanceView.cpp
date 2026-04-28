@@ -1,4 +1,4 @@
-﻿#include <gui/menuintervalsrundistance_screen/MenuIntervalsRunDistanceView.hpp>
+#include <gui/menuintervalsrundistance_screen/MenuIntervalsRunDistanceView.hpp>
 
 MenuIntervalsRunDistanceView::MenuIntervalsRunDistanceView() :
     mUpdateItemCb(this, &MenuIntervalsRunDistanceView::updateItem),

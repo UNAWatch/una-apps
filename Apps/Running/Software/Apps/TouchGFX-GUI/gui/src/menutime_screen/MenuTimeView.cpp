@@ -1,4 +1,4 @@
-﻿#include <gui/menutime_screen/MenuTimeView.hpp>
+#include <gui/menutime_screen/MenuTimeView.hpp>
 
 MenuTimeView::MenuTimeView() :
     mUpdateItemCb(this, &MenuTimeView::updateItem),

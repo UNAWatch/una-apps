@@ -6,7 +6,7 @@
 /**
  * @brief Track face showing overall session metrics: pace, total distance and elapsed time.
  *
- * All values are display-ready — unit conversion is the view's responsibility.
+ * All values are display-ready -- unit conversion is the view's responsibility.
  */
 class TrackFaceTotal : public TrackFaceTotalBase
 {

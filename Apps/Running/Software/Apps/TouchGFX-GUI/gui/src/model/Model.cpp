@@ -79,7 +79,7 @@ void Model::exitApp()
     SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(nullptr);
 
     mKernel.sys.exit();
-    // On simulator sys.exit() only sets a flag — the current tick completes normally.
+    // On simulator sys.exit() only sets a flag -- the current tick completes normally.
 }
 
 
@@ -164,13 +164,13 @@ const Track::IntervalsData& Model::getPendingAlertIntervals() const
 // Navigation contract (callers must follow):
 //
 //   intervalsMode = false
-//       TrackStartConfirmation → gotoTrackScreen  (TrackFaceTotal)
+//       TrackStartConfirmation -> gotoTrackScreen  (TrackFaceTotal)
 //
 //   intervalsMode = true
-//       TrackStartConfirmationIntervals → gotoTrackIntervalsCountdown
+//       TrackStartConfirmationIntervals -> gotoTrackIntervalsCountdown
 //       TrackIntervalsCountdown (on confirm / timer expire):
-//           warmUp = true  → gotoTrackScreen  (TrackFaceIntervals, WARM_UP phase)
-//           warmUp = false → gotoTrackIntervalsAlertScreen  (RUN phase)
+//           warmUp = true  -> gotoTrackScreen  (TrackFaceIntervals, WARM_UP phase)
+//           warmUp = false -> gotoTrackIntervalsAlertScreen  (RUN phase)
 //
 // mTrackData.intervals is pre-populated from settings so that the
 // destination screen has valid data before the first TRACK_DATA_UPDATE

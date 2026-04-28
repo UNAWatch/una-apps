@@ -8,7 +8,7 @@
 /**
  * @brief Scroll-wheel menu container (wheel + scroll only).
  *
- * Pure navigation component — no chrome (title / buttons / info / background).
+ * Pure navigation component -- no chrome (title / buttons / info / background).
  * Use MainMenuLayout for the standard full-screen menu layout.
  *
  * Usage:
@@ -21,9 +21,9 @@
  *   4. Navigate with selectNext() / selectPrev() / selectItem().
  *
  * Animation callbacks:
- *   setAnimationMiddleCallback() — fires at the midpoint of the animation,
+ *   setAnimationMiddleCallback() -- fires at the midpoint of the animation,
  *     useful for updating background before the new item is fully centered.
- *   setAnimationEndedCallback()  — fires when animation completes.
+ *   setAnimationEndedCallback()  -- fires when animation completes.
  *   Both pass the target item index as argument.
  *
  * Layout priority (per item):
@@ -75,7 +75,7 @@ public:
      * @brief Fires at the midpoint of a selectNext/selectPrev animation.
      *
      * Useful for updating the background while the old item is still
-     * partially visible — change happens smoothly mid-transition.
+     * partially visible -- change happens smoothly mid-transition.
      * Not fired by selectItem() (instant, no animation).
      * Signature: void callback(int16_t targetItemIndex)
      */

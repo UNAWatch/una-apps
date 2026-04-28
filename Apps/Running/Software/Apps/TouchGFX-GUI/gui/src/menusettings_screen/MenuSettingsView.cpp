@@ -1,4 +1,4 @@
-﻿#include <gui/menusettings_screen/MenuSettingsView.hpp>
+#include <gui/menusettings_screen/MenuSettingsView.hpp>
 
 MenuSettingsView::MenuSettingsView() :
     mUpdateItemCb(this, &MenuSettingsView::updateItem),

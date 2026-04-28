@@ -18,14 +18,14 @@ public:
 
     /**
      * @brief Display the current time of day.
-     * @param h Hour   (0–23).
-     * @param m Minute (0–59).
+     * @param h Hour   (0-23).
+     * @param m Minute (0-59).
      */
     void setTime(uint8_t h, uint8_t m);
 
     /**
      * @brief Display the battery charge level.
-     * @param level Charge percentage (0–100).
+     * @param level Charge percentage (0-100).
      */
     void setBatteryLevel(uint8_t level);
 

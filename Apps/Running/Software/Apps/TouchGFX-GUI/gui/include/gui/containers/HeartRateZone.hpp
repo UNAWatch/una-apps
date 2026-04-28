@@ -6,7 +6,7 @@
 /**
  * @brief Segmented arc indicator showing the current heart rate zone.
  *
- * Displays one of five zone segments (hr1–hr5) based on the current HR value
+ * Displays one of five zone segments (hr1-hr5) based on the current HR value
  * measured against a threshold array. Segments represent zones from lowest (1)
  * to highest (5). No segment is shown when HR is below all thresholds.
  *

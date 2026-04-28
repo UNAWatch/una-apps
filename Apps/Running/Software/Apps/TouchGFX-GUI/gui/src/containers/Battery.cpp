@@ -52,7 +52,7 @@ void Battery::setSegment4(touchgfx::colortype color)
 
 void Battery::setLevel(uint8_t level)
 {
-    // s1: red at 1–24 %, inactive at 0 %
+    // s1: red at 1-24 %, inactive at 0 %
     const touchgfx::colortype c1 = (level == 0)  ? kColorInactive :
                                    (level  < 25) ? kColorLow      : kColorActive;
     setSegment(s1box, s1line1, s1line1Painter, s1line2, s1line2Painter, c1);

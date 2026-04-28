@@ -8,8 +8,8 @@
 /**
  * @brief Canvas container that renders a GPS track as a PolyLine with start/end dot markers.
  *
- * Draws the recorded route as a coloured polyline centred inside a 150×150 area.
- * A 4 px inset on every side ensures that 8×8 dot markers placed at extreme
+ * Draws the recorded route as a coloured polyline centred inside a 150x150 area.
+ * A 4 px inset on every side ensures that 8x8 dot markers placed at extreme
  * coordinates (0, 0) are never clipped by the container boundary.
  *
  * Usage:

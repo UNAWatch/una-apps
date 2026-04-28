@@ -25,18 +25,18 @@ public:
      *
      * @param phase        Current interval phase.
      * @param repeat       1-based repeat index (shown as "n/total" during RUN/REST).
-     * @param totalRepeats Total number of RUN–REST cycles.
+     * @param totalRepeats Total number of RUN-REST cycles.
      */
     void setPhase(Track::IntervalsPhase phase, uint8_t repeat, uint8_t totalRepeats);
 
     /**
-     * @brief Update the timer — always shows remaining time, no description, no line.
+     * @brief Update the timer -- always shows remaining time, no description, no line.
      * @param sec Seconds remaining in the current phase, clamped to 59:59.
      */
     void setPhaseTime(std::time_t sec);
 
     /**
-     * @brief Update the timer for a distance-based phase — shows distance remaining.
+     * @brief Update the timer for a distance-based phase -- shows distance remaining.
      * @param distDisplay Already-converted display value in km or mi.
      * @param isImperial  Selects unit label.
      */
