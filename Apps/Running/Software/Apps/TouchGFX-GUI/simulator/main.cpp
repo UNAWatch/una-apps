@@ -61,7 +61,6 @@ static void appMessageThreadFunction(SDK::App::KernelMessageDispatcher* appMessa
     appMessage->run();
 }
 
-
 static int runTouchGFX(SDK::App::DualAppComm&  appComm,
                        SDK::Simulator::Kernel& srvKernel,
                        SDK::Simulator::Kernel& guiKernel,
@@ -85,7 +84,6 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     SDK::Simulator::Mock::Buzzer      mBuzzer;
     SDK::Simulator::Mock::Vibro       mVibro;
     SDK::App::KernelMessageDispatcher kernelMessage(appComm, appComm.getMsgManager(), mVibro, mBacklight, mBuzzer);
-
 
 	// Create the Application core
 	App::Core appCore(appComm, srvKernel, guiKernel);

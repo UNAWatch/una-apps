@@ -13,7 +13,7 @@ TrackFaceIntervalsBase::TrackFaceIntervalsBase()
     repeatsText.setPosition(80, 202, 80, 23);
     repeatsText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     repeatsText.setLinespacing(0);
-    Unicode::snprintf(repeatsTextBuffer, REPEATSTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
+    Unicode::snprintf(repeatsTextBuffer, REPEATSTEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_VZH2).getText());
     repeatsText.setWildcard(repeatsTextBuffer);
     repeatsText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(repeatsText);
@@ -25,7 +25,7 @@ TrackFaceIntervalsBase::TrackFaceIntervalsBase()
     hrText.setPosition(40, 162, 160, 44);
     hrText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     hrText.setLinespacing(0);
-    Unicode::snprintf(hrTextBuffer, HRTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
+    Unicode::snprintf(hrTextBuffer, HRTEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_VRO4).getText());
     hrText.setWildcard(hrTextBuffer);
     hrText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(hrText);
@@ -33,7 +33,7 @@ TrackFaceIntervalsBase::TrackFaceIntervalsBase()
     paceText.setPosition(40, 162, 160, 44);
     paceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     paceText.setLinespacing(0);
-    Unicode::snprintf(paceTextBuffer, PACETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
+    Unicode::snprintf(paceTextBuffer, PACETEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_N0SO).getText());
     paceText.setWildcard(paceTextBuffer);
     paceText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(paceText);

@@ -98,7 +98,8 @@ KEEP extern const touchgfx::GlyphNode glyphs_Poppins_Medium_10_2bpp[] FONT_TABLE
     {   895, 0x007B,   4,  12,  10,   1,   5,   0,   0, 0x00 }, // braceleft
     {   907, 0x007C,   2,  10,   9,   1,   3,   0,   0, 0x00 }, // bar
     {   912, 0x007D,   3,  12,  10,   1,   5,   0,   0, 0x00 }, // braceright
-    {   921, 0x007E,   5,   2,   5,   0,   6,   0,   0, 0x00 }  // asciitilde
+    {   921, 0x007E,   5,   2,   5,   0,   6,   0,   0, 0x00 }, // asciitilde
+    {     0, 0x2026,   6,   2,   2,   0,   6,   0,   0, 0x00 }  // ellipsis
 };
 
 // GSUB tables:
@@ -108,9 +109,15 @@ FONT_TABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::GlyphNode glyphs_Poppins_Medium_10_2bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE;
 FONT_GLYPH_LOCATION_FLASH_PRAGMA
 KEEP extern const uint8_t unicodes_Poppins_Medium_10_2bpp_0[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
+FONT_GLYPH_LOCATION_FLASH_PRAGMA
+KEEP extern const uint8_t unicodes_Poppins_Medium_10_2bpp_4[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
 FONT_SEARCHTABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const uint8_t* const unicodes_Poppins_Medium_10_2bpp[] FONT_SEARCHTABLE_LOCATION_FLASH_ATTRIBUTE = {
-    unicodes_Poppins_Medium_10_2bpp_0
+    unicodes_Poppins_Medium_10_2bpp_0,
+    0,
+    0,
+    0,
+    unicodes_Poppins_Medium_10_2bpp_4
 };
 FONT_KERNING_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::KerningNode kerning_Poppins_Medium_10_2bpp[] FONT_KERNING_LOCATION_FLASH_ATTRIBUTE;
@@ -118,6 +125,6 @@ touchgfx::GeneratedFont& getFont_Poppins_Medium_10_2bpp();
 
 touchgfx::GeneratedFont& getFont_Poppins_Medium_10_2bpp()
 {
-    static touchgfx::GeneratedFont Poppins_Medium_10_2bpp(glyphs_Poppins_Medium_10_2bpp, 95, 13, 10, 0, 0, 2, 0, 1, 1, unicodes_Poppins_Medium_10_2bpp, kerning_Poppins_Medium_10_2bpp, 63, 0, 0, 0);
+    static touchgfx::GeneratedFont Poppins_Medium_10_2bpp(glyphs_Poppins_Medium_10_2bpp, 96, 13, 10, 0, 0, 2, 0, 1, 1, unicodes_Poppins_Medium_10_2bpp, kerning_Poppins_Medium_10_2bpp, 63, 8230, 0, 0);
     return Poppins_Medium_10_2bpp;
 }

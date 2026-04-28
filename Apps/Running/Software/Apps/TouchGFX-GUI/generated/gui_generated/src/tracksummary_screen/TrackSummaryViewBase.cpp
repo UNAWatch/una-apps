@@ -20,6 +20,7 @@ TrackSummaryViewBase::TrackSummaryViewBase()
     add(scrollIndicator);
 
     summaryFaceLaps.setXY(0, 0);
+    summaryFaceLaps.setVisible(false);
     add(summaryFaceLaps);
 
     summaryFaceHeartRate.setXY(0, 0);

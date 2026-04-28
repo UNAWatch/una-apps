@@ -12,7 +12,7 @@ TrackFaceStatusBase::TrackFaceStatusBase()
     percentValue.setPosition(85, 172, 70, 32);
     percentValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     percentValue.setLinespacing(0);
-    Unicode::snprintf(percentValueBuffer, PERCENTVALUE_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
+    Unicode::snprintf(percentValueBuffer, PERCENTVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_ICBU).getText());
     percentValue.setWildcard(percentValueBuffer);
     percentValue.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_25));
     add(percentValue);
@@ -32,7 +32,7 @@ TrackFaceStatusBase::TrackFaceStatusBase()
     dayTimeValue.setPosition(35, 43, 170, 77);
     dayTimeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     dayTimeValue.setLinespacing(0);
-    Unicode::snprintf(dayTimeValueBuffer, DAYTIMEVALUE_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
+    Unicode::snprintf(dayTimeValueBuffer, DAYTIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_YHFT).getText());
     dayTimeValue.setWildcard(dayTimeValueBuffer);
     dayTimeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_60));
     add(dayTimeValue);

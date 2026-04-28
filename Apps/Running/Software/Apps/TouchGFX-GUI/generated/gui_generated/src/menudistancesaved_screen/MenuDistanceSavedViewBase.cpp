@@ -30,7 +30,7 @@ MenuDistanceSavedViewBase::MenuDistanceSavedViewBase()
     messageText.setPosition(60, 53, 120, 32);
     messageText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     messageText.setLinespacing(0);
-    messageTextBuffer[0] = 0;
+    Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
     messageText.setWildcard(messageTextBuffer);
     messageText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_25));
     add(messageText);

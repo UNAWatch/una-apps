@@ -29,22 +29,22 @@ SummaryFaceLapsBase::SummaryFaceLapsBase() :
     paceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     paceText.setLinespacing(0);
     paceText.setWildcard(touchgfx::TypedText(T_TEXT_PACE).getText());
-    paceText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
+    paceText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_16_L));
     add(paceText);
 
     timeText.setPosition(119, 104, 45, 18);
     timeText.setColor(touchgfx::Color::getColorFromRGB(0, 192, 192));
     timeText.setLinespacing(0);
     timeText.setWildcard(touchgfx::TypedText(T_TEXT_TIME).getText());
-    timeText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
+    timeText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_16_L));
     add(timeText);
 
-    distanceText.setXY(32, 104);
+    distanceText.setXY(33, 104);
     distanceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceText.setLinespacing(0);
     distanceText.setWildcard(touchgfx::TypedText(T_TEXT_DISTANCE).getText());
     distanceText.resizeToCurrentText();
-    distanceText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
+    distanceText.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_16_L));
     add(distanceText);
 
     line.setPosition(25, 100, 190, 3);

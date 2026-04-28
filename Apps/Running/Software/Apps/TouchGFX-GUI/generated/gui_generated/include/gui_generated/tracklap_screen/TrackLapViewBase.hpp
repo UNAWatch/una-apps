@@ -34,12 +34,12 @@ protected:
     Buttons buttons;
     touchgfx::Line line2;
     touchgfx::PainterABGR2222 line2Painter;
-    touchgfx::Line line1;
-    touchgfx::PainterABGR2222 line1Painter;
     touchgfx::TextAreaWithOneWildcard paceValue;
     touchgfx::TextAreaWithOneWildcard paceText;
     touchgfx::TextAreaWithOneWildcard timeValue;
     touchgfx::TextAreaWithOneWildcard timeText;
+    touchgfx::Line line1;
+    touchgfx::PainterABGR2222 line1Painter;
     touchgfx::TextAreaWithOneWildcard distanceValue;
     touchgfx::TextAreaWithOneWildcard distanceText;
     Title title;

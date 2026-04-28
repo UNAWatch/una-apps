@@ -26,15 +26,6 @@ TrackLapViewBase::TrackLapViewBase()
     line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line2);
 
-    line1.setPosition(119, 84, 3, 44);
-    line1Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
-    line1.setPainter(line1Painter);
-    line1.setStart(0, 0);
-    line1.setEnd(0, 44);
-    line1.setLineWidth(10);
-    line1.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
-    add(line1);
-
     paceValue.setPosition(70, 158, 100, 44);
     paceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     paceValue.setLinespacing(0);
@@ -65,6 +56,15 @@ TrackLapViewBase::TrackLapViewBase()
     timeText.resizeToCurrentText();
     timeText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(timeText);
+
+    line1.setPosition(119, 84, 3, 44);
+    line1Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
+    line1.setPainter(line1Painter);
+    line1.setStart(0, 0);
+    line1.setEnd(0, 44);
+    line1.setLineWidth(10);
+    line1.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
+    add(line1);
 
     distanceValue.setPosition(18, 82, 100, 44);
     distanceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));

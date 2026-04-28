@@ -22,7 +22,7 @@ TrackIntervalsAlertViewBase::TrackIntervalsAlertViewBase()
     repeatsText.setPosition(40, 115, 160, 44);
     repeatsText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     repeatsText.setLinespacing(0);
-    Unicode::snprintf(repeatsTextBuffer, REPEATSTEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_JOOI).getText());
+    Unicode::snprintf(repeatsTextBuffer, REPEATSTEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_ORKU).getText());
     repeatsText.setWildcard(repeatsTextBuffer);
     repeatsText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(repeatsText);

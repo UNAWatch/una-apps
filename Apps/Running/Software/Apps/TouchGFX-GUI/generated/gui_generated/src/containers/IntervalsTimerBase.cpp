@@ -29,7 +29,7 @@ IntervalsTimerBase::IntervalsTimerBase()
     timerText.setPosition(0, -5, 190, 77);
     timerText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timerText.setLinespacing(0);
-    Unicode::snprintf(timerTextBuffer, TIMERTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
+    Unicode::snprintf(timerTextBuffer, TIMERTEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_8S9I).getText());
     timerText.setWildcard(timerTextBuffer);
     timerText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_60));
     add(timerText);
