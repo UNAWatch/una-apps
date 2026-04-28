@@ -2402,10 +2402,10 @@
       <Filter>SDK\Libs\Header\Kernel</Filter>
     </ClInclude>
     <ClInclude Include="$(ApplicationRoot)\simulator\ConfigurationSimulator.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\simulator</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\FitHelper\FitHelper.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\FitHelper</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Messages\CommandMessages.hpp">
       <Filter>SDK\Libs\Header\Messages</Filter>
