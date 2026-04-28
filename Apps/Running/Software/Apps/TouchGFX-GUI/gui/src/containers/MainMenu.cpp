@@ -38,11 +38,12 @@ void MainMenu::selectNext()
         return;
     }
 
-    mAnimTargetItem = wheel.getSelectedItem() + 1;
+    int16_t targetId = static_cast<int16_t>(wheel.getSelectedItem()) + 1;
+    wheel.animateToItem(targetId, mAnimSteps);
+    mAnimTargetItem = static_cast<int16_t>(wheel.getSelectedItem()); // actual index after wrap
     mAnimCountdown  = mAnimSteps;
 
-    wheel.animateToItem(mAnimTargetItem, mAnimSteps);
-    scrollIndicator.animateToId(mAnimTargetItem, mAnimSteps);
+    scrollIndicator.animateToId(targetId, mAnimSteps); // virtual id for correct wrap direction
 }
 
 void MainMenu::selectPrev()
@@ -51,11 +52,12 @@ void MainMenu::selectPrev()
         return;
     }
 
-    mAnimTargetItem = wheel.getSelectedItem() - 1;
+    int16_t targetId = static_cast<int16_t>(wheel.getSelectedItem()) - 1;
+    wheel.animateToItem(targetId, mAnimSteps);
+    mAnimTargetItem = static_cast<int16_t>(wheel.getSelectedItem()); // actual index after wrap
     mAnimCountdown  = mAnimSteps;
 
-    wheel.animateToItem(mAnimTargetItem, mAnimSteps);
-    scrollIndicator.animateToId(mAnimTargetItem, mAnimSteps);
+    scrollIndicator.animateToId(targetId, mAnimSteps); // virtual id for correct wrap direction
 }
 
 void MainMenu::selectItem(int16_t itemIndex)
