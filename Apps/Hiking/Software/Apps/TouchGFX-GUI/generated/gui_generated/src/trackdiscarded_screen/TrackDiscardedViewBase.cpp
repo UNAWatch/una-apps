@@ -15,25 +15,23 @@ TrackDiscardedViewBase::TrackDiscardedViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    text2.setPosition(48, 158, 144, 57);
-    text2.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    text2.setLinespacing(0);
-    Unicode::snprintf(text2Buffer, TEXT2_SIZE, "%s", touchgfx::TypedText(T_TEXT_ACTIVITY_DELETED).getText());
-    text2.setWildcard(text2Buffer);
-    text2.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
-    add(text2);
+    subtitleText.setPosition(48, 158, 144, 57);
+    subtitleText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    subtitleText.setLinespacing(0);
+    subtitleText.setWildcard(touchgfx::TypedText(T_TEXT_ACTIVITY_DELETED).getText());
+    subtitleText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
+    add(subtitleText);
 
     icon.setXY(95, 95);
-    icon.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CIRCLECROSS_ID));
+    icon.setBitmap(touchgfx::Bitmap(BITMAP_CIRCLECROSS_50X50_ID));
     add(icon);
 
-    text1.setPosition(41, 47, 159, 42);
-    text1.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    text1.setLinespacing(0);
-    Unicode::snprintf(text1Buffer, TEXT1_SIZE, "%s", touchgfx::TypedText(T_TEXT_DISCARTED).getText());
-    text1.setWildcard(text1Buffer);
-    text1.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
-    add(text1);
+    headingText.setPosition(41, 47, 159, 42);
+    headingText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    headingText.setLinespacing(0);
+    headingText.setWildcard(touchgfx::TypedText(T_TEXT_DISCARTED).getText());
+    headingText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
+    add(headingText);
 
     title.setXY(50, 0);
     add(title);

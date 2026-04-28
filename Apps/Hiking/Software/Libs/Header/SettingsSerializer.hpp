@@ -10,69 +10,61 @@
  *
  * @code{.json}
  * {
+ *     "version":1,
  *     "auto_pause_en":false,
- *     "phone_notif_en":false,
- *     "alert_steps":0,
- *     "alert_distance":0.0,
- *     "alert_time":0
+ *     "phone_notif_en":true,
+ *     "alert_steps_id":0,
+ *     "alert_distance_id":0,
+ *     "alert_time_id":0
  * }
  * @endcode
  *
  ******************************************************************************
  */
 
-#ifndef __SETTINGS_SERIALIZER_HPP
-#define __SETTINGS_SERIALIZER_HPP
+#ifndef SETTINGS_SERIALIZER_HPP
+#define SETTINGS_SERIALIZER_HPP
 
 #include <cstdint>
-#include <cstdbool>
-#include <string>
 
 #include "SDK/Kernel/Kernel.hpp"
 
 #include "Settings.hpp"
 
 
- /**
-  * @class SettingsSerializer
-  * @brief Serializes/Deserializes settings to a file.
-  */
+/**
+ * @brief Serializes/Deserializes settings to a file.
+ */
 class SettingsSerializer {
 
 public:
 
     /**
      * @brief Constructor.
-     * @param kernel: Reference to the kernel interface.
-     * @param pathToFile: Path of the settings file.
+     * @param kernel    Reference to the kernel interface.
+     * @param pathToFile Path to the settings file.
      */
     SettingsSerializer(const SDK::Kernel& kernel, const char *pathToFile);
 
-    /**
-     * @brief Destructor.
-     */
-    virtual ~SettingsSerializer() = default;
+    ~SettingsSerializer() = default;
 
     /**
-     * @brief Save settings.
-     * @param summary: Reference to the Settings structure.
+     * @brief Save settings to file.
+     * @param settings Reference to the Settings structure to save.
      * @return True if settings saved successfully.
      */
     bool save(const Settings &settings);
 
     /**
-     * @brief Save settings.
-     * @param summary: Reference to load the Settings structure.
-     * @return True if settings read successfully.
+     * @brief Load settings from file.
+     * @param settings Reference to the Settings structure to populate.
+     * @return True if settings loaded successfully.
      */
     bool load(Settings &settings);
 
 private:
-    /// A constant reference to an Kernel object.
-    const SDK::Kernel& mKernel;
-
-    /// Path to settings file
-    const char *mPath = nullptr;    
+    const SDK::Kernel& mKernel; ///< Reference to the kernel interface.
+    const char*        mPath;   ///< Path to the settings file.
 };
 
-#endif /* __SETTINGS_SERIALIZER_HPP */
+#endif // SETTINGS_SERIALIZER_HPP

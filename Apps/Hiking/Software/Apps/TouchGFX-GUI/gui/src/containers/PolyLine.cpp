@@ -4,8 +4,6 @@
 #include <cstdio>
 #include <touchgfx/widgets/canvas/Canvas.hpp>
 #include <touchgfx/Drawable.hpp>
-#include <touchgfx/widgets/canvas/Line.hpp>
-
 
 
 PolyLine::PolyLine()

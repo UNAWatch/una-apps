@@ -1,25 +1,21 @@
 
-#pragma once
+#ifndef SERVICE_HPP
+#define SERVICE_HPP
 
 #include "SDK/Kernel/Kernel.hpp"
-
 #include "SDK/SensorLayer/SensorConnection.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
-
 #include "SDK/TrackMap/TrackMapBuilder.hpp"
-#include "SDK/Glance/GlanceControl.hpp"
-
-#include "SettingsSerializer.hpp"
-#include "ActivitySummarySerializer.hpp"
-#include "ActivityWriter.hpp"
-
 #include "SDK/Metrics/MonotonicTime.hpp"
 #include "SDK/Metrics/MonotonicCounter.hpp"
 #include "SDK/Metrics/VariableCounter.hpp"
 #include "SDK/Metrics/DeltaCounter.hpp"
+#include "SDK/Metrics/ThrottledSample.hpp"
 #include "SDK/Filters/SimpleLPF.hpp"
-#include "SDK/Timer/Timer.hpp"
 
+#include "SettingsSerializer.hpp"
+#include "ActivitySummarySerializer.hpp"
+#include "ActivityWriter.hpp"
 #include "Commands.hpp"
 
 class Service
@@ -32,45 +28,33 @@ public:
     void run();
 
 private:
-    SDK::Kernel&            mKernel;
-    bool                    mGUIStarted;
-    CustomMessage::Sender   mGuiSender;
+    // -- Constants ------------------------------------------------------------
 
-    Settings mSettings;
-    bool mUnits = false;
-    SettingsSerializer mSettingsSerializer;
+    static constexpr uint32_t skBacklightTimeout     = 5000;
+    static constexpr uint32_t skSamplePeriod         = 1000;
+    static constexpr uint32_t skSampleLatency        = 1000;
+    static constexpr float    skMapDistanceThreshold = 10.0f; // meters
+    static constexpr uint32_t skMapMaxPoints         = 70;
+    static constexpr uint32_t skBatteryLogPeriodMs   = 5 * 60 * 1000;
 
-    ActivitySummary mSummary;
+    // -- Infrastructure -------------------------------------------------------
+
+    SDK::Kernel&          mKernel;
+    bool                  mGuiStarted;
+    CustomMessage::Sender mGuiSender;
+
+    // -- Settings & persistence -----------------------------------------------
+
+    Settings                  mSettings;
+    bool                      mIsImperial = false;
+    SettingsSerializer        mSettingsSerializer;
+    ActivitySummary           mSummary;
     ActivitySummarySerializer mActivitySummarySerializer;
-    ActivityWriter mActivityWriter;
-    SDK::TrackMapBuilder mTrackMapBuilder;
+    ActivityWriter            mActivityWriter;
+    SDK::TrackMapBuilder      mTrackMapBuilder;
 
+    // -- Sensors --------------------------------------------------------------
 
-    void connectGps();
-    void connectAll(); // Except GPS
-    void disconnect();
-    void onStartGUI();
-    void onStopGUI();
-
-    void handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data);
-
-    // User-defined event handlers
-    void handleEvent(const CustomMessage::TrackStart& event);
-    void handleEvent(const CustomMessage::TrackStop& event);
-    void handleEvent(const CustomMessage::SettingsUpd& event);
-    void handleEvent(const CustomMessage::TrackPause& event);
-    void handleEvent(const CustomMessage::TrackResume& event);
-    void handleEvent(const CustomMessage::ManualLap& event);
-
-    void setCapabilities();
-    void notifyFirstFix();
-    void notifyLapEnd();
-    void notifyNewActivity();
-
-
-
-
-    // Sensors
     SDK::Sensor::Connection mSensorGpsLocation;
     SDK::Sensor::Connection mSensorGpsSpeed;
     SDK::Sensor::Connection mSensorGpsDistance;
@@ -81,32 +65,31 @@ private:
     SDK::Sensor::Connection mSensorBatteryLevel;
     SDK::Sensor::Connection mSensorBatteryMetrics;
     SDK::Sensor::Connection mSensorWristMotion;
-    bool mIsSensorsConnected = false;
+    bool                    mIsSensorsConnected = false;
 
-    static constexpr uint32_t skBacklightTimeout    = 5000;
-    static constexpr uint32_t skInitialSamplePeriod = 1000;
-    static constexpr uint32_t skSamplePeriod        = 1000;
-    static constexpr uint32_t skSampleLatency       = 1000;
+    // -- Metrics --------------------------------------------------------------
 
-    static constexpr float skMapDistanceThreshold   = 10.0f; // meters
+    SDK::Metric::MonotonicTime<SDK::Interface::ISystem> mTimeTracker;
+    SDK::Metric::MonotonicCounter<std::time_t>          mTimeCounter;
+    SDK::Metric::MonotonicCounter<float>                mDistanceCounter;
+    SDK::Metric::VariableCounter                        mSpeedCounter;
+    SDK::Metric::VariableCounter                        mHrCounter;
+    SDK::Filter::SimpleLPF                              mAltitudeFilter;
+    SDK::Metric::DeltaCounter                           mAltitudeCounter;
+    SDK::Metric::MonotonicCounter<uint32_t>             mStepCounter;
+    SDK::Metric::MonotonicCounter<uint32_t>             mFloorCounter;
 
-    SDK::Metric::MonotonicTime<SDK::Interface::ISystem>  mTimeTracker;
-    SDK::Metric::MonotonicCounter<std::time_t>  mTimeCounter;
-    SDK::Metric::MonotonicCounter<float>        mDistanceCounter;
-    SDK::Metric::VariableCounter                mSpeedCounter;
-    SDK::Metric::VariableCounter                mHrCounter;
-    SDK::Filter::SimpleLPF                      mAltitudeFilter;
-    SDK::Metric::DeltaCounter                   mAltitudeCounter;
-    SDK::Metric::MonotonicCounter<uint32_t>     mStepCounter;
-    SDK::Metric::MonotonicCounter<uint32_t>     mFloorCounter;
+    SDK::Metric::ThrottledSample<float, SDK::Interface::ISystem> mBatterySoc;     ///< State of charge, percent
+    SDK::Metric::ThrottledSample<float, SDK::Interface::ISystem> mBatteryVoltage; ///< Voltage, volts
 
-    // GPS info
+    // -- GPS state ------------------------------------------------------------
+
     struct {
-        bool     fix;           // Actual GPS fix
-        float    latitude;      // degrees
-        float    longitude;     // degrees
-        float    altitude;      // meters
-        uint32_t timestamp;     // ms
+        bool     fix;       // Actual GPS fix
+        float    latitude;  // degrees
+        float    longitude; // degrees
+        float    altitude;  // meters
+        uint32_t timestamp; // ms
 
         void reset()
         {
@@ -118,160 +101,45 @@ private:
         }
     } mGps{};
 
-    // Sea-level pressure, Pa
-    float mSeaLevelPressure = 0.0f;
+    float mSeaLevelPressure = 0.0f; // Pa
 
-    // Current battery level
-    /**
-     * @brief Battery state-of-charge (SoC) sampling and throttled FIT logging helper.
-     *
-     * Keeps the latest SoC value and decides when it should be written to the FIT file:
-     * - periodically (every 5 minutes), and/or
-     * - on demand via a forced save request.
-     *
-     * The first valid value is written immediately after @ref reset() because @ref saveRequest
-     * is set to true there.
-     */
-    struct
-    {
-        /** @brief Periodic save timer (5 minutes by default). */
-        SDK::Timer timer;
-
-        /** @brief Last known state of charge value, in percent. */
-        float soc;
-
-        /** @brief Last known state of charge value, in volts. */
-        float voltage;
-
-        /** @brief Indicates that @ref soc contains a valid value. */
-        bool isLevelValid;
-
-        /** @brief Indicates that @ref voltage contains a valid value. */
-        bool isVoltageValid;
-
-        /**
-         * @brief Indicates a pending forced save request.
-         *
-         * When set, the next call to @ref readyToSave() will return true (if the value is valid),
-         * and this flag will be cleared.
-         *
-         * Mark battery level to be written with the next record (forced save).
-         */
-        bool saveRequest;
-
-        /**
-         * @brief Update the stored SoC value.
-         * @param v State of charge, in percent.
-         */
-        void setLevel(float v)
-        {
-            soc          = v;
-            isLevelValid = true;
-        }
-
-        /**
-         * @brief Update the stored Voltage value.
-         * @param v Battery voltage, in volts.
-         */
-        void setVoltage(float v)
-        {
-            voltage        = v;
-            isVoltageValid = true;
-        }
-
-        /**
-         * @brief Get the stored SoC value.
-         * @return State of charge, in percent.
-         */
-        float getLevel()
-        {
-            return soc;
-        }
-
-        /**
-         * @brief Get the stored Voltage value.
-         * @return Battery voltage, in volts.
-         */
-        float getVoltage()
-        {
-            return voltage;
-        }
-
-        /**
-         * @brief Request a forced SoC write.
-         *
-         * Sets @ref saveRequest so that the next record can include the battery field,
-         * bypassing the periodic interval if needed.
-         */
-        void setSaveRequest()
-        {
-            saveRequest = true;
-        }
-
-        /**
-         * @brief Check whether SoC should be written now.
-         *
-         * Returns true when:
-         * - a valid value is available, and
-         * - either the periodic timer has elapsed or a forced save was requested.
-         *
-         * When it returns true, the internal save request flag is cleared.
-         *
-         * @return True if SoC should be written with the current/next record.
-         */
-        bool readyToSave()
-        {
-            if (!isLevelValid || !isVoltageValid) {
-                return false;
-            }
-
-            if (timer.tick()) {
-                saveRequest = true;
-            }
-
-            if (!saveRequest) {
-                return false;
-            }
-
-            saveRequest = false;
-            return true;
-        }
-
-        /**
-         * @brief Reset internal state and start periodic saving.
-         *
-         * Starts a 5-minute timer, clears validity, and requests an initial save.
-         */
-        void reset()
-        {
-            timer.start(TIMER_MINUTES(5));
-            soc            = 0.0f;
-            isLevelValid   = false;
-            isVoltageValid = false;
-            saveRequest    = false;
-        }
-    } mBatteryLevel{};
-
-    Track::State mTrackState = Track::State::INACTIVE;
-    std::time_t  mTrackStartUTC = 0;
-    bool         mPreviousGpsFixState = false;
-    std::time_t  mTrackProcessTimestamp = 0;
-
-    bool mSessionNotEmpty = false;
-    bool mLapNotEmpty = false;
-
-    Track::Data mTrackData{};
+    // -- Track state ----------------------------------------------------------
 
     enum class LapDivSource {
         OFF = 0,
-        STEPS,
         DISTANCE,
         TIME,
     };
 
-    LapDivSource mLapDivSource{};
+    LapDivSource mLapDivSource        = LapDivSource::OFF;
+    Track::State mTrackState          = Track::State::INACTIVE;
+    bool         mPreviousGpsFixState = false;
+    bool         mSessionNotEmpty     = false;
+    bool         mLapNotEmpty         = false;
+    Track::Data  mTrackData{};
 
-    ActivityWriter::RecordData prepareRecordData();
+    // -- Lifecycle ------------------------------------------------------------
+
+    void connectGps();
+    void connectSensors();
+    void disconnect();
+    void onStartGUI();
+    void onStopGUI();
+
+    // -- Sensor data dispatch -------------------------------------------------
+
+    void handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data);
+
+    // -- Event handlers -------------------------------------------------------
+
+    void handleEvent(const CustomMessage::TrackStart& event);
+    void handleEvent(const CustomMessage::TrackStop& event);
+    void handleEvent(const CustomMessage::SettingsSave& event);
+    void handleEvent(const CustomMessage::TrackPause& event);
+    void handleEvent(const CustomMessage::TrackResume& event);
+    void handleEvent(const CustomMessage::ManualLap& event);
+
+    // -- Track control --------------------------------------------------------
 
     void sendInitialInfoToGui();
     void startTrack(std::time_t utc);
@@ -279,23 +147,20 @@ private:
     void saveLap();
     void stopTrack(bool discard);
     void pauseTrack(bool pause);
+    void buildPartialSummary();
+    ActivityWriter::RecordData prepareRecordData();
     LapDivSource getLapDivSource();
 
-    inline float getPace(float speed, float th)
-    {
-        return (speed > th) ? (1.0f / speed) : 0.0f;
-    }
+    // -- Notifications --------------------------------------------------------
 
-    // IGlance implementation
-    bool                     mGlanceActive = false;
-    const char*              mName = nullptr;
-    uint32_t                 mMaxControls = 0;
-    SDK::Glance::Form        mGlanceUI {};
-    SDK::Glance::ControlText mGlanceTitle {};
-    SDK::Glance::ControlText mGlanceTime {};
+    void setCapabilities();
+    void notifyFirstFix();
+    void notifyLapEnd();
+    void notifyNewActivity();
+    void backlightOn(uint32_t timeoutMs = skBacklightTimeout);
+    void playBuzzerPattern(uint16_t beepMs, uint8_t count = 1, uint16_t silenceMs = 100);
+    void playVibroPattern(SDK::Message::RequestVibroPlay::Effect effect, uint8_t count = 1, uint16_t silenceMs = 100);
 
-    void onGlanceTick();
-    bool configGui();
-    void createGuiControls();
 };
 
+#endif // SERVICE_HPP

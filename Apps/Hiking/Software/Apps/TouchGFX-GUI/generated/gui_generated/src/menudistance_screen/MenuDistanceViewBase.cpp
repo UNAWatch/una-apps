@@ -14,12 +14,12 @@ MenuDistanceViewBase::MenuDistanceViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    tick.setXY(186, 60);
-    tick.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_TICK_ID));
-    add(tick);
+    menuLayout.setXY(0, 0);
+    add(menuLayout);
 
-    menu.setXY(0, 0);
-    add(menu);
+    tick.setXY(186, 60);
+    tick.setBitmap(touchgfx::Bitmap(BITMAP_TICKAMBER_22X17_ID));
+    add(tick);
 }
 
 MenuDistanceViewBase::~MenuDistanceViewBase()
@@ -29,7 +29,7 @@ MenuDistanceViewBase::~MenuDistanceViewBase()
 
 void MenuDistanceViewBase::setupScreen()
 {
-    menu.initialize();
+    menuLayout.initialize();
     transitionBegins();
 }
 

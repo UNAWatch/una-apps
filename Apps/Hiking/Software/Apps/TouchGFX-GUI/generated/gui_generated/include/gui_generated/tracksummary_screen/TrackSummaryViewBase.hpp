@@ -8,11 +8,11 @@
 #include <mvp/View.hpp>
 #include <gui/tracksummary_screen/TrackSummaryPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/TrackSummaryHR.hpp>
-#include <gui/containers/TrackSummary.hpp>
 #include <gui/containers/Buttons.hpp>
-#include <gui/containers/SideBarSmall.hpp>
-#include <gui/containers/Title.hpp>
+#include <gui/containers/ScrollIndicator.hpp>
+#include <gui/containers/SummaryFaceHeartRate.hpp>
+#include <gui/containers/SummaryFaceOverview.hpp>
+#include <gui/containers/SummaryFaceMap.hpp>
 
 class TrackSummaryViewBase : public touchgfx::View<TrackSummaryPresenter>
 {
@@ -31,11 +31,11 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    TrackSummaryHR trackSummaryHR;
-    TrackSummary trackSummary;
     Buttons buttons;
-    SideBarSmall sideBar;
-    Title title;
+    ScrollIndicator scrollIndicator;
+    SummaryFaceHeartRate summaryFaceHeartRate;
+    SummaryFaceOverview summaryFaceOverview;
+    SummaryFaceMap summaryFaceMap;
 
 private:
 

@@ -9,19 +9,15 @@ MenuAlertsPresenter::MenuAlertsPresenter(MenuAlertsView& v)
 
 void MenuAlertsPresenter::activate()
 {
-    // Set current menu position
-    view.setPositionId(model->getMenuPosMenuAlerts());
-
-    // Reset idle timer
+    view.setPositionId(model->menu().settings.alerts.get());
     model->resetIdleTimer();
 
     view.setUnitsImperial(model->isUnitsImperial());
-    view.setSteps(model->getSettings().alertSteps);
-    view.setDistance(model->getSettings().alertDistance);
-    view.setTime(model->getSettings().alertTime);
+    view.setDistance(model->getSettings().alertDistanceId);
+    view.setTime(model->getSettings().alertTimeId);
 }
 
 void MenuAlertsPresenter::deactivate()
 {
-    model->setMenuPosMenuAlerts(view.getPositionId());
+    model->menu().settings.alerts.set(view.getPositionId());
 }

@@ -3,6 +3,7 @@
 
 #include <gui_generated/trackaction_screen/TrackActionViewBase.hpp>
 #include <gui/trackaction_screen/TrackActionPresenter.hpp>
+#include <gui/containers/MenuItemConfig.hpp>
 
 class TrackActionView : public TrackActionViewBase
 {
@@ -16,31 +17,34 @@ public:
     uint16_t getPositionId();
     void setUnitsImperial(bool isImperial);
     void setTimer(std::time_t sec);
-    void setAvgPace(float spm);
-    void setDistance(float m);
+    void setAvgPace(float secPerM);
+    void setDistance(float metres);
+    void setAvgHR(float hr);
+    void setElevation(float metres);
     void setSteps(uint32_t steps);
-    void setAvgHR(float v);
-    void setFloors(uint32_t floors);
-
-    void setGpsFix(bool state);
 
 protected:
-    bool mUnitsImperial = false;
-    uint16_t mCounter = Gui::Config::kTrackTitleInfoSwitchPeriod;
-    static const uint32_t skTitleInfoMsgNum = 6;
-    uint16_t mTitleInfoMsgId = 0;
+    using Menu = App::MenuNav::TrackView::Action;
 
-    std::time_t mTimerSec = 0;
-    float       mAvgPace  = 0.0f;   // s/m
-    float       mDistance = 0.0f;   // m
-    uint32_t    mSteps    = 0;
-    float       mAvgHr    = 0.0f;
-    uint32_t    mFloors   = 0;
-    bool        mGpsFix   = false;
+    bool mIsImperial = false;
+
+    float    mAvgPaceConv   = 0.0f;
+    float    mDistanceConv  = 0.0f;
+    float    mAvgHr         = 0.0f;
+    float    mElevationConv = 0.0f;
+    uint32_t mSteps         = 0;
+
+    ItemLayout mItemLayout{};
+
+    touchgfx::Callback<TrackActionView, MainMenuItem&, int16_t>       mUpdateItemCb;
+    touchgfx::Callback<TrackActionView, MainMenuCenterItem&, int16_t> mUpdateCenterItemCb;
+    touchgfx::Callback<TrackActionView, int16_t>                      mCarouselCb;
+
+    void updateItem(MainMenuItem& item, int16_t index);
+    void updateCenterItem(MainMenuCenterItem& item, int16_t index);
+    void onCarouselUpdate(int16_t index);
 
     virtual void handleKeyEvent(uint8_t key) override;
-    virtual void handleTickEvent() override;
-    void updTitleInfo();
 };
 
 #endif // TRACKACTIONVIEW_HPP

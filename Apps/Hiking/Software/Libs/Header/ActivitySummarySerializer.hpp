@@ -10,70 +10,68 @@
  *
  * @code{.json}
  * {
- *     "file":"Activity/202504/activity_20250409T023510.cbor",
- *     "date":"20250409T023530",
+ *     "utc":1744163530,
  *     "time":125,
- *     "distance":4.0154,
+ *     "distance":4015.4,
  *     "speed_avg":3.64264,
  *     "steps":2278,
  *     "elevation":98.4013,
- *     "pace_avg":192,
+ *     "pace_avg":0.274536,
  *     "hr_max":84,
  *     "hr_avg":74,
- *     "map":"416A426B43...6643"
+ *     "map":"416A426B43...6643",
+ *     "lap_count":2,
+ *     "laps":[
+ *         {"dur":62,"dist":2010.5,"steps":1140},
+ *         {"dur":63,"dist":2004.9,"steps":1138}
+ *     ]
  * }
  * @endcode
  *
  ******************************************************************************
  */
 
-#ifndef __ACTIVITY_SUMMARY_SERIALIZER_HPP
-#define __ACTIVITY_SUMMARY_SERIALIZER_HPP
+#ifndef ACTIVITY_SUMMARY_SERIALIZER_HPP
+#define ACTIVITY_SUMMARY_SERIALIZER_HPP
 
 #include "SDK/Kernel/Kernel.hpp"
 
 #include "ActivitySummary.hpp"
 
- /**
-  * @class ActivitySummarySerializer
-  * @brief Serializes/Deserializes summary data to a file.
-  */
+/**
+ * @class ActivitySummarySerializer
+ * @brief Serializes/Deserializes summary data to a file.
+ */
 class ActivitySummarySerializer {
 
 public:
 
     /**
      * @brief Constructor.
-     * @param kernel: Reference to the kernel interface.
-     * @param pathToFile: Path to the summary file.
+     * @param kernel    Reference to the kernel interface.
+     * @param pathToFile Path to the summary file.
      */
     ActivitySummarySerializer(const SDK::Kernel& kernel, const char* pathToFile);
 
-    /**
-     * @brief Destructor.
-     */
-    virtual ~ActivitySummarySerializer() = default;
+    ~ActivitySummarySerializer() = default;
 
     /**
-     * @brief Save summary.
-     * @param summary: Reference to the Summary structure.
+     * @brief Save summary to file.
+     * @param summary Reference to the Summary structure to save.
      * @return True if summary saved successfully.
      */
     bool save(const ActivitySummary& summary);
 
     /**
-     * @brief Save summary.
-     * @param summary: Reference to load the Summary structure.
-     * @return True if summary read successfully.
+     * @brief Load summary from file.
+     * @param summary Reference to the Summary structure to populate.
+     * @return True if summary loaded successfully.
      */
     bool load(ActivitySummary& summary);
 
 private:
-    /// A constant reference to an Kernel object.
-    const SDK::Kernel& mKernel;
-
-    /// Path to summary file
-    const char* mPath = nullptr;
+    const SDK::Kernel& mKernel; ///< Reference to the kernel interface.
+    const char*        mPath;   ///< Path to the summary file.
 };
 
-#endif /* __ACTIVITY_SUMMARY_SERIALIZER_HPP */
+#endif // ACTIVITY_SUMMARY_SERIALIZER_HPP

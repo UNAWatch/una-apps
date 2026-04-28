@@ -17,11 +17,11 @@ public:
 
     virtual void changeToStartScreen()
     {
-        gotoEnterMenuScreenNoTransition();
+        gotoMainScreenNoTransition();
     }
 
-    // EnterMenu
-    void gotoEnterMenuScreenNoTransition();
+    // Main
+    void gotoMainScreenNoTransition();
 
     // MenuSettings
     void gotoMenuSettingsScreenNoTransition();
@@ -40,12 +40,6 @@ public:
 
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransition();
-
-    // MenuSteps
-    void gotoMenuStepsScreenNoTransition();
-
-    // MenuStepsSaved
-    void gotoMenuStepsSavedScreenNoTransition();
 
     // TrackStartConfirmation
     void gotoTrackStartConfirmationScreenNoTransition();
@@ -76,8 +70,8 @@ protected:
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // EnterMenu
-    void gotoEnterMenuScreenNoTransitionImpl();
+    // Main
+    void gotoMainScreenNoTransitionImpl();
 
     // MenuSettings
     void gotoMenuSettingsScreenNoTransitionImpl();
@@ -96,12 +90,6 @@ protected:
 
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransitionImpl();
-
-    // MenuSteps
-    void gotoMenuStepsScreenNoTransitionImpl();
-
-    // MenuStepsSaved
-    void gotoMenuStepsSavedScreenNoTransitionImpl();
 
     // TrackStartConfirmation
     void gotoTrackStartConfirmationScreenNoTransitionImpl();

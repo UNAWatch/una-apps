@@ -29,18 +29,10 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::TextAreaWithOneWildcard text2;
+    touchgfx::TextAreaWithOneWildcard subtitleText;
     touchgfx::Image icon;
-    touchgfx::TextAreaWithOneWildcard text1;
+    touchgfx::TextAreaWithOneWildcard headingText;
     Title title;
-
-    /*
-     * Wildcard Buffers
-     */
-    static const uint16_t TEXT2_SIZE = 30;
-    touchgfx::Unicode::UnicodeChar text2Buffer[TEXT2_SIZE];
-    static const uint16_t TEXT1_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar text1Buffer[TEXT1_SIZE];
 
 private:
 

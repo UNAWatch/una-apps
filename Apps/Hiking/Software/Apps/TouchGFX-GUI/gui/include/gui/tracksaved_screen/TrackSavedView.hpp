@@ -3,6 +3,8 @@
 
 #include <gui_generated/tracksaved_screen/TrackSavedViewBase.hpp>
 #include <gui/tracksaved_screen/TrackSavedPresenter.hpp>
+#include <gui/containers/CountdownTimer.hpp>
+#include <touchgfx/Callback.hpp>
 
 class TrackSavedView : public TrackSavedViewBase
 {
@@ -11,9 +13,12 @@ public:
     virtual ~TrackSavedView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
-protected:
-    uint16_t mCounter = Gui::Config::kTrackActionConfirmScreenTimeout;
-    virtual void handleTickEvent() override;
+
+private:
+    void onDismiss();
+
+    CountdownTimer                      mDismissTimer;
+    touchgfx::Callback<TrackSavedView>  mDismissCb;
 };
 
 #endif // TRACKSAVEDVIEW_HPP

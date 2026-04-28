@@ -12,8 +12,8 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
-#include <gui/entermenu_screen/EnterMenuView.hpp>
-#include <gui/entermenu_screen/EnterMenuPresenter.hpp>
+#include <gui/main_screen/MainView.hpp>
+#include <gui/main_screen/MainPresenter.hpp>
 #include <gui/menusettings_screen/MenuSettingsView.hpp>
 #include <gui/menusettings_screen/MenuSettingsPresenter.hpp>
 #include <gui/menualerts_screen/MenuAlertsView.hpp>
@@ -26,10 +26,6 @@
 #include <gui/menutime_screen/MenuTimePresenter.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedView.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedPresenter.hpp>
-#include <gui/menusteps_screen/MenuStepsView.hpp>
-#include <gui/menusteps_screen/MenuStepsPresenter.hpp>
-#include <gui/menustepssaved_screen/MenuStepsSavedView.hpp>
-#include <gui/menustepssaved_screen/MenuStepsSavedPresenter.hpp>
 #include <gui/trackstartconfirmation_screen/TrackStartConfirmationView.hpp>
 #include <gui/trackstartconfirmation_screen/TrackStartConfirmationPresenter.hpp>
 #include <gui/track_screen/TrackView.hpp>
@@ -68,15 +64,13 @@ public:
      * A list of all view types. Must end with meta::Nil.
      * @note All view types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< EnterMenuView,
+    typedef touchgfx::meta::TypeList< MainView,
             touchgfx::meta::TypeList< MenuSettingsView,
             touchgfx::meta::TypeList< MenuAlertsView,
             touchgfx::meta::TypeList< MenuDistanceView,
             touchgfx::meta::TypeList< MenuDistanceSavedView,
             touchgfx::meta::TypeList< MenuTimeView,
             touchgfx::meta::TypeList< MenuTimeSavedView,
-            touchgfx::meta::TypeList< MenuStepsView,
-            touchgfx::meta::TypeList< MenuStepsSavedView,
             touchgfx::meta::TypeList< TrackStartConfirmationView,
             touchgfx::meta::TypeList< TrackView,
             touchgfx::meta::TypeList< TrackLapView,
@@ -85,7 +79,7 @@ public:
             touchgfx::meta::TypeList< TrackDiscardedView,
             touchgfx::meta::TypeList< TrackSavedView,
             touchgfx::meta::TypeList< TrackSummaryView,
-            touchgfx::meta::Nil > > > > > > > > > > > > > > > >
+            touchgfx::meta::Nil > > > > > > > > > > > > > >
             > GeneratedViewTypes;
 
     /**
@@ -97,15 +91,13 @@ public:
      * A list of all presenter types. Must end with meta::Nil.
      * @note All presenter types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< EnterMenuPresenter,
+    typedef touchgfx::meta::TypeList< MainPresenter,
             touchgfx::meta::TypeList< MenuSettingsPresenter,
             touchgfx::meta::TypeList< MenuAlertsPresenter,
             touchgfx::meta::TypeList< MenuDistancePresenter,
             touchgfx::meta::TypeList< MenuDistanceSavedPresenter,
             touchgfx::meta::TypeList< MenuTimePresenter,
             touchgfx::meta::TypeList< MenuTimeSavedPresenter,
-            touchgfx::meta::TypeList< MenuStepsPresenter,
-            touchgfx::meta::TypeList< MenuStepsSavedPresenter,
             touchgfx::meta::TypeList< TrackStartConfirmationPresenter,
             touchgfx::meta::TypeList< TrackPresenter,
             touchgfx::meta::TypeList< TrackLapPresenter,
@@ -114,7 +106,7 @@ public:
             touchgfx::meta::TypeList< TrackDiscardedPresenter,
             touchgfx::meta::TypeList< TrackSavedPresenter,
             touchgfx::meta::TypeList< TrackSummaryPresenter,
-            touchgfx::meta::Nil > > > > > > > > > > > > > > > >
+            touchgfx::meta::Nil > > > > > > > > > > > > > >
             > GeneratedPresenterTypes;
 
     /**
@@ -137,7 +129,7 @@ public:
 
     virtual void gotoStartScreen(FrontendApplication& app)
     {
-        app.gotoEnterMenuScreenNoTransition();
+        app.gotoMainScreenNoTransition();
     }
 protected:
     FrontendHeapBase(touchgfx::AbstractPartition& presenters, touchgfx::AbstractPartition& views, touchgfx::AbstractPartition& transitions, FrontendApplication& app)

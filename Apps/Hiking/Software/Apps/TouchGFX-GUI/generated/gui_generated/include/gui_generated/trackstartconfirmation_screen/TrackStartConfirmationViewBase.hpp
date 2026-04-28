@@ -9,8 +9,8 @@
 #include <gui/trackstartconfirmation_screen/TrackStartConfirmationPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
-#include <touchgfx/widgets/Image.hpp>
 #include <gui/containers/Buttons.hpp>
+#include <touchgfx/widgets/Image.hpp>
 #include <gui/containers/Title.hpp>
 
 class TrackStartConfirmationViewBase : public touchgfx::View<TrackStartConfirmationPresenter>
@@ -30,16 +30,10 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::TextAreaWithOneWildcard text;
-    touchgfx::Image tick;
+    touchgfx::TextAreaWithOneWildcard questionText;
     Buttons buttons;
+    touchgfx::Image tick;
     Title title;
-
-    /*
-     * Wildcard Buffers
-     */
-    static const uint16_t TEXT_SIZE = 40;
-    touchgfx::Unicode::UnicodeChar textBuffer[TEXT_SIZE];
 
 private:
 

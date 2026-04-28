@@ -8,9 +8,9 @@
 #include <mvp/View.hpp>
 #include <gui/menudistancesaved_screen/MenuDistanceSavedPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/Title.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <gui/containers/Title.hpp>
 
 class MenuDistanceSavedViewBase : public touchgfx::View<MenuDistanceSavedPresenter>
 {
@@ -29,16 +29,16 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    Title title;
     touchgfx::TextAreaWithOneWildcard savedText;
     touchgfx::Image icon;
-    touchgfx::TextAreaWithOneWildcard msg;
+    touchgfx::TextAreaWithOneWildcard messageText;
+    Title title;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t MSG_SIZE = 32;
-    touchgfx::Unicode::UnicodeChar msgBuffer[MSG_SIZE];
+    static const uint16_t MESSAGETEXT_SIZE = 32;
+    touchgfx::Unicode::UnicodeChar messageTextBuffer[MESSAGETEXT_SIZE];
 
 private:
 
