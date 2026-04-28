@@ -4,16 +4,17 @@ MenuIntervalsRestDistanceView::MenuIntervalsRestDistanceView() :
     mUpdateItemCb(this, &MenuIntervalsRestDistanceView::updateItem),
     mUpdateCenterItemCb(this, &MenuIntervalsRestDistanceView::updateCenterItem)
 {
+    // Main text position is fixed for both stages
     mCenterLayoutWhole.inl.mainX = 70;
     mCenterLayoutWhole.inl.mainW = 100;
     mCenterLayoutFrac.inl.mainX  = 70;
     mCenterLayoutFrac.inl.mainW  = 100;
 
-    mCenterLayoutWhole.inl.tipX = 30;
+    // Stage WHOLE/FRAC: unit label (km / mi) on RIGHT
+    mCenterLayoutWhole.inl.tipX = 170;
     mCenterLayoutWhole.inl.tipW = 40;
-
-    mCenterLayoutFrac.inl.tipX  = 170;
-    mCenterLayoutFrac.inl.tipW  = 40;
+    mCenterLayoutFrac.inl.tipX = 170;
+    mCenterLayoutFrac.inl.tipW = 40;
 }
 
 void MenuIntervalsRestDistanceView::setupScreen()
@@ -106,7 +107,7 @@ void MenuIntervalsRestDistanceView::updateCenterItem(MainMenuCenterItem& item, i
         cfg.tipId        = mIsImperial ? T_TEXT_MI : T_TEXT_KM;
         cfg.centerLayout = &mCenterLayoutWhole;
     } else {
-        cfg.tipId        = mIsImperial ? T_TEXT_MI : T_TEXT_M;
+        cfg.tipId        = mIsImperial ? T_TEXT_MI : T_TEXT_KM; // Use same units
         cfg.centerLayout = &mCenterLayoutFrac;
     }
     item.apply(cfg);

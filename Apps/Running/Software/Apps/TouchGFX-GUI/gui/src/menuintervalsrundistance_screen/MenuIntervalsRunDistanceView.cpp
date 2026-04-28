@@ -10,11 +10,9 @@ MenuIntervalsRunDistanceView::MenuIntervalsRunDistanceView() :
     mCenterLayoutFrac.inl.mainX  = 70;
     mCenterLayoutFrac.inl.mainW  = 100;
 
-    // Stage WHOLE: unit label (km / mi) on LEFT
-    mCenterLayoutWhole.inl.tipX = 30;
+    // Stage WHOLE/FRAC: unit label (km / mi) on RIGHT
+    mCenterLayoutWhole.inl.tipX = 170;
     mCenterLayoutWhole.inl.tipW = 40;
-
-    // Stage FRAC: unit label on RIGHT
     mCenterLayoutFrac.inl.tipX  = 170;
     mCenterLayoutFrac.inl.tipW  = 40;
 }
@@ -109,7 +107,7 @@ void MenuIntervalsRunDistanceView::updateCenterItem(MainMenuCenterItem& item, in
         cfg.tipId        = mIsImperial ? T_TEXT_MI : T_TEXT_KM;
         cfg.centerLayout = &mCenterLayoutWhole;
     } else {
-        cfg.tipId        = mIsImperial ? T_TEXT_MI : T_TEXT_M;
+        cfg.tipId        = mIsImperial ? T_TEXT_MI : T_TEXT_KM; // Use same units
         cfg.centerLayout = &mCenterLayoutFrac;
     }
     item.apply(cfg);
