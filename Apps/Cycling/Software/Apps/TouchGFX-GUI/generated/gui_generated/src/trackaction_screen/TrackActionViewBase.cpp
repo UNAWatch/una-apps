@@ -4,7 +4,6 @@
 #include <gui_generated/trackaction_screen/TrackActionViewBase.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 
 TrackActionViewBase::TrackActionViewBase()
 {
@@ -14,15 +13,14 @@ TrackActionViewBase::TrackActionViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    tick.setXY(186, 60);
-    tick.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_TICK_ID));
-    add(tick);
+    menuLayout.setXY(0, 0);
+    add(menuLayout);
 
-    menu.setXY(0, 0);
-    add(menu);
+    pauseIndicator.setXY(0, 200);
+    add(pauseIndicator);
 
-    titleInfo.setXY(40, 0);
-    add(titleInfo);
+    infoCarousel.setXY(40, 0);
+    add(infoCarousel);
 }
 
 TrackActionViewBase::~TrackActionViewBase()
@@ -32,8 +30,9 @@ TrackActionViewBase::~TrackActionViewBase()
 
 void TrackActionViewBase::setupScreen()
 {
-    menu.initialize();
-    titleInfo.initialize();
+    menuLayout.initialize();
+    pauseIndicator.initialize();
+    infoCarousel.initialize();
     transitionBegins();
 }
 

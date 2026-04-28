@@ -1,48 +1,24 @@
 #include <gui/menusettings_screen/MenuSettingsView.hpp>
 
-MenuSettingsView::MenuSettingsView()
+MenuSettingsView::MenuSettingsView() :
+    mUpdateItemCb(this, &MenuSettingsView::updateItem),
+    mUpdateCenterItemCb(this, &MenuSettingsView::updateCenterItem)
 {
-
 }
 
 void MenuSettingsView::setupScreen()
 {
     MenuSettingsViewBase::setupScreen();
 
-    menu.setTitle(T_TEXT_SETTINGS_UC);
-
-    menu.setNumberOfItems(App::Menu::Settings::ID_COUNT);
-
-    MenuItemSelected *pS = nullptr;
-    MenuItemNotSelected *pN = nullptr;
-
-    // LAP ALERTS
-    pS = menu.getSelectedItem(App::Menu::Settings::ID_ALERTS);
-    pS->config(T_TEXT_LAP_ALERTS);
-    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_ALERTS);
-    pN->config(T_TEXT_LAP_ALERTS);
-
-    // AUTO PAUSE
-    pS = menu.getSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
-    pS->configToggle(T_TEXT_AUTO_BR_PAUSE);
-    pS->setMsgTypedTextId(T_TMP_SEMIBOLD_25);
-
-    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
-    pN->configTip(T_TEXT_AUTO_PAUSE, T_TEXT_ON_UC);
-
-    // PHONE NOTIF
-    pS = menu.getSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
-    pS->configToggle(T_TEXT_PHONE_BR_NOTIF_DOT);
-    pS->setMsgTypedTextId(T_TMP_SEMIBOLD_25);
-
-    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
-    pN->configTip(T_TEXT_PHONE_NOTIF_DOT, T_TEXT_OFF_UC);
+    menuLayout.setAnimationSteps(App::Config::kMenuAnimationSteps);
+    menuLayout.setTitle(T_TEXT_SETTINGS_UC);
+    menuLayout.setUpdateItemCallback(mUpdateItemCb);
+    menuLayout.setUpdateCenterItemCallback(mUpdateCenterItemCb);
+    menuLayout.setNumberOfItems(Menu::ID_COUNT);
 
     setGpsFix(mGpsFix);
-    setAutoPause(mAutoPause);
-    setPhoneNotif(mPhoneNotif);
 
-    menu.invalidate();
+    menuLayout.invalidate();
 }
 
 void MenuSettingsView::tearDownScreen()
@@ -50,92 +26,125 @@ void MenuSettingsView::tearDownScreen()
     MenuSettingsViewBase::tearDownScreen();
 }
 
-
 void MenuSettingsView::setGpsFix(bool state)
 {
     mGpsFix = state;
-    if (mGpsFix) {
-        menu.setInfoMsg(T_TEXT_SIGNAL_ACQUIRED);
-    } else {
-        menu.setInfoMsg(T_TEXT_ACQUIRING_SIGNAL);
-    }
+    menuLayout.setInfoMsg(state ? T_TEXT_SIGNAL_ACQUIRED : T_TEXT_ACQUIRING_SIGNAL);
 }
 
 void MenuSettingsView::setAutoPause(bool state)
 {
     mAutoPause = state;
-
-    MenuItemSelected *pS = nullptr;
-    MenuItemNotSelected *pN = nullptr;
-    pS = menu.getSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
-    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_AUTO_PAUSE);
-
-    pS->setToggle(mAutoPause);
-    pN->configTip(T_TEXT_AUTO_PAUSE, state ? T_TEXT_ON_UC : T_TEXT_OFF_UC);
-    pN->setTipColor(state ? Gui::Config::Color::MENU_NOT_SELECTED_TIP_ON : Gui::Config::Color::MENU_NOT_SELECTED_TIP_OFF);
-
-    menu.invalidate();
+    menuLayout.invalidate();
 }
 
 void MenuSettingsView::setPhoneNotif(bool state)
 {
     mPhoneNotif = state;
-
-    MenuItemSelected *pS = nullptr;
-    MenuItemNotSelected *pN = nullptr;
-    pS = menu.getSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
-    pN = menu.getNotSelectedItem(App::Menu::Settings::ID_PHONE_NOTIF);
-
-    pS->setToggle(mPhoneNotif);
-    pN->configTip(T_TEXT_PHONE_NOTIF_DOT, state ? T_TEXT_ON_UC : T_TEXT_OFF_UC);
-    pN->setTipColor(state ? Gui::Config::Color::MENU_NOT_SELECTED_TIP_ON : Gui::Config::Color::MENU_NOT_SELECTED_TIP_OFF);
-
-    menu.invalidate();
+    menuLayout.invalidate();
 }
 
 void MenuSettingsView::setPositionId(uint16_t id)
 {
-    menu.selectItem(id);
+    menuLayout.selectItem(id);
 }
 
 uint16_t MenuSettingsView::getPositionId()
 {
-    return menu.getSelectedItem();
+    return menuLayout.getSelectedItem();
+}
+
+void MenuSettingsView::updateItem(MainMenuItem& item, int16_t index)
+{
+    MenuItemConfig cfg;
+
+    switch (index) {
+    case Menu::ID_ALERTS:
+        cfg.style = MenuItemConfig::SIMPLE;
+        cfg.msgId = T_TEXT_LAP_ALERTS;
+        break;
+    case Menu::ID_AUTO_PAUSE:
+        cfg.style    = MenuItemConfig::TIP;
+        cfg.msgId    = T_TEXT_AUTO_PAUSE;
+        cfg.tipId    = mAutoPause ? T_TEXT_ON_UC : T_TEXT_OFF_UC;
+        cfg.tipColor = mAutoPause ? SDK::GUI::Color::YELLOW_DARK
+                                  : SDK::GUI::Color::TEAL;
+        break;
+    case Menu::ID_PHONE_NOTIF:
+        cfg.style    = MenuItemConfig::TIP;
+        cfg.msgId    = T_TEXT_PHONE_NOTIF_DOT;
+        cfg.tipId    = mPhoneNotif ? T_TEXT_ON_UC : T_TEXT_OFF_UC;
+        cfg.tipColor = mPhoneNotif ? SDK::GUI::Color::YELLOW_DARK
+                                   : SDK::GUI::Color::TEAL;
+        break;
+    default:
+        return;
+    }
+
+    item.apply(cfg);
+}
+
+void MenuSettingsView::updateCenterItem(MainMenuCenterItem& item, int16_t index)
+{
+    MenuItemConfig cfg;
+
+    switch (index) {
+    case Menu::ID_ALERTS:
+        cfg.style = MenuItemConfig::SIMPLE;
+        cfg.msgId = T_TEXT_LAP_ALERTS;
+        break;
+    case Menu::ID_AUTO_PAUSE:
+        cfg.style       = MenuItemConfig::TOGGLE;
+        cfg.msgId       = T_TEXT_AUTO_BR_PAUSE;
+        cfg.msgIdType   = T_TMP_SEMIBOLD_25;
+        cfg.toggleState = mAutoPause;
+        break;
+    case Menu::ID_PHONE_NOTIF:
+        cfg.style       = MenuItemConfig::TOGGLE;
+        cfg.msgId       = T_TEXT_PHONE_BR_NOTIF_DOT;
+        cfg.msgIdType   = T_TMP_SEMIBOLD_25;
+        cfg.toggleState = mPhoneNotif;
+        break;
+    default:
+        return;
+    }
+
+    item.apply(cfg);
 }
 
 void MenuSettingsView::handleKeyEvent(uint8_t key)
 {
-    if (key == Gui::Config::Button::L1) {
-        menu.selectPrev();
+    if (key == SDK::GUI::Button::L1) {
+        menuLayout.selectPrev();
     }
 
-    if (key == Gui::Config::Button::L2) {
-        menu.selectNext();
+    if (key == SDK::GUI::Button::L2) {
+        menuLayout.selectNext();
     }
 
-    if (key == Gui::Config::Button::R1) {
-        uint32_t id = menu.getSelectedItem();
+    if (key == SDK::GUI::Button::R1) {
+        uint32_t id = menuLayout.getSelectedItem();
 
         switch (id) {
-            case App::Menu::Settings::ID_ALERTS:
-                application().gotoMenuAlertsScreenNoTransition();
-                break;
-            case App::Menu::Settings::ID_AUTO_PAUSE:
-                mAutoPause = !mAutoPause;
-                setAutoPause(mAutoPause);
-                presenter->saveAutoPause(mAutoPause);
-                break;
-            case App::Menu::Settings::ID_PHONE_NOTIF:
-                mPhoneNotif = !mPhoneNotif;
-                setPhoneNotif(mPhoneNotif);
-                presenter->savePhoneNotif(mPhoneNotif);
-                break;
-            default:
-                break;
-        };
+        case Menu::ID_ALERTS:
+            application().gotoMenuAlertsScreenNoTransition();
+            break;
+        case Menu::ID_AUTO_PAUSE:
+            mAutoPause = !mAutoPause;
+            setAutoPause(mAutoPause);
+            presenter->saveAutoPause(mAutoPause);
+            break;
+        case Menu::ID_PHONE_NOTIF:
+            mPhoneNotif = !mPhoneNotif;
+            setPhoneNotif(mPhoneNotif);
+            presenter->savePhoneNotif(mPhoneNotif);
+            break;
+        default:
+            break;
+        }
     }
 
-    if (key == Gui::Config::Button::R2) {
-        application().gotoEnterMenuScreenNoTransition();
+    if (key == SDK::GUI::Button::R2) {
+        application().gotoMainScreenNoTransition();
     }
 }

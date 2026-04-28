@@ -27,13 +27,13 @@ protected:
      */
     touchgfx::Line line;
     touchgfx::PainterABGR2222 linePainter;
-    touchgfx::TextAreaWithOneWildcard text;
+    touchgfx::TextAreaWithOneWildcard titleText;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t TEXT_SIZE = 16;
-    touchgfx::Unicode::UnicodeChar textBuffer[TEXT_SIZE];
+    static const uint16_t TITLETEXT_SIZE = 16;
+    touchgfx::Unicode::UnicodeChar titleTextBuffer[TITLETEXT_SIZE];
 
 private:
 

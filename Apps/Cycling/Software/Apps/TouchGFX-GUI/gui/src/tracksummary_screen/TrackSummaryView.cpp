@@ -12,14 +12,14 @@ void TrackSummaryView::setupScreen()
     buttons.setL1(Buttons::NONE);
     buttons.setL2(Buttons::NONE);
     buttons.setR1(Buttons::NONE);
-    buttons.setR2(Buttons::AMBER);
+    buttons.setR2(Buttons::NONE);
 
-    title.set(T_TEXT_APP_NAME_UC);
+    scrollIndicator.setConfig(ScrollIndicator::kSmall);
+    scrollIndicator.setCount(3);
+    scrollIndicator.setActiveId(FACE_MAP);
 
-    sideBar.setCount(kFacesNum);
-    sideBar.setActiveId(0);
-
-    updFace();
+    mCurrentFace = FACE_MAP;
+    updateFace();
 }
 
 void TrackSummaryView::tearDownScreen()
@@ -27,85 +27,104 @@ void TrackSummaryView::tearDownScreen()
     TrackSummaryViewBase::tearDownScreen();
 }
 
-
-void TrackSummaryView::setDistance(float m, bool isImperial)
+void TrackSummaryView::setSummary(const ActivitySummary& s, bool isImperial, bool isPaused)
 {
-    trackSummary.setDistance(m, isImperial);
-}
+    mIsImperial = isImperial;
+    mTrackIsPaused = isPaused;
 
-void TrackSummaryView::setAvgSpeed(float mps, bool isImperial)
-{
-    trackSummary.setAvgSpeed(mps, isImperial);
-}
+    auto distConv = [isImperial](float metres) -> float {
+        const float km = metres / 1000.0f;
+        return isImperial ? SDK::Utils::kmToMiles(km) : km;
+    };
 
-void TrackSummaryView::setElevation(float m, bool isImperial)
-{
-    trackSummary.setElevation(m, isImperial);
-}
+    auto speedConv = [isImperial](float mPerSec) -> float {
+        const float kmPerHour = mPerSec * 3.6f;
+        return isImperial ? SDK::Utils::kmToMiles(kmPerHour) : kmPerHour;
+    };
 
-void TrackSummaryView::setTimer(uint32_t sec)
-{
-    trackSummary.setTimer(sec);
-}
+    const float dist = distConv(s.distance);
+    summaryFaceMap.setDistance(dist, isImperial);
+    summaryFaceOverview.setDistance(dist, isImperial);
+    summaryFaceOverview.setAvgSpeed(speedConv(s.speedAvg), isImperial);
+    summaryFaceOverview.setTimer(s.time);
+    summaryFaceHeartRate.setMaxHR(s.hrMax);
+    summaryFaceHeartRate.setAvgHR(s.hrAvg);
+    summaryFaceMap.setMap(s.map);
 
-void TrackSummaryView::setMaxHR(float hr)
-{
-    trackSummaryHR.setMaxHR(hr);
-}
+    summaryFaceLaps.setLaps(s.laps, isImperial);
+    mLapsPageCount = summaryFaceLaps.getPageCount();
+    scrollIndicator.setCount(3 + mLapsPageCount);
 
-void TrackSummaryView::setAvgHR(float hr)
-{
-    trackSummaryHR.setAvgHR(hr);
-}
-
-void TrackSummaryView::setMap(const SDK::TrackMapScreen &map)
-{
-    trackSummary.setMap(map);
-}
-
-void TrackSummaryView::updFace()
-{
-    trackSummary.setVisible(false);
-    trackSummaryHR.setVisible(false);
-
-    if (sideBar.getActiveId() == 1) {
-        trackSummaryHR.setVisible(true);
+    if (isPaused) {
+        buttons.setR1(Buttons::NONE);
+        buttons.setR2(Buttons::AMBER);
     } else {
-        trackSummary.setVisible(true);
+        buttons.setR1(Buttons::AMBER);
+        buttons.setR2(Buttons::NONE);
     }
+}
 
-    trackSummary.invalidate();
-    trackSummaryHR.invalidate();
+void TrackSummaryView::updateFace()
+{
+    summaryFaceMap.setVisible(mCurrentFace == FACE_MAP);
+    summaryFaceOverview.setVisible(mCurrentFace == FACE_OVERVIEW);
+    summaryFaceHeartRate.setVisible(mCurrentFace == FACE_HEARTRATE);
+    summaryFaceLaps.setVisible(mCurrentFace == FACE_LAPS);
+
+    summaryFaceMap.invalidate();
+    summaryFaceOverview.invalidate();
+    summaryFaceHeartRate.invalidate();
+    summaryFaceLaps.invalidate();
+
+    updateScrollIndicator();
+}
+
+void TrackSummaryView::updateScrollIndicator()
+{
+    const uint8_t id = (mCurrentFace < FACE_LAPS)
+        ? mCurrentFace
+        : static_cast<uint8_t>(FACE_LAPS + summaryFaceLaps.getScrollPage());
+    scrollIndicator.animateToId(id);
 }
 
 void TrackSummaryView::handleKeyEvent(uint8_t key)
 {
-    if (key == Gui::Config::Button::L1) {
-        mCurrentFace--;
-        //sideBar.animateToId(mCurrentFace, Gui::Config::kMenuAnimationSteps);
-        sideBar.animateToId(mCurrentFace);
-        updFace();
-
-        if (mCurrentFace < 0) {
-            mCurrentFace = kFacesNum - 1;
+    if (key == SDK::GUI::Button::L2) {
+        if (mCurrentFace == FACE_LAPS) {
+            if (summaryFaceLaps.canScrollDown()) {
+                summaryFaceLaps.scrollDown();
+                updateScrollIndicator();
+            }
+        } else if (mCurrentFace < FACE_HEARTRATE || mLapsPageCount > 0) {
+            mCurrentFace++;
+            updateFace();
         }
+        return;
     }
 
-    if (key == Gui::Config::Button::L2) {
-        mCurrentFace++;
-        //sideBar.animateToId(mCurrentFace, Gui::Config::kMenuAnimationSteps);
-        sideBar.animateToId(mCurrentFace);
-        updFace();
-        if (mCurrentFace >= kFacesNum) {
-            mCurrentFace = 0;
+    if (key == SDK::GUI::Button::L1) {
+        if (mCurrentFace == FACE_LAPS) {
+            if (summaryFaceLaps.canScrollUp()) {
+                summaryFaceLaps.scrollUp();
+                updateScrollIndicator();
+            } else {
+                mCurrentFace--;
+                updateFace();
+            }
+        } else if (mCurrentFace > FACE_MAP) {
+            mCurrentFace--;
+            updateFace();
         }
+        return;
     }
 
-    if (key == Gui::Config::Button::R1) {
-
+    if (key == SDK::GUI::Button::R1) {
+        if (!mTrackIsPaused) presenter->backToTrack();
+        return;
     }
 
-    if (key == Gui::Config::Button::R2) {
-        presenter->exitApp();
+    if (key == SDK::GUI::Button::R2) {
+        if (mTrackIsPaused) presenter->backToTrack();
+        return;
     }
 }

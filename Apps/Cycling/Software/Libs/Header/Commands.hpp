@@ -1,5 +1,8 @@
 
-#pragma once
+#ifndef COMMANDS_HPP
+#define COMMANDS_HPP
+
+#include <cstring>
 
 #include "SDK/Messages/MessageBase.hpp"
 #include "SDK/Messages/MessageTypes.hpp"
@@ -9,15 +12,17 @@
 
 // Application types
 #include "Settings.hpp"
-#include "TrackInfo.hpp"
+#include "Track.hpp"
 #include "ActivitySummary.hpp"
-
-#include <array>
 
 // Force 4-byte alignment for all message structures
 #pragma pack(push, 4)
 
 namespace CustomMessage {
+
+    // Kernel HR configuration — shared defaults used before first kernel update
+    static constexpr uint8_t kHrThresholdsCount                       = 6;
+    static constexpr uint8_t kHrThresholdsDefault[kHrThresholdsCount] = { 95, 114, 133, 152, 171, 190 };
 
     // Application custom commands
     // Service --> GUI
@@ -44,13 +49,15 @@ namespace CustomMessage {
         Settings settings;
 
         // Kernel settings
-        bool unitsImperial;
-        std::array<uint8_t, kHrThresholdsCount> hrThresholds;
+        bool    unitsImperial;
+        uint8_t hrThresholds[kHrThresholdsCount];
+        uint8_t hrThresholdsCount;
 
         SettingsUpd()
             : SDK::MessageBase(SETTINGS_UPDATE)
             , unitsImperial(false)
             , hrThresholds {}
+            , hrThresholdsCount(0)
         {}
     };
 
@@ -104,10 +111,10 @@ namespace CustomMessage {
     };
 
     struct Summary : public SDK::MessageBase {
-        std::shared_ptr<const ActivitySummary> summary;
+        const ActivitySummary* summary; ///< Non-owning pointer; receiver must copy before releaseMessage
         Summary()
             : SDK::MessageBase(SUMMARY)
-            , summary{}
+            , summary(nullptr)
         {}
     };
 
@@ -156,12 +163,14 @@ public:
     virtual ~Sender() = default;
 
     // Service --> GUI
-    bool settingsUpd(Settings settings, bool units, std::array<uint8_t, kHrThresholdsCount> th)
+    bool settingsUpd(Settings settings, bool units,
+                     const uint8_t (&thresholds)[kHrThresholdsCount], uint8_t thresholdCount)
     {
         if (auto msg = SDK::make_msg<CustomMessage::SettingsUpd>(mKernel)) {
-            msg->settings      = settings;
-            msg->unitsImperial = units;
-            msg->hrThresholds  = th;
+            msg->settings          = settings;
+            msg->unitsImperial     = units;
+            memcpy(msg->hrThresholds, thresholds, sizeof(msg->hrThresholds));
+            msg->hrThresholdsCount = thresholdCount;
             return msg.send();
         }
 
@@ -240,12 +249,12 @@ public:
         return status;
     }
 
-    bool summary(std::shared_ptr<const ActivitySummary> summary)
+    bool summary(const ActivitySummary* summaryPtr)
     {
         bool status = false;
         auto *msg = mKernel.comm.allocateMessage<CustomMessage::Summary>();
         if (msg) {
-            msg->summary = summary;
+            msg->summary = summaryPtr;
             status = mKernel.comm.sendMessage(msg);
             mKernel.comm.releaseMessage(msg);
         }
@@ -329,3 +338,5 @@ private:
 } // namespace CustomMessage
 
 #pragma pack(pop)
+
+#endif // COMMANDS_HPP

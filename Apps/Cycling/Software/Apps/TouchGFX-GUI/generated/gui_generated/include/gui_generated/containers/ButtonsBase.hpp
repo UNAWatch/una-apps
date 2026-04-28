@@ -6,7 +6,8 @@
 
 #include <gui/common/FrontendApplication.hpp>
 #include <touchgfx/containers/Container.hpp>
-#include <touchgfx/widgets/Image.hpp>
+#include <touchgfx/widgets/canvas/Circle.hpp>
+#include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
 
 class ButtonsBase : public touchgfx::Container
 {
@@ -23,18 +24,14 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Image buttonR2;
-    touchgfx::Image buttonR1;
-    touchgfx::Image buttonL2;
-    touchgfx::Image buttonL1;
-    touchgfx::Image buttonR2a;
-    touchgfx::Image buttonR1a;
-    touchgfx::Image buttonL2a;
-    touchgfx::Image buttonL1a;
-    touchgfx::Image buttonR2r;
-    touchgfx::Image buttonR1r;
-    touchgfx::Image buttonL2r;
-    touchgfx::Image buttonL1r;
+    touchgfx::Circle bL1;
+    touchgfx::PainterABGR2222 bL1Painter;
+    touchgfx::Circle bL2;
+    touchgfx::PainterABGR2222 bL2Painter;
+    touchgfx::Circle bR2;
+    touchgfx::PainterABGR2222 bR2Painter;
+    touchgfx::Circle bR1;
+    touchgfx::PainterABGR2222 bR1Painter;
 
 private:
 

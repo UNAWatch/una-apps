@@ -2,7 +2,6 @@
 
 Title::Title()
 {
-
 }
 
 void Title::initialize()
@@ -12,12 +11,32 @@ void Title::initialize()
 
 void Title::set(TypedTextId msgId)
 {
-    Unicode::snprintf(textBuffer, TEXT_SIZE, "%s", touchgfx::TypedText(msgId).getText());
+    touchgfx::Unicode::snprintf(titleTextBuffer, TITLETEXT_SIZE, "%s",
+        touchgfx::TypedText(msgId).getText());
+    titleText.invalidate();
 }
 
-void Title::set(touchgfx::Unicode::UnicodeChar *msg)
+void Title::set(touchgfx::Unicode::UnicodeChar* messageText)
 {
-    if (msg != nullptr) {
-        Unicode::snprintf(textBuffer, TEXT_SIZE, "%s", msg);
+    if (messageText != nullptr) {
+        touchgfx::Unicode::snprintf(titleTextBuffer, TITLETEXT_SIZE, "%s", messageText);
+        titleText.invalidate();
     }
+}
+
+void Title::set(const char* messageText)
+{
+    if (messageText != nullptr) {
+        touchgfx::Unicode::fromUTF8(
+            reinterpret_cast<const uint8_t*>(messageText), titleTextBuffer, TITLETEXT_SIZE);
+        titleText.invalidate();
+    }
+}
+
+void Title::setColor(touchgfx::colortype color)
+{
+    linePainter.setColor(color);
+    line.invalidate();
+    titleText.setColor(color);
+    titleText.invalidate();
 }

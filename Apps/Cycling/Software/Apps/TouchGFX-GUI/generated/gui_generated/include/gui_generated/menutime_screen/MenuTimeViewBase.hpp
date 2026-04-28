@@ -8,7 +8,7 @@
 #include <mvp/View.hpp>
 #include <gui/menutime_screen/MenuTimePresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/Menu.hpp>
+#include <gui/containers/MainMenuLayout.hpp>
 #include <touchgfx/widgets/Image.hpp>
 
 class MenuTimeViewBase : public touchgfx::View<MenuTimePresenter>
@@ -28,7 +28,7 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    Menu menu;
+    MainMenuLayout menuLayout;
     touchgfx::Image tick;
 
 private:

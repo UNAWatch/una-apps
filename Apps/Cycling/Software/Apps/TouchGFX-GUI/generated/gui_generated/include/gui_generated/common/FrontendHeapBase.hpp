@@ -12,8 +12,8 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
-#include <gui/entermenu_screen/EnterMenuView.hpp>
-#include <gui/entermenu_screen/EnterMenuPresenter.hpp>
+#include <gui/main_screen/MainView.hpp>
+#include <gui/main_screen/MainPresenter.hpp>
 #include <gui/menusettings_screen/MenuSettingsView.hpp>
 #include <gui/menusettings_screen/MenuSettingsPresenter.hpp>
 #include <gui/menualerts_screen/MenuAlertsView.hpp>
@@ -64,7 +64,7 @@ public:
      * A list of all view types. Must end with meta::Nil.
      * @note All view types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< EnterMenuView,
+    typedef touchgfx::meta::TypeList< MainView,
             touchgfx::meta::TypeList< MenuSettingsView,
             touchgfx::meta::TypeList< MenuAlertsView,
             touchgfx::meta::TypeList< MenuDistanceView,
@@ -91,7 +91,7 @@ public:
      * A list of all presenter types. Must end with meta::Nil.
      * @note All presenter types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< EnterMenuPresenter,
+    typedef touchgfx::meta::TypeList< MainPresenter,
             touchgfx::meta::TypeList< MenuSettingsPresenter,
             touchgfx::meta::TypeList< MenuAlertsPresenter,
             touchgfx::meta::TypeList< MenuDistancePresenter,
@@ -129,7 +129,7 @@ public:
 
     virtual void gotoStartScreen(FrontendApplication& app)
     {
-        app.gotoEnterMenuScreenNoTransition();
+        app.gotoMainScreenNoTransition();
     }
 protected:
     FrontendHeapBase(touchgfx::AbstractPartition& presenters, touchgfx::AbstractPartition& views, touchgfx::AbstractPartition& transitions, FrontendApplication& app)

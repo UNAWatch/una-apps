@@ -27,7 +27,9 @@ public:
 
     virtual ~MenuDistancePresenter() {}
 
-    void saveDistance(float km);
+    virtual void onIdleTimeout() override { model->exitApp(); }
+
+    void saveDistance(Settings::Alerts::Distance::Id id);
 
 private:
     MenuDistancePresenter();

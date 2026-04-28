@@ -8,11 +8,10 @@
 #include <mvp/View.hpp>
 #include <gui/tracklap_screen/TrackLapPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Image.hpp>
+#include <gui/containers/Buttons.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/canvas/Line.hpp>
 #include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
-#include <gui/containers/Buttons.hpp>
 #include <gui/containers/Title.hpp>
 
 class TrackLapViewBase : public touchgfx::View<TrackLapPresenter>
@@ -32,7 +31,8 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::Image cross;
+    Buttons buttons;
+    touchgfx::TextAreaWithOneWildcard avgSpeedUnits;
     touchgfx::TextAreaWithOneWildcard avgSpeedText;
     touchgfx::TextAreaWithOneWildcard avgSpeedValue;
     touchgfx::Line line2;
@@ -43,12 +43,13 @@ protected:
     touchgfx::PainterABGR2222 line1Painter;
     touchgfx::TextAreaWithOneWildcard distanceValue;
     touchgfx::TextAreaWithOneWildcard distanceText;
-    Buttons buttons;
     Title title;
 
     /*
      * Wildcard Buffers
      */
+    static const uint16_t AVGSPEEDUNITS_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar avgSpeedUnitsBuffer[AVGSPEEDUNITS_SIZE];
     static const uint16_t AVGSPEEDTEXT_SIZE = 15;
     touchgfx::Unicode::UnicodeChar avgSpeedTextBuffer[AVGSPEEDTEXT_SIZE];
     static const uint16_t AVGSPEEDVALUE_SIZE = 10;

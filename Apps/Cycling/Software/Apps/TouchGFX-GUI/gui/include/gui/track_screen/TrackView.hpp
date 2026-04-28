@@ -14,18 +14,22 @@ public:
 
     void setPositionId(uint16_t id);
     uint16_t getPositionId();
-    void setTrackData(const Track::Data &data, bool isImperial, const std::array<uint8_t, kHrThresholdsCount>& hrth);
+
+    void setConfig(bool isImperial, const uint8_t* thresholds, uint8_t thresholdCount);
+    void setTrackData(const Track::Data& data);
+
     void setTime(uint8_t h, uint8_t m);
     void setBatteryLevel(uint8_t level);
-    void setCharging(bool state);
     void setGpsFix(bool state);
 
 protected:
+
     virtual void handleKeyEvent(uint8_t key) override;
 
-    bool mGpsFix = false;
-    uint16_t mGpsFixBlinkCounter = 0;
-    virtual void handleTickEvent() override;
+    uint16_t mCurrentFaceId = 0;
+    bool     mIsImperial = false;
+    uint8_t  mHrThresholds[App::Config::kHrThresholdsCount] = {};
+    uint8_t  mHrThresholdCount = 0;
 };
 
 #endif // TRACKVIEW_HPP

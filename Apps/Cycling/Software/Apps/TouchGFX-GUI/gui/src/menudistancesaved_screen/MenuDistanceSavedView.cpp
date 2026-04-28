@@ -1,8 +1,10 @@
 #include <gui/menudistancesaved_screen/MenuDistanceSavedView.hpp>
 
-MenuDistanceSavedView::MenuDistanceSavedView()
-{
+static constexpr uint16_t kDismissTicks = SDK::Utils::secToTicks(1, App::Config::kFrameRate);
 
+MenuDistanceSavedView::MenuDistanceSavedView()
+    : mDismissCb(this, &MenuDistanceSavedView::onDismiss)
+{
 }
 
 void MenuDistanceSavedView::setupScreen()
@@ -10,46 +12,35 @@ void MenuDistanceSavedView::setupScreen()
     MenuDistanceSavedViewBase::setupScreen();
 
     title.set(T_TEXT_DISTANCE_UC);
+
+    mDismissTimer.setDuration(kDismissTicks);
+    mDismissTimer.setCallback(mDismissCb);
+    mDismissTimer.start();
 }
 
 void MenuDistanceSavedView::tearDownScreen()
 {
+    mDismissTimer.stop();
     MenuDistanceSavedViewBase::tearDownScreen();
 }
 
-void MenuDistanceSavedView::setDistanceUnits(float km, bool isImperial)
+void MenuDistanceSavedView::setDistanceUnits(Menu::Id id, bool isImperial)
 {
-    float distance = isImperial ? App::Utils::km2mi(km) : km;
-
-    uint32_t distanceId = App::Menu::RoundToNearestIndex(App::Menu::kDistanceList,
-        App::Menu::Settings::Alerts::Distance::ID_COUNT, distance);
-
-    if (distanceId == App::Menu::Settings::Alerts::Distance::ID_OFF) {
-        Unicode::snprintf(msgBuffer, MSG_SIZE, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
+    if (id == Menu::ID_OFF) {
+        Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
     } else {
+        uint16_t val = Menu::kValues[id];
         if (isImperial) {
-            touchgfx::TypedTextId txt = App::Menu::kDistanceList[distanceId] > 1 ?
-                T_TEXT_MILES : T_TEXT_MILE;
-
-            Unicode::snprintf(msgBuffer, MSG_SIZE, "%d %s",
-                App::Menu::kDistanceList[distanceId],
-                touchgfx::TypedText(txt).getText());
-
+            touchgfx::TypedTextId txt = val > 1 ? T_TEXT_MILES : T_TEXT_MILE;
+            Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%d %s", val, touchgfx::TypedText(txt).getText());
         } else {
-            Unicode::snprintf(msgBuffer, MSG_SIZE, "%d %s",
-                App::Menu::kDistanceList[distanceId],
-                touchgfx::TypedText(T_TEXT_KM).getText());
+            Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%d %s", val, touchgfx::TypedText(T_TEXT_KM).getText());
         }
     }
-    msg.invalidate();
+    messageText.invalidate();
 }
 
-void MenuDistanceSavedView::handleTickEvent()
+void MenuDistanceSavedView::onDismiss()
 {
-    if (mCounter > 0) {
-        mCounter--;
-    }
-    if (mCounter == 0) {
-        application().gotoMenuAlertsScreenNoTransition();
-    }
+    application().gotoMenuAlertsScreenNoTransition();
 }

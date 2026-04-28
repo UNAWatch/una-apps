@@ -8,7 +8,7 @@
 #include <mvp/View.hpp>
 #include <gui/menualerts_screen/MenuAlertsPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/Menu.hpp>
+#include <gui/containers/MainMenuLayout.hpp>
 
 class MenuAlertsViewBase : public touchgfx::View<MenuAlertsPresenter>
 {
@@ -27,7 +27,7 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    Menu menu;
+    MainMenuLayout menuLayout;
 
 private:
 

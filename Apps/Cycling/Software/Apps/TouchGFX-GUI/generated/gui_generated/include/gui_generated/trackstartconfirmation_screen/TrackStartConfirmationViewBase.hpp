@@ -30,7 +30,7 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::TextAreaWithOneWildcard text;
+    touchgfx::TextAreaWithOneWildcard questionText;
     touchgfx::Image tick;
     Buttons buttons;
     Title title;
@@ -38,8 +38,8 @@ protected:
     /*
      * Wildcard Buffers
      */
-    static const uint16_t TEXT_SIZE = 40;
-    touchgfx::Unicode::UnicodeChar textBuffer[TEXT_SIZE];
+    static const uint16_t QUESTIONTEXT_SIZE = 40;
+    touchgfx::Unicode::UnicodeChar questionTextBuffer[QUESTIONTEXT_SIZE];
 
 private:
 

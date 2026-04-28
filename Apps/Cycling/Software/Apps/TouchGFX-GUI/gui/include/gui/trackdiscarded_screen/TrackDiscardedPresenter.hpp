@@ -27,7 +27,6 @@ public:
 
     virtual ~TrackDiscardedPresenter() {}
 
-    virtual void onIdleTimeout() override { }
     void exitApp();
 
 private:

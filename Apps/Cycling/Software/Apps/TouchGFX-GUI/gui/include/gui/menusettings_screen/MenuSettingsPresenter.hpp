@@ -27,6 +27,7 @@ public:
 
     virtual ~MenuSettingsPresenter() {}
 
+    virtual void onIdleTimeout() override { model->exitApp(); }
     virtual void onGpsFix(bool acquired) override;
 
     void saveAutoPause(bool state);

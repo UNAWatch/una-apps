@@ -13,8 +13,8 @@ MenuSettingsViewBase::MenuSettingsViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    menu.setXY(0, 0);
-    add(menu);
+    menuLayout.setXY(0, 0);
+    add(menuLayout);
 }
 
 MenuSettingsViewBase::~MenuSettingsViewBase()
@@ -24,7 +24,7 @@ MenuSettingsViewBase::~MenuSettingsViewBase()
 
 void MenuSettingsViewBase::setupScreen()
 {
-    menu.initialize();
+    menuLayout.initialize();
     transitionBegins();
 }
 
