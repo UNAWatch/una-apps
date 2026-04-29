@@ -111,8 +111,6 @@ struct Data {
 
     // Elevation, m (current altitude from barometer)
     float elevation    = 0.0f;
-    /// @note Not currently populated; reserved for future lap-relative elevation.
-    float lapElevation = 0.0f;
 
     bool intervalsMode = false; ///< true when the track was started in intervals mode
 
