@@ -4,7 +4,6 @@
 #include <gui_generated/tracklap_screen/TrackLapViewBase.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
 TrackLapViewBase::TrackLapViewBase()
@@ -15,26 +14,8 @@ TrackLapViewBase::TrackLapViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    cross.setXY(33, 163);
-    cross.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CROSSYELLOW_ID));
-    add(cross);
-
-    avgHrText.setXY(136, 58);
-    avgHrText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgHrText.setLinespacing(0);
-    Unicode::snprintf(avgHrTextBuffer, AVGHRTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_AVG_LC_DOT_HR).getText());
-    avgHrText.setWildcard(avgHrTextBuffer);
-    avgHrText.resizeToCurrentText();
-    avgHrText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(avgHrText);
-
-    avgHrValue.setPosition(122, 82, 100, 44);
-    avgHrValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    avgHrValue.setLinespacing(0);
-    Unicode::snprintf(avgHrValueBuffer, AVGHRVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
-    avgHrValue.setWildcard(avgHrValueBuffer);
-    avgHrValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
-    add(avgHrValue);
+    buttons.setXY(0, 47);
+    add(buttons);
 
     line2.setPosition(35, 127, 170, 3);
     line2Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
@@ -45,19 +26,33 @@ TrackLapViewBase::TrackLapViewBase()
     line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line2);
 
-    timeValue.setPosition(70, 158, 100, 44);
+    paceValue.setPosition(70, 158, 100, 44);
+    paceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    paceValue.setLinespacing(0);
+    Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_WXKL).getText());
+    paceValue.setWildcard(paceValueBuffer);
+    paceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40));
+    add(paceValue);
+
+    paceText.setPosition(70, 137, 100, 23);
+    paceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    paceText.setLinespacing(0);
+    paceText.setWildcard(touchgfx::TypedText(T_TEXT_AVG_DOT_PACE).getText());
+    paceText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(paceText);
+
+    timeValue.setPosition(122, 82, 100, 44);
     timeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timeValue.setLinespacing(0);
-    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_0CJZ).getText());
+    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
     timeValue.setWildcard(timeValueBuffer);
-    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_40));
+    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
     add(timeValue);
 
-    timeText.setXY(98, 137);
+    timeText.setXY(136, 58);
     timeText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     timeText.setLinespacing(0);
-    Unicode::snprintf(timeTextBuffer, TIMETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_TIME).getText());
-    timeText.setWildcard(timeTextBuffer);
+    timeText.setWildcard(touchgfx::TypedText(T_TEXT_TIME).getText());
     timeText.resizeToCurrentText();
     timeText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(timeText);
@@ -82,14 +77,10 @@ TrackLapViewBase::TrackLapViewBase()
     distanceText.setXY(50, 58);
     distanceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     distanceText.setLinespacing(0);
-    Unicode::snprintf(distanceTextBuffer, DISTANCETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DIST_DOT).getText());
-    distanceText.setWildcard(distanceTextBuffer);
+    distanceText.setWildcard(touchgfx::TypedText(T_TEXT_DIST_DOT).getText());
     distanceText.resizeToCurrentText();
     distanceText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(distanceText);
-
-    buttons.setXY(0, 47);
-    add(buttons);
 
     title.setXY(50, 0);
     add(title);

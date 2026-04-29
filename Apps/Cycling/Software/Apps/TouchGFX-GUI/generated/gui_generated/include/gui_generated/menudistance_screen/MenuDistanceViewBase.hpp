@@ -9,7 +9,7 @@
 #include <gui/menudistance_screen/MenuDistancePresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <gui/containers/Menu.hpp>
+#include <gui/containers/MainMenuLayout.hpp>
 
 class MenuDistanceViewBase : public touchgfx::View<MenuDistancePresenter>
 {
@@ -29,7 +29,7 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Image tick;
-    Menu menu;
+    MainMenuLayout menuLayout;
 
 private:
 

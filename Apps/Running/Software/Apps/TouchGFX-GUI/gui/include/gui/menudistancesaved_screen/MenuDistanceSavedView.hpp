@@ -3,6 +3,8 @@
 
 #include <gui_generated/menudistancesaved_screen/MenuDistanceSavedViewBase.hpp>
 #include <gui/menudistancesaved_screen/MenuDistanceSavedPresenter.hpp>
+#include <gui/containers/CountdownTimer.hpp>
+#include <touchgfx/Callback.hpp>
 
 class MenuDistanceSavedView : public MenuDistanceSavedViewBase
 {
@@ -12,12 +14,15 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
-    void setDistanceUnits(float km, bool isImperial);
+    void setDistanceUnits(Settings::Alerts::Distance::Id id, bool isImperial);
 
-protected:
-    uint32_t mCounter = Gui::Config::kConfirmTimeout;
+private:
+    using Menu = App::MenuNav::Root::Settings::Alerts::Distance;
 
-    virtual void handleTickEvent() override;
+    void onDismiss();
+
+    CountdownTimer                              mDismissTimer;
+    touchgfx::Callback<MenuDistanceSavedView>   mDismissCb;
 };
 
 #endif // MENUDISTANCESAVEDVIEW_HPP

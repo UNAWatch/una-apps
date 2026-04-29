@@ -27,6 +27,8 @@ public:
 
     virtual ~MenuAlertsPresenter() {}
 
+    virtual void onIdleTimeout() override { model->exitApp(); }
+
 private:
     MenuAlertsPresenter();
 

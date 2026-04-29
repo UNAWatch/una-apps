@@ -19,7 +19,7 @@
 #include "SDK/Simulator/Kernel/Mock/Backlight.hpp"
 #include "SDK/Simulator/Kernel/Mock/Buzzer.hpp"
 #include "SDK/Simulator/Kernel/Mock/Vibro.hpp"
-#include "gui/common/GuiConfig.hpp"
+
 #include "Service.hpp"
 
 #include <stdlib.h>
@@ -97,7 +97,7 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     setupSimulator(argc, argv, hal);
 
     // Set custom frame rate
-    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / Gui::Config::kFrameRate);
+    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / SDK::GUI::Config::kFrameRate);
 
     //// Ensure there is a console window to print to using printf() or
     //// std::cout, and read from using e.g. fgets or std::cin.

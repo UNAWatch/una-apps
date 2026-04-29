@@ -3,9 +3,7 @@
 
 TrackLapPresenter::TrackLapPresenter(TrackLapView& v)
     : view(v)
-{
-
-}
+{}
 
 void TrackLapPresenter::activate()
 {
@@ -24,18 +22,4 @@ void TrackLapPresenter::activate()
 
 void TrackLapPresenter::deactivate()
 {
-
-}
-
-//void TrackLapPresenter::onTrackData(const Track::Data& data)
-//{
-//    view.setLapNum(data.lapNum);
-//    view.setDistance(data.totalDistance);
-//    view.setTimer(data.totalTime);
-//    view.setSteps(data.steps);
-//}
-
-void TrackLapPresenter::onGpsFix(bool acquired)
-{
-    view.setGpsFix(acquired);
 }

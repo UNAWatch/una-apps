@@ -33,7 +33,6 @@ bool SettingsSerializer::save(const Settings &settings)
     if (slash) {
         char buff[SDK::Interface::IFileSystem::skMaxPathLen] { };
         snprintf(buff, sizeof(buff), "%.*s", static_cast<size_t>(slash - mPath), mPath);
-        // Create dir
         if (!mKernel.fs.mkdir(buff)) {
             return false;
         }
@@ -54,10 +53,11 @@ bool SettingsSerializer::save(const Settings &settings)
 
     writer.startMap();
 
-    writer.add("auto_pause_en", settings.autoPauseEn);
-    writer.add("phone_notif_en", settings.phoneNotifEn);
-    writer.add("alert_distance", settings.alertDistance);
-    writer.add("alert_time", settings.alertTime);
+    writer.add("version",          settings.version);
+    writer.add("auto_pause_en",    settings.autoPauseEn);
+    writer.add("phone_notif_en",   settings.phoneNotifEn);
+    writer.add("alert_distance_id", static_cast<uint8_t>(settings.alertDistanceId));
+    writer.add("alert_time_id",     static_cast<uint8_t>(settings.alertTimeId));
 
     writer.endMap();
 
@@ -86,7 +86,7 @@ bool SettingsSerializer::load(Settings &settings)
     }
 
     size_t fileSize = file->size();
-    if (fileSize == 0) { // Check for adequate size
+    if (fileSize == 0) {
         file->close();
         file.reset();
         return false;
@@ -100,7 +100,7 @@ bool SettingsSerializer::load(Settings &settings)
     }
 
     size_t read = 0;
-    bool status = (file->read(buffer, fileSize, read) || read != fileSize);
+    bool status = file->read(buffer, fileSize, read) && (read == fileSize);
 
     file->close();
     file.reset();
@@ -118,10 +118,20 @@ bool SettingsSerializer::load(Settings &settings)
         return false;
     }
 
-    reader.get("auto_pause_en", settings.autoPauseEn);
+    reader.get("version",        settings.version);
+    reader.get("auto_pause_en",  settings.autoPauseEn);
     reader.get("phone_notif_en", settings.phoneNotifEn);
-    reader.get("alert_distance", settings.alertDistance);
-    reader.get("alert_time", settings.alertTime);
+
+    uint8_t distId = static_cast<uint8_t>(Settings::Alerts::Distance::ID_OFF);
+    uint8_t timeId = static_cast<uint8_t>(Settings::Alerts::Time::ID_OFF);
+    reader.get("alert_distance_id", distId);
+    reader.get("alert_time_id",     timeId);
+    settings.alertDistanceId = distId < Settings::Alerts::Distance::ID_COUNT
+        ? static_cast<Settings::Alerts::Distance::Id>(distId)
+        : Settings::Alerts::Distance::ID_OFF;
+    settings.alertTimeId = timeId < Settings::Alerts::Time::ID_COUNT
+        ? static_cast<Settings::Alerts::Time::Id>(timeId)
+        : Settings::Alerts::Time::ID_OFF;
 
     delete[] buffer;
 

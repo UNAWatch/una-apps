@@ -1,51 +1,38 @@
 #include <gui/trackaction_screen/TrackActionView.hpp>
-#include <images/BitmapDatabase.hpp>
 
-TrackActionView::TrackActionView()
+constexpr uint16_t kTrackTitleInfoSwitchPeriod = SDK::Utils::secToTicks(3, App::Config::kFrameRate);
+
+TrackActionView::TrackActionView() :
+    mUpdateItemCb(this, &TrackActionView::updateItem),
+    mUpdateCenterItemCb(this, &TrackActionView::updateCenterItem),
+    mCarouselCb(this, &TrackActionView::onCarouselUpdate)
 {
-
 }
 
 void TrackActionView::setupScreen()
 {
     TrackActionViewBase::setupScreen();
 
-    updTitleInfo();
+    menuLayout.showTitle(false);
 
-    menu.showTitle(false);  // Hide title
+    menuLayout.getButtons().setL1(Buttons::NONE);
+    menuLayout.getButtons().setL2(Buttons::NONE);
+    menuLayout.getButtons().setR1(Buttons::AMBER);
+    menuLayout.getButtons().setR2(Buttons::NONE);
 
-    menu.getButtons().setL1(Buttons::NONE);
-    menu.getButtons().setL2(Buttons::NONE);
-    menu.getButtons().setR1(Buttons::AMBER);
-    menu.getButtons().setR2(Buttons::NONE);
+    menuLayout.setAnimationSteps(App::Config::kMenuAnimationSteps);
+    menuLayout.setUpdateItemCallback(mUpdateItemCb);
+    menuLayout.setUpdateCenterItemCallback(mUpdateCenterItemCb);
+    menuLayout.setNumberOfItems(Menu::ID_COUNT);
 
-    menu.setNumberOfItems(App::Menu::Start::Action::ID_COUNT);
-    menu.setBackground(BITMAP_BACKGROUND_TEAL_ID);
+    mItemLayout.simple.msgOffsetY = -6;
+    menuLayout.getMenu().setItemLayout(mItemLayout);
 
-    MenuItemSelected *pS = nullptr;
-    MenuItemNotSelected *pN = nullptr;
+    infoCarousel.setPeriod(kTrackTitleInfoSwitchPeriod);
+    infoCarousel.setUpdateCallback(mCarouselCb);
+    infoCarousel.setCount(4);   // fires onCarouselUpdate(0) immediately
 
-    pS = menu.getSelectedItem(App::Menu::Start::Action::ID_RESUME);
-    pS->config(T_TEXT_RESUME);
-
-    pN = menu.getNotSelectedItem(App::Menu::Start::Action::ID_RESUME);
-    pN->config(T_TEXT_RESUME);
-
-
-    pS = menu.getSelectedItem(App::Menu::Start::Action::ID_SAVE);
-    pS->config(T_TEXT_SAVE);
-
-    pN = menu.getNotSelectedItem(App::Menu::Start::Action::ID_SAVE);
-    pN->config(T_TEXT_SAVE);
-
-
-    pS = menu.getSelectedItem(App::Menu::Start::Action::ID_DISCARD);
-    pS->config(T_TEXT_DISCARD);
-
-    pN = menu.getNotSelectedItem(App::Menu::Start::Action::ID_DISCARD);
-    pN->config(T_TEXT_DISCARD);
-
-    menu.invalidate();
+    menuLayout.invalidate();
 }
 
 void TrackActionView::tearDownScreen()
@@ -53,159 +40,180 @@ void TrackActionView::tearDownScreen()
     TrackActionViewBase::tearDownScreen();
 }
 
+// ---- Presenter -> View ------------------------------------------------------
+
 void TrackActionView::setPositionId(uint16_t id)
 {
-    menu.selectItem(id);
+    menuLayout.selectItem(id);
 }
 
 uint16_t TrackActionView::getPositionId()
 {
-    return menu.getSelectedItem();
+    return menuLayout.getSelectedItem();
 }
 
 void TrackActionView::setUnitsImperial(bool isImperial)
 {
-    mUnitsImperial = isImperial;
-    updTitleInfo();
+    mIsImperial = isImperial;
+    infoCarousel.refresh();
 }
 
 void TrackActionView::setTimer(std::time_t sec)
 {
-    mTimerSec = sec;
-    updTitleInfo();
+    pauseIndicator.setTime(sec);
 }
 
-void TrackActionView::setAvgPace(float spm)
+void TrackActionView::setAvgPace(float secPerM)
 {
-    mAvgPace = spm;
-    updTitleInfo();
+    auto paceConv = [this](float s) -> float {
+        if (s < 1e-6f) return 0.0f;
+        const float secPerKm = s * 1000.0f;
+        return mIsImperial ? secPerKm / SDK::Utils::kmToMiles(1.0f) : secPerKm;
+    };
+
+    mAvgPaceConv = paceConv(secPerM);
+    infoCarousel.refresh();
 }
 
-void TrackActionView::setDistance(float m)
+void TrackActionView::setDistance(float metres)
 {
-    mDistance = m;
-    updTitleInfo();
+    auto distConv = [this](float m) -> float {
+        const float km = m / 1000.0f;
+        return mIsImperial ? SDK::Utils::kmToMiles(km) : km;
+    };
+
+    mDistanceConv = distConv(metres);
+    infoCarousel.refresh();
 }
 
-void TrackActionView::setAvgHR(float v)
+void TrackActionView::setAvgHR(float hr)
 {
-    mAvgHr = v;
-    updTitleInfo();
+    mAvgHr = hr;
+    infoCarousel.refresh();
 }
 
-void TrackActionView::setElevation(float m)
+void TrackActionView::setElevation(float metres)
 {
-    mElevation = m;
-    updTitleInfo();
+    mElevationConv = mIsImperial ? SDK::Utils::metersToFeet(metres) : metres;
+    infoCarousel.refresh();
 }
 
-void TrackActionView::setGpsFix(bool state)
+// ---- Menu callbacks --------------------------------------------------------
+
+void TrackActionView::updateItem(MainMenuItem& item, int16_t index)
 {
-    mGpsFix = state;
+    static const TypedTextId sIds[Menu::ID_COUNT] = {
+        T_TEXT_RESUME,
+        T_TEXT_SUMMARY,
+        T_TEXT_SAVE,
+        T_TEXT_DISCARD,
+    };
+
+    if (index < 0 || index >= static_cast<int16_t>(Menu::ID_COUNT)) return;
+
+    MenuItemConfig cfg;
+    cfg.msgId = sIds[index];
+    item.apply(cfg);
 }
+
+void TrackActionView::updateCenterItem(MainMenuCenterItem& item, int16_t index)
+{
+    static const TypedTextId sIds[Menu::ID_COUNT] = {
+        T_TEXT_RESUME,
+        T_TEXT_SUMMARY,
+        T_TEXT_SAVE,
+        T_TEXT_DISCARD,
+    };
+
+    if (index < 0 || index >= static_cast<int16_t>(Menu::ID_COUNT)) return;
+
+    MenuItemConfig cfg;
+    cfg.msgId = sIds[index];
+    item.apply(cfg);
+}
+
+// ---- Carousel callback -----------------------------------------------------
+
+void TrackActionView::onCarouselUpdate(int16_t index)
+{
+    const uint16_t kBufSize = 10;
+    touchgfx::Unicode::UnicodeChar buf[kBufSize] {};
+
+    switch (index) {
+
+    case 0:
+        infoCarousel.setTitle(T_TEXT_AVG_DOT_PACE_UC);
+        {
+            if (mAvgPaceConv < App::Display::kMinPace) {
+                Unicode::snprintf(buf, kBufSize, "---");
+            } else {
+                auto hms = SDK::Utils::toHMS(static_cast<std::time_t>(mAvgPaceConv));
+                Unicode::snprintf(buf, kBufSize, "%u:%02u", hms.m, hms.s);
+            }
+        }
+        break;
+
+    case 1:
+        infoCarousel.setTitle(T_TEXT_DISTANCE_UC); 
+        {
+            if (mDistanceConv < App::Display::kMinDist) {
+                Unicode::snprintf(buf, kBufSize, "---");
+            } else if (mDistanceConv < 100.0f) {
+                Unicode::snprintfFloat(buf, kBufSize, "%.02f", mDistanceConv);
+            } else {
+                Unicode::snprintfFloat(buf, kBufSize, "%.01f", mDistanceConv);
+            }
+        }
+        break;
+
+    case 2:
+        infoCarousel.setTitle(T_TEXT_AVG_DOT_HR);
+        Unicode::snprintfFloat(buf, kBufSize, "%.0f", mAvgHr);
+        break;
+
+    case 3:
+        infoCarousel.setTitle(T_TEXT_ELEVATION_UC);
+        Unicode::snprintf(buf, kBufSize, "%d", static_cast<int16_t>(mElevationConv));
+        break;
+
+    default:
+        break;
+    }
+
+    infoCarousel.setValue(buf);
+}
+
+// ---- Input -----------------------------------------------------------------
 
 void TrackActionView::handleKeyEvent(uint8_t key)
 {
-    if (key == Gui::Config::Button::L1) {
-        menu.selectPrev();
-        updTitleInfo();
+    if (key == SDK::GUI::Button::L1) {
+        menuLayout.selectPrev();
+        infoCarousel.refresh();  // tick visibility depends on selected item
     }
 
-    if (key == Gui::Config::Button::L2) {
-        menu.selectNext();
-        updTitleInfo();
+    if (key == SDK::GUI::Button::L2) {
+        menuLayout.selectNext();
+        infoCarousel.refresh();
     }
 
-    if (key == Gui::Config::Button::R1) {
-        uint16_t id = menu.getSelectedItem();
-
-        switch (id) {
-            case App::Menu::Start::Action::ID_RESUME:
-                presenter->resumeTrack();
-                application().gotoTrackScreenNoTransition();
-                break;
-            case App::Menu::Start::Action::ID_SAVE:
-                application().gotoTrackSavedScreenNoTransition();
-                break;
-            case App::Menu::Start::Action::ID_DISCARD:
-                application().gotoTrackDiscardConfirmationScreenNoTransition();
-                break;
-            default:
-                break;
+    if (key == SDK::GUI::Button::R1) {
+        switch (menuLayout.getSelectedItem()) {
+        case Menu::ID_RESUME:
+            presenter->resumeTrack();
+            application().gotoTrackScreenNoTransition();
+            break;
+        case Menu::ID_SUMMARY:
+            application().gotoTrackSummaryScreenNoTransition();
+            break;
+        case Menu::ID_SAVE:
+            application().gotoTrackSavedScreenNoTransition();
+            break;
+        case Menu::ID_DISCARD:
+            application().gotoTrackDiscardConfirmationScreenNoTransition();
+            break;
+        default:
+            break;
         }
-
     }
-
-    if (key == Gui::Config::Button::R2) {
-
-    }
-}
-
-void TrackActionView::handleTickEvent()
-{
-    if (mCounter > 0) {
-        mCounter--;
-    }
-    if (mCounter == 0) {
-        mCounter = Gui::Config::kTrackTitleInfoSwitchPeriod;
-
-        mTitleInfoMsgId++;
-        if (mTitleInfoMsgId == skTitleInfoMsgNum) {
-            mTitleInfoMsgId = 0;
-        }
-        updTitleInfo();
-    }
-}
-
-void TrackActionView::updTitleInfo()
-{
-    if (menu.getSelectedItem() == App::Menu::Start::Action::ID_SAVE) {
-        tick.setVisible(true);
-        titleInfo.setShortLine(true);
-    } else {
-        tick.setVisible(false);
-        titleInfo.setShortLine(false);
-    }
-    tick.invalidate();
-    const uint16_t bufferSize = 10;
-    touchgfx::Unicode::UnicodeChar buffer[bufferSize] {};
-
-    if (mTitleInfoMsgId == 0) {
-        titleInfo.setTitle(T_TEXT_TIMER_UC);
-        uint16_t hh = 0;
-        uint8_t mm = 0;
-        uint8_t ss = 0;
-        App::Utils::sec2hms(mTimerSec, hh, mm, ss);
-        Unicode::snprintf(buffer, bufferSize, "%u:%02u:%02u", hh, mm, ss);
-    } else if (mTitleInfoMsgId == 1) {
-        titleInfo.setTitle(T_TEXT_AVG_DOT_PACE_UC);
-        std::time_t secPerKm = static_cast<std::time_t>(mAvgPace * 1000.0f);
-        if (mGpsFix || secPerKm != 0) {
-            if (mUnitsImperial) {
-                secPerKm = static_cast<std::time_t>(secPerKm / App::Utils::km2mi(1.0f));
-            }
-            Unicode::snprintf(buffer, bufferSize, "%d:%02d", App::Utils::sec2hmsM(secPerKm), App::Utils::sec2hmsS(secPerKm));
-        } else {
-            Unicode::snprintf(buffer, bufferSize, "---");
-        }
-    } else if (mTitleInfoMsgId == 2) {
-        titleInfo.setTitle(T_TEXT_DISTANCE_UC);
-        if (mGpsFix || mDistance > 0.001f) {
-            if (mUnitsImperial) {
-                Unicode::snprintfFloat(buffer, bufferSize, "%.02f", App::Utils::km2mi(mDistance / 1000.0f));    // mi
-            } else {
-                Unicode::snprintfFloat(buffer, bufferSize, "%.02f", mDistance / 1000.0f); // km
-            }
-        } else {
-            Unicode::snprintf(buffer, bufferSize, "---");
-        }
-    } else if (mTitleInfoMsgId == 3) {
-        titleInfo.setTitle(T_TEXT_AVG_DOT_HR);
-        Unicode::snprintfFloat(buffer, bufferSize, "%.0f", mAvgHr);
-    } else if (mTitleInfoMsgId == 4) {
-        titleInfo.setTitle(T_TEXT_ELEVATION_UC);
-        Unicode::snprintfFloat(buffer, bufferSize, "%.0f", mElevation);
-    }
-
-    titleInfo.setValue(buffer);
 }

@@ -32,13 +32,13 @@ protected:
     Title title;
     touchgfx::TextAreaWithOneWildcard savedText;
     touchgfx::Image icon;
-    touchgfx::TextAreaWithOneWildcard msg;
+    touchgfx::TextAreaWithOneWildcard messageText;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t MSG_SIZE = 32;
-    touchgfx::Unicode::UnicodeChar msgBuffer[MSG_SIZE];
+    static const uint16_t MESSAGETEXT_SIZE = 32;
+    touchgfx::Unicode::UnicodeChar messageTextBuffer[MESSAGETEXT_SIZE];
 
 private:
 

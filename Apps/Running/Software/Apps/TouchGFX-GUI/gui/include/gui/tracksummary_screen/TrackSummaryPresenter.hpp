@@ -13,21 +13,18 @@ class TrackSummaryPresenter : public touchgfx::Presenter, public ModelListener
 public:
     TrackSummaryPresenter(TrackSummaryView& v);
 
-    /**
-     * The activate function is called automatically when this screen is "switched in"
-     * (ie. made active). Initialization logic can be placed here.
-     */
     virtual void activate();
-
-    /**
-     * The deactivate function is called automatically when this screen is "switched out"
-     * (ie. made inactive). Teardown functionality can be placed here.
-     */
     virtual void deactivate();
 
     virtual ~TrackSummaryPresenter() {}
 
     void exitApp();
+
+    /**
+     * @brief Called when R1 is pressed.
+     * Returns to TrackAction screen if track is paused, otherwise exits the app.
+     */
+    void backToTrack();
 
 private:
     TrackSummaryPresenter();

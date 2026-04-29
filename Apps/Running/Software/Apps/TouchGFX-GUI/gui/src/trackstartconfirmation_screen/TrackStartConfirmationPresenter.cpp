@@ -20,10 +20,15 @@ void TrackStartConfirmationPresenter::deactivate()
 
 void TrackStartConfirmationPresenter::onIdleTimeout()
 {
-    model->application().gotoEnterMenuScreenNoTransition();
+    model->application().gotoMainScreenNoTransition();
 }
 
 void TrackStartConfirmationPresenter::startTrack()
 {
-    model->trackStart();
+    if (model->isPendingIntervalsMode()) {
+        model->application().gotoMenuIntervalsScreenNoTransition();
+    } else {
+        model->trackStart(false);
+        model->application().gotoTrackScreenNoTransition();
+    }
 }

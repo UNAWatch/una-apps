@@ -14,15 +14,14 @@ void TrackActionPresenter::activate()
     // Reset idle timer
     model->resetIdleTimer();
 
-    view.setGpsFix(model->getGpsFix());
-    view.setPositionId(model->getMenuPosTrackAction());
+    view.setPositionId(model->menu().track.action.get());
 
     model->trackPause();
 }
 
 void TrackActionPresenter::deactivate()
 {
-    model->setMenuPosTrackAction(view.getPositionId());
+    model->menu().track.action.set(view.getPositionId());
 }
 
 void TrackActionPresenter::onTrackData(const Track::Data& data)
@@ -37,9 +36,4 @@ void TrackActionPresenter::onTrackData(const Track::Data& data)
 void TrackActionPresenter::resumeTrack()
 {
     model->trackResume();
-}
-
-void TrackActionPresenter::onGpsFix(bool acquired)
-{
-    view.setGpsFix(acquired);
 }

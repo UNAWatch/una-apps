@@ -9,10 +9,7 @@ MenuTimePresenter::MenuTimePresenter(MenuTimeView& v)
 
 void MenuTimePresenter::activate()
 {
-    // Set current menu position
-    view.setTime(model->getSettings().alertTime);
-
-    // Reset idle timer
+    view.setTime(model->getSettings().alertTimeId);
     model->resetIdleTimer();
 }
 
@@ -21,9 +18,9 @@ void MenuTimePresenter::deactivate()
 
 }
 
-void MenuTimePresenter::saveTime(uint32_t minutes)
+void MenuTimePresenter::saveTime(Settings::Alerts::Time::Id id)
 {
     Settings sett = model->getSettings();
-    sett.alertTime = minutes;
-    model->setSettings(sett);
+    sett.alertTimeId = id;
+    model->saveSettings(sett);
 }

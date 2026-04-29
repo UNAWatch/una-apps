@@ -10,24 +10,28 @@
  *
  * @code{.json}
  * {
- *     "file":"Activity/202504/activity_20250409T023510.cbor",
- *     "date":"20250409T023530",
+ *     "utc":1744163530,
  *     "time":125,
- *     "distance":4.0154,
+ *     "distance":4015.4,
  *     "speed_avg":3.64264,
  *     "elevation":98.4013,
- *     "pace_avg":192,
+ *     "pace_avg":0.274536,
  *     "hr_max":84,
  *     "hr_avg":74,
- *     "map":"416A426B43...6643"
+ *     "map":"416A426B43...6643",
+ *     "lap_count":2,
+ *     "laps":[
+ *         {"dur":62,"dist":2010.5,"pace":4.15},
+ *         {"dur":63,"dist":2004.9,"pace":4.15}
+ *     ]
  * }
  * @endcode
  *
  ******************************************************************************
  */
 
-#ifndef __ACTIVITY_SUMMARY_SERIALIZER_HPP
-#define __ACTIVITY_SUMMARY_SERIALIZER_HPP
+#ifndef ACTIVITY_SUMMARY_SERIALIZER_HPP
+#define ACTIVITY_SUMMARY_SERIALIZER_HPP
 
 #include "SDK/Kernel/Kernel.hpp"
 
@@ -75,4 +79,4 @@ private:
     const char* mPath = nullptr;
 };
 
-#endif /* __ACTIVITY_SUMMARY_SERIALIZER_HPP */
+#endif // ACTIVITY_SUMMARY_SERIALIZER_HPP

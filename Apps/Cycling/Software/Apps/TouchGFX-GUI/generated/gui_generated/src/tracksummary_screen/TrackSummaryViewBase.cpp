@@ -13,21 +13,26 @@ TrackSummaryViewBase::TrackSummaryViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    trackSummaryHR.setXY(0, 0);
-    trackSummaryHR.setVisible(false);
-    add(trackSummaryHR);
-
-    trackSummary.setXY(0, 0);
-    add(trackSummary);
-
     buttons.setXY(0, 46);
     add(buttons);
 
-    sideBar.setXY(0, 81);
-    add(sideBar);
+    scrollIndicator.setXY(0, 47);
+    add(scrollIndicator);
 
-    title.setXY(50, 0);
-    add(title);
+    summaryFaceLaps.setXY(0, 0);
+    summaryFaceLaps.setVisible(false);
+    add(summaryFaceLaps);
+
+    summaryFaceHeartRate.setXY(0, 0);
+    summaryFaceHeartRate.setVisible(false);
+    add(summaryFaceHeartRate);
+
+    summaryFaceOverview.setXY(0, 0);
+    summaryFaceOverview.setVisible(false);
+    add(summaryFaceOverview);
+
+    summaryFaceMap.setXY(0, 0);
+    add(summaryFaceMap);
 }
 
 TrackSummaryViewBase::~TrackSummaryViewBase()
@@ -37,11 +42,12 @@ TrackSummaryViewBase::~TrackSummaryViewBase()
 
 void TrackSummaryViewBase::setupScreen()
 {
-    trackSummaryHR.initialize();
-    trackSummary.initialize();
     buttons.initialize();
-    sideBar.initialize();
-    title.initialize();
+    scrollIndicator.initialize();
+    summaryFaceLaps.initialize();
+    summaryFaceHeartRate.initialize();
+    summaryFaceOverview.initialize();
+    summaryFaceMap.initialize();
     transitionBegins();
 }
 

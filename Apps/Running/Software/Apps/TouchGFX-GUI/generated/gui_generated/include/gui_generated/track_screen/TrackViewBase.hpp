@@ -8,13 +8,13 @@
 #include <mvp/View.hpp>
 #include <gui/track_screen/TrackPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/SideBarSmall.hpp>
+#include <gui/containers/ScrollIndicator.hpp>
 #include <gui/containers/Buttons.hpp>
-#include <gui/containers/TrackFace3.hpp>
-#include <gui/containers/TrackFace2.hpp>
-#include <gui/containers/TrackFace1.hpp>
-#include <touchgfx/widgets/canvas/Circle.hpp>
-#include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
+#include <gui/containers/TrackFaceStatus.hpp>
+#include <gui/containers/TrackFaceLap.hpp>
+#include <gui/containers/TrackFaceTotal.hpp>
+#include <gui/containers/TrackFaceIntervals.hpp>
+#include <gui/containers/GpsIndicator.hpp>
 
 class TrackViewBase : public touchgfx::View<TrackPresenter>
 {
@@ -33,13 +33,13 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    SideBarSmall sideBar;
+    ScrollIndicator scrollIndicator;
     Buttons buttons;
-    TrackFace3 trackFace3;
-    TrackFace2 trackFace2;
-    TrackFace1 trackFace1;
-    touchgfx::Circle gpsDot;
-    touchgfx::PainterABGR2222 gpsDotPainter;
+    TrackFaceStatus trackFaceStatus;
+    TrackFaceLap trackFaceLap;
+    TrackFaceTotal trackFaceTotal;
+    TrackFaceIntervals trackFaceIntervals;
+    GpsIndicator gpsIndicator;
 
 private:
 

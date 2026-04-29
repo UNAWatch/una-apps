@@ -8,11 +8,10 @@
 #include <mvp/View.hpp>
 #include <gui/tracklap_screen/TrackLapPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <gui/containers/Buttons.hpp>
 #include <touchgfx/widgets/canvas/Line.hpp>
 #include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
-#include <gui/containers/Buttons.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <gui/containers/Title.hpp>
 
 class TrackLapViewBase : public touchgfx::View<TrackLapPresenter>
@@ -32,35 +31,28 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::Image cross;
-    touchgfx::TextAreaWithOneWildcard avgHrText;
-    touchgfx::TextAreaWithOneWildcard avgHrValue;
+    Buttons buttons;
     touchgfx::Line line2;
     touchgfx::PainterABGR2222 line2Painter;
+    touchgfx::TextAreaWithOneWildcard paceValue;
+    touchgfx::TextAreaWithOneWildcard paceText;
     touchgfx::TextAreaWithOneWildcard timeValue;
     touchgfx::TextAreaWithOneWildcard timeText;
     touchgfx::Line line1;
     touchgfx::PainterABGR2222 line1Painter;
     touchgfx::TextAreaWithOneWildcard distanceValue;
     touchgfx::TextAreaWithOneWildcard distanceText;
-    Buttons buttons;
     Title title;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t AVGHRTEXT_SIZE = 15;
-    touchgfx::Unicode::UnicodeChar avgHrTextBuffer[AVGHRTEXT_SIZE];
-    static const uint16_t AVGHRVALUE_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar avgHrValueBuffer[AVGHRVALUE_SIZE];
+    static const uint16_t PACEVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar paceValueBuffer[PACEVALUE_SIZE];
     static const uint16_t TIMEVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar timeValueBuffer[TIMEVALUE_SIZE];
-    static const uint16_t TIMETEXT_SIZE = 15;
-    touchgfx::Unicode::UnicodeChar timeTextBuffer[TIMETEXT_SIZE];
     static const uint16_t DISTANCEVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar distanceValueBuffer[DISTANCEVALUE_SIZE];
-    static const uint16_t DISTANCETEXT_SIZE = 15;
-    touchgfx::Unicode::UnicodeChar distanceTextBuffer[DISTANCETEXT_SIZE];
 
 private:
 

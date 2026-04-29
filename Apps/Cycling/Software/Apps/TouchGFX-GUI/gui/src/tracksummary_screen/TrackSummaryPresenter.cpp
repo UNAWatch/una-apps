@@ -9,27 +9,24 @@ TrackSummaryPresenter::TrackSummaryPresenter(TrackSummaryView& v)
 
 void TrackSummaryPresenter::activate()
 {
-    // Reset idle timer
     model->resetIdleTimer();
 
-    view.setDistance(model->trackSummary().distance, model->isUnitsImperial());
-    view.setAvgSpeed(model->trackSummary().speedAvg, model->isUnitsImperial());
-    view.setTimer(static_cast<uint32_t>(model->trackSummary().time));
-    view.setMaxHR(model->trackSummary().hrMax);
-    view.setAvgHR(model->trackSummary().hrAvg);
-    view.setMap(model->trackSummary().map);
-    view.setElevation(model->trackSummary().elevation, model->isUnitsImperial());
+    view.setSummary(model->getTrackSummary(), model->isUnitsImperial(), model->isTrackPaused());
 }
 
 void TrackSummaryPresenter::deactivate()
 {
-
 }
 
 void TrackSummaryPresenter::exitApp()
 {
-    if (model->getMenuPosEnterMenu() == App::Menu::ID_LAST_ACTIVITY) {
-        model->application().gotoEnterMenuScreenNoTransition();
+    model->exitApp();
+}
+
+void TrackSummaryPresenter::backToTrack()
+{
+    if (model->isTrackPaused()) {
+        model->application().gotoTrackActionScreenNoTransition();
     } else {
         model->exitApp();
     }

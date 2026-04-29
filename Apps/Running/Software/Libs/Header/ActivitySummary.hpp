@@ -9,14 +9,24 @@
  ******************************************************************************
  */
 
-#ifndef __ACTIVITY_SUMMARY_HPP
-#define __ACTIVITY_SUMMARY_HPP
+#ifndef ACTIVITY_SUMMARY_HPP
+#define ACTIVITY_SUMMARY_HPP
 
 #include <cstdint>
-#include <string>
 #include <ctime>
+#include <vector>
 
 #include "SDK/TrackMap/TrackMapScreen.hpp"
+
+/**
+ * @struct LapSummary
+ * @brief Summary data for a single lap.
+ */
+struct LapSummary {
+    time_t duration;  ///< Lap duration in seconds
+    float  distance;  ///< Lap distance in m
+    float  paceAvg;   ///< Average pace in s/m
+};
 
 /**
  * @struct ActivitySummary
@@ -29,9 +39,11 @@ struct ActivitySummary {
     float speedAvg;     ///< Average speed in m/s
     float elevation;    ///< Elevation in m
     float paceAvg;      ///< Average pace in s/m
-    float hrMax;        ///< Maximum Heart Rate in bbs
-    float hrAvg;        ///< Average Heart Rate in bbs
+    float hrMax;        ///< Maximum Heart Rate in bpm
+    float hrAvg;        ///< Average Heart Rate in bpm
     SDK::TrackMapScreen map; ///< Track map
+
+    std::vector<LapSummary> laps; ///< Per-lap summary data
 };
 
-#endif /* __ACTIVITY_SUMMARY_HPP */
+#endif // ACTIVITY_SUMMARY_HPP

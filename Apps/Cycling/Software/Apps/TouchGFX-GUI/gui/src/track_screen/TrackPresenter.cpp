@@ -9,11 +9,12 @@ TrackPresenter::TrackPresenter(TrackView& v)
 
 void TrackPresenter::activate()
 {
-    // Reset nested menu position
-    model->setMenuPosTrackAction(0);
+    // Reset nested action menu position
+    model->menu().track.action.reset();
 
-    // Set current menu position
-    view.setPositionId(model->getMenuPosTrack());
+    view.setPositionId(model->menu().track.get());
+
+    view.setConfig(model->isUnitsImperial(), model->getHrThresholds(), model->getHrThresholdsCount());
 
     onTrackData(model->getTrackData());
 
@@ -24,17 +25,17 @@ void TrackPresenter::activate()
     view.setTime(hour, minute);
 
     view.setBatteryLevel(model->getBatteryLevel());
-    view.setGpsFix(model->getGpsFix());
+    view.setGpsFix(model->hasGpsFix());
 }
 
 void TrackPresenter::deactivate()
 {
-    model->setMenuPosTrack(view.getPositionId());
+    model->menu().track.set(view.getPositionId());
 }
 
 void TrackPresenter::onTrackData(const Track::Data& data)
 {
-    view.setTrackData(data, model->isUnitsImperial(), model->getHrThresholds());
+    view.setTrackData(data);
 }
 
 void TrackPresenter::onBatteryLevel(uint8_t lvl)

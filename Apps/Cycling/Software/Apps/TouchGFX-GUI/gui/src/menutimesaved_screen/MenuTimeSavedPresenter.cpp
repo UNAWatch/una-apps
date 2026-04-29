@@ -9,7 +9,7 @@ MenuTimeSavedPresenter::MenuTimeSavedPresenter(MenuTimeSavedView& v)
 
 void MenuTimeSavedPresenter::activate()
 {
-    view.setTime(model->getSettings().alertTime);
+    view.setTime(model->getSettings().alertTimeId);
 }
 
 void MenuTimeSavedPresenter::deactivate()

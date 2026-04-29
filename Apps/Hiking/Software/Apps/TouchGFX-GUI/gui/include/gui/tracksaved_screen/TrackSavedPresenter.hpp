@@ -27,8 +27,6 @@ public:
 
     virtual ~TrackSavedPresenter() {}
 
-    virtual void onIdleTimeout() override { }
-
 private:
     TrackSavedPresenter();
 

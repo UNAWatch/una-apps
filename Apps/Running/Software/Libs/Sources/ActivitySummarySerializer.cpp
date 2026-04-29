@@ -12,6 +12,8 @@
 #include "ActivitySummarySerializer.hpp"
 
 #include <cassert>
+#include <cinttypes>
+#include <cstdlib>
 
 #include "SDK/JSON/JsonStreamWriter.hpp"
 #include "SDK/JSON/JsonStreamReader.hpp"
@@ -65,6 +67,17 @@ bool ActivitySummarySerializer::save(const ActivitySummary& summary)
 
     const uint8_t* points = reinterpret_cast<const uint8_t*>(summary.map.points.data());
     writer.addHexString("map", points, summary.map.points.size() * 2);
+
+    writer.add("lap_count", static_cast<uint32_t>(summary.laps.size()));
+    writer.startArray("laps");
+    for (const LapSummary& lap : summary.laps) {
+        writer.startMap();
+        writer.add("dur",  static_cast<uint32_t>(lap.duration));
+        writer.add("dist", lap.distance);
+        writer.add("pace", lap.paceAvg);
+        writer.endMap();
+    }
+    writer.endArray();
 
     writer.endMap();
 
@@ -148,6 +161,28 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
     reader.get("hr_max", summary.hrMax);
     reader.get("hr_avg", summary.hrAvg);
 
+    // Laps
+    uint32_t lapCount = 0;
+    reader.get("lap_count", lapCount);
+    summary.laps.clear();
+    summary.laps.reserve(lapCount);
+    for (uint32_t i = 0; i < lapCount; ++i) {
+        char query[32];
+        LapSummary lap{};
+
+        uint32_t dur = 0;
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].dur", i);
+        reader.get(query, dur);
+        lap.duration = static_cast<time_t>(dur);
+
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].dist", i);
+        reader.get(query, lap.distance);
+
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].pace", i);
+        reader.get(query, lap.paceAvg);
+
+        summary.laps.push_back(lap);
+    }
 
 #if 1
     // Track map as HEX-String

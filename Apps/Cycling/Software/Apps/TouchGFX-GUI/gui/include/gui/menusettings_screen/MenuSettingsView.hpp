@@ -3,6 +3,7 @@
 
 #include <gui_generated/menusettings_screen/MenuSettingsViewBase.hpp>
 #include <gui/menusettings_screen/MenuSettingsPresenter.hpp>
+#include <gui/containers/MenuItemConfig.hpp>
 
 class MenuSettingsView : public MenuSettingsViewBase
 {
@@ -19,9 +20,17 @@ public:
     uint16_t getPositionId();
 
 protected:
-    bool mGpsFix { };
-    bool mAutoPause { };
-    bool mPhoneNotif { };
+    using Menu = App::MenuNav::Root::Settings;
+
+    bool mGpsFix     = false;
+    bool mAutoPause  = false;
+    bool mPhoneNotif = false;
+
+    touchgfx::Callback<MenuSettingsView, MainMenuItem&, int16_t>       mUpdateItemCb;
+    touchgfx::Callback<MenuSettingsView, MainMenuCenterItem&, int16_t> mUpdateCenterItemCb;
+
+    void updateItem(MainMenuItem& item, int16_t index);
+    void updateCenterItem(MainMenuCenterItem& item, int16_t index);
 
     virtual void handleKeyEvent(uint8_t key) override;
 };

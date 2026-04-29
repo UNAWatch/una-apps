@@ -17,11 +17,11 @@ public:
 
     virtual void changeToStartScreen()
     {
-        gotoEnterMenuScreenNoTransition();
+        gotoMainScreenNoTransition();
     }
 
-    // EnterMenu
-    void gotoEnterMenuScreenNoTransition();
+    // Main
+    void gotoMainScreenNoTransition();
 
     // MenuSettings
     void gotoMenuSettingsScreenNoTransition();
@@ -40,6 +40,30 @@ public:
 
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransition();
+
+    // MenuIntervals
+    void gotoMenuIntervalsScreenNoTransition();
+
+    // MenuIntervalsRepeats
+    void gotoMenuIntervalsRepeatsScreenNoTransition();
+
+    // MenuIntervalsRun
+    void gotoMenuIntervalsRunScreenNoTransition();
+
+    // MenuIntervalsRunDistance
+    void gotoMenuIntervalsRunDistanceScreenNoTransition();
+
+    // MenuIntervalsRest
+    void gotoMenuIntervalsRestScreenNoTransition();
+
+    // MenuIntervalsRunTime
+    void gotoMenuIntervalsRunTimeScreenNoTransition();
+
+    // MenuIntervalsRestTime
+    void gotoMenuIntervalsRestTimeScreenNoTransition();
+
+    // MenuIntervalsRestDistance
+    void gotoMenuIntervalsRestDistanceScreenNoTransition();
 
     // TrackStartConfirmation
     void gotoTrackStartConfirmationScreenNoTransition();
@@ -65,13 +89,22 @@ public:
     // TrackSummary
     void gotoTrackSummaryScreenNoTransition();
 
+    // TrackIntervalsCountdown
+    void gotoTrackIntervalsCountdownScreenNoTransition();
+
+    // TrackIntervalsAlert
+    void gotoTrackIntervalsAlertScreenNoTransition();
+
+    // TrackIntervalsWorkoutCompleted
+    void gotoTrackIntervalsWorkoutCompletedScreenNoTransition();
+
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // EnterMenu
-    void gotoEnterMenuScreenNoTransitionImpl();
+    // Main
+    void gotoMainScreenNoTransitionImpl();
 
     // MenuSettings
     void gotoMenuSettingsScreenNoTransitionImpl();
@@ -90,6 +123,30 @@ protected:
 
     // MenuTimeSaved
     void gotoMenuTimeSavedScreenNoTransitionImpl();
+
+    // MenuIntervals
+    void gotoMenuIntervalsScreenNoTransitionImpl();
+
+    // MenuIntervalsRepeats
+    void gotoMenuIntervalsRepeatsScreenNoTransitionImpl();
+
+    // MenuIntervalsRun
+    void gotoMenuIntervalsRunScreenNoTransitionImpl();
+
+    // MenuIntervalsRunDistance
+    void gotoMenuIntervalsRunDistanceScreenNoTransitionImpl();
+
+    // MenuIntervalsRest
+    void gotoMenuIntervalsRestScreenNoTransitionImpl();
+
+    // MenuIntervalsRunTime
+    void gotoMenuIntervalsRunTimeScreenNoTransitionImpl();
+
+    // MenuIntervalsRestTime
+    void gotoMenuIntervalsRestTimeScreenNoTransitionImpl();
+
+    // MenuIntervalsRestDistance
+    void gotoMenuIntervalsRestDistanceScreenNoTransitionImpl();
 
     // TrackStartConfirmation
     void gotoTrackStartConfirmationScreenNoTransitionImpl();
@@ -114,6 +171,15 @@ protected:
 
     // TrackSummary
     void gotoTrackSummaryScreenNoTransitionImpl();
+
+    // TrackIntervalsCountdown
+    void gotoTrackIntervalsCountdownScreenNoTransitionImpl();
+
+    // TrackIntervalsAlert
+    void gotoTrackIntervalsAlertScreenNoTransitionImpl();
+
+    // TrackIntervalsWorkoutCompleted
+    void gotoTrackIntervalsWorkoutCompletedScreenNoTransitionImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

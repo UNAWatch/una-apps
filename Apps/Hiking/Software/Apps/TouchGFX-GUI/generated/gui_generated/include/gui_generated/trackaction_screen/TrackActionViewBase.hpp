@@ -8,9 +8,9 @@
 #include <mvp/View.hpp>
 #include <gui/trackaction_screen/TrackActionPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Image.hpp>
-#include <gui/containers/Menu.hpp>
-#include <gui/containers/TitleInfo.hpp>
+#include <gui/containers/MainMenuLayout.hpp>
+#include <gui/containers/PauseIndicator.hpp>
+#include <gui/containers/InfoCarousel.hpp>
 
 class TrackActionViewBase : public touchgfx::View<TrackActionPresenter>
 {
@@ -29,9 +29,9 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::Image tick;
-    Menu menu;
-    TitleInfo titleInfo;
+    MainMenuLayout menuLayout;
+    PauseIndicator pauseIndicator;
+    InfoCarousel infoCarousel;
 
 private:
 

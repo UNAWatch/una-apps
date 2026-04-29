@@ -9,7 +9,7 @@ MenuDistanceSavedPresenter::MenuDistanceSavedPresenter(MenuDistanceSavedView& v)
 
 void MenuDistanceSavedPresenter::activate()
 {
-    view.setDistanceUnits(model->getSettings().alertDistance, model->isUnitsImperial());
+    view.setDistanceUnits(model->getSettings().alertDistanceId, model->isUnitsImperial());
 }
 
 void MenuDistanceSavedPresenter::deactivate()

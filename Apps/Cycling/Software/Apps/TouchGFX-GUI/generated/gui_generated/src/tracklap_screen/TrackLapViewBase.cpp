@@ -4,7 +4,6 @@
 #include <gui_generated/tracklap_screen/TrackLapViewBase.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
 TrackLapViewBase::TrackLapViewBase()
@@ -15,9 +14,16 @@ TrackLapViewBase::TrackLapViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    cross.setXY(33, 163);
-    cross.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CROSSYELLOW_ID));
-    add(cross);
+    buttons.setXY(0, 47);
+    add(buttons);
+
+    avgSpeedUnits.setPosition(160, 180, 60, 19);
+    avgSpeedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    avgSpeedUnits.setLinespacing(0);
+    Unicode::snprintf(avgSpeedUnitsBuffer, AVGSPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
+    avgSpeedUnits.setWildcard(avgSpeedUnitsBuffer);
+    avgSpeedUnits.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
+    add(avgSpeedUnits);
 
     avgSpeedText.setXY(71, 137);
     avgSpeedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
@@ -28,7 +34,7 @@ TrackLapViewBase::TrackLapViewBase()
     avgSpeedText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(avgSpeedText);
 
-    avgSpeedValue.setPosition(60, 158, 120, 44);
+    avgSpeedValue.setPosition(71, 158, 85, 44);
     avgSpeedValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     avgSpeedValue.setLinespacing(0);
     Unicode::snprintf(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
@@ -87,9 +93,6 @@ TrackLapViewBase::TrackLapViewBase()
     distanceText.resizeToCurrentText();
     distanceText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(distanceText);
-
-    buttons.setXY(0, 47);
-    add(buttons);
 
     title.setXY(50, 0);
     add(title);

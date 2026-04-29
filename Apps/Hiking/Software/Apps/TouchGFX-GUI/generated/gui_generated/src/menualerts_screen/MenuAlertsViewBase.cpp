@@ -13,8 +13,8 @@ MenuAlertsViewBase::MenuAlertsViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    menu.setXY(0, 0);
-    add(menu);
+    menuLayout.setXY(0, 0);
+    add(menuLayout);
 }
 
 MenuAlertsViewBase::~MenuAlertsViewBase()
@@ -24,7 +24,7 @@ MenuAlertsViewBase::~MenuAlertsViewBase()
 
 void MenuAlertsViewBase::setupScreen()
 {
-    menu.initialize();
+    menuLayout.initialize();
     transitionBegins();
 }
 

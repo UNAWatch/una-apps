@@ -98,7 +98,8 @@ KEEP extern const touchgfx::GlyphNode glyphs_Poppins_Regular_18_2bpp[] FONT_TABL
     {  2455, 0x007B,   5,  21,  17,   2,   8,   0,   0, 0x00 }, // braceleft
     {  2482, 0x007C,   3,  16,  14,   1,   5,   0,   0, 0x00 }, // bar
     {  2494, 0x007D,   6,  21,  17,   1,   8,   0,   0, 0x00 }, // braceright
-    {  2526, 0x007E,   8,   3,   7,   1,   9,   0,   0, 0x00 }  // asciitilde
+    {  2526, 0x007E,   8,   3,   7,   1,   9,   0,   0, 0x00 }, // asciitilde
+    {     0, 0x2026,   9,   3,   3,   1,  10,   0,   0, 0x00 }  // ellipsis
 };
 
 // GSUB tables:
@@ -108,9 +109,15 @@ FONT_TABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::GlyphNode glyphs_Poppins_Regular_18_2bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE;
 FONT_GLYPH_LOCATION_FLASH_PRAGMA
 KEEP extern const uint8_t unicodes_Poppins_Regular_18_2bpp_0[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
+FONT_GLYPH_LOCATION_FLASH_PRAGMA
+KEEP extern const uint8_t unicodes_Poppins_Regular_18_2bpp_4[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
 FONT_SEARCHTABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const uint8_t* const unicodes_Poppins_Regular_18_2bpp[] FONT_SEARCHTABLE_LOCATION_FLASH_ATTRIBUTE = {
-    unicodes_Poppins_Regular_18_2bpp_0
+    unicodes_Poppins_Regular_18_2bpp_0,
+    0,
+    0,
+    0,
+    unicodes_Poppins_Regular_18_2bpp_4
 };
 FONT_KERNING_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::KerningNode kerning_Poppins_Regular_18_2bpp[] FONT_KERNING_LOCATION_FLASH_ATTRIBUTE;
@@ -118,6 +125,6 @@ touchgfx::GeneratedFont& getFont_Poppins_Regular_18_2bpp();
 
 touchgfx::GeneratedFont& getFont_Poppins_Regular_18_2bpp()
 {
-    static touchgfx::GeneratedFont Poppins_Regular_18_2bpp(glyphs_Poppins_Regular_18_2bpp, 95, 23, 18, 0, 0, 2, 0, 1, 0, unicodes_Poppins_Regular_18_2bpp, kerning_Poppins_Regular_18_2bpp, 63, 0, 0, 0);
+    static touchgfx::GeneratedFont Poppins_Regular_18_2bpp(glyphs_Poppins_Regular_18_2bpp, 96, 23, 18, 0, 0, 2, 0, 1, 0, unicodes_Poppins_Regular_18_2bpp, kerning_Poppins_Regular_18_2bpp, 63, 8230, 0, 0);
     return Poppins_Regular_18_2bpp;
 }

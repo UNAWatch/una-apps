@@ -3,6 +3,7 @@
 
 #include <gui_generated/tracksummary_screen/TrackSummaryViewBase.hpp>
 #include <gui/tracksummary_screen/TrackSummaryPresenter.hpp>
+#include "ActivitySummary.hpp"
 
 class TrackSummaryView : public TrackSummaryViewBase
 {
@@ -12,20 +13,24 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
-    void setDistance(float m, bool isImperial);
-    void setAvgSpeed(float mps, bool isImperial);
-    void setElevation(float m, bool isImperial);
-    void setTimer(uint32_t sec);
-    void setMaxHR(float hr);
-    void setAvgHR(float hr);
-    void setMap(const SDK::TrackMapScreen &map);
+    void setSummary(const ActivitySummary& s, bool isImperial, bool isPaused);
 
 protected:
-    const uint16_t kFacesNum = 2;
-    int16_t mCurrentFace {};
+    enum Face : uint8_t {
+        FACE_MAP = 0,
+        FACE_OVERVIEW = 1,
+        FACE_HEARTRATE = 2,
+        FACE_LAPS = 3,
+    };
+
+    uint8_t mCurrentFace = FACE_MAP;
+    bool    mIsImperial = false;
+    bool    mTrackIsPaused = false;
+    uint8_t mLapsPageCount = 0;
 
     virtual void handleKeyEvent(uint8_t key) override;
-    void updFace();
+    void updateFace();
+    void updateScrollIndicator();
 };
 
 #endif // TRACKSUMMARYVIEW_HPP

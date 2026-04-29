@@ -10,6 +10,11 @@ void TrackStartConfirmationView::setupScreen()
     TrackStartConfirmationViewBase::setupScreen();
 
     title.set(T_TEXT_APP_NAME_UC);
+
+    buttons.setL1(Buttons::NONE);
+    buttons.setL2(Buttons::NONE);
+    buttons.setR1(Buttons::AMBER);
+    buttons.setR2(Buttons::WHITE);
 }
 
 void TrackStartConfirmationView::tearDownScreen()
@@ -19,20 +24,19 @@ void TrackStartConfirmationView::tearDownScreen()
 
 void TrackStartConfirmationView::handleKeyEvent(uint8_t key)
 {
-    if (key == Gui::Config::Button::L1) {
+    if (key == SDK::GUI::Button::L1) {
 
     }
 
-    if (key == Gui::Config::Button::L2) {
+    if (key == SDK::GUI::Button::L2) {
 
     }
 
-    if (key == Gui::Config::Button::R1) {
+    if (key == SDK::GUI::Button::R1) {
         presenter->startTrack();
-        application().gotoTrackScreenNoTransition();
     }
 
-    if (key == Gui::Config::Button::R2) {
-        application().gotoEnterMenuScreenNoTransition();
+    if (key == SDK::GUI::Button::R2) {
+        application().gotoMainScreenNoTransition();
     }
 }

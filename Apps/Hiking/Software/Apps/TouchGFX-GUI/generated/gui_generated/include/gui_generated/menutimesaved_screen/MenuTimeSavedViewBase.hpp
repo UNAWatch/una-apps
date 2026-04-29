@@ -8,9 +8,9 @@
 #include <mvp/View.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/Title.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <gui/containers/Title.hpp>
 
 class MenuTimeSavedViewBase : public touchgfx::View<MenuTimeSavedPresenter>
 {
@@ -29,16 +29,16 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    Title title;
     touchgfx::TextAreaWithOneWildcard savedText;
     touchgfx::Image icon;
-    touchgfx::TextAreaWithOneWildcard msg;
+    touchgfx::TextAreaWithOneWildcard messageText;
+    Title title;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t MSG_SIZE = 32;
-    touchgfx::Unicode::UnicodeChar msgBuffer[MSG_SIZE];
+    static const uint16_t MESSAGETEXT_SIZE = 32;
+    touchgfx::Unicode::UnicodeChar messageTextBuffer[MESSAGETEXT_SIZE];
 
 private:
 

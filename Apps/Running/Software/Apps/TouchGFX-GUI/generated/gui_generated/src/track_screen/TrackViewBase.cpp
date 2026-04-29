@@ -13,31 +13,29 @@ TrackViewBase::TrackViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    sideBar.setXY(0, 81);
-    add(sideBar);
+    scrollIndicator.setXY(0, 47);
+    add(scrollIndicator);
 
     buttons.setXY(0, 47);
     add(buttons);
 
-    trackFace3.setXY(0, 0);
-    trackFace3.setVisible(false);
-    add(trackFace3);
+    trackFaceStatus.setXY(0, 0);
+    trackFaceStatus.setVisible(false);
+    add(trackFaceStatus);
 
-    trackFace2.setXY(0, 0);
-    trackFace2.setVisible(false);
-    add(trackFace2);
+    trackFaceLap.setXY(0, 0);
+    trackFaceLap.setVisible(false);
+    add(trackFaceLap);
 
-    trackFace1.setXY(0, 0);
-    add(trackFace1);
+    trackFaceTotal.setXY(0, 0);
+    add(trackFaceTotal);
 
-    gpsDot.setPosition(116, 227, 8, 8);
-    gpsDot.setCenter(4, 4);
-    gpsDot.setRadius(4);
-    gpsDot.setLineWidth(0);
-    gpsDot.setArc(0, 360);
-    gpsDotPainter.setColor(touchgfx::Color::getColorFromRGB(64, 192, 0));
-    gpsDot.setPainter(gpsDotPainter);
-    add(gpsDot);
+    trackFaceIntervals.setXY(0, 0);
+    trackFaceIntervals.setVisible(false);
+    add(trackFaceIntervals);
+
+    gpsIndicator.setXY(116, 227);
+    add(gpsIndicator);
 }
 
 TrackViewBase::~TrackViewBase()
@@ -47,11 +45,13 @@ TrackViewBase::~TrackViewBase()
 
 void TrackViewBase::setupScreen()
 {
-    sideBar.initialize();
+    scrollIndicator.initialize();
     buttons.initialize();
-    trackFace3.initialize();
-    trackFace2.initialize();
-    trackFace1.initialize();
+    trackFaceStatus.initialize();
+    trackFaceLap.initialize();
+    trackFaceTotal.initialize();
+    trackFaceIntervals.initialize();
+    gpsIndicator.initialize();
     transitionBegins();
 }
 

@@ -1,5 +1,8 @@
 
-#pragma once
+#ifndef COMMANDS_HPP
+#define COMMANDS_HPP
+
+#include <cstring>
 
 #include "SDK/Messages/MessageBase.hpp"
 #include "SDK/Messages/MessageTypes.hpp"
@@ -9,15 +12,17 @@
 
 // Application types
 #include "Settings.hpp"
-#include "TrackInfo.hpp"
+#include "Track.hpp"
 #include "ActivitySummary.hpp"
-
-#include <array>
 
 // Force 4-byte alignment for all message structures
 #pragma pack(push, 4)
 
 namespace CustomMessage {
+
+    // Kernel HR configuration — shared defaults used before first kernel update
+    static constexpr uint8_t kHrThresholdsCount                       = 6;
+    static constexpr uint8_t kHrThresholdsDefault[kHrThresholdsCount] = { 95, 114, 133, 152, 171, 190 };
 
     // Application custom commands
     // Service --> GUI
@@ -27,16 +32,19 @@ namespace CustomMessage {
     constexpr SDK::MessageType::Type GPS_FIX            = 0x00000004;
     constexpr SDK::MessageType::Type TRACK_STATE_UPDATE = 0x00000005;
     constexpr SDK::MessageType::Type TRACK_DATA_UPDATE  = 0x00000006;
-    constexpr SDK::MessageType::Type LAP_END            = 0x00000007;
-    constexpr SDK::MessageType::Type SUMMARY            = 0x00000008;
+    constexpr SDK::MessageType::Type LAP_END                  = 0x00000007;
+    constexpr SDK::MessageType::Type SUMMARY                  = 0x00000008;
+    constexpr SDK::MessageType::Type INTERVALS_PHASE_ALERT      = 0x00000009;
+    constexpr SDK::MessageType::Type INTERVALS_WORKOUT_COMPLETED = 0x00000010;
 
     // GUI --> Service
-    constexpr SDK::MessageType::Type SETTINGS_SAVE      = 0x0000000A;
-    constexpr SDK::MessageType::Type TRACK_START        = 0x0000000B;
-    constexpr SDK::MessageType::Type TRACK_STOP         = 0x0000000C;
-    constexpr SDK::MessageType::Type TRACK_PAUSE        = 0x0000000D;
-    constexpr SDK::MessageType::Type TRACK_RESUME       = 0x0000000E;
-    constexpr SDK::MessageType::Type MANUAL_LAP         = 0x0000000F;
+    constexpr SDK::MessageType::Type SETTINGS_SAVE         = 0x0000000A;
+    constexpr SDK::MessageType::Type TRACK_START           = 0x0000000B;
+    constexpr SDK::MessageType::Type TRACK_STOP            = 0x0000000C;
+    constexpr SDK::MessageType::Type TRACK_PAUSE           = 0x0000000D;
+    constexpr SDK::MessageType::Type TRACK_RESUME          = 0x0000000E;
+    constexpr SDK::MessageType::Type MANUAL_LAP            = 0x0000000F;
+    constexpr SDK::MessageType::Type INTERVALS_NEXT_PHASE  = 0x00000011;
 
     // Service <-> GUI
     struct SettingsUpd : public SDK::MessageBase {
@@ -44,13 +52,15 @@ namespace CustomMessage {
         Settings settings;
 
         // Kernel settings
-        bool unitsImperial;
-        std::array<uint8_t, kHrThresholdsCount> hrThresholds;
+        bool    unitsImperial;
+        uint8_t hrThresholds[kHrThresholdsCount];
+        uint8_t hrThresholdsCount;
 
         SettingsUpd()
             : SDK::MessageBase(SETTINGS_UPDATE)
             , unitsImperial(false)
             , hrThresholds {}
+            , hrThresholdsCount(0)
         {}
     };
 
@@ -104,11 +114,20 @@ namespace CustomMessage {
     };
 
     struct Summary : public SDK::MessageBase {
-        std::shared_ptr<const ActivitySummary> summary;
+        const ActivitySummary* summary; ///< Non-owning pointer; receiver must copy before releaseMessage
         Summary()
             : SDK::MessageBase(SUMMARY)
-            , summary{}
+            , summary(nullptr)
         {}
+    };
+
+    struct IntervalsPhaseAlert : public SDK::MessageBase {
+        Track::IntervalsData intervals; ///< Snapshot of the NEW phase — already set before this message is sent
+        IntervalsPhaseAlert() : SDK::MessageBase(INTERVALS_PHASE_ALERT) {}
+    };
+
+    struct IntervalsWorkoutCompleted : public SDK::MessageBase {
+        IntervalsWorkoutCompleted() : SDK::MessageBase(INTERVALS_WORKOUT_COMPLETED) {}
     };
 
     // GUI --> Service
@@ -122,7 +141,12 @@ namespace CustomMessage {
     };
 
     struct TrackStart : public SDK::MessageBase {
+        bool intervalsMode = false;
         TrackStart() : SDK::MessageBase(TRACK_START) {}
+    };
+
+    struct IntervalsNextPhase : public SDK::MessageBase {
+        IntervalsNextPhase() : SDK::MessageBase(INTERVALS_NEXT_PHASE) {}
     };
 
     struct TrackStop : public SDK::MessageBase {
@@ -156,12 +180,14 @@ public:
     virtual ~Sender() = default;
 
     // Service --> GUI
-    bool settingsUpd(Settings settings, bool units, std::array<uint8_t, kHrThresholdsCount> th)
+    bool settingsUpd(Settings settings, bool units,
+                     const uint8_t (&thresholds)[kHrThresholdsCount], uint8_t thresholdCount)
     {
         if (auto msg = SDK::make_msg<CustomMessage::SettingsUpd>(mKernel)) {
-            msg->settings      = settings;
-            msg->unitsImperial = units;
-            msg->hrThresholds  = th;
+            msg->settings          = settings;
+            msg->unitsImperial     = units;
+            memcpy(msg->hrThresholds, thresholds, sizeof(msg->hrThresholds));
+            msg->hrThresholdsCount = thresholdCount;
             return msg.send();
         }
 
@@ -228,6 +254,29 @@ public:
         return status;
     }
 
+    bool intervalsPhaseAlert(const Track::IntervalsData& intervals)
+    {
+        bool status = false;
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::IntervalsPhaseAlert>();
+        if (msg) {
+            msg->intervals = intervals;
+            status = mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
+        return status;
+    }
+
+    bool intervalsWorkoutCompleted()
+    {
+        bool status = false;
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::IntervalsWorkoutCompleted>();
+        if (msg) {
+            status = mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
+        return status;
+    }
+
     bool lapEnd(uint32_t lapNum)
     {
         bool status = false;
@@ -240,12 +289,12 @@ public:
         return status;
     }
 
-    bool summary(std::shared_ptr<const ActivitySummary> summary)
+    bool summary(const ActivitySummary* summaryPtr)
     {
         bool status = false;
         auto *msg = mKernel.comm.allocateMessage<CustomMessage::Summary>();
         if (msg) {
-            msg->summary = summary;
+            msg->summary = summaryPtr;
             status = mKernel.comm.sendMessage(msg);
             mKernel.comm.releaseMessage(msg);
         }
@@ -265,10 +314,22 @@ public:
         return status;
     }
 
-    bool trackStart()
+    bool trackStart(bool intervalsMode)
     {
         bool status = false;
         auto *msg = mKernel.comm.allocateMessage<CustomMessage::TrackStart>();
+        if (msg) {
+            msg->intervalsMode = intervalsMode;
+            status = mKernel.comm.sendMessage(msg);
+            mKernel.comm.releaseMessage(msg);
+        }
+        return status;
+    }
+
+    bool intervalsNextPhase()
+    {
+        bool status = false;
+        auto *msg = mKernel.comm.allocateMessage<CustomMessage::IntervalsNextPhase>();
         if (msg) {
             status = mKernel.comm.sendMessage(msg);
             mKernel.comm.releaseMessage(msg);
@@ -328,3 +389,5 @@ private:
 } // namespace CustomMessage
 
 #pragma pack(pop)
+
+#endif // COMMANDS_HPP

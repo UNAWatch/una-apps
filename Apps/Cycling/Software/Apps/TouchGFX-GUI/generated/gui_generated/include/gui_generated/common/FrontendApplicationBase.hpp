@@ -17,11 +17,11 @@ public:
 
     virtual void changeToStartScreen()
     {
-        gotoEnterMenuScreenNoTransition();
+        gotoMainScreenNoTransition();
     }
 
-    // EnterMenu
-    void gotoEnterMenuScreenNoTransition();
+    // Main
+    void gotoMainScreenNoTransition();
 
     // MenuSettings
     void gotoMenuSettingsScreenNoTransition();
@@ -70,8 +70,8 @@ protected:
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // EnterMenu
-    void gotoEnterMenuScreenNoTransitionImpl();
+    // Main
+    void gotoMainScreenNoTransitionImpl();
 
     // MenuSettings
     void gotoMenuSettingsScreenNoTransitionImpl();

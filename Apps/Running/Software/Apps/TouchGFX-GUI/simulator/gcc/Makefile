@@ -83,6 +83,7 @@ Libs/Source/Simulator/Components/SensorDriver.cpp\
 ../../Libs/Sources/ActivityWriter.cpp\
 ../../Libs/Sources/Service.cpp\
 ../../Libs/Sources/SettingsSerializer.cpp\
+../../Libs/Sources/WristTiltDetector.cpp\
 ADDITIONAL_SOURCES :=
 ADDITIONAL_INCLUDE_PATHS := $(SDK)/Libs/Header\
 ../../Libs/Header\

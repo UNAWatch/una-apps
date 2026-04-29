@@ -12,6 +12,8 @@
 #include "ActivitySummarySerializer.hpp"
 
 #include <cassert>
+#include <cinttypes>
+#include <cstdlib>
 
 #include "SDK/JSON/JsonStreamWriter.hpp"
 #include "SDK/JSON/JsonStreamReader.hpp"
@@ -33,7 +35,6 @@ bool ActivitySummarySerializer::save(const ActivitySummary& summary)
     if (slash) {
         char buff[SDK::Interface::IFileSystem::skMaxPathLen]{ };
         snprintf(buff, sizeof(buff), "%.*s", static_cast<size_t>(slash - mPath), mPath);
-        // Create dir
         if (!mKernel.fs.mkdir(buff)) {
             return false;
         }
@@ -54,17 +55,28 @@ bool ActivitySummarySerializer::save(const ActivitySummary& summary)
 
     writer.startMap();
 
-    writer.add("utc", static_cast<uint32_t>(summary.utc));
-    writer.add("time", static_cast<uint32_t>(summary.time));
-    writer.add("distance", summary.distance);
+    writer.add("utc",       static_cast<uint32_t>(summary.utc));
+    writer.add("time",      static_cast<uint32_t>(summary.time));
+    writer.add("distance",  summary.distance);
     writer.add("speed_avg", summary.speedAvg);
     writer.add("elevation", summary.elevation);
-    writer.add("pace_avg", summary.paceAvg);
-    writer.add("hr_max", summary.hrMax);
-    writer.add("hr_avg", summary.hrAvg);
+    writer.add("pace_avg",  summary.paceAvg);
+    writer.add("hr_max",    summary.hrMax);
+    writer.add("hr_avg",    summary.hrAvg);
 
     const uint8_t* points = reinterpret_cast<const uint8_t*>(summary.map.points.data());
     writer.addHexString("map", points, summary.map.points.size() * 2);
+
+    writer.add("lap_count", static_cast<uint32_t>(summary.laps.size()));
+    writer.startArray("laps");
+    for (const LapSummary& lap : summary.laps) {
+        writer.startMap();
+        writer.add("dur",   static_cast<uint32_t>(lap.duration));
+        writer.add("dist",  lap.distance);
+        writer.add("speed", lap.speed);
+        writer.endMap();
+    }
+    writer.endArray();
 
     writer.endMap();
 
@@ -93,7 +105,7 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
     }
 
     size_t fileSize = file->size();
-    if (fileSize == 0) { // Check for adequate size
+    if (fileSize == 0) {
         file->close();
         file.reset();
         return false;
@@ -107,7 +119,7 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
     }
 
     size_t read = 0;
-    bool status = (file->read(buffer, fileSize, read) || read != fileSize);
+    bool status = file->read(buffer, fileSize, read) && (read == fileSize);
 
     file->close();
     file.reset();
@@ -139,17 +151,38 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
     summary.utc = static_cast<time_t>(tmp);
 #else
     reader.get("time", summary.time);
-    reader.get("utc", summary.utc);
+    reader.get("utc",  summary.utc);
 #endif
-    reader.get("distance", summary.distance);
+    reader.get("distance",  summary.distance);
     reader.get("speed_avg", summary.speedAvg);
     reader.get("elevation", summary.elevation);
-    reader.get("pace_avg", summary.paceAvg);
-    reader.get("hr_max", summary.hrMax);
-    reader.get("hr_avg", summary.hrAvg);
+    reader.get("pace_avg",  summary.paceAvg);
+    reader.get("hr_max",    summary.hrMax);
+    reader.get("hr_avg",    summary.hrAvg);
 
+    // Laps
+    uint32_t lapCount = 0;
+    reader.get("lap_count", lapCount);
+    summary.laps.clear();
+    summary.laps.reserve(lapCount);
+    for (uint32_t i = 0; i < lapCount; ++i) {
+        char query[32];
+        LapSummary lap{};
 
-#if 1
+        uint32_t dur = 0;
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].dur", i);
+        reader.get(query, dur);
+        lap.duration = static_cast<time_t>(dur);
+
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].dist", i);
+        reader.get(query, lap.distance);
+
+        snprintf(query, sizeof(query), "laps[%" PRIu32 "].speed", i);
+        reader.get(query, lap.speed);
+
+        summary.laps.push_back(lap);
+    }
+
     // Track map as HEX-String
     const char* hexStr = nullptr;
     size_t hexStrLen = 0;
@@ -165,8 +198,6 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
             summary.map.points.push_back(point);
         }
     }
-#endif
-
 
     delete[] buffer;
 

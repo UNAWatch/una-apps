@@ -8,14 +8,13 @@
 #include <mvp/View.hpp>
 #include <gui/track_screen/TrackPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/SideBarSmall.hpp>
+#include <gui/containers/ScrollIndicator.hpp>
 #include <gui/containers/Buttons.hpp>
-#include <gui/containers/TrackFace4.hpp>
-#include <gui/containers/TrackFace3.hpp>
-#include <gui/containers/TrackFace2.hpp>
-#include <gui/containers/TrackFace1.hpp>
-#include <touchgfx/widgets/canvas/Circle.hpp>
-#include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
+#include <gui/containers/TrackFaceStatus.hpp>
+#include <gui/containers/TrackFaceElevation.hpp>
+#include <gui/containers/TrackFaceOverview.hpp>
+#include <gui/containers/TrackFaceTotal.hpp>
+#include <gui/containers/GpsIndicator.hpp>
 
 class TrackViewBase : public touchgfx::View<TrackPresenter>
 {
@@ -34,14 +33,13 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    SideBarSmall sideBar;
+    ScrollIndicator scrollIndicator;
     Buttons buttons;
-    TrackFace4 trackFace4;
-    TrackFace3 trackFace3;
-    TrackFace2 trackFace2;
-    TrackFace1 trackFace1;
-    touchgfx::Circle gpsDot;
-    touchgfx::PainterABGR2222 gpsDotPainter;
+    TrackFaceStatus trackFaceStatus;
+    TrackFaceElevation trackFaceElevation;
+    TrackFaceOverview trackFaceOverview;
+    TrackFaceTotal trackFaceTotal;
+    GpsIndicator gpsIndicator;
 
 private:
 

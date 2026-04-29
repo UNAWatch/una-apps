@@ -9,53 +9,33 @@
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
-#if defined(SIMULATOR)
-    #include "touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp"
-    #include "Windows.h"
-    #include <chrono>
-    #include <ctime>
-#endif
-
 Model::Model()
-    : modelListener(0)
+    : modelListener(nullptr)
     , mKernel(SDK::KernelProviderGUI::GetInstance().getKernel())
     , mSrvSender(mKernel)
 {
     SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(this);
     SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(this);
+    memcpy(mHrThresholds, CustomMessage::kHrThresholdsDefault, sizeof(mHrThresholds));
 
 #if defined(SIMULATOR)
-    LOG_INFO("Application is running through simulator! \n");
-
-    std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
-    LOG_INFO("Path to files created by app:\n"
-        "       [%s]\n", fileStoreDir.c_str());
-
-	LOG_INFO("\n"
-        "---------------------------------------------------\n"
-        "|   For Simulation Button use keybaord Keys.      |\n"
-        "|       Keys Keybaord:                            |\n"
-        "|       1   L1,                                   |\n"
-        "|       2   L2,                                   |\n"
-        "|       3   R1,                                   |\n"
-        "|       4   R2,                                   |\n"
-        "|                  /---------\\                    |\n"
-        "|                 /           \\                   |\n"
-        "| BUTTON UP   L1 |             | R1 BUTTON SELECT |\n"
-        "|                |     UNA     |                  |\n"
-        "|                |    WATCH    |                  |\n"
-        "| BUTTON DOWN L2 |             | R2 BUTTON BACK   |\n"
-        "|                 \\           /                   |\n"
-        "|                  \\---------/                    |\n"
-        "---------------------------------------------------\n"
-    );
+    std::string fsPath = SDK::Simulator::KernelHolder::Get().getFsPath();
+    LOG_INFO("Simulator.\n");
+    LOG_INFO("FS path: [%s].\n", fsPath.c_str());
+    LOG_INFO("Buttons: 1=L1 2=L2 3=R1 4=R2\n\n");
 #endif
 }
 
 // Controls
+
 FrontendApplication& Model::application()
 {
     return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());
+}
+
+App::MenuNav::Nav& Model::menu()
+{
+    return mMenu;
 }
 
 void Model::invalidate()
@@ -63,13 +43,15 @@ void Model::invalidate()
     mInvalidate = true;
 }
 
-
 void Model::tick()
 {
+#if defined(SIMULATOR)
+    decIdleTimer();
+#else
     if (mIsRunning) {
         decIdleTimer();
     }
-
+#endif
     if (mInvalidate) {
         mInvalidate = false;
         application().invalidate();
@@ -79,131 +61,68 @@ void Model::tick()
 void Model::handleKeyEvent(uint8_t key)
 {
     LOG_DEBUG("key = %c\n", static_cast<char>(key));
-
     if (isAnyKeyPressed(key)) {
-
-        // Reset idle timer on any key press
         resetIdleTimer();
     }
 }
 
 void Model::resetIdleTimer()
 {
-    mIdleTimer = Gui::Config::kScreenTimeoutSteps;
+    mIdleTimer = App::Config::kScreenTimeoutSteps;
 }
 
 void Model::exitApp()
 {
     LOG_INFO("Manually exiting the application\n");
-    // Cleanup recourses
 
     SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(nullptr);
     SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(nullptr);
 
-    mKernel.sys.exit(); // No return for real app
-
-    // !!! For TouchGFX Simulator !!!
-    // This function only sets a flag. 
-    // The current TouchGFX loop will be completed, meaning that depending 
-    // on where this function was called, Model::tick(), Model::handleKeyEvent(), 
-    // as well as handleTickEvent() and handleKeyEvent() for the 
-    // current screen will be called.
-}
-
-
-// Menu position
-void Model::setMenuPosEnterMenu(uint16_t p)
-{
-    mMenuPosition.enter = p;
-}
-
-uint16_t Model::getMenuPosEnterMenu()
-{
-    return mMenuPosition.enter;
-}
-
-void Model::setMenuPosTrack(uint16_t p)
-{
-    mMenuPosition.track = p;
-}
-
-uint16_t Model::getMenuPosTrack()
-{
-    return mMenuPosition.track;
-}
-
-void Model::setMenuPosTrackAction(uint16_t p)
-{
-    mMenuPosition.action = p;
-}
-
-uint16_t Model::getMenuPosTrackAction()
-{
-    return mMenuPosition.action;
-}
-
-void Model::setMenuPosMenuSettings(uint16_t p)
-{
-    mMenuPosition.settings = p;
-}
-
-uint16_t Model::getMenuPosMenuSettings()
-{
-    return mMenuPosition.settings;
-}
-
-void Model::setMenuPosMenuAlerts(uint16_t p)
-{
-    mMenuPosition.alerts = p;
-}
-
-uint16_t Model::getMenuPosMenuAlerts()
-{
-    return mMenuPosition.alerts;
+    mKernel.sys.exit();
+    // On simulator sys.exit() only sets a flag -- the current tick completes normally.
 }
 
 
 // Date/Time
-void Model::getDate(uint8_t& m, uint8_t& d, uint8_t& wd)
-{
-    std::tm tm = getDateTime();
 
-    m = tm.tm_mon;
-    d = tm.tm_mday;
-    wd = tm.tm_wday;
+void Model::getDate(uint8_t& month, uint8_t& day, uint8_t& weekday)
+{
+    month   = static_cast<uint8_t>(mTime.tm_mon);
+    day     = static_cast<uint8_t>(mTime.tm_mday);
+    weekday = static_cast<uint8_t>(mTime.tm_wday);
 }
 
 void Model::getTime(uint8_t& h, uint8_t& m, uint8_t& s)
 {
-    std::tm tm = getDateTime();
-
-    h = tm.tm_hour;
-    m = tm.tm_min;
-    s = tm.tm_sec;
-}
-
-std::tm Model::getDateTime()
-{
-    return mTime;
+    h = static_cast<uint8_t>(mTime.tm_hour);
+    m = static_cast<uint8_t>(mTime.tm_min);
+    s = static_cast<uint8_t>(mTime.tm_sec);
 }
 
 
 // Power
-uint8_t Model::getBatteryLevel()
+
+uint8_t Model::getBatteryLevel() const
 {
     return mBatteryLevel;
 }
 
 
 // Settings
-bool Model::isUnitsImperial()
+
+bool Model::isUnitsImperial() const
 {
     return mUnitsImperial;
 }
 
-const std::array<uint8_t, kHrThresholdsCount>& Model::getHrThresholds() const
+const uint8_t* Model::getHrThresholds() const
 {
     return mHrThresholds;
+}
+
+uint8_t Model::getHrThresholdsCount() const
+{
+    return mHrThresholdsCount;
 }
 
 const Settings& Model::getSettings() const
@@ -211,7 +130,7 @@ const Settings& Model::getSettings() const
     return mSettings;
 }
 
-void Model::setSettings(const Settings& sett)
+void Model::saveSettings(const Settings& sett)
 {
     mSettings = sett;
     mSrvSender.settingsSave(mSettings);
@@ -219,19 +138,21 @@ void Model::setSettings(const Settings& sett)
 
 
 // GPS
-bool Model::getGpsFix()
+
+bool Model::hasGpsFix() const
 {
     return mGpsFix;
 }
 
 
 // Track
+
 void Model::trackStart()
 {
     mSrvSender.trackStart();
 }
 
-bool Model::trackIsActive()
+bool Model::isTrackActive() const
 {
     return mTrackState != Track::State::INACTIVE;
 }
@@ -246,7 +167,7 @@ void Model::trackResume()
     mSrvSender.trackResume();
 }
 
-bool Model::trackIsPaused()
+bool Model::isTrackPaused() const
 {
     return mTrackState == Track::State::PAUSED;
 }
@@ -271,23 +192,23 @@ void Model::discardTrack()
     mSrvSender.trackStop(true);
 }
 
-bool Model::trackIsSummaryAvailable()
+bool Model::isTrackSummaryAvailable() const
 {
-    return mpActivitySummary != nullptr && mpActivitySummary->time != 0;
+    return mActivitySummary != nullptr && mActivitySummary->time != 0;
 }
 
-const ActivitySummary& Model::trackSummary()
+const ActivitySummary& Model::getTrackSummary() const
 {
-    return *mpActivitySummary;
+    return *mActivitySummary;
 }
 
 
-// Protected
+// Private
+
 void Model::decIdleTimer()
 {
     if (mIdleTimer > 0) {
-        mIdleTimer--;
-        if (mIdleTimer == 0) {
+        if (--mIdleTimer == 0) {
             modelListener->onIdleTimeout();
         }
     }
@@ -295,13 +216,14 @@ void Model::decIdleTimer()
 
 bool Model::isAnyKeyPressed(uint8_t key) const
 {
-    return (Gui::Config::Button::L1 == key) ||
-        (Gui::Config::Button::L2 == key) ||
-        (Gui::Config::Button::R1 == key) ||
-        (Gui::Config::Button::R2 == key);
+    return key == SDK::GUI::Button::L1 ||
+           key == SDK::GUI::Button::L2 ||
+           key == SDK::GUI::Button::R1 ||
+           key == SDK::GUI::Button::R2;
 }
 
-// IUserApp implementation
+
+// IGuiLifeCycleCallback
 
 void Model::onStart()
 {
@@ -312,8 +234,7 @@ void Model::onResume()
 {
     mIsRunning = true;
     resetIdleTimer();
-
-    invalidate();   // Redraw screen
+    invalidate();
 }
 
 void Model::onSuspend()
@@ -326,90 +247,93 @@ void Model::onStop()
     LOG_INFO("Force exit from the application\n");
 }
 
-// Events from Service
 
-bool Model::customMessageHandler(SDK::MessageBase *msg)
+// ICustomMessageHandler
+
+bool Model::customMessageHandler(SDK::MessageBase* message)
 {
-    switch (msg->getType()) {
-        case CustomMessage::SETTINGS_UPDATE:  {
+    switch (message->getType()) {
+        case CustomMessage::SETTINGS_UPDATE: {
             LOG_DEBUG("SETTINGS_UPDATE\n");
-            auto *cmsg = static_cast<CustomMessage::SettingsUpd*>(msg);
-            mSettings = cmsg->settings;
-            mUnitsImperial = cmsg->unitsImperial;
-            mHrThresholds = cmsg->hrThresholds;
+            auto* msg          = static_cast<CustomMessage::SettingsUpd*>(message);
+            mSettings          = msg->settings;
+            mUnitsImperial     = msg->unitsImperial;
+            memcpy(mHrThresholds, msg->hrThresholds, sizeof(mHrThresholds));
+            mHrThresholdsCount = msg->hrThresholdsCount;
+            modelListener->onSettings(mSettings);
         } break;
 
-        case CustomMessage::LOCAL_TIME:  {
-            auto *cmsg = static_cast<CustomMessage::Time*>(msg);
-
-            std::tm newTime = cmsg->localTime;
+        case CustomMessage::LOCAL_TIME: {
+            auto* msg = static_cast<CustomMessage::Time*>(message);
+            std::tm newTime = msg->localTime;
             LOG_DEBUG("LOCAL_TIME %04u-%02u-%02u %02u:%02u:%02u\n",
-                    newTime.tm_year + 1900, newTime.tm_mon + 1, newTime.tm_mday,
-                    newTime.tm_hour, newTime.tm_min, newTime.tm_sec);
+                newTime.tm_year + 1900, newTime.tm_mon + 1, newTime.tm_mday,
+                newTime.tm_hour, newTime.tm_min, newTime.tm_sec);
 
-            bool dateChanged = (newTime.tm_year != mTime.tm_year ||
-                newTime.tm_mon != mTime.tm_mon || newTime.tm_mday != mTime.tm_mday);
-
-            bool timeChanged = (newTime.tm_hour != mTime.tm_hour ||
-                                newTime.tm_min != mTime.tm_min ||
-                                newTime.tm_sec != mTime.tm_sec);
-
+            const bool dateChanged = newTime.tm_year  != mTime.tm_year  ||
+                                     newTime.tm_mon   != mTime.tm_mon   ||
+                                     newTime.tm_mday  != mTime.tm_mday;
+            const bool timeChanged = newTime.tm_hour  != mTime.tm_hour  ||
+                                     newTime.tm_min   != mTime.tm_min   ||
+                                     newTime.tm_sec   != mTime.tm_sec;
             mTime = newTime;
 
             if (dateChanged) {
-                modelListener->onDate(mTime.tm_year + 1900, mTime.tm_mon + 1, mTime.tm_mday, mTime.tm_wday);
+                modelListener->onDate(mTime.tm_year + 1900, mTime.tm_mon + 1,
+                                      mTime.tm_mday, mTime.tm_wday);
             }
-
             if (timeChanged) {
                 modelListener->onTime(mTime.tm_hour, mTime.tm_min, mTime.tm_sec);
             }
         } break;
 
-        case CustomMessage::BATTERY:  {
-            auto *cmsg = static_cast<CustomMessage::Battery*>(msg);
-            LOG_DEBUG("BATTERY Level %u\n", cmsg->level);
-            if (mBatteryLevel != cmsg->level) {
-                mBatteryLevel = cmsg->level;
+        case CustomMessage::BATTERY: {
+            auto* msg = static_cast<CustomMessage::Battery*>(message);
+            LOG_DEBUG("BATTERY Level %u\n", msg->level);
+            if (mBatteryLevel != msg->level) {
+                mBatteryLevel = msg->level;
                 modelListener->onBatteryLevel(mBatteryLevel);
             }
         } break;
 
-        case CustomMessage::GPS_FIX:  {
-            auto *cmsg = static_cast<CustomMessage::GpsFix*>(msg);
-            LOG_DEBUG("GPS_FIX %u\n", cmsg->state);
-            if (mGpsFix != cmsg->state) {
-                mGpsFix = cmsg->state;
+        case CustomMessage::GPS_FIX: {
+            auto* msg = static_cast<CustomMessage::GpsFix*>(message);
+            LOG_DEBUG("GPS_FIX %u\n", msg->state);
+            if (mGpsFix != msg->state) {
+                mGpsFix = msg->state;
                 modelListener->onGpsFix(mGpsFix);
             }
         } break;
 
-        case CustomMessage::TRACK_STATE_UPDATE:  {
+        case CustomMessage::TRACK_STATE_UPDATE: {
             LOG_DEBUG("TRACK_STATE_UPDATE\n");
-            auto *cmsg = static_cast<CustomMessage::TrackStateUpd*>(msg);
-            if (mTrackState != cmsg->state) {
-                mTrackState = cmsg->state;
+            auto* msg = static_cast<CustomMessage::TrackStateUpd*>(message);
+            if (mTrackState != msg->state) {
+                mTrackState = msg->state;
                 modelListener->onTrackState(mTrackState);
             }
         } break;
 
-        case CustomMessage::TRACK_DATA_UPDATE:  {
+        case CustomMessage::TRACK_DATA_UPDATE: {
             LOG_DEBUG("TRACK_DATA_UPDATE\n");
-            auto *cmsg = static_cast<CustomMessage::TrackDataUpd*>(msg);
-            mTrackData = cmsg->data;
+            auto* msg  = static_cast<CustomMessage::TrackDataUpd*>(message);
+            mTrackData = msg->data;
             modelListener->onTrackData(mTrackData);
         } break;
 
-        case CustomMessage::LAP_END:  {
+        case CustomMessage::LAP_END: {
             LOG_DEBUG("LAP_END\n");
-            auto *cmsg = static_cast<CustomMessage::LapEnded*>(msg);
-            modelListener->onLapChanged(cmsg->lapNum);
+            auto* msg = static_cast<CustomMessage::LapEnded*>(message);
+            modelListener->onLapChanged(msg->lapNum);
         } break;
 
-        case CustomMessage::SUMMARY:  {
+        case CustomMessage::SUMMARY: {
             LOG_DEBUG("SUMMARY\n");
-            auto *cmsg = static_cast<CustomMessage::Summary*>(msg);
-            mpActivitySummary = cmsg->summary;
-            modelListener->onActivitySummary(*mpActivitySummary);
+            auto* msg = static_cast<CustomMessage::Summary*>(message);
+            if (msg->summary) {
+                mActivitySummary = msg->summary;
+                modelListener->onActivitySummary(*mActivitySummary);
+            }
         } break;
 
         default:

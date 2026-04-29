@@ -14,11 +14,11 @@ MenuTimeViewBase::MenuTimeViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    menu.setXY(0, 0);
-    add(menu);
+    menuLayout.setXY(0, 0);
+    add(menuLayout);
 
     tick.setXY(186, 60);
-    tick.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_TICK_ID));
+    tick.setBitmap(touchgfx::Bitmap(BITMAP_TICKAMBER_22X17_ID));
     add(tick);
 }
 
@@ -29,7 +29,7 @@ MenuTimeViewBase::~MenuTimeViewBase()
 
 void MenuTimeViewBase::setupScreen()
 {
-    menu.initialize();
+    menuLayout.initialize();
     transitionBegins();
 }
 

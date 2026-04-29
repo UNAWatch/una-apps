@@ -27,7 +27,9 @@ public:
 
     virtual ~MenuTimePresenter() {}
 
-    void saveTime(uint32_t minutes);
+    virtual void onIdleTimeout() override { model->exitApp(); }
+
+    void saveTime(Settings::Alerts::Time::Id id);
 
 private:
     MenuTimePresenter();

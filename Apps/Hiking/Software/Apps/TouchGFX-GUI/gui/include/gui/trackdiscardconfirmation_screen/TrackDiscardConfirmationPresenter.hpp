@@ -27,6 +27,8 @@ public:
 
     virtual ~TrackDiscardConfirmationPresenter() {}
 
+    virtual void onIdleTimeout() override { model->application().gotoTrackActionScreenNoTransition(); }
+
 private:
     TrackDiscardConfirmationPresenter();
 

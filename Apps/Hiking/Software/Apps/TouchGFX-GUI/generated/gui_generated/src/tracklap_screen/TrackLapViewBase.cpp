@@ -4,7 +4,6 @@
 #include <gui_generated/tracklap_screen/TrackLapViewBase.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
 TrackLapViewBase::TrackLapViewBase()
@@ -15,60 +14,8 @@ TrackLapViewBase::TrackLapViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    cross.setXY(33, 163);
-    cross.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CROSSYELLOW_ID));
-    add(cross);
-
-    timeText.setXY(146, 58);
-    timeText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    timeText.setLinespacing(0);
-    Unicode::snprintf(timeTextBuffer, TIMETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_TIME).getText());
-    timeText.setWildcard(timeTextBuffer);
-    timeText.resizeToCurrentText();
-    timeText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(timeText);
-
-    timeValue.setPosition(122, 82, 100, 44);
-    timeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    timeValue.setLinespacing(0);
-    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
-    timeValue.setWildcard(timeValueBuffer);
-    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
-    add(timeValue);
-
-    line2.setPosition(35, 127, 170, 3);
-    line2Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
-    line2.setPainter(line2Painter);
-    line2.setStart(0, 0);
-    line2.setEnd(170, 0);
-    line2.setLineWidth(10);
-    line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
-    add(line2);
-
-    distanceValue.setPosition(18, 82, 100, 44);
-    distanceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    distanceValue.setLinespacing(0);
-    Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_Z0WD).getText());
-    distanceValue.setWildcard(distanceValueBuffer);
-    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
-    add(distanceValue);
-
-    distanceText.setPosition(50, 58, 37, 23);
-    distanceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    distanceText.setLinespacing(0);
-    Unicode::snprintf(distanceTextBuffer, DISTANCETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DIST_DOT).getText());
-    distanceText.setWildcard(distanceTextBuffer);
-    distanceText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(distanceText);
-
-    line1.setPosition(119, 84, 3, 44);
-    line1Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
-    line1.setPainter(line1Painter);
-    line1.setStart(0, 0);
-    line1.setEnd(0, 44);
-    line1.setLineWidth(10);
-    line1.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
-    add(line1);
+    buttons.setXY(0, 47);
+    add(buttons);
 
     stepsValue.setPosition(35, 158, 170, 44);
     stepsValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
@@ -81,14 +28,59 @@ TrackLapViewBase::TrackLapViewBase()
     stepsText.setXY(96, 137);
     stepsText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     stepsText.setLinespacing(0);
-    Unicode::snprintf(stepsTextBuffer, STEPSTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_STEPS).getText());
-    stepsText.setWildcard(stepsTextBuffer);
+    stepsText.setWildcard(touchgfx::TypedText(T_TEXT_STEPS).getText());
     stepsText.resizeToCurrentText();
     stepsText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
     add(stepsText);
 
-    buttons.setXY(0, 47);
-    add(buttons);
+    line2.setPosition(35, 127, 170, 3);
+    line2Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
+    line2.setPainter(line2Painter);
+    line2.setStart(0, 0);
+    line2.setEnd(170, 0);
+    line2.setLineWidth(10);
+    line2.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
+    add(line2);
+
+    timeValue.setPosition(122, 82, 100, 44);
+    timeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    timeValue.setLinespacing(0);
+    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_3KKT).getText());
+    timeValue.setWildcard(timeValueBuffer);
+    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    add(timeValue);
+
+    timeText.setXY(146, 58);
+    timeText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    timeText.setLinespacing(0);
+    timeText.setWildcard(touchgfx::TypedText(T_TEXT_TIME).getText());
+    timeText.resizeToCurrentText();
+    timeText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(timeText);
+
+    line1.setPosition(119, 84, 3, 44);
+    line1Painter.setColor(touchgfx::Color::getColorFromRGB(0, 128, 128));
+    line1.setPainter(line1Painter);
+    line1.setStart(0, 0);
+    line1.setEnd(0, 44);
+    line1.setLineWidth(10);
+    line1.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
+    add(line1);
+
+    distanceValue.setPosition(18, 82, 100, 44);
+    distanceValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    distanceValue.setLinespacing(0);
+    Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_Z0WD).getText());
+    distanceValue.setWildcard(distanceValueBuffer);
+    distanceValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_35));
+    add(distanceValue);
+
+    distanceText.setPosition(50, 58, 37, 23);
+    distanceText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    distanceText.setLinespacing(0);
+    distanceText.setWildcard(touchgfx::TypedText(T_TEXT_DIST_DOT).getText());
+    distanceText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(distanceText);
 
     title.setXY(50, 0);
     add(title);

@@ -9,9 +9,6 @@ TrackSavedPresenter::TrackSavedPresenter(TrackSavedView& v)
 
 void TrackSavedPresenter::activate()
 {
-    // Reset idle timer
-    model->resetIdleTimer();
-
     model->saveTrack();
 }
 

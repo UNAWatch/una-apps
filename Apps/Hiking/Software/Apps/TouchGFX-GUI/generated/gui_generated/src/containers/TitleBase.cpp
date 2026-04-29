@@ -18,13 +18,13 @@ TitleBase::TitleBase()
     line.setLineEndingStyle(touchgfx::Line::ROUND_CAP_ENDING);
     add(line);
 
-    text.setPosition(10, 11, 120, 23);
-    text.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    text.setLinespacing(0);
-    textBuffer[0] = 0;
-    text.setWildcard(textBuffer);
-    text.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(text);
+    titleText.setPosition(10, 11, 120, 23);
+    titleText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    titleText.setLinespacing(0);
+    Unicode::snprintf(titleTextBuffer, TITLETEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_NEW_TEXT).getText());
+    titleText.setWildcard(titleTextBuffer);
+    titleText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(titleText);
 }
 
 TitleBase::~TitleBase()

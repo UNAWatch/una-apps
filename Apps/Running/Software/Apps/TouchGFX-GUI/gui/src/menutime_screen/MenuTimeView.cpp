@@ -1,53 +1,21 @@
 #include <gui/menutime_screen/MenuTimeView.hpp>
 
-MenuTimeView::MenuTimeView()
+MenuTimeView::MenuTimeView() :
+    mUpdateItemCb(this, &MenuTimeView::updateItem),
+    mUpdateCenterItemCb(this, &MenuTimeView::updateCenterItem)
 {
-
 }
 
 void MenuTimeView::setupScreen()
 {
     MenuTimeViewBase::setupScreen();
 
-    menu.setTitle(T_TEXT_TIME_UC);
-    menu.setNumberOfItems(App::Menu::Settings::Alerts::Time::ID_COUNT);
-
-    MenuItemSelected *pS = nullptr;
-    MenuItemNotSelected *pN = nullptr;
-
-    const uint16_t kBuffSize = 32;
-    touchgfx::Unicode::UnicodeChar buffer[kBuffSize] { };
-
-    for (int i = 0; i < App::Menu::Settings::Alerts::Time::ID_COUNT; i++) {
-        pS = menu.getSelectedItem(i);
-
-        if (i == 0) {
-            Unicode::snprintf(buffer, kBuffSize, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
-        } else {
-            touchgfx::TypedTextId txt = App::Menu::kTimeList[i] > 1 ? T_TEXT_MINUTES_LC : T_TEXT_MINUTE_LC;
-
-            Unicode::snprintf(buffer, kBuffSize, "%d %s",
-                App::Menu::kTimeList[i],
-                touchgfx::TypedText(txt).getText());
-        }
-
-        pS->config(buffer);
-    }
-
-    for (int i = 0; i < App::Menu::Settings::Alerts::Time::ID_COUNT; i++) {
-        pN = menu.getNotSelectedItem(i);
-
-        if (i == 0) {
-            Unicode::snprintf(buffer, kBuffSize, "%s", touchgfx::TypedText(T_TEXT_OFF_UC).getText());
-        } else {
-            Unicode::snprintf(buffer, kBuffSize, "%d %s",
-                App::Menu::kTimeList[i],
-                touchgfx::TypedText(T_TEXT_MIN_DOT).getText());
-        }
-        pN->config(buffer);
-    }
-
-    menu.invalidate();
+    menuLayout.setAnimationSteps(App::Config::kMenuAnimationSteps);
+    menuLayout.setTitle(T_TEXT_TIME_UC);
+    menuLayout.setUpdateItemCallback(mUpdateItemCb);
+    menuLayout.setUpdateCenterItemCallback(mUpdateCenterItemCb);
+    menuLayout.setNumberOfItems(Menu::ID_COUNT);
+    menuLayout.invalidate();
 }
 
 void MenuTimeView::tearDownScreen()
@@ -55,31 +23,62 @@ void MenuTimeView::tearDownScreen()
     MenuTimeViewBase::tearDownScreen();
 }
 
-void MenuTimeView::setTime(uint32_t minutes)
+void MenuTimeView::setTime(Menu::Id id)
 {
-    uint32_t timeId = App::Menu::RoundToNearestIndex(App::Menu::kTimeList,
-        App::Menu::Settings::Alerts::Time::ID_COUNT, static_cast<float>(minutes));
+    menuLayout.selectItem(static_cast<uint16_t>(id));
+}
 
-    menu.selectItem(timeId);
+void MenuTimeView::updateItem(MainMenuItem& item, int16_t index)
+{
+    if (index < 0 || index >= static_cast<int16_t>(Menu::ID_COUNT)) return;
+
+    if (index == 0) {
+        Unicode::snprintf(mItemBuff, kBuffSize, "%s",
+            touchgfx::TypedText(T_TEXT_OFF_UC).getText());
+    } else {
+        Unicode::snprintf(mItemBuff, kBuffSize, "%d %s",
+            Menu::kValues[index], touchgfx::TypedText(T_TEXT_MIN).getText());
+    }
+
+    MenuItemConfig cfg;
+    cfg.msgText = mItemBuff;
+    item.apply(cfg);
+}
+
+void MenuTimeView::updateCenterItem(MainMenuCenterItem& item, int16_t index)
+{
+    if (index < 0 || index >= static_cast<int16_t>(Menu::ID_COUNT)) return;
+
+    if (index == 0) {
+        Unicode::snprintf(mMainBuff, kBuffSize, "%s",
+            touchgfx::TypedText(T_TEXT_OFF_UC).getText());
+    } else {
+        touchgfx::TypedTextId txt = Menu::kValues[index] > 1 ? T_TEXT_MINUTES_LC : T_TEXT_MINUTE_LC;
+        Unicode::snprintf(mMainBuff, kBuffSize, "%d %s",
+            Menu::kValues[index], touchgfx::TypedText(txt).getText());
+    }
+
+    MenuItemConfig cfg;
+    cfg.msgText = mMainBuff;
+    item.apply(cfg);
 }
 
 void MenuTimeView::handleKeyEvent(uint8_t key)
 {
-    if (key == Gui::Config::Button::L1) {
-        menu.selectPrev();
+    if (key == SDK::GUI::Button::L1) {
+        menuLayout.selectPrev();
     }
 
-    if (key == Gui::Config::Button::L2) {
-        menu.selectNext();
+    if (key == SDK::GUI::Button::L2) {
+        menuLayout.selectNext();
     }
 
-    if (key == Gui::Config::Button::R1) {
-        uint16_t id = menu.getSelectedItem();
-        presenter->saveTime(App::Menu::kTimeList[id]);
+    if (key == SDK::GUI::Button::R1) {
+        presenter->saveTime(static_cast<Menu::Id>(menuLayout.getSelectedItem()));
         application().gotoMenuTimeSavedScreenNoTransition();
     }
 
-    if (key == Gui::Config::Button::R2) {
+    if (key == SDK::GUI::Button::R2) {
         application().gotoMenuAlertsScreenNoTransition();
     }
 }

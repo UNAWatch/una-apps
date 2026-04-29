@@ -27,10 +27,6 @@ public:
 
     virtual ~TrackLapPresenter() {}
 
-    virtual void onIdleTimeout() override { }
-    //virtual void onTrackData(const Track::Data& data) override;
-    virtual void onGpsFix(bool acquired) override;
-
 private:
     TrackLapPresenter();
 

@@ -20,7 +20,6 @@
 #include "SDK/Simulator/Kernel/Mock/Buzzer.hpp"
 #include "SDK/Simulator/Kernel/Mock/Vibro.hpp"
 
-#include "gui/common/GuiConfig.hpp"
 #include "Service.hpp"
 
 #include <stdlib.h>
@@ -62,7 +61,6 @@ static void appMessageThreadFunction(SDK::App::KernelMessageDispatcher* appMessa
     appMessage->run();
 }
 
-
 static int runTouchGFX(SDK::App::DualAppComm&  appComm,
                        SDK::Simulator::Kernel& srvKernel,
                        SDK::Simulator::Kernel& guiKernel,
@@ -87,7 +85,6 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     SDK::Simulator::Mock::Vibro       mVibro;
     SDK::App::KernelMessageDispatcher kernelMessage(appComm, appComm.getMsgManager(), mVibro, mBacklight, mBuzzer);
 
-
 	// Create the Application core
 	App::Core appCore(appComm, srvKernel, guiKernel);
 
@@ -101,7 +98,7 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     setupSimulator(argc, argv, hal);
 
     // Set custom frame rate
-    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / Gui::Config::kFrameRate);
+    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / SDK::GUI::Config::kFrameRate);
 
     //// Ensure there is a console window to print to using printf() or
     //// std::cout, and read from using e.g. fgets or std::cin.

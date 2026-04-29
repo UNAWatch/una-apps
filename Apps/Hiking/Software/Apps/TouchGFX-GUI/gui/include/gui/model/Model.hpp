@@ -1,20 +1,51 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <vector>
-#include <memory>
-
 #include "touchgfx/UIEventListener.hpp"
+
+#include <texts/TextKeysAndLanguages.hpp>
+#include <images/BitmapDatabase.hpp>
 
 #include "SDK/Kernel/Kernel.hpp"
 #include "SDK/Interfaces/IGuiLifeCycleCallback.hpp"
 #include "SDK/Interfaces/ICustomMessageHandler.hpp"
+#include <SDK/Utils/Utils.hpp>
+#include <SDK/GUI/Config.hpp>
+#include <SDK/GUI/Color.hpp>
+#include <SDK/GUI/Button.hpp>
 
-#include "gui/common/GuiConfig.hpp"
 #include "Commands.hpp"
 #include "Settings.hpp"
 #include "ActivitySummary.hpp"
-#include "TrackInfo.hpp"
+#include "Track.hpp"
+#include "AppMenu.hpp"
+
+
+// ---------------------------------------------------------------------------
+// App::Config -- application-level constants (timing, frame rate).
+// Screens include this transitively via Presenter -> ModelListener -> Model.hpp.
+// ---------------------------------------------------------------------------
+namespace App::Config
+{
+constexpr uint32_t kFrameRate = SDK::GUI::Config::kFrameRate;
+
+constexpr uint32_t kMenuAnimationSteps = 4;
+constexpr uint32_t kScreenTimeoutSteps = SDK::Utils::secToTicks(30, kFrameRate);  // 30 s
+
+// HR thresholds
+constexpr uint8_t kHrThresholdsCount = CustomMessage::kHrThresholdsCount;
+} // namespace App::Config
+
+// ---------------------------------------------------------------------------
+// App::Display -- minimum valid values for on-screen display.
+// Below these thresholds the widget shows "---" instead of a number.
+// ---------------------------------------------------------------------------
+namespace App::Display
+{
+constexpr float kMinDist = 0.0f;   ///< km or mi  -- negative = no data
+constexpr float kMinPace = 30.0f;  ///< sec/km or sec/mi -- below any human hiking pace
+constexpr float kMinHR   = 20.0f;  ///< bpm -- below physiological minimum
+} // namespace App::Display
 
 
 class FrontendApplication;
@@ -27,143 +58,86 @@ class Model : public touchgfx::UIEventListener,
 public:
     Model();
 
-    void bind(ModelListener *listener)
-    {
-        modelListener = listener;
-    }
+    void bind(ModelListener* listener) { modelListener = listener; }
 
     // Controls
-    FrontendApplication &application();
+    FrontendApplication& application();
+    App::MenuNav::Nav&   menu();
     void tick();
-    void handleKeyEvent(uint8_t c);
+    void handleKeyEvent(uint8_t key);
     void invalidate();
-
-    /**
-     * @brief Resets the idle timer.
-     * This method is called when a user interaction occurs, such as a key press.
-     * It prevents the application from going idle for a specified timeout period.
-     */
     void resetIdleTimer();
-
-    /**
-     * @brief Exits the application.
-     * This method notifies the kernel that the application is exiting and performs
-     * any necessary cleanup before termination.
-     */
     void exitApp();
 
-    // Menu position
-    void setMenuPosEnterMenu(uint16_t p);
-    uint16_t getMenuPosEnterMenu();
-    void setMenuPosTrack(uint16_t p);
-    uint16_t getMenuPosTrack();
-    void setMenuPosTrackAction(uint16_t p);
-    uint16_t getMenuPosTrackAction();
-    void setMenuPosMenuSettings(uint16_t p);
-    uint16_t getMenuPosMenuSettings();
-    void setMenuPosMenuAlerts(uint16_t p);
-    uint16_t getMenuPosMenuAlerts();
-
     // Date/Time
-    void getDate(uint8_t& m, uint8_t& d, uint8_t& wd);
+    void getDate(uint8_t& month, uint8_t& day, uint8_t& weekday);
     void getTime(uint8_t& h, uint8_t& m, uint8_t& s);
-    std::tm getDateTime();
 
     // Power
-    uint8_t getBatteryLevel();
+    uint8_t getBatteryLevel() const;
 
     // Settings
-    bool isUnitsImperial();
-    const std::array<uint8_t, kHrThresholdsCount>& getHrThresholds() const;
+    bool isUnitsImperial() const;
+    const uint8_t* getHrThresholds() const;
+    uint8_t        getHrThresholdsCount() const;
     const Settings& getSettings() const;
-    void setSettings(const Settings& sett);
+    void saveSettings(const Settings& sett);
 
     // GPS
-    bool getGpsFix();
+    bool hasGpsFix() const;
 
     // Track
     void trackStart();
-    bool trackIsActive();
+    bool isTrackActive() const;
     void trackPause();
     void trackResume();
-    bool trackIsPaused();
+    bool isTrackPaused() const;
     const Track::Data& getTrackData() const;
     void saveLap();
     void saveTrack();
     void discardTrack();
-    bool trackIsSummaryAvailable();
-    const ActivitySummary& trackSummary();
+    bool isTrackSummaryAvailable() const;
+    const ActivitySummary& getTrackSummary() const;
 
-protected:
-    ModelListener* modelListener;
-    // Fields required for for GUI <-> Service communication
-    const SDK::Kernel&      mKernel;             ///< Reference to kernel interface
-    CustomMessage::Sender   mSrvSender;
+private:
+    ModelListener*        modelListener;
+    const SDK::Kernel&    mKernel;
+    CustomMessage::Sender mSrvSender;
 
+    // IGuiLifeCycleCallback
+    void onStart()   override;
+    void onResume()  override;
+    void onSuspend() override;
+    void onStop()    override;
 
-    // User application section
+    // ICustomMessageHandler
+    bool customMessageHandler(SDK::MessageBase* message) override;
 
-    /**
-     * @brief Decrease the idle timer.
-     * This method is called periodically to decrement the idle timer.
-     * If the timer reaches zero, it triggers an idle timeout event.
-     */
     void decIdleTimer();
-
-    /**
-     * @brief Checks if any key is pressed.
-     * This method checks if the provided key corresponds to any of the defined keys
-     * in the Gui::Config::Button enumeration.
-     *
-     * @param key The key to check.
-     * @return true if the key is one of the defined keys, false otherwise.
-     */
     bool isAnyKeyPressed(uint8_t key) const;
 
-    // IGuiLifeCycleCallback implementation required methods for app lifecycle
-    virtual void onStart()   override;
-    virtual void onResume()  override;
-    virtual void onSuspend() override;
-    virtual void onStop()    override;
+    // State
+    bool     mIsRunning  = false;
+    bool     mInvalidate = false;
+    uint32_t mIdleTimer  = 0;
 
-    // ICustomMessageHandler implementation
-    virtual bool customMessageHandler(SDK::MessageBase *msg) override;
+    App::MenuNav::Nav mMenu {};
+    std::tm           mTime {};
 
-    // User data
-
-    /// Is app running (between onResume and onPause)
-    bool mIsRunning = false;
-
-    uint32_t mIdleTimer = 0;
-    bool mInvalidate = false;
-
-    // Menu positions
-    struct {
-        uint16_t enter;
-        uint16_t track;
-        uint16_t action;
-        uint16_t settings;
-        uint16_t alerts;
-    } mMenuPosition {};
-
-    std::tm mTime {};
-
-    // Kernel settings
-    bool mUnitsImperial = false;
-    std::array<uint8_t, kHrThresholdsCount> mHrThresholds = kHrThresholdsDefault;
-
-    // Application settings
+    // Settings (mirrored from Service)
+    bool    mUnitsImperial     = false;
+    uint8_t mHrThresholds[App::Config::kHrThresholdsCount] = {};
+    uint8_t mHrThresholdsCount = App::Config::kHrThresholdsCount;
     Settings mSettings {};
 
     // Kernel state
-    bool mGpsFix = false;
+    bool    mGpsFix       = false;
     uint8_t mBatteryLevel = 0;
 
     // Track
-    Track::State mTrackState {};
-    std::shared_ptr<const ActivitySummary> mpActivitySummary = nullptr;
-    Track::Data mTrackData {};
-
+    Track::State           mTrackState      {};
+    const ActivitySummary* mActivitySummary = nullptr;
+    Track::Data            mTrackData       {};
 };
 
 #endif // MODEL_HPP

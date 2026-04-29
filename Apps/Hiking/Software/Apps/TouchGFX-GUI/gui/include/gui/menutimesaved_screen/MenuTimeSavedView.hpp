@@ -3,6 +3,8 @@
 
 #include <gui_generated/menutimesaved_screen/MenuTimeSavedViewBase.hpp>
 #include <gui/menutimesaved_screen/MenuTimeSavedPresenter.hpp>
+#include <gui/containers/CountdownTimer.hpp>
+#include <touchgfx/Callback.hpp>
 
 class MenuTimeSavedView : public MenuTimeSavedViewBase
 {
@@ -12,12 +14,15 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
-    void setTime(uint32_t minutes);
+    void setTime(Settings::Alerts::Time::Id id);
 
-protected:
-    uint32_t mCounter = Gui::Config::kConfirmTimeout;
+private:
+    using Menu = App::MenuNav::Root::Settings::Alerts::Time;
 
-    virtual void handleTickEvent() override;
+    void onDismiss();
+
+    CountdownTimer                          mDismissTimer;
+    touchgfx::Callback<MenuTimeSavedView>   mDismissCb;
 };
 
 #endif // MENUTIMESAVEDVIEW_HPP

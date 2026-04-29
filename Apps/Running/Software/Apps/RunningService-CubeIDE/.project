@@ -84,21 +84,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Commands.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/DeltaCounter.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/DeltaCounter.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/MonotonicCounter.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/MonotonicCounter.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/MonotonicTime.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/MonotonicTime.hpp</locationURI>
-		</link>
-		<link>
 			<name>Libs/Header/Service.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
@@ -114,24 +99,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/SettingsSerializer.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/SimpleLPF.hpp</name>
+			<name>Libs/Header/Track.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/SimpleLPF.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Track.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/TrackInfo.hpp</name>
+			<name>Libs/Header/WristTiltDetector.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/TrackInfo.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/VariableCounter.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/VariableCounter.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/WristWakeupDetector.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/WristWakeupDetector.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/WristTiltDetector.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Sources/ActivitySummarySerializer.cpp</name>
@@ -154,9 +129,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/SettingsSerializer.cpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Sources/WristWakeupDetector.cpp</name>
+			<name>Libs/Sources/WristTiltDetector.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/WristWakeupDetector.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Sources/WristTiltDetector.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header</name>
@@ -175,6 +150,11 @@
 		</link>
 		<link>
 			<name>SDK/ThirdParty/coreJSON</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Filters</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -200,6 +180,11 @@
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Messages</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -284,6 +269,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Filters/SimpleLPF.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Filters/SimpleLPF.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
@@ -337,6 +327,26 @@
 			<name>SDK/Libs/Header/Messages/SensorLayerMessages.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/SensorLayerMessages.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/DeltaCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/DeltaCounter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/MonotonicCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/MonotonicCounter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/MonotonicTime.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/MonotonicTime.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/VariableCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/VariableCounter.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/SensorLayer/DataParsers</name>

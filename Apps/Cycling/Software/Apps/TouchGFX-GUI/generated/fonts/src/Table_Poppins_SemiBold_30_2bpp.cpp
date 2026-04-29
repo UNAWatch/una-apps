@@ -98,7 +98,8 @@ KEEP extern const touchgfx::GlyphNode glyphs_Poppins_SemiBold_30_2bpp[] FONT_TAB
     {  7144, 0x007B,  10,  34,  28,   3,  15,   0,   0, 0x00 }, // braceleft
     {  7229, 0x007C,   5,  28,  24,   2,   9,   0,   0, 0x00 }, // bar
     {  7264, 0x007D,  10,  34,  28,   2,  15,   0,   0, 0x00 }, // braceright
-    {  7349, 0x007E,  16,   6,  13,   1,  18,   0,   0, 0x00 }  // asciitilde
+    {  7349, 0x007E,  16,   6,  13,   1,  18,   0,   0, 0x00 }, // asciitilde
+    {     0, 0x2026,  19,   5,   5,   1,  21,   0,   0, 0x00 }  // ellipsis
 };
 
 // GSUB tables:
@@ -108,9 +109,15 @@ FONT_TABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::GlyphNode glyphs_Poppins_SemiBold_30_2bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE;
 FONT_GLYPH_LOCATION_FLASH_PRAGMA
 KEEP extern const uint8_t unicodes_Poppins_SemiBold_30_2bpp_0[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
+FONT_GLYPH_LOCATION_FLASH_PRAGMA
+KEEP extern const uint8_t unicodes_Poppins_SemiBold_30_2bpp_4[] FONT_GLYPH_LOCATION_FLASH_ATTRIBUTE;
 FONT_SEARCHTABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const uint8_t* const unicodes_Poppins_SemiBold_30_2bpp[] FONT_SEARCHTABLE_LOCATION_FLASH_ATTRIBUTE = {
-    unicodes_Poppins_SemiBold_30_2bpp_0
+    unicodes_Poppins_SemiBold_30_2bpp_0,
+    0,
+    0,
+    0,
+    unicodes_Poppins_SemiBold_30_2bpp_4
 };
 FONT_KERNING_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::KerningNode kerning_Poppins_SemiBold_30_2bpp[] FONT_KERNING_LOCATION_FLASH_ATTRIBUTE;
@@ -118,6 +125,6 @@ touchgfx::GeneratedFont& getFont_Poppins_SemiBold_30_2bpp();
 
 touchgfx::GeneratedFont& getFont_Poppins_SemiBold_30_2bpp()
 {
-    static touchgfx::GeneratedFont Poppins_SemiBold_30_2bpp(glyphs_Poppins_SemiBold_30_2bpp, 95, 38, 30, 0, 0, 2, 0, 1, 0, unicodes_Poppins_SemiBold_30_2bpp, kerning_Poppins_SemiBold_30_2bpp, 63, 0, 0, 0);
+    static touchgfx::GeneratedFont Poppins_SemiBold_30_2bpp(glyphs_Poppins_SemiBold_30_2bpp, 96, 38, 30, 0, 0, 2, 0, 1, 0, unicodes_Poppins_SemiBold_30_2bpp, kerning_Poppins_SemiBold_30_2bpp, 63, 8230, 0, 0);
     return Poppins_SemiBold_30_2bpp;
 }
