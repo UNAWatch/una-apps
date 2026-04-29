@@ -704,12 +704,6 @@ void Service::saveLap()
 
     mActivityWriter.addLap(fitLap);
 
-    LapSummary lapSummary{};
-    lapSummary.duration = mTimeCounter.getLapValueActive();
-    lapSummary.distance = mDistanceCounter.getLapValueActive();
-    lapSummary.speed    = mSpeedCounter.getLapAverage();
-    mSummary.laps.push_back(lapSummary);
-
     mTrackData.lapNum++;
 
     LOG_INFO("Lap_%u saved. UTC: %u\n", mTrackData.lapNum, static_cast<uint32_t>(mTimeCounter.getCurrent()));
