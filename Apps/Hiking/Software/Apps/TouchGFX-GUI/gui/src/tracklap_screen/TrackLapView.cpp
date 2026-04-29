@@ -54,10 +54,12 @@ void TrackLapView::setDistance(float metres)
 
     if (value < App::Display::kMinDist) {
         Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");
-    } else if (value < 100.0f) {
+    } else if (value < 10.0f) {
         Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", value);
-    } else {
+    } else if (value < 100.0f) {
         Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.01f", value);
+    } else {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.0f", value);
     }
 
     distanceValue.invalidate();

@@ -15,6 +15,7 @@ void TrackFaceOverview::setHR(float hr, const uint8_t* thresholds, uint8_t thres
     if (hr < App::Display::kMinHR) {
         Unicode::snprintf(hrValueBuffer, HRVALUE_SIZE, "---");
         hrValue.invalidate();
+        hrZone.setHR(0, thresholds, thresholdCount);
         return;
     }
 

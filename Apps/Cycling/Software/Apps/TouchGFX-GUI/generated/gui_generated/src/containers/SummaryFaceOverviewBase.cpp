@@ -58,16 +58,15 @@ SummaryFaceOverviewBase::SummaryFaceOverviewBase()
     elevationText.setTypedText(touchgfx::TypedText(T_TMP_MEDIUM_18));
     add(elevationText);
 
-    avgSpeedUnits.setPosition(183, 107, 60, 19);
+    avgSpeedUnits.setPosition(174, 106, 60, 19);
     avgSpeedUnits.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     avgSpeedUnits.setLinespacing(0);
     Unicode::snprintf(avgSpeedUnitsBuffer, AVGSPEEDUNITS_SIZE, "%s", touchgfx::TypedText(T_TEXT_KM_PER_H).getText());
     avgSpeedUnits.setWildcard(avgSpeedUnitsBuffer);
     avgSpeedUnits.setTypedText(touchgfx::TypedText(T_TMP_REGULAR_18_L));
-    avgSpeedUnits.setVisible(false);
     add(avgSpeedUnits);
 
-    avgSpeedValue.setPosition(132, 99, 60, 32);
+    avgSpeedValue.setPosition(116, 99, 60, 32);
     avgSpeedValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     avgSpeedValue.setLinespacing(0);
     Unicode::snprintf(avgSpeedValueBuffer, AVGSPEEDVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_UWY0).getText());
@@ -75,7 +74,7 @@ SummaryFaceOverviewBase::SummaryFaceOverviewBase()
     avgSpeedValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25));
     add(avgSpeedValue);
 
-    avgSpeedText.setPosition(25, 103, 100, 21);
+    avgSpeedText.setPosition(17, 104, 100, 21);
     avgSpeedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     avgSpeedText.setLinespacing(0);
     avgSpeedText.setWildcard(touchgfx::TypedText(T_TEXT_AVG_SPEED_UC).getText());

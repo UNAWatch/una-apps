@@ -158,7 +158,11 @@ void TrackActionView::onCarouselUpdate(int16_t index)
                 Unicode::snprintf(buf, kBufSize, "---");
             } else {
                 auto hms = SDK::Utils::toHMS(static_cast<std::time_t>(mAvgPaceConv));
-                Unicode::snprintf(buf, kBufSize, "%u:%02u", hms.m, hms.s);
+                if (hms.h > 0) {
+                    Unicode::snprintf(buf, kBufSize, "%u:%02u", hms.h, hms.m);
+                } else {
+                    Unicode::snprintf(buf, kBufSize, "%u:%02u", hms.m, hms.s);
+                }
             }
         }
         break;
@@ -198,7 +202,11 @@ void TrackActionView::onCarouselUpdate(int16_t index)
 
     case 4:
         infoCarousel.setTitle(T_TEXT_AVG_DOT_HR);
-        Unicode::snprintfFloat(buf, kBufSize, "%.0f", mAvgHr);
+        if (mAvgHr < App::Display::kMinHR) {
+            Unicode::snprintf(buf, kBufSize, "---");
+        } else {
+            Unicode::snprintfFloat(buf, kBufSize, "%.0f", mAvgHr);
+        }
         break;
 
     default:

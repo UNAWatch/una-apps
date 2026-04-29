@@ -16,7 +16,11 @@ void TrackFaceTotal::setPace(float pace)
         Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "---");
     } else {
         auto hms = SDK::Utils::toHMS(static_cast<std::time_t>(pace));
-        Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        if (hms.h > 0) {
+            Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%u:%02u", hms.h, hms.m);
+        } else {
+            Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        }
     }
     paceValue.invalidate();
 }

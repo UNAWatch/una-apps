@@ -114,14 +114,22 @@ void SummaryFaceLaps::scrollListUpdateItem(LapListItem& item, int16_t itemIndex)
     item.setUnits(touchgfx::TypedText(mIsImperial ? T_TEXT_MI : T_TEXT_KM).getText());
 
     auto dur = SDK::Utils::toHMS(lap.duration);
-    Unicode::snprintf(buf, 32, "%u:%02u", dur.m, dur.s);
+    if (dur.h > 0) {
+        Unicode::snprintf(buf, 32, "%u:%02u", dur.h, dur.m);
+    } else {
+        Unicode::snprintf(buf, 32, "%u:%02u", dur.m, dur.s);
+    }
     item.setTime(buf);
 
     if (pace < static_cast<time_t>(App::Display::kMinPace)) {
         Unicode::snprintf(buf, 32, "---");
     } else {
         auto pac = SDK::Utils::toHMS(pace);
-        Unicode::snprintf(buf, 32, "%u:%02u", pac.m, pac.s);
+        if (pac.h > 0) {
+            Unicode::snprintf(buf, 32, "%u:%02u", pac.h, pac.m);
+        } else {
+            Unicode::snprintf(buf, 32, "%u:%02u", pac.m, pac.s);
+        }
     }
     item.setPace(buf);
 }
