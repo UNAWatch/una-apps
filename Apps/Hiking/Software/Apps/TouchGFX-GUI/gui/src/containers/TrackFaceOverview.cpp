@@ -15,6 +15,7 @@ void TrackFaceOverview::setHR(float hr, const uint8_t* thresholds, uint8_t thres
     if (hr < App::Display::kMinHR) {
         Unicode::snprintf(hrValueBuffer, HRVALUE_SIZE, "---");
         hrValue.invalidate();
+        hrZone.setHR(0, thresholds, thresholdCount);
         return;
     }
 
@@ -30,7 +31,11 @@ void TrackFaceOverview::setPace(float pace)
         Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "---");
     } else {
         auto hms = SDK::Utils::toHMS(static_cast<std::time_t>(pace));
-        Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        if (hms.h > 0) {
+            Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", hms.h, hms.m);
+        } else {
+            Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        }
     }
     avgPaceValue.invalidate();
 }

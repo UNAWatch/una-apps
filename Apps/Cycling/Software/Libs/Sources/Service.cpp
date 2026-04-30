@@ -51,9 +51,9 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorGpsDistance(SDK::Sensor::Type::GPS_DISTANCE, skSamplePeriod, skSampleLatency)
         , mSensorPressure(SDK::Sensor::Type::PRESSURE, skSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skSamplePeriod, skSampleLatency)
-        , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skSamplePeriod, skSampleLatency)
+        , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL)
         , mSensorBatteryMetrics(SDK::Sensor::Type::BATTERY_METRICS, skSamplePeriod, skSampleLatency)
-        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 300)
+        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION)
         , mTimeTracker(kernel.sys)
         , mAltitudeFilter(0.8f)
         , mAltitudeCounter()
@@ -703,12 +703,6 @@ void Service::saveLap()
     fitLap.descent   = mAltitudeCounter.getLapDescent();
 
     mActivityWriter.addLap(fitLap);
-
-    LapSummary lapSummary{};
-    lapSummary.duration = mTimeCounter.getLapValueActive();
-    lapSummary.distance = mDistanceCounter.getLapValueActive();
-    lapSummary.speed    = mSpeedCounter.getLapAverage();
-    mSummary.laps.push_back(lapSummary);
 
     mTrackData.lapNum++;
 

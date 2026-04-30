@@ -14,6 +14,7 @@ void TrackFaceLap::setHR(float hr, const uint8_t* thresholds, uint8_t thresholdC
     if (hr < App::Display::kMinHR) {
         Unicode::snprintf(hrValueBuffer, HRVALUE_SIZE, "---");
         hrValue.invalidate();
+        hrZone.setHR(0, thresholds, thresholdCount);
         return;
     }
 
@@ -29,7 +30,11 @@ void TrackFaceLap::setPace(float pace)
         Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "---");
     } else {
         auto hms = SDK::Utils::toHMS(static_cast<std::time_t>(pace));
-        Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        if (hms.h > 0) {
+            Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%u:%02u", hms.h, hms.m);
+        } else {
+            Unicode::snprintf(lapPaceValueBuffer, LAPPACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        }
     }
     lapPaceValue.invalidate();
 }
@@ -38,10 +43,12 @@ void TrackFaceLap::setDistance(float dist)
 {
     if (dist < App::Display::kMinDist) {
         Unicode::snprintf(lapDistValueBuffer, LAPDISTVALUE_SIZE, "---");
-    } else if (dist < 100.0f) {
+    } else if (dist < 10.0f) {
         Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.02f", dist);
-    } else {
+    } else if (dist < 100.0f) {
         Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.01f", dist);
+    } else {
+        Unicode::snprintfFloat(lapDistValueBuffer, LAPDISTVALUE_SIZE, "%.0f", dist);
     }
     lapDistValue.invalidate();
 }
@@ -49,10 +56,7 @@ void TrackFaceLap::setDistance(float dist)
 void TrackFaceLap::setTimer(std::time_t sec)
 {
     auto hms = SDK::Utils::toHMS(sec);
-    if (hms.h == 0) {
-        Unicode::snprintf(lapTimerValueBuffer, LAPTIMERVALUE_SIZE, "%u:%02u", hms.m, hms.s);
-    } else {
-        Unicode::snprintf(lapTimerValueBuffer, LAPTIMERVALUE_SIZE, "%u:%02u", hms.h, hms.m);
-    }
+    Unicode::snprintf(lapTimerValueBuffer, LAPTIMERVALUE_SIZE,
+        "%u:%02u:%02u", hms.h, hms.m, hms.s);
     lapTimerValue.invalidate();
 }

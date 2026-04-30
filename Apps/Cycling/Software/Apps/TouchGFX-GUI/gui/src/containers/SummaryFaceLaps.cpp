@@ -113,12 +113,18 @@ void SummaryFaceLaps::scrollListUpdateItem(LapListItem& item, int16_t itemIndex)
     item.setUnits(touchgfx::TypedText(mIsImperial ? T_TEXT_MI : T_TEXT_KM).getText());
 
     auto dur = SDK::Utils::toHMS(lap.duration);
-    Unicode::snprintf(buf, 32, "%u:%02u", dur.m, dur.s);
+    if (dur.h > 0) {
+        Unicode::snprintf(buf, 32, "%u:%02u", dur.h, dur.m);
+    } else {
+        Unicode::snprintf(buf, 32, "%u:%02u", dur.m, dur.s);
+    }
     item.setTime(buf);
 
-    if (speed < 10.0f) {
+    if (speed < App::Display::kMinSpeed) {
+        Unicode::snprintf(buf, 32, "---");
+    } else if (speed < 10.0f) {
         Unicode::snprintfFloat(buf, 32, "%.02f", speed);
-    } else  if (speed < 100.0f) {
+    } else if (speed < 100.0f) {
         Unicode::snprintfFloat(buf, 32, "%.01f", speed);
     } else {
         Unicode::snprintfFloat(buf, 32, "%.0f", speed);

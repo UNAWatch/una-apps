@@ -2907,12 +2907,10 @@
           {
             "Type": "TextArea",
             "Name": "avgSpeedUnits",
-            "X": 183,
-            "Y": 107,
+            "X": 174,
+            "Y": 106,
             "Width": 60,
             "Height": 19,
-            "Visible": false,
-            "LockPosition": true,
             "TextId": "TMP_REGULAR_18_L",
             "TextRotation": "0",
             "Color": {
@@ -2929,11 +2927,10 @@
           {
             "Type": "TextArea",
             "Name": "avgSpeedValue",
-            "X": 132,
+            "X": 116,
             "Y": 99,
             "Width": 60,
             "Height": 32,
-            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_25",
             "TextRotation": "0",
             "Color": {
@@ -2950,11 +2947,10 @@
           {
             "Type": "TextArea",
             "Name": "avgSpeedText",
-            "X": 25,
-            "Y": 103,
+            "X": 17,
+            "Y": 104,
             "Width": 100,
             "Height": 21,
-            "LockPosition": true,
             "TextId": "TMP_MEDIUM_18",
             "TextRotation": "0",
             "Color": {
@@ -3031,6 +3027,7 @@
             "Y": 62,
             "Width": 37,
             "Height": 29,
+            "LockPosition": true,
             "RelativeFilename": "CyclingMan_37x29.png"
           },
           {
@@ -3039,6 +3036,7 @@
             "X": 50,
             "Width": 140,
             "Height": 41,
+            "LockPosition": true,
             "CustomContainerDefinitionName": "Title"
           }
         ],

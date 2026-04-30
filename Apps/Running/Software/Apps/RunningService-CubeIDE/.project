@@ -159,9 +159,9 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/FirmwareVersion.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/SDK/FirmwareVersion.hpp</locationURI>
+			<name>SDK/Libs/Header/FitHelper</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Interfaces</name>
@@ -190,6 +190,11 @@
 		</link>
 		<link>
 			<name>SDK/Libs/Header/SensorLayer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Timer</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -274,6 +279,11 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/Filters/SimpleLPF.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/FitHelper/FitHelper.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/FitHelper/FitHelper.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
@@ -344,6 +354,11 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/MonotonicTime.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Metrics/ThrottledSample.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/ThrottledSample.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/Metrics/VariableCounter.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/VariableCounter.hpp</locationURI>
@@ -377,6 +392,11 @@
 			<name>SDK/Libs/Header/SensorLayer/SensorTypes.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorTypes.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Timer/Timer.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Timer/Timer.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/TrackMap/TrackMapBuilder.hpp</name>
@@ -441,7 +461,7 @@
 		<link>
 			<name>SDK/Libs/Source/Timer/Timer.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libs/Source/Timer/Timer.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/Timer/Timer.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/TrackMap/TrackMapBuilder.cpp</name>

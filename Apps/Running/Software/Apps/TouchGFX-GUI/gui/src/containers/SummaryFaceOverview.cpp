@@ -34,7 +34,11 @@ void SummaryFaceOverview::setAvgPace(float pace)
         Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "---");
     } else {
         auto hms = SDK::Utils::toHMS(static_cast<std::time_t>(pace));
-        Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        if (hms.h > 0) {
+            Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", hms.h, hms.m);
+        } else {
+            Unicode::snprintf(avgPaceValueBuffer, AVGPACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        }
     }
     avgPaceValue.invalidate();
 }

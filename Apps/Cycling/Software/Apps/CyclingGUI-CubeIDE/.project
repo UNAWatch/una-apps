@@ -74,6 +74,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Commands.hpp</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/Settings.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Settings.hpp</locationURI>
+		</link>
+		<link>
+			<name>Libs/Header/Track.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Track.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>

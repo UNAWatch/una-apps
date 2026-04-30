@@ -58,7 +58,11 @@ void TrackLapView::setPace(float secPerM)
         Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "---");
     } else {
         auto hms = SDK::Utils::toHMS(static_cast<std::time_t>(value));
-        Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        if (hms.h > 0) {
+            Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%u:%02u", hms.h, hms.m);
+        } else {
+            Unicode::snprintf(paceValueBuffer, PACEVALUE_SIZE, "%u:%02u", hms.m, hms.s);
+        }
     }
     paceValue.invalidate();
 }
@@ -74,10 +78,12 @@ void TrackLapView::setDistance(float metres)
 
     if (value < App::Display::kMinDist) {
         Unicode::snprintf(distanceValueBuffer, DISTANCEVALUE_SIZE, "---");
-    } else if (value < 100.0f) {
+    } else if (value < 10.0f) {
         Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.02f", value);
-    } else {
+    } else if (value < 100.0f) {
         Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.01f", value);
+    } else {
+        Unicode::snprintfFloat(distanceValueBuffer, DISTANCEVALUE_SIZE, "%.0f", value);
     }
 
     distanceValue.invalidate();

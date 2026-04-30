@@ -84,21 +84,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Commands.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/DeltaCounter.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/DeltaCounter.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/MonotonicCounter.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/MonotonicCounter.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/MonotonicTime.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/MonotonicTime.hpp</locationURI>
-		</link>
-		<link>
 			<name>Libs/Header/Service.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
@@ -114,19 +99,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/SettingsSerializer.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/SimpleLPF.hpp</name>
+			<name>Libs/Header/Track.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/SimpleLPF.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/TrackInfo.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/TrackInfo.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/VariableCounter.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/VariableCounter.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Track.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Sources/ActivitySummarySerializer.cpp</name>
@@ -169,9 +144,14 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>SDK/Libs/Header/FirmwareVersion.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/SDK/FirmwareVersion.hpp</locationURI>
+			<name>SDK/Libs/Header/Filters</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/FitHelper</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Interfaces</name>
@@ -194,7 +174,17 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Metrics</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/SensorLayer</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Timer</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -274,6 +264,16 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Filters/SimpleLPF.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Filters/SimpleLPF.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/FitHelper/FitHelper.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/FitHelper/FitHelper.hpp</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/Interfaces/IKernel.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Interfaces/IKernel.hpp</locationURI>
@@ -329,9 +329,64 @@
 			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/SensorLayerMessages.hpp</locationURI>
 		</link>
 		<link>
+			<name>SDK/Libs/Header/Metrics/DeltaCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/DeltaCounter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/MonotonicCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/MonotonicCounter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/MonotonicTime.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/MonotonicTime.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/ThrottledSample.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/ThrottledSample.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Metrics/VariableCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Metrics/VariableCounter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>SDK/Libs/Header/SensorLayer/SensorConnection.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorConnection.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/SensorData.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorData.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/SensorDataBatch.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorDataBatch.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/SensorDataView.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorDataView.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/SensorTypes.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/SensorTypes.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/Timer/Timer.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/Timer/Timer.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/TrackMap/TrackMapBuilder.hpp</name>
@@ -396,7 +451,7 @@
 		<link>
 			<name>SDK/Libs/Source/Timer/Timer.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Libs/Source/Timer/Timer.cpp</locationURI>
+			<locationURI>SDK_LOC/Libs/Source/Timer/Timer.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Source/TrackMap/TrackMapBuilder.cpp</name>
@@ -417,6 +472,131 @@
 			<name>SDK/ThirdParty/coreJSON/source/include</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserAccelerometer.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserAccelerometer.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserAccelerometerRaw.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserAccelerometerRaw.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserActivity.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserActivity.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserActivityRecognition.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserActivityRecognition.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserAltimeter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserBatteryCharging.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserBatteryCharging.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserBatteryMetrics.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserBatteryMetrics.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserFusion.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserFusion.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserFusionRaw.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserFusionRaw.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserGpsDistance.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserGpsDistance.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserGpsLocation.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserGpsSpeed.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserGyroscope.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserGyroscope.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserGyroscopeRaw.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserGyroscopeRaw.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserHeartRateMetrics.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserHeartRateMetrics.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserMotionDetect.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserMotionDetect.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserPressure.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserPressure.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserStepCounter.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserStepDetector.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserStepDetector.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserTemperature.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserTemperature.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserTouch.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserTouch.hpp</locationURI>
+		</link>
+		<link>
+			<name>SDK/Libs/Header/SensorLayer/DataParsers/SensorDataParserWristMotion.hpp</name>
+			<type>1</type>
+			<locationURI>SDK_LOC/Libs/Header/SDK/SensorLayer/DataParsers/SensorDataParserWristMotion.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/ThirdParty/coreJSON/source/include/core_json.h</name>

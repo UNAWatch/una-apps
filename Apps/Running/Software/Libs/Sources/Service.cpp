@@ -54,9 +54,9 @@ Service::Service(SDK::Kernel &kernel)
         , mSensorGpsDistance(SDK::Sensor::Type::GPS_DISTANCE, skSamplePeriod, skSampleLatency)
         , mSensorPressure(SDK::Sensor::Type::PRESSURE, skSamplePeriod, skSampleLatency)
         , mSensorHr(SDK::Sensor::Type::HEART_RATE, skSamplePeriod, skSampleLatency)
-        , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL, skSamplePeriod, skSampleLatency)
+        , mSensorBatteryLevel(SDK::Sensor::Type::BATTERY_LEVEL)
         , mSensorBatteryMetrics(SDK::Sensor::Type::BATTERY_METRICS, skSamplePeriod, skSampleLatency)
-        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION, 0)
+        , mSensorWristMotion(SDK::Sensor::Type::WRIST_MOTION)
         , mSensorFusion(SDK::Sensor::Type::FUSION_RAW, 1000.0f / skFusionSampleRateHz, 100)
         , mTimeTracker(kernel.sys)
         , mAltitudeFilter(0.8f)
@@ -815,7 +815,6 @@ void Service::saveLap()
     // Clear track data
     mTrackData.lapTime = 0;
     mTrackData.lapDistance = 0.0f;
-    mTrackData.lapElevation = 0.0f;
     mTrackData.maxLapSpeed = 0.0f;
     mTrackData.avgLapSpeed = 0.0f;
     mTrackData.avgLapHR = 0.0f;
