@@ -11,13 +11,14 @@
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 
-#include "icon_60x60.h"
+#include "icon_28x33.h"
 
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValue()
+    , mIcon()
     , mSensorHR(SDK::Sensor::Type::HEART_RATE)
     , mHrValue(0)
     , mIsValid(false)
@@ -149,13 +150,15 @@ void Service::glanceUpdate()
 {
     if (mHrValue > 1.0 && !mIsValid) {
         mIsValid = true;
-        mGlanceValue.pos({ 80, 28 }, { 160, 34 })
+        mIcon.pos({60, 32});
+        mGlanceValue.pos({ 100, 28 }, { 100, 34 })
                 .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
                 .setText("")
-                .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
+                .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
     } else if (mHrValue <= 1.0 && mIsValid) {
         mIsValid = false;
-        mGlanceValue.pos({ 81, 34 }, { 130, 23 })
+        mIcon.pos({39, 32});
+        mGlanceValue.pos({ 85, 34 }, { 130, 23 })
                 .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
                 .setText(skTextCalculating)
                 .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
@@ -168,8 +171,6 @@ void Service::glanceUpdate()
 
 void Service::createGuiControls()
 {
-    mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
-
     mGlanceTitle = mGlanceUI.createText();
     mGlanceTitle.pos({ 70, 0 }, { 100, 25 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
@@ -177,11 +178,13 @@ void Service::createGuiControls()
         .setText("Live HR")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
+    mIcon = mGlanceUI.createImage();
+    mIcon.init({39, 32}, {ICON_28X33_WIDTH, ICON_28X33_HEIGHT}, ICON_28X33_ABGR2222);
+
     mGlanceValue = mGlanceUI.createText();
-    mGlanceValue.pos({ 81, 34 }, { 172, 23 })
+    mGlanceValue.pos({ 85, 34 }, { 172, 23 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .setText(skTextCalculating)
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
-
 }

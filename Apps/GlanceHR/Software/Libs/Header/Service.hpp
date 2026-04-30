@@ -30,10 +30,11 @@ private:
 
     static constexpr char skTextCalculating[] = "Calculating...";
 
-    const SDK::Kernel&       mKernel;
-    SDK::Glance::Form        mGlanceUI;
-    SDK::Glance::ControlText mGlanceTitle;
-    SDK::Glance::ControlText mGlanceValue;
+    const SDK::Kernel&        mKernel;
+    SDK::Glance::Form         mGlanceUI;
+    SDK::Glance::ControlText  mGlanceTitle;
+    SDK::Glance::ControlText  mGlanceValue;
+    SDK::Glance::ControlImage mIcon;
 
     SDK::Sensor::Connection mSensorHR;
     float                   mHrValue;
