@@ -11,7 +11,7 @@
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 
-#include "icon_28x33.h"
+#include "IconHR.h"
 
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
@@ -150,18 +150,25 @@ void Service::glanceUpdate()
 {
     if (mHrValue > 1.0 && !mIsValid) {
         mIsValid = true;
-        mIcon.pos({60, 32});
-        mGlanceValue.pos({ 100, 28 }, { 100, 34 })
-                .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
-                .setText("")
-                .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+
+        mIcon.pos({ kValidIconX, kValidIconY });
+
+        mGlanceValue.pos({ kValidValueX, kValidValueY },
+                         { kValidValueW, kValidValueH })
+            .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
+            .setText("")
+            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+
     } else if (mHrValue <= 1.0 && mIsValid) {
         mIsValid = false;
-        mIcon.pos({39, 32});
-        mGlanceValue.pos({ 85, 34 }, { 130, 23 })
-                .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
-                .setText(skTextCalculating)
-                .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+
+        mIcon.pos({ kCalculatingIconX, kCalculatingIconY });
+
+        mGlanceValue.pos({ kCalculatingValueX, kCalculatingValueY },
+                         { kCalculatingValueW, kCalculatingValueH })
+            .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
+            .setText(skTextCalculating)
+            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
     }
 
     if (mIsValid) {
@@ -172,19 +179,19 @@ void Service::glanceUpdate()
 void Service::createGuiControls()
 {
     mGlanceTitle = mGlanceUI.createText();
-    //                 x   y       w    h
-    mGlanceTitle.pos({ 70, 0 }, { 100, 25 })
+    mGlanceTitle.pos({ kTitleX, kTitleY }, { kTitleW, kTitleH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
         .setText("Live HR")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     mIcon = mGlanceUI.createImage();
-    mIcon.init({39, 32}, {ICON_28X33_WIDTH, ICON_28X33_HEIGHT}, ICON_28X33_ABGR2222);
+    mIcon.init({ kCalculatingIconX, kCalculatingIconY },
+               { ICON_HR_WIDTH, ICON_HR_HEIGHT },
+               ICON_HR_ABGR2222);
 
     mGlanceValue = mGlanceUI.createText();
-    //                 x   y       w    h
-    mGlanceValue.pos({ 85, 34 }, { 172, 23 })
+    mGlanceValue.pos({ kCalculatingValueX, kCalculatingValueY }, { kCalculatingValueW, kCalculatingValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .setText(skTextCalculating)

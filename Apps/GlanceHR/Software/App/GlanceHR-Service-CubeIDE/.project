@@ -59,19 +59,14 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/IconHR.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/IconHR.h</locationURI>
+		</link>
+		<link>
 			<name>Libs/Header/Service.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/icon_30x30.h</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/icon_30x30.h</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/icon_60x60.h</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/icon_60x60.h</locationURI>
 		</link>
 		<link>
 			<name>Libs/Source/Service.cpp</name>
