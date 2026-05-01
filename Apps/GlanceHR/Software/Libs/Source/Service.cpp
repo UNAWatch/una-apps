@@ -1,15 +1,14 @@
 #include "Service.hpp"
-#include "SDK/Kernel/KernelProviderService.hpp"
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
+#include "SDK/Kernel/KernelProviderService.hpp"
+#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 #include "SDK/Messages/CommandMessages.hpp"
 #include "SDK/Messages/SensorLayerMessages.hpp"
 #include "SDK/Messages/MessageGuard.hpp"
-
-#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
 
 #include "IconHR.h"
 
@@ -151,18 +150,14 @@ void Service::glanceUpdate()
     if (mHrValue > 1.0 && !mIsValid) {
         mIsValid = true;
 
-        mIcon.pos({ kValidIconX, kValidIconY });
-
         mGlanceValue.pos({ kValidValueX, kValidValueY },
                          { kValidValueW, kValidValueH })
             .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
             .setText("")
-            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     } else if (mHrValue <= 1.0 && mIsValid) {
         mIsValid = false;
-
-        mIcon.pos({ kCalculatingIconX, kCalculatingIconY });
 
         mGlanceValue.pos({ kCalculatingValueX, kCalculatingValueY },
                          { kCalculatingValueW, kCalculatingValueH })
@@ -172,7 +167,7 @@ void Service::glanceUpdate()
     }
 
     if (mIsValid) {
-        mGlanceValue.print("%.0f          ", mHrValue);
+        mGlanceValue.print("%.0f", mHrValue);
     }
 }
 

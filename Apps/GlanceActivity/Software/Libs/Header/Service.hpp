@@ -8,8 +8,6 @@
 #include "SDK/SensorLayer/SensorConnection.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
 
-#include "IconActivity.h"
-
 class Service
 {
 public:

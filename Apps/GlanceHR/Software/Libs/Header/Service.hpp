@@ -47,7 +47,7 @@ private:
     static constexpr int16_t kValidIconX = 60;
     static constexpr int16_t kValidIconY = 118 - kTopOffset;
 
-    static constexpr int16_t kValidValueX = 100;
+    static constexpr int16_t kValidValueX = 70;
     static constexpr int16_t kValidValueY = 115 - kTopOffset;
     static constexpr int16_t kValidValueW = 100;
     static constexpr int16_t kValidValueH = 40;
