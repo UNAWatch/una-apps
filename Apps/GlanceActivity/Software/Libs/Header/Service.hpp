@@ -8,6 +8,8 @@
 #include "SDK/SensorLayer/SensorConnection.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
 
+#include "IconActivity.h"
+
 class Service
 {
 public:
@@ -27,10 +29,27 @@ private:
     bool configGui();
     void createGuiControls();
 
-    const SDK::Kernel&       mKernel;
-    SDK::Glance::Form        mGlanceUI;
-    SDK::Glance::ControlText mGlanceTitle;
-    SDK::Glance::ControlText mGlanceValue;
+private:
+    static constexpr int16_t kTopOffset = 87;
+
+    static constexpr int16_t kTitleX = 18;
+    static constexpr int16_t kTitleY = 87 - kTopOffset;
+    static constexpr int16_t kTitleW = 205;
+    static constexpr int16_t kTitleH = 30;
+
+    static constexpr int16_t kIconX = 52;
+    static constexpr int16_t kIconY = 124 - kTopOffset;
+
+    static constexpr int16_t kValueX = 105;
+    static constexpr int16_t kValueY = 115 - kTopOffset;
+    static constexpr int16_t kValueW = 80;
+    static constexpr int16_t kValueH = 40;
+
+    const SDK::Kernel&        mKernel;
+    SDK::Glance::Form         mGlanceUI;
+    SDK::Glance::ControlText  mGlanceTitle;
+    SDK::Glance::ControlText  mGlanceValue;
+    SDK::Glance::ControlImage mIcon;
 
     SDK::Sensor::Connection mSensorActivity;
 };
