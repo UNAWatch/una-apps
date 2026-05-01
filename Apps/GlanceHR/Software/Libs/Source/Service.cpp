@@ -172,6 +172,7 @@ void Service::glanceUpdate()
 void Service::createGuiControls()
 {
     mGlanceTitle = mGlanceUI.createText();
+    //                 x   y       w    h
     mGlanceTitle.pos({ 70, 0 }, { 100, 25 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
@@ -182,6 +183,7 @@ void Service::createGuiControls()
     mIcon.init({39, 32}, {ICON_28X33_WIDTH, ICON_28X33_HEIGHT}, ICON_28X33_ABGR2222);
 
     mGlanceValue = mGlanceUI.createText();
+    //                 x   y       w    h
     mGlanceValue.pos({ 85, 34 }, { 172, 23 })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)

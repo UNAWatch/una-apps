@@ -12,9 +12,6 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserActivity.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
 
-#include "icon_60x60.h"
-#include "icon_30x30.h"
-
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
     , mGlanceUI()
@@ -141,19 +138,22 @@ bool Service::configGui()
 
 void Service::createGuiControls()
 {
-    mGlanceUI.createImage().init({31, 15}, {60, 60}, ICON_60X60_ABGR2222);
-
     mGlanceTitle = mGlanceUI.createText();
-    mGlanceTitle.pos({ 20, 0 }, { 200, 25 })
+    mGlanceTitle.pos({ kTitleX, kTitleY }, { kTitleW, kTitleH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
         .setText("Activity Minutes")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
+    mIcon = mGlanceUI.createImage();
+    mIcon.init({ kIconX, kIconY },
+               { ICON_ACTIVITY_WIDTH, ICON_ACTIVITY_HEIGHT },
+               ICON_ACTIVITY_ABGR2222);
+
     mGlanceValue = mGlanceUI.createText();
-    mGlanceValue.pos({ 80, 28 }, { 80, 34 })
+    mGlanceValue.pos({ kValueX, kValueY }, { kValueW, kValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .setText("")
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
 }
