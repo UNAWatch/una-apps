@@ -12,6 +12,8 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserActivity.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
 
+#include "IconActivity.h"
+
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
     , mGlanceUI()
