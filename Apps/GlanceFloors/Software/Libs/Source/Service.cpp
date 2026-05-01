@@ -10,7 +10,7 @@
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserFloorCounter.hpp"
 
-#include "icon_60x60.h"
+#include "IconFloors.h"
 
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
@@ -154,20 +154,19 @@ bool Service::configGui()
 
 void Service::createGuiControls()
 {
-    mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
+    mGlanceUI.createImage().init({kIconX, kIconY}, {ICON_FLOORS_WIDTH, ICON_FLOORS_HEIGHT}, ICON_FLOORS_ABGR2222);
 
     mGlanceTitle = mGlanceUI.createText();
-    mGlanceTitle.pos({ 70, 0 }, { 100, 25 })
+    mGlanceTitle.pos({ kTitleX, kTitleY }, { kTitleW, kTitleH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
         .setText("Floors")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     mGlanceValue = mGlanceUI.createText();
-    mGlanceValue.pos({ 80, 28 }, { 80, 34 })
+    mGlanceValue.pos({ kValueX, kValueY }, { kValueW, kValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .setText("")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
-
 }

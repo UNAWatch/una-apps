@@ -157,5 +157,5 @@ void Service::createGuiControls()
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .setText("")
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }
