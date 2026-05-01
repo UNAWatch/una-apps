@@ -155,7 +155,6 @@ void Service::glanceUpdate()
             .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
             .setText("")
             .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
-
     } else if (mHrValue <= 1.0 && mIsValid) {
         mIsValid = false;
 
@@ -181,7 +180,7 @@ void Service::createGuiControls()
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     mIcon = mGlanceUI.createImage();
-    mIcon.init({ kCalculatingIconX, kCalculatingIconY },
+    mIcon.init({ kIconX, kIconY },
                { ICON_HR_WIDTH, ICON_HR_HEIGHT },
                ICON_HR_ABGR2222);
 
