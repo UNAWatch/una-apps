@@ -10,13 +10,14 @@
 
 #include "SDK/SensorLayer/DataParsers/SensorDataParserBatteryLevel.hpp"
 
-#include "icon_60x60.h"
+#include "IconsBattery.h"
 
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValue()
+    , mIcon()
     , mSensorSOC(SDK::Sensor::Type::BATTERY_LEVEL)
     , mSOCValue(0)
 {
@@ -151,21 +152,43 @@ bool Service::configGui()
 void Service::glanceUpdate()
 {
     mGlanceValue.print("%.0f%%", mSOCValue);
+
+    /**
+     *  Level     s1          s2      s3      s4
+     *  0 %       off         off     off     off
+     *  1-24 %    red         off     off     off
+     *  25-49 %   teal        teal    off     off
+     *  50-74 %   teal        teal    teal    off
+     *  75-100 %  teal        teal    teal    teal
+     */
+
+    if (mSOCValue >= 75.0f) {
+        mIcon.setImage(ICON_BATTERY_100_ABGR2222);
+    } else if (mSOCValue >= 50.0f) {
+        mIcon.setImage(ICON_BATTERY_75_ABGR2222);
+    } else if (mSOCValue >= 25.0f) {
+        mIcon.setImage(ICON_BATTERY_50_ABGR2222);
+    } else if (mSOCValue >= 1.0f) {
+        mIcon.setImage(ICON_BATTERY_25_ABGR2222);
+    } else {
+        mIcon.setImage(ICON_BATTERY_0_ABGR2222);
+    }
 }
 
 void Service::createGuiControls()
 {
-    mGlanceUI.createImage().init({20, 0}, {60, 60}, ICON_60X60_ABGR2222);
+    mIcon = mGlanceUI.createImage();
+    mIcon.init({kIconX, kIconY}, {ICON_BATTERY_WIDTH, ICON_BATTERY_HEIGHT}, ICON_BATTERY_0_ABGR2222);
 
     mGlanceTitle = mGlanceUI.createText();
-    mGlanceTitle.pos({ 70, 0 }, { 100, 24 })
+    mGlanceTitle.pos({ kTitleX, kTitleY }, { kTitleW, kTitleH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
-        .setText("Battery")
+        .setText("Battery Level")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 
     mGlanceValue = mGlanceUI.createText();
-    mGlanceValue.pos({ 72, 25 }, { 100, 49 })
+    mGlanceValue.pos({ kValueX, kValueY }, { kValueW, kValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .setText("")
