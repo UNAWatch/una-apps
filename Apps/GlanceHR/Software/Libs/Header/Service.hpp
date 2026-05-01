@@ -36,16 +36,13 @@ private:
     static constexpr int16_t kTitleW = 205;
     static constexpr int16_t kTitleH = 30;
 
-    static constexpr int16_t kCalculatingIconX = 39;
-    static constexpr int16_t kCalculatingIconY = 118 - kTopOffset;
+    static constexpr int16_t kIconX = 39;
+    static constexpr int16_t kIconY = 118 - kTopOffset;
 
     static constexpr int16_t kCalculatingValueX = 85;
     static constexpr int16_t kCalculatingValueY = 117 - kTopOffset;
     static constexpr int16_t kCalculatingValueW = 150;
     static constexpr int16_t kCalculatingValueH = 40;
-
-    static constexpr int16_t kValidIconX = 60;
-    static constexpr int16_t kValidIconY = 118 - kTopOffset;
 
     static constexpr int16_t kValidValueX = 70;
     static constexpr int16_t kValidValueY = 115 - kTopOffset;
