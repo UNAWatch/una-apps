@@ -8,29 +8,28 @@ using namespace touchgfx;
 
 class MainView;
 
+/**
+ * @brief Presenter for the main alarm list screen.
+ *
+ * On activation loads the current alarm list and the last selected alarm index
+ * into the view. Handles idle timeout by routing to the next priority screen.
+ */
 class MainPresenter : public touchgfx::Presenter, public ModelListener
 {
 public:
     MainPresenter(MainView& v);
 
-    /**
-     * The activate function is called automatically when this screen is "switched in"
-     * (ie. made active). Initialization logic can be placed here.
-     */
     virtual void activate();
-
-    /**
-     * The deactivate function is called automatically when this screen is "switched out"
-     * (ie. made inactive). Teardown functionality can be placed here.
-     */
     virtual void deactivate();
-
     virtual ~MainPresenter() {}
 
     virtual void onIdleTimeout() override { model->switchToNextPriorityScreen(); }
-    virtual void onAlarmListUpdated(const std::vector<AppType::Alarm>& list) override;
 
-    void setAlarmIdForEdit(size_t id);
+    /** @brief Called when the alarm list changes (e.g. after save/delete). */
+    virtual void onAlarmListUpdated(const std::vector<Alarm>& list) override;
+
+    /** @brief Store @p id as the alarm to be edited/actioned on the next screen. */
+    void setAlarmEditId(size_t id);
 
     void exitApp();
 

@@ -12,7 +12,7 @@ void DeletedPresenter::activate()
     // Reset idle timer
     model->resetIdleTimer();
 
-    size_t id = model->alarmGetEditId();
+    size_t id = model->getAlarmEditId();
     size_t size = model->getAlarmList().size();
 
     if (id < size) {
@@ -27,7 +27,7 @@ void DeletedPresenter::activate()
     else if (id > 0){
         id--;
     }
-    model->alarmSetEditId(id);
+    model->setAlarmEditId(id);
 }
 
 void DeletedPresenter::deactivate()

@@ -15,48 +15,51 @@ MainViewBase::MainViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    valueRepeat.setPosition(53, 175, 140, 23);
-    valueRepeat.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    valueRepeat.setLinespacing(0);
-    Unicode::snprintf(valueRepeatBuffer, VALUEREPEAT_SIZE, "%s", touchgfx::TypedText(T_TEXT_WEDNESDAY).getText());
-    valueRepeat.setWildcard(valueRepeatBuffer);
-    valueRepeat.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(valueRepeat);
+    buttons.setXY(0, 47);
+    add(buttons);
 
-    textRepeat.setXY(88, 150);
-    textRepeat.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    textRepeat.setLinespacing(0);
-    textRepeat.setWildcard(touchgfx::TypedText(T_TEXT_REPEAT).getText());
-    textRepeat.resizeToCurrentText();
-    textRepeat.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(textRepeat);
+    repeatValue.setPosition(53, 175, 140, 23);
+    repeatValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    repeatValue.setLinespacing(0);
+    Unicode::snprintf(repeatValueBuffer, REPEATVALUE_SIZE, "%s", touchgfx::TypedText(T_TEXT_WEDNESDAY).getText());
+    repeatValue.setWildcard(repeatValueBuffer);
+    repeatValue.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(repeatValue);
 
-    time.setPosition(20, 82, 200, 77);
-    time.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    time.setLinespacing(0);
-    Unicode::snprintf(timeBuffer, TIME_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_AP10).getText());
-    time.setWildcard(timeBuffer);
-    time.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_60));
-    add(time);
+    repeatText.setXY(88, 150);
+    repeatText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    repeatText.setLinespacing(0);
+    repeatText.setWildcard(touchgfx::TypedText(T_TEXT_REPEAT).getText());
+    repeatText.resizeToCurrentText();
+    repeatText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(repeatText);
 
-    toggleSwitch.setXY(131, 58);
-    add(toggleSwitch);
+    timeValue.setPosition(20, 82, 200, 77);
+    timeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    timeValue.setLinespacing(0);
+    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_AP10).getText());
+    timeValue.setWildcard(timeValueBuffer);
+    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_60));
+    add(timeValue);
 
-    valueAlarm.setPosition(111, 60, 25, 23);
-    valueAlarm.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    valueAlarm.setLinespacing(0);
-    Unicode::snprintf(valueAlarmBuffer, VALUEALARM_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_JNEX).getText());
-    valueAlarm.setWildcard(valueAlarmBuffer);
-    valueAlarm.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18_L));
-    add(valueAlarm);
+    toggle.setXY(131, 58);
+    add(toggle);
 
-    textAlarm.setXY(51, 60);
-    textAlarm.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    textAlarm.setLinespacing(0);
-    textAlarm.setWildcard(touchgfx::TypedText(T_TEXT_ALARM).getText());
-    textAlarm.resizeToCurrentText();
-    textAlarm.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(textAlarm);
+    alarmValue.setPosition(111, 60, 25, 23);
+    alarmValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    alarmValue.setLinespacing(0);
+    Unicode::snprintf(alarmValueBuffer, ALARMVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_JNEX).getText());
+    alarmValue.setWildcard(alarmValueBuffer);
+    alarmValue.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18_L));
+    add(alarmValue);
+
+    alarmText.setXY(51, 60);
+    alarmText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    alarmText.setLinespacing(0);
+    alarmText.setWildcard(touchgfx::TypedText(T_TEXT_ALARM).getText());
+    alarmText.resizeToCurrentText();
+    alarmText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(alarmText);
 
     textNew.setPosition(67, 145, 107, 36);
     textNew.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
@@ -68,12 +71,9 @@ MainViewBase::MainViewBase()
     add(textNew);
 
     icon.setXY(95, 95);
-    icon.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CIRCLEPLUS_ID));
+    icon.setBitmap(touchgfx::Bitmap(BITMAP_CIRCLEPLUS_50X50_ID));
     icon.setVisible(false);
     add(icon);
-
-    buttons.setXY(0, 47);
-    add(buttons);
 
     title.setXY(50, 0);
     add(title);
@@ -86,8 +86,8 @@ MainViewBase::~MainViewBase()
 
 void MainViewBase::setupScreen()
 {
-    toggleSwitch.initialize();
     buttons.initialize();
+    toggle.initialize();
     title.initialize();
     transitionBegins();
 }

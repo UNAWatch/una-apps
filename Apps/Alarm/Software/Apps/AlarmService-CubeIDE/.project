@@ -69,9 +69,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AlarmManager.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Header/AppTypes.hpp</name>
+			<name>Libs/Header/Alarm.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AppTypes.hpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Alarm.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Header/Commands.hpp</name>

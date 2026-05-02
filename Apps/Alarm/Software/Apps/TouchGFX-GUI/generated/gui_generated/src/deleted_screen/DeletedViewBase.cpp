@@ -4,8 +4,8 @@
 #include <gui_generated/deleted_screen/DeletedViewBase.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
+#include <images/BitmapDatabase.hpp>
 
 DeletedViewBase::DeletedViewBase()
 {
@@ -15,38 +15,25 @@ DeletedViewBase::DeletedViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    buttons.setXY(0, 47);
-    add(buttons);
+    deletedText.setXY(61, 145);
+    deletedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    deletedText.setLinespacing(0);
+    deletedText.setWildcard(touchgfx::TypedText(T_TEXT_DELETED).getText());
+    deletedText.resizeToCurrentText();
+    deletedText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
+    add(deletedText);
 
     icon.setXY(95, 95);
-    icon.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CIRCLECROSS_ID));
+    icon.setBitmap(touchgfx::Bitmap(BITMAP_CIRCLECROSS_50X50_ID));
     add(icon);
 
-    text.setXY(61, 145);
-    text.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    text.setLinespacing(0);
-    Unicode::snprintf(textBuffer, TEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_DELETED).getText());
-    text.setWildcard(textBuffer);
-    text.resizeToCurrentText();
-    text.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
-    add(text);
-
-    textAlarm.setXY(89, 60);
-    textAlarm.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    textAlarm.setLinespacing(0);
-    Unicode::snprintf(textAlarmBuffer, TEXTALARM_SIZE, "%s", touchgfx::TypedText(T_TEXT_ALARM).getText());
-    textAlarm.setWildcard(textAlarmBuffer);
-    textAlarm.resizeToCurrentText();
-    textAlarm.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(textAlarm);
-
-    valueAlarm.setPosition(153, 60, 25, 23);
-    valueAlarm.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    valueAlarm.setLinespacing(0);
-    Unicode::snprintf(valueAlarmBuffer, VALUEALARM_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_S8Q0).getText());
-    valueAlarm.setWildcard(valueAlarmBuffer);
-    valueAlarm.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18_L));
-    add(valueAlarm);
+    messageText.setPosition(60, 60, 120, 23);
+    messageText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    messageText.setLinespacing(0);
+    Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_PAA0).getText());
+    messageText.setWildcard(messageTextBuffer);
+    messageText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(messageText);
 
     title.setXY(50, 0);
     add(title);
@@ -59,7 +46,6 @@ DeletedViewBase::~DeletedViewBase()
 
 void DeletedViewBase::setupScreen()
 {
-    buttons.initialize();
     title.initialize();
     transitionBegins();
 }

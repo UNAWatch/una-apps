@@ -8,10 +8,10 @@
 #include <mvp/View.hpp>
 #include <gui/main_screen/MainPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
+#include <gui/containers/Buttons.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <gui/containers/Toggle.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <gui/containers/Buttons.hpp>
 #include <gui/containers/Title.hpp>
 
 class MainViewBase : public touchgfx::View<MainPresenter>
@@ -31,26 +31,26 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::TextAreaWithOneWildcard valueRepeat;
-    touchgfx::TextAreaWithOneWildcard textRepeat;
-    touchgfx::TextAreaWithOneWildcard time;
-    Toggle toggleSwitch;
-    touchgfx::TextAreaWithOneWildcard valueAlarm;
-    touchgfx::TextAreaWithOneWildcard textAlarm;
+    Buttons buttons;
+    touchgfx::TextAreaWithOneWildcard repeatValue;
+    touchgfx::TextAreaWithOneWildcard repeatText;
+    touchgfx::TextAreaWithOneWildcard timeValue;
+    Toggle toggle;
+    touchgfx::TextAreaWithOneWildcard alarmValue;
+    touchgfx::TextAreaWithOneWildcard alarmText;
     touchgfx::TextAreaWithOneWildcard textNew;
     touchgfx::Image icon;
-    Buttons buttons;
     Title title;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t VALUEREPEAT_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar valueRepeatBuffer[VALUEREPEAT_SIZE];
-    static const uint16_t TIME_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar timeBuffer[TIME_SIZE];
-    static const uint16_t VALUEALARM_SIZE = 5;
-    touchgfx::Unicode::UnicodeChar valueAlarmBuffer[VALUEALARM_SIZE];
+    static const uint16_t REPEATVALUE_SIZE = 16;
+    touchgfx::Unicode::UnicodeChar repeatValueBuffer[REPEATVALUE_SIZE];
+    static const uint16_t TIMEVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar timeValueBuffer[TIMEVALUE_SIZE];
+    static const uint16_t ALARMVALUE_SIZE = 5;
+    touchgfx::Unicode::UnicodeChar alarmValueBuffer[ALARMVALUE_SIZE];
     static const uint16_t TEXTNEW_SIZE = 10;
     touchgfx::Unicode::UnicodeChar textNewBuffer[TEXTNEW_SIZE];
 

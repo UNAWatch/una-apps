@@ -9,20 +9,18 @@
 #include <touchgfx/Texts.hpp>
 #include <touchgfx/hal/HAL.hpp>
 #include <platform/driver/lcd/LCD8bpp_ABGR2222.hpp>
-#include <gui/start_screen/StartView.hpp>
-#include <gui/start_screen/StartPresenter.hpp>
 #include <gui/main_screen/MainView.hpp>
 #include <gui/main_screen/MainPresenter.hpp>
-#include <gui/settime_screen/SetTimeView.hpp>
-#include <gui/settime_screen/SetTimePresenter.hpp>
-#include <gui/action_screen/ActionView.hpp>
-#include <gui/action_screen/ActionPresenter.hpp>
+#include <gui/edit_screen/EditView.hpp>
+#include <gui/edit_screen/EditPresenter.hpp>
+#include <gui/menu_screen/MenuView.hpp>
+#include <gui/menu_screen/MenuPresenter.hpp>
 #include <gui/saved_screen/SavedView.hpp>
 #include <gui/saved_screen/SavedPresenter.hpp>
 #include <gui/deleted_screen/DeletedView.hpp>
 #include <gui/deleted_screen/DeletedPresenter.hpp>
-#include <gui/alarm_screen/AlarmView.hpp>
-#include <gui/alarm_screen/AlarmPresenter.hpp>
+#include <gui/ringing_screen/RingingView.hpp>
+#include <gui/ringing_screen/RingingPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -41,19 +39,6 @@ FrontendApplicationBase::FrontendApplicationBase(Model& m, FrontendHeap& heap)
  * Screen Transition Declarations
  */
 
-// Start
-
-void FrontendApplicationBase::gotoStartScreenNoTransition()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoStartScreenNoTransitionImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoStartScreenNoTransitionImpl()
-{
-    touchgfx::makeTransition<StartView, StartPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
 // Main
 
 void FrontendApplicationBase::gotoMainScreenNoTransition()
@@ -67,30 +52,30 @@ void FrontendApplicationBase::gotoMainScreenNoTransitionImpl()
     touchgfx::makeTransition<MainView, MainPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-// SetTime
+// Edit
 
-void FrontendApplicationBase::gotoSetTimeScreenNoTransition()
+void FrontendApplicationBase::gotoEditScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoSetTimeScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoEditScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoSetTimeScreenNoTransitionImpl()
+void FrontendApplicationBase::gotoEditScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<SetTimeView, SetTimePresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<EditView, EditPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-// Action
+// Menu
 
-void FrontendApplicationBase::gotoActionScreenNoTransition()
+void FrontendApplicationBase::gotoMenuScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoActionScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoMenuScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoActionScreenNoTransitionImpl()
+void FrontendApplicationBase::gotoMenuScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<ActionView, ActionPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<MenuView, MenuPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 // Saved
@@ -119,15 +104,15 @@ void FrontendApplicationBase::gotoDeletedScreenNoTransitionImpl()
     touchgfx::makeTransition<DeletedView, DeletedPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-// Alarm
+// Ringing
 
-void FrontendApplicationBase::gotoAlarmScreenNoTransition()
+void FrontendApplicationBase::gotoRingingScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoAlarmScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoRingingScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoAlarmScreenNoTransitionImpl()
+void FrontendApplicationBase::gotoRingingScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<AlarmView, AlarmPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<RingingView, RingingPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

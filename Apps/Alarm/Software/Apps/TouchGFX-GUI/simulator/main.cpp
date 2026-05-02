@@ -15,8 +15,11 @@
 #include "SDK/Simulator/OS/OS.hpp"
 #include "SDK/Simulator/App/AppCore.hpp"
 #include "SDK/Simulator/App/AppMessageCore.hpp"
+#include "SDK/Simulator/App/KernelMessageDispatcher.hpp"
+#include "SDK/Simulator/Kernel/Mock/Backlight.hpp"
+#include "SDK/Simulator/Kernel/Mock/Buzzer.hpp"
+#include "SDK/Simulator/Kernel/Mock/Vibro.hpp"
 
-#include "gui/common/GuiConfig.hpp"
 #include "Service.hpp"
 
 #include <stdlib.h>
@@ -35,9 +38,15 @@
 using namespace touchgfx;
 
 // Kernel thread function
-static void kernelThreadFunction(App::Core* appCore)
+static void appThreadFunction(App::Core* appCore)
 {
     appCore->run();
+}
+
+// GUI communication thread 
+static void guiCommThreadFunction(App::Core* appCore)
+{
+    appCore->runGuiComm();
 }
 
 // Service thread function
@@ -46,11 +55,17 @@ static void serviceThreadFunction(Service* service)
     service->run();
 }
 
-static int runTouchGFX(SDK::App::DualAppComm&  appComm,
-                       SDK::Simulator::Kernel& srvKernel,
-                       SDK::Simulator::Kernel& guiKernel,
-                       int                     argc,
-                       char**                  argv)
+// KernelMessage thread function
+static void appMessageThreadFunction(SDK::App::KernelMessageDispatcher* appMessage)
+{
+    appMessage->run();
+}
+
+static int runTouchGFX(SDK::App::DualAppComm& appComm,
+    SDK::Simulator::Kernel& srvKernel,
+    SDK::Simulator::Kernel& guiKernel,
+    int                     argc,
+    char** argv)
 {
     // Initialize Logger with Service's kernel. In real app Service and GUI will have each its own kernel.
     Logger_init(srvKernel.getKernel().log);
@@ -63,8 +78,14 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     // Create the Service of the application
     Service service(SDK::KernelProviderService::GetInstance().getKernel());
 
-	// Create the Application core
-	App::Core appCore(appComm, srvKernel, guiKernel);
+    // Create KernelMessageDispatcher core
+    SDK::Simulator::Mock::Backlight   mBacklight;
+    SDK::Simulator::Mock::Buzzer      mBuzzer;
+    SDK::Simulator::Mock::Vibro       mVibro;
+    SDK::App::KernelMessageDispatcher kernelMessage(appComm, appComm.getMsgManager(), mVibro, mBacklight, mBuzzer);
+
+    // Create the Application core
+    App::Core appCore(appComm, srvKernel, guiKernel);
 
     //For windows/linux, DMA transfers are simulated
     touchgfx::NoDMA dma;
@@ -76,7 +97,7 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     setupSimulator(argc, argv, hal);
 
     // Set custom frame rate
-    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / Gui::Config::kFrameRate);
+    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / SDK::GUI::Config::kFrameRate);
 
     //// Ensure there is a console window to print to using printf() or
     //// std::cout, and read from using e.g. fgets or std::cin.
@@ -85,17 +106,21 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     //// to.
     touchgfx_enable_stdio();
 
-    // Start service thread
+    // Start threads
     std::thread serviceThread(serviceThreadFunction, &service);
-    std::thread kernelThread(kernelThreadFunction, &appCore);
+    std::thread appThread(appThreadFunction, &appCore);
+    std::thread guiCommThread(guiCommThreadFunction, &appCore);
+    std::thread appMessageThread(appMessageThreadFunction, &kernelMessage);
 
     touchgfx::HAL::getInstance()->taskEntry();  // Main GUI loop
-	
+
     appCore.stopRequest();
 
     // Stop threads
     serviceThread.join();
-    kernelThread.join();
+    appThread.join();
+    guiCommThread.join();
+    appMessageThread.join();
 
     return EXIT_SUCCESS;
 }
@@ -117,10 +142,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
     // Create kernel objects and service control
     SDK::App::MessageCore         appMessageCore;
 
-	SDK::Simulator::Mock::SystemService serviceSystem;
+    SDK::Simulator::Mock::SystemService serviceSystem;
     SDK::Simulator::Kernel serviceKernel("service");
-	serviceKernel.setIAppComm(appMessageCore.getAppComm().getServiceComm());
-	serviceKernel.setISystem(&serviceSystem);
+    serviceKernel.setIAppComm(appMessageCore.getAppComm().getServiceComm());
+    serviceKernel.setISystem(&serviceSystem);
 
     SDK::Simulator::Mock::SystemGUI guiSystem;
     SDK::Simulator::Kernel guiKernel("gui");
@@ -131,8 +156,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
     SDK::Simulator::KernelHolder::Create(guiKernel);
 
     return runTouchGFX(appMessageCore.getAppComm(),
-                       serviceKernel,
-                       guiKernel,
-                       argc,
-                       argv);
+        serviceKernel,
+        guiKernel,
+        argc,
+        argv);
 }

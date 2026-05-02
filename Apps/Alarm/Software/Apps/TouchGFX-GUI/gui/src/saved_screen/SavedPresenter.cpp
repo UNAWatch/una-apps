@@ -11,7 +11,7 @@ void SavedPresenter::activate()
 {
     // Reset idle timer
     model->resetIdleTimer();
-    view.setAlarmId(model->alarmGetEditId());
+    view.setAlarmId(model->getAlarmEditId());
 }
 
 void SavedPresenter::deactivate()

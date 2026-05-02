@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="texts.xsd" Version="4.25.0">
+<TextDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="texts.xsd" Version="4.26.1">
   <Languages>
     <Language Id="GB" />
   </Languages>
   <Texts>
     <TextGroup Id="Template">
-      <Text Id="TMP_REGULAR_18" Alignment="Center" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
-      <Text Id="TMP_REGULAR_18_L" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
-      <Text Id="TMP_REGULAR_18_R" Alignment="Right" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
       <Text Id="TMP_ITALIC_18" Alignment="Center" TypographyId="Poppins_Italic_18">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
@@ -26,31 +17,19 @@
       <Text Id="TMP_ITALIC_20" Alignment="Center" TypographyId="Poppins_Italic_20">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
-      <Text Id="TMP_MEDIUM_10" Alignment="Center" TypographyId="Poppins_Medium_10">
-        <Translation Language="GB">&lt;&gt;&#10;</Translation>
-      </Text>
-      <Text Id="TMP_MEDIUM_18" Alignment="Center" TypographyId="Poppins_Medium_18">
-        <Translation Language="GB">&lt;&gt;&#10;</Translation>
-      </Text>
-      <Text Id="TMP_MEDIUM_18_L" Alignment="Left" TypographyId="Poppins_Medium_18">
-        <Translation Language="GB">&lt;&gt;&#10;</Translation>
-      </Text>
-      <Text Id="TMP_MEDIUM_25" Alignment="Center" TypographyId="Poppins_Medium_25">
+      <Text Id="TMP_ITALIC_20_L" Alignment="Left" TypographyId="Poppins_Italic_20">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
-      <Text Id="TMP_MEDIUM_50" Alignment="Center" TypographyId="Poppins_Medium_50">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
-      <Text Id="TMP_SEMIBOLD_18" Alignment="Center" TypographyId="Poppins_SemiBold_18">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
-      <Text Id="TMP_SEMIBOLD_18_L" Alignment="Left" TypographyId="Poppins_SemiBold_18">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
-      <Text Id="TMP_SEMIBOLD_18_R" Alignment="Right" TypographyId="Poppins_SemiBold_18">
+      <Text Id="TMP_ITALIC_20_R" Alignment="Right" TypographyId="Poppins_Italic_20">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
       <Text Id="TMP_SEMIBOLD_20" Alignment="Center" TypographyId="Poppins_SemiBold_20">
+        <Translation Language="GB">&lt;&gt;</Translation>
+      </Text>
+      <Text Id="TMP_SEMIBOLD_20_L" Alignment="Left" TypographyId="Poppins_SemiBold_20">
+        <Translation Language="GB">&lt;&gt;</Translation>
+      </Text>
+      <Text Id="TMP_SEMIBOLD_20_R" Alignment="Right" TypographyId="Poppins_SemiBold_20">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
       <Text Id="TMP_SEMIBOLD_25" Alignment="Center" TypographyId="Poppins_SemiBold_25">
@@ -74,16 +53,10 @@
       <Text Id="TMP_SEMIBOLD_35" Alignment="Center" TypographyId="Poppins_SemiBold_35">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
-      <Text Id="TMP_SEMIBOLD_35_R" Alignment="Right" TypographyId="Poppins_SemiBold_35">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
       <Text Id="TMP_SEMIBOLD_35_L" Alignment="Left" TypographyId="Poppins_SemiBold_35">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
-      <Text Id="TMP_SEMIBOLD_40" Alignment="Center" TypographyId="Poppins_SemiBold_40">
-        <Translation Language="GB">&lt;&gt;</Translation>
-      </Text>
-      <Text Id="TMP_SEMIBOLD_40_R" Alignment="Right" TypographyId="Poppins_SemiBold_40">
+      <Text Id="TMP_SEMIBOLD_35_R" Alignment="Right" TypographyId="Poppins_SemiBold_35">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
       <Text Id="TMP_SEMIBOLD_60" Alignment="Center" TypographyId="Poppins_SemiBold_60">
@@ -118,7 +91,7 @@
       <Text Id="TEXT_HOURS" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Hours</Translation>
       </Text>
-      <Text Id="TEXT_MIN_DOT" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_MIN_DOT" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Min.</Translation>
       </Text>
       <Text Id="TEXT_EDIT" Alignment="Left" TypographyId="Poppins_Regular_18">
@@ -133,7 +106,7 @@
       <Text Id="TEXT_DELETED" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Deleted</Translation>
       </Text>
-      <Text Id="TEXT_SAVED" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_SAVED" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Saved</Translation>
       </Text>
       <Text Id="TEXT_REPEAT" Alignment="Left" TypographyId="Poppins_Regular_18">
@@ -172,22 +145,22 @@
       <Text Id="TEXT_EVERY_DAY" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Every Day</Translation>
       </Text>
-      <Text Id="TEXT_ALERT" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_ALERT" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Alert</Translation>
       </Text>
-      <Text Id="TEXT_BEEP_AND_VIBRATE" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_BEEP_AND_VIBRATE" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Beep &amp; Vibrate</Translation>
       </Text>
-      <Text Id="TEXT_VIBRATE" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_VIBRATE" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Vibrate</Translation>
       </Text>
-      <Text Id="TEXT_BEEP" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_BEEP" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Beep</Translation>
       </Text>
-      <Text Id="TEXT_ON_UC" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_ON_UC" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">ON</Translation>
       </Text>
-      <Text Id="TEXT_OFF_UC" Alignment="Left" TypographyId="Poppins_Medium_18">
+      <Text Id="TEXT_OFF_UC" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">OFF</Translation>
       </Text>
       <Text Id="TEXT_SNOOZE" Alignment="Left" TypographyId="Poppins_Regular_18">
@@ -196,10 +169,19 @@
       <Text Id="TEXT_STOP" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Stop</Translation>
       </Text>
+      <Text Id="TEXT_NEW_TEXT" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">New Text</Translation>
+      </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_JVL6" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">MENU TITLE</Translation>
+      <Text Id="__SingleUse_E088" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">Alarm 1</Translation>
+      </Text>
+      <Text Id="__SingleUse_NPYY" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">Alarm 1</Translation>
+      </Text>
+      <Text Id="__SingleUse_PAA0" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">Alarm 1</Translation>
       </Text>
       <Text Id="__SingleUse_JCLX" Alignment="Left" TypographyId="Poppins_Light_60">
         <Translation Language="GB">00</Translation>
@@ -210,28 +192,19 @@
       <Text Id="__SingleUse_F3V1" Alignment="Left" TypographyId="Poppins_Light_60">
         <Translation Language="GB">00</Translation>
       </Text>
-      <Text Id="__SingleUse_5BTS" Alignment="Left" TypographyId="Poppins_Italic_20">
+      <Text Id="__SingleUse_5BTS" Alignment="Left" TypographyId="Poppins_SemiBold_60">
         <Translation Language="GB">00</Translation>
       </Text>
-      <Text Id="__SingleUse_BQ0F" Alignment="Left" TypographyId="Poppins_Italic_20">
+      <Text Id="__SingleUse_BQ0F" Alignment="Left" TypographyId="Poppins_SemiBold_35">
         <Translation Language="GB">00</Translation>
       </Text>
-      <Text Id="__SingleUse_6GYE" Alignment="Left" TypographyId="Poppins_Italic_20">
+      <Text Id="__SingleUse_6GYE" Alignment="Left" TypographyId="Poppins_SemiBold_60">
         <Translation Language="GB">00</Translation>
       </Text>
-      <Text Id="__SingleUse_L9S1" Alignment="Left" TypographyId="Poppins_Italic_20">
+      <Text Id="__SingleUse_L9S1" Alignment="Left" TypographyId="Poppins_SemiBold_35">
         <Translation Language="GB">00</Translation>
       </Text>
-      <Text Id="__SingleUse_S8Q0" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">1</Translation>
-      </Text>
-      <Text Id="__SingleUse_P99V" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">1</Translation>
-      </Text>
-      <Text Id="__SingleUse_W0LP" Alignment="Left" TypographyId="Poppins_Regular_18">
-        <Translation Language="GB">1</Translation>
-      </Text>
-      <Text Id="__SingleUse_AP10" Alignment="Left" TypographyId="Poppins_Regular_18">
+      <Text Id="__SingleUse_AP10" Alignment="Left" TypographyId="Poppins_SemiBold_60">
         <Translation Language="GB">05:40</Translation>
       </Text>
       <Text Id="__SingleUse_JNEX" Alignment="Left" TypographyId="Poppins_Regular_18">
@@ -240,22 +213,14 @@
     </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Poppins_Regular_18" Font="Poppins-Regular.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_Medium_10" Font="Poppins-Medium.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="0123456789" />
-    <Typography Id="Poppins_Medium_18" Font="Poppins-Medium.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_Medium_25" Font="Poppins-SemiBold.ttf" Size="25" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_Medium_50" Font="Poppins-Medium.ttf" Size="50" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_Medium_60" Font="Poppins-SemiBold.ttf" Size="60" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_SemiBold_18" Font="Poppins-SemiBold.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
-    <Typography Id="Poppins_SemiBold_20" Font="Poppins-SemiBold.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_SemiBold_25" Font="Poppins-SemiBold.ttf" Size="25" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_SemiBold_30" Font="Poppins-SemiBold.ttf" Size="30" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_SemiBold_35" Font="Poppins-SemiBold.ttf" Size="35" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_SemiBold_40" Font="Poppins-SemiBold.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_SemiBold_60" Font="Poppins-SemiBold.ttf" Size="60" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
+    <Typography Id="Poppins_Regular_18" Font="Poppins-Regular.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
+    <Typography Id="Poppins_SemiBold_20" Font="Poppins-SemiBold.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
+    <Typography Id="Poppins_SemiBold_25" Font="Poppins-SemiBold.ttf" Size="25" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
+    <Typography Id="Poppins_SemiBold_30" Font="Poppins-SemiBold.ttf" Size="30" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
+    <Typography Id="Poppins_SemiBold_35" Font="Poppins-SemiBold.ttf" Size="35" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
+    <Typography Id="Poppins_SemiBold_60" Font="Poppins-SemiBold.ttf" Size="60" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="0123456789:" />
     <Typography Id="Poppins_Italic_18" Font="Poppins-Italic.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
-    <Typography Id="Poppins_Italic_20" Font="Poppins-Italic.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_LightItalic_18" Font="Poppins-LightItalic.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
-    <Typography Id="Poppins_Light_60" Font="Poppins-Light.ttf" Size="60" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" />
+    <Typography Id="Poppins_Italic_20" Font="Poppins-Italic.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="! \&quot;#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…" EllipsisCharacter="…" />
+    <Typography Id="Poppins_Light_60" Font="Poppins-Light.ttf" Size="60" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="0123456789:" />
   </Typographies>
 </TextDatabase>

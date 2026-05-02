@@ -1,8 +1,8 @@
 #include <gui/containers/Buttons.hpp>
+#include <touchgfx/Color.hpp>
 
 Buttons::Buttons()
 {
-
 }
 
 void Buttons::initialize()
@@ -10,103 +10,32 @@ void Buttons::initialize()
     ButtonsBase::initialize();
 }
 
+// ---------------------------------------------------------------------------
 
-void Buttons::setL1(Color color)
+touchgfx::colortype Buttons::toColortype(Color color)
 {
-    buttonL1.setVisible(false);
-    buttonL1a.setVisible(false);
-    buttonL1r.setVisible(false);
-
     switch (color) {
-    case WHITE:
-        buttonL1.setVisible(true);
-        break;
-    case AMBER:
-        buttonL1a.setVisible(true);
-        break;
-    case RED:
-        buttonL1r.setVisible(true);
-        break;
-    default:
-        break;
+        case WHITE: return touchgfx::Color::getColorFromRGB(192, 192, 192);
+        case AMBER: return touchgfx::Color::getColorFromRGB(192, 128,   0);
+        case RED:   return touchgfx::Color::getColorFromRGB(192,   0,   0);
+        default:    return 0;
     }
-
-    buttonL1.invalidate();
-    buttonL1a.invalidate();
-    buttonL1r.invalidate();
 }
 
-void Buttons::setL2(Color color)
+void Buttons::applyColor(touchgfx::Circle& arc,
+                         touchgfx::PainterABGR2222& painter,
+                         Color color)
 {
-    buttonL2.setVisible(false);
-    buttonL2a.setVisible(false);
-    buttonL2r.setVisible(false);
-
-    switch (color) {
-    case WHITE:
-        buttonL2.setVisible(true);
-        break;
-    case AMBER:
-        buttonL2a.setVisible(true);
-        break;
-    case RED:
-        buttonL2r.setVisible(true);
-        break;
-    default:
-        break;
+    arc.setVisible(color != NONE);
+    if (color != NONE) {
+        painter.setColor(toColortype(color));
     }
-
-    buttonL2.invalidate();
-    buttonL2a.invalidate();
-    buttonL2r.invalidate();
+    arc.invalidate();
 }
 
-void Buttons::setR1(Color color)
-{
-    buttonR1.setVisible(false);
-    buttonR1a.setVisible(false);
-    buttonR1r.setVisible(false);
+// ---------------------------------------------------------------------------
 
-    switch (color) {
-    case WHITE:
-        buttonR1.setVisible(true);
-        break;
-    case AMBER:
-        buttonR1a.setVisible(true);
-        break;
-    case RED:
-        buttonR1r.setVisible(true);
-        break;
-    default:
-        break;
-    }
-
-    buttonR1.invalidate();
-    buttonR1a.invalidate();
-    buttonR1r.invalidate();
-}
-
-void Buttons::setR2(Color color)
-{
-    buttonR2.setVisible(false);
-    buttonR2a.setVisible(false);
-    buttonR2r.setVisible(false);
-
-    switch (color) {
-    case WHITE:
-        buttonR2.setVisible(true);
-        break;
-    case AMBER:
-        buttonR2a.setVisible(true);
-        break;
-    case RED:
-        buttonR2r.setVisible(true);
-        break;
-    default:
-        break;
-    }
-
-    buttonR2.invalidate();
-    buttonR2a.invalidate();
-    buttonR2r.invalidate();
-}
+void Buttons::setL1(Color color) { applyColor(bL1, bL1Painter, color); }
+void Buttons::setL2(Color color) { applyColor(bL2, bL2Painter, color); }
+void Buttons::setR1(Color color) { applyColor(bR1, bR1Painter, color); }
+void Buttons::setR2(Color color) { applyColor(bR2, bR2Painter, color); }

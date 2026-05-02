@@ -7,10 +7,10 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/containers/scrollers/ScrollWheelWithSelectionStyle.hpp>
-#include <gui/containers/TimeWheelItemMinutesNotSelected.hpp>
-#include <gui/containers/TimeWheelItemMinutesSelected.hpp>
-#include <gui/containers/TimeWheelItemHoursNotSelected.hpp>
-#include <gui/containers/TimeWheelItemHoursSelected.hpp>
+#include <gui/containers/TimeWheelMinutesItem.hpp>
+#include <gui/containers/TimeWheelMinutesCenterItem.hpp>
+#include <gui/containers/TimeWheelHoursItem.hpp>
+#include <gui/containers/TimeWheelHoursCenterItem.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class TimeWheelBase : public touchgfx::Container
@@ -20,22 +20,22 @@ public:
     virtual ~TimeWheelBase();
     virtual void initialize();
 
-    virtual void minutesWheelUpdateItem(TimeWheelItemMinutesNotSelected& item, int16_t itemIndex)
+    virtual void minutesWheelUpdateItem(TimeWheelMinutesItem& item, int16_t itemIndex)
     {
         // Override and implement this function in TimeWheel
     }
 
-    virtual void minutesWheelUpdateCenterItem(TimeWheelItemMinutesSelected& item, int16_t itemIndex)
+    virtual void minutesWheelUpdateCenterItem(TimeWheelMinutesCenterItem& item, int16_t itemIndex)
     {
         // Override and implement this function in TimeWheel
     }
 
-    virtual void hoursWheelUpdateItem(TimeWheelItemHoursNotSelected& item, int16_t itemIndex)
+    virtual void hoursWheelUpdateItem(TimeWheelHoursItem& item, int16_t itemIndex)
     {
         // Override and implement this function in TimeWheel
     }
 
-    virtual void hoursWheelUpdateCenterItem(TimeWheelItemHoursSelected& item, int16_t itemIndex)
+    virtual void hoursWheelUpdateCenterItem(TimeWheelHoursCenterItem& item, int16_t itemIndex)
     {
         // Override and implement this function in TimeWheel
     }
@@ -49,11 +49,11 @@ protected:
      * Member Declarations
      */
     touchgfx::ScrollWheelWithSelectionStyle minutesWheel;
-    touchgfx::DrawableListItems<TimeWheelItemMinutesNotSelected, 5> minutesWheelListItems;
-    touchgfx::DrawableListItems<TimeWheelItemMinutesSelected, 2> minutesWheelSelectedListItems;
+    touchgfx::DrawableListItems<TimeWheelMinutesItem, 5> minutesWheelListItems;
+    touchgfx::DrawableListItems<TimeWheelMinutesCenterItem, 2> minutesWheelSelectedListItems;
     touchgfx::ScrollWheelWithSelectionStyle hoursWheel;
-    touchgfx::DrawableListItems<TimeWheelItemHoursNotSelected, 5> hoursWheelListItems;
-    touchgfx::DrawableListItems<TimeWheelItemHoursSelected, 2> hoursWheelSelectedListItems;
+    touchgfx::DrawableListItems<TimeWheelHoursItem, 5> hoursWheelListItems;
+    touchgfx::DrawableListItems<TimeWheelHoursCenterItem, 2> hoursWheelSelectedListItems;
     touchgfx::TextAreaWithOneWildcard minutesInactive;
     touchgfx::TextAreaWithOneWildcard semicolon;
     touchgfx::TextAreaWithOneWildcard hoursInactive;
