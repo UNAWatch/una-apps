@@ -355,6 +355,9 @@
     <Filter Include="SDK\Libs\Source\Simulator">
       <UniqueIdentifier>{f3a37b1c-c854-4ba3-b96e-328eb0bf19ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\Libs\Source\Timer">
+      <UniqueIdentifier>{c2024f12-36bc-43f0-8b48-280a08159054}</UniqueIdentifier>
+    </Filter>
     <Filter Include="SDK\Libs\Source\UnaLogger">
       <UniqueIdentifier>{b7bff1f9-96da-4789-bffb-93bf6598efd9}</UniqueIdentifier>
     </Filter>
@@ -390,6 +393,9 @@
     </Filter>
     <Filter Include="SDK\Libs\Header\Interfaces">
       <UniqueIdentifier>{0f56cfeb-ec18-49a3-8760-93875ed47540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\Libs\Header\Timer">
+      <UniqueIdentifier>{54081234-8cee-4d8f-a597-e02b8cc55735}</UniqueIdentifier>
     </Filter>
     <Filter Include="SDK\Libs\Header\UnaLogger">
       <UniqueIdentifier>{4a882200-7775-4f1a-aa25-f5f480bb91fc}</UniqueIdentifier>
@@ -2004,6 +2010,9 @@
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SynchManager\SynchManager.hpp">
       <Filter>SDK\Libs\Header\SynchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Timer\Timer.hpp">
+      <Filter>SDK\Libs\Header\Timer</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h">
       <Filter>SDK\Libs\Header\UnaLogger</Filter>

@@ -378,6 +378,7 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\ISensorCore.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\SensorCore.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SynchManager\SynchManager.hpp"/>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Timer\Timer.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Wrappers\StdLibWrappers.h"/>
     <ClInclude Include="$(SdkPath)\ThirdParty\coreJSON\source\include\core_json.h"/>
