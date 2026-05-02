@@ -12,20 +12,18 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
-#include <gui/start_screen/StartView.hpp>
-#include <gui/start_screen/StartPresenter.hpp>
 #include <gui/main_screen/MainView.hpp>
 #include <gui/main_screen/MainPresenter.hpp>
-#include <gui/settime_screen/SetTimeView.hpp>
-#include <gui/settime_screen/SetTimePresenter.hpp>
-#include <gui/action_screen/ActionView.hpp>
-#include <gui/action_screen/ActionPresenter.hpp>
+#include <gui/edit_screen/EditView.hpp>
+#include <gui/edit_screen/EditPresenter.hpp>
+#include <gui/menu_screen/MenuView.hpp>
+#include <gui/menu_screen/MenuPresenter.hpp>
 #include <gui/saved_screen/SavedView.hpp>
 #include <gui/saved_screen/SavedPresenter.hpp>
 #include <gui/deleted_screen/DeletedView.hpp>
 #include <gui/deleted_screen/DeletedPresenter.hpp>
-#include <gui/alarm_screen/AlarmView.hpp>
-#include <gui/alarm_screen/AlarmPresenter.hpp>
+#include <gui/ringing_screen/RingingView.hpp>
+#include <gui/ringing_screen/RingingPresenter.hpp>
 
 
 /**
@@ -48,14 +46,13 @@ public:
      * A list of all view types. Must end with meta::Nil.
      * @note All view types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< StartView,
-            touchgfx::meta::TypeList< MainView,
-            touchgfx::meta::TypeList< SetTimeView,
-            touchgfx::meta::TypeList< ActionView,
+    typedef touchgfx::meta::TypeList< MainView,
+            touchgfx::meta::TypeList< EditView,
+            touchgfx::meta::TypeList< MenuView,
             touchgfx::meta::TypeList< SavedView,
             touchgfx::meta::TypeList< DeletedView,
-            touchgfx::meta::TypeList< AlarmView,
-            touchgfx::meta::Nil > > > > > >
+            touchgfx::meta::TypeList< RingingView,
+            touchgfx::meta::Nil > > > > >
             > GeneratedViewTypes;
 
     /**
@@ -67,14 +64,13 @@ public:
      * A list of all presenter types. Must end with meta::Nil.
      * @note All presenter types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< StartPresenter,
-            touchgfx::meta::TypeList< MainPresenter,
-            touchgfx::meta::TypeList< SetTimePresenter,
-            touchgfx::meta::TypeList< ActionPresenter,
+    typedef touchgfx::meta::TypeList< MainPresenter,
+            touchgfx::meta::TypeList< EditPresenter,
+            touchgfx::meta::TypeList< MenuPresenter,
             touchgfx::meta::TypeList< SavedPresenter,
             touchgfx::meta::TypeList< DeletedPresenter,
-            touchgfx::meta::TypeList< AlarmPresenter,
-            touchgfx::meta::Nil > > > > > >
+            touchgfx::meta::TypeList< RingingPresenter,
+            touchgfx::meta::Nil > > > > >
             > GeneratedPresenterTypes;
 
     /**

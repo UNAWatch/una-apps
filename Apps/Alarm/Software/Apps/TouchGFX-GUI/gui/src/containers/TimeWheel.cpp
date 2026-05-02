@@ -1,8 +1,9 @@
 #include <gui/containers/TimeWheel.hpp>
 
+static constexpr int kMenuAnimationSteps = 4;
+
 TimeWheel::TimeWheel()
 {
-
 }
 
 void TimeWheel::initialize()
@@ -29,7 +30,7 @@ void TimeWheel::getTime(uint8_t& h, uint8_t& m)
 
 void TimeWheel::setActiveHours()
 {
-    mMinutesAactive = false;
+    mMinutesActive = false;
 
     minutesWheel.setVisible(false);
     minutesWheel.invalidate();
@@ -44,7 +45,7 @@ void TimeWheel::setActiveHours()
 
 void TimeWheel::setActiveMinutes()
 {
-    mMinutesAactive = true;
+    mMinutesActive = true;
 
     minutesWheel.setVisible(true);
     minutesWheel.invalidate();
@@ -59,13 +60,12 @@ void TimeWheel::setActiveMinutes()
 
 void TimeWheel::incValue()
 {
-    if (mMinutesAactive) {
+    if (mMinutesActive) {
         if (minutesWheel.getNumberOfItems() <= 1) {
             return;
         }
-
         int16_t p = minutesWheel.getSelectedItem() + 1;
-        minutesWheel.animateToItem(p, Gui::Config::kMenuAnimationSteps);
+        minutesWheel.animateToItem(p, kMenuAnimationSteps);
         setMinutes(minutesWheel.getSelectedItem());
     }
     else {
@@ -73,50 +73,47 @@ void TimeWheel::incValue()
             return;
         }
         int16_t p = hoursWheel.getSelectedItem() + 1;
-        hoursWheel.animateToItem(p, Gui::Config::kMenuAnimationSteps);
+        hoursWheel.animateToItem(p, kMenuAnimationSteps);
         setHours(hoursWheel.getSelectedItem());
     }
 }
 
 void TimeWheel::decValue()
 {
-    if (mMinutesAactive) {
+    if (mMinutesActive) {
         if (minutesWheel.getNumberOfItems() <= 1) {
             return;
         }
-
         int16_t p = minutesWheel.getSelectedItem() - 1;
-        minutesWheel.animateToItem(p, Gui::Config::kMenuAnimationSteps);
+        minutesWheel.animateToItem(p, kMenuAnimationSteps);
         setMinutes(minutesWheel.getSelectedItem());
     }
     else {
         if (hoursWheel.getNumberOfItems() <= 1) {
             return;
         }
-
         int16_t p = hoursWheel.getSelectedItem() - 1;
-        hoursWheel.animateToItem(p, Gui::Config::kMenuAnimationSteps);
-
+        hoursWheel.animateToItem(p, kMenuAnimationSteps);
         setHours(hoursWheel.getSelectedItem());
     }
 }
 
-void TimeWheel::hoursWheelUpdateItem(TimeWheelItemHoursNotSelected& item, int16_t itemIndex)
+void TimeWheel::hoursWheelUpdateItem(TimeWheelHoursItem& item, int16_t itemIndex)
 {
     item.setValue(itemIndex);
 }
 
-void TimeWheel::hoursWheelUpdateCenterItem(TimeWheelItemHoursSelected& item, int16_t itemIndex)
+void TimeWheel::hoursWheelUpdateCenterItem(TimeWheelHoursCenterItem& item, int16_t itemIndex)
 {
     item.setValue(itemIndex);
 }
 
-void TimeWheel::minutesWheelUpdateItem(TimeWheelItemMinutesNotSelected& item, int16_t itemIndex)
+void TimeWheel::minutesWheelUpdateItem(TimeWheelMinutesItem& item, int16_t itemIndex)
 {
     item.setValue(itemIndex);
 }
 
-void TimeWheel::minutesWheelUpdateCenterItem(TimeWheelItemMinutesSelected& item, int16_t itemIndex)
+void TimeWheel::minutesWheelUpdateCenterItem(TimeWheelMinutesCenterItem& item, int16_t itemIndex)
 {
     item.setValue(itemIndex);
 }

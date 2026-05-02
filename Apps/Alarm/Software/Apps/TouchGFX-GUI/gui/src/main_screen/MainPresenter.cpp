@@ -13,7 +13,7 @@ void MainPresenter::activate()
     model->resetIdleTimer();
 
     view.updateAlarmList(model->getAlarmList());
-    view.setActiveAlarm(model->alarmGetEditId());
+    view.setSelectedAlarm(model->getAlarmEditId());
 }
 
 void MainPresenter::deactivate()
@@ -21,14 +21,14 @@ void MainPresenter::deactivate()
 
 }
 
-void MainPresenter::onAlarmListUpdated(const std::vector<AppType::Alarm>& list) 
+void MainPresenter::onAlarmListUpdated(const std::vector<Alarm>& list) 
 {
     view.updateAlarmList(list);
 }
 
-void MainPresenter::setAlarmIdForEdit(size_t id)
+void MainPresenter::setAlarmEditId(size_t id)
 {
-    model->alarmSetEditId(id);
+    model->setAlarmEditId(id);
 }
 
 void MainPresenter::exitApp()

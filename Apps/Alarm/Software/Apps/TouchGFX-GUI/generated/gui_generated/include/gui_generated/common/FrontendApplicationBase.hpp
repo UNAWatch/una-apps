@@ -20,17 +20,14 @@ public:
         gotoMainScreenNoTransition();
     }
 
-    // Start
-    void gotoStartScreenNoTransition();
-
     // Main
     void gotoMainScreenNoTransition();
 
-    // SetTime
-    void gotoSetTimeScreenNoTransition();
+    // Edit
+    void gotoEditScreenNoTransition();
 
-    // Action
-    void gotoActionScreenNoTransition();
+    // Menu
+    void gotoMenuScreenNoTransition();
 
     // Saved
     void gotoSavedScreenNoTransition();
@@ -38,25 +35,22 @@ public:
     // Deleted
     void gotoDeletedScreenNoTransition();
 
-    // Alarm
-    void gotoAlarmScreenNoTransition();
+    // Ringing
+    void gotoRingingScreenNoTransition();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // Start
-    void gotoStartScreenNoTransitionImpl();
-
     // Main
     void gotoMainScreenNoTransitionImpl();
 
-    // SetTime
-    void gotoSetTimeScreenNoTransitionImpl();
+    // Edit
+    void gotoEditScreenNoTransitionImpl();
 
-    // Action
-    void gotoActionScreenNoTransitionImpl();
+    // Menu
+    void gotoMenuScreenNoTransitionImpl();
 
     // Saved
     void gotoSavedScreenNoTransitionImpl();
@@ -64,8 +58,8 @@ protected:
     // Deleted
     void gotoDeletedScreenNoTransitionImpl();
 
-    // Alarm
-    void gotoAlarmScreenNoTransitionImpl();
+    // Ringing
+    void gotoRingingScreenNoTransitionImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

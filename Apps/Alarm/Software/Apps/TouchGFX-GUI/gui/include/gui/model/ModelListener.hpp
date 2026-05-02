@@ -19,15 +19,12 @@ public:
 
     virtual void onIdleTimeout() {}
 
-    virtual void onAlarmListUpdated(const std::vector<AppType::Alarm>& list) {}
+    virtual void onAlarmListUpdated(const std::vector<Alarm>& list) {}
 
-    virtual void onAlarmActivated(const AppType::Alarm& alarm) {
+    virtual void onAlarmActivated(const Alarm& alarm) {
         // Switch to Alarm screen from any other screen of this app
-        model->application().gotoAlarmScreenNoTransition();
+        model->application().gotoRingingScreenNoTransition();
     }
-
-    // The GUI has been ran to change settings.
-    virtual void onRunForSettings() {}
 
 protected:
     Model* model;

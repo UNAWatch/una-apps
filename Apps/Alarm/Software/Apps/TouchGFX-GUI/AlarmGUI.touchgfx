@@ -2,29 +2,20 @@
   "Application": {
     "Screens": [
       {
-        "Name": "Start",
-        "Components": [],
-        "Interactions": [
-          {
-            "InteractionName": "Interaction1",
-            "Trigger": {
-              "Type": "TriggerScreenTransitionBegins"
-            },
-            "Action": {
-              "Type": "ActionGotoScreen",
-              "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "Start"
-            }
-          }
-        ]
-      },
-      {
         "Name": "Main",
         "CanvasBufferSize": 3600,
         "Components": [
           {
+            "Type": "CustomContainerInstance",
+            "Name": "buttons",
+            "Y": 47,
+            "Width": 240,
+            "Height": 146,
+            "CustomContainerDefinitionName": "Buttons"
+          },
+          {
             "Type": "TextArea",
-            "Name": "valueRepeat",
+            "Name": "repeatValue",
             "X": 53,
             "Y": 175,
             "Width": 140,
@@ -40,12 +31,12 @@
             "Wildcard1": {
               "TextId": "TEXT_WEDNESDAY",
               "UseBuffer": true,
-              "BufferSize": 10
+              "BufferSize": 16
             }
           },
           {
             "Type": "TextArea",
-            "Name": "textRepeat",
+            "Name": "repeatText",
             "X": 88,
             "Y": 150,
             "Width": 64,
@@ -65,7 +56,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "time",
+            "Name": "timeValue",
             "X": 20,
             "Y": 82,
             "Width": 200,
@@ -86,7 +77,7 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "toggleSwitch",
+            "Name": "toggle",
             "X": 131,
             "Y": 58,
             "Width": 60,
@@ -96,7 +87,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "valueAlarm",
+            "Name": "alarmValue",
             "X": 111,
             "Y": 60,
             "Width": 25,
@@ -117,7 +108,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textAlarm",
+            "Name": "alarmText",
             "X": 51,
             "Y": 60,
             "Width": 54,
@@ -166,16 +157,7 @@
             "Height": 50,
             "Visible": false,
             "LockPosition": true,
-            "RelativeFilename": "MenuAssets_CirclePlus.png"
-          },
-          {
-            "Type": "CustomContainerInstance",
-            "Name": "buttons",
-            "Y": 47,
-            "Width": 240,
-            "Height": 147,
-            "LockPosition": true,
-            "CustomContainerDefinitionName": "Buttons"
+            "RelativeFilename": "CirclePlus_50x50.png"
           },
           {
             "Type": "CustomContainerInstance",
@@ -202,7 +184,7 @@
         ]
       },
       {
-        "Name": "SetTime",
+        "Name": "Edit",
         "CanvasBufferSize": 3600,
         "Components": [
           {
@@ -210,33 +192,45 @@
             "Name": "buttons",
             "Y": 47,
             "Width": 240,
-            "Height": 147,
+            "Height": 146,
             "LockPosition": true,
             "CustomContainerDefinitionName": "Buttons"
           },
           {
+            "Type": "Image",
+            "Name": "tick",
+            "X": 186,
+            "Y": 60,
+            "Width": 22,
+            "Height": 17,
+            "LockPosition": true,
+            "RelativeFilename": "TickAmber_22x17.png"
+          },
+          {
             "Type": "CustomContainerInstance",
-            "Name": "menuRepeat",
+            "Name": "repeatMenu",
             "X": 20,
             "Y": 55,
             "Width": 200,
             "Height": 184,
+            "Visible": false,
             "LockPosition": true,
-            "CustomContainerDefinitionName": "MenuWheel"
+            "CustomContainerDefinitionName": "OptionWheel"
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "menuEffect",
+            "Name": "effectMenu",
             "X": 20,
             "Y": 55,
             "Width": 200,
             "Height": 184,
+            "Visible": false,
             "LockPosition": true,
-            "CustomContainerDefinitionName": "MenuWheel"
+            "CustomContainerDefinitionName": "OptionWheel"
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "menuTime",
+            "Name": "timeMenu",
             "X": 20,
             "Y": 55,
             "Width": 200,
@@ -246,7 +240,7 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textName",
+            "Name": "messageText",
             "X": 40,
             "Y": 55,
             "Width": 160,
@@ -266,16 +260,6 @@
             }
           },
           {
-            "Type": "Image",
-            "Name": "tick",
-            "X": 186,
-            "Y": 60,
-            "Width": 22,
-            "Height": 17,
-            "LockPosition": true,
-            "RelativeFilename": "MenuAssets_Tick.png"
-          },
-          {
             "Type": "CustomContainerInstance",
             "Name": "title",
             "X": 50,
@@ -294,13 +278,13 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "SetTime"
+              "ActionComponent": "Edit"
             }
           }
         ]
       },
       {
-        "Name": "Action",
+        "Name": "Menu",
         "CanvasBufferSize": 3600,
         "Components": [
           {
@@ -308,37 +292,16 @@
             "Name": "buttons",
             "Y": 47,
             "Width": 240,
-            "Height": 147,
+            "Height": 146,
             "LockPosition": true,
             "CustomContainerDefinitionName": "Buttons"
           },
           {
             "Type": "TextArea",
-            "Name": "valueAlarm",
-            "X": 153,
+            "Name": "messageText",
+            "X": 60,
             "Y": 60,
-            "Width": 25,
-            "Height": 23,
-            "LockPosition": true,
-            "TextId": "TMP_ITALIC_18_L",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_W0LP",
-              "UseBuffer": true,
-              "BufferSize": 5
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textAlarm",
-            "X": 89,
-            "Y": 60,
-            "Width": 54,
+            "Width": 120,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
@@ -348,21 +311,11 @@
               "Green": 192,
               "Blue": 192
             },
-            "AutoSize": true,
             "Wildcard1": {
-              "TextId": "TEXT_ALARM",
+              "TextId": "__SingleUse_E088",
               "UseBuffer": true,
               "BufferSize": 10
             }
-          },
-          {
-            "Type": "CustomContainerInstance",
-            "Name": "title",
-            "X": 50,
-            "Width": 140,
-            "Height": 41,
-            "LockPosition": true,
-            "CustomContainerDefinitionName": "Title"
           },
           {
             "Type": "CustomContainerInstance",
@@ -372,7 +325,16 @@
             "Width": 200,
             "Height": 184,
             "LockPosition": true,
-            "CustomContainerDefinitionName": "MenuWheel"
+            "CustomContainerDefinitionName": "OptionWheel"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "title",
+            "X": 50,
+            "Width": 140,
+            "Height": 41,
+            "LockPosition": true,
+            "CustomContainerDefinitionName": "Title"
           }
         ],
         "Interactions": [
@@ -384,7 +346,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "Action"
+              "ActionComponent": "Menu"
             }
           }
         ]
@@ -394,31 +356,12 @@
         "CanvasBufferSize": 3600,
         "Components": [
           {
-            "Type": "CustomContainerInstance",
-            "Name": "buttons",
-            "Y": 47,
-            "Width": 240,
-            "Height": 147,
-            "LockPosition": true,
-            "CustomContainerDefinitionName": "Buttons"
-          },
-          {
-            "Type": "Image",
-            "Name": "icon",
-            "X": 95,
-            "Y": 95,
-            "Width": 50,
-            "Height": 50,
-            "LockPosition": true,
-            "RelativeFilename": "MenuAssets_CircleTick.png"
-          },
-          {
             "Type": "TextArea",
-            "Name": "text",
+            "Name": "savedText",
             "X": 73,
             "Y": 145,
             "Width": 95,
-            "Height": 38,
+            "Height": 45,
             "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_30",
             "TextRotation": "0",
@@ -435,11 +378,21 @@
             }
           },
           {
+            "Type": "Image",
+            "Name": "icon",
+            "X": 95,
+            "Y": 95,
+            "Width": 50,
+            "Height": 50,
+            "LockPosition": true,
+            "RelativeFilename": "CircleTick_50x50.png"
+          },
+          {
             "Type": "TextArea",
-            "Name": "textAlarm",
-            "X": 89,
+            "Name": "messageText",
+            "X": 60,
             "Y": 60,
-            "Width": 54,
+            "Width": 120,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
@@ -449,32 +402,10 @@
               "Green": 192,
               "Blue": 192
             },
-            "AutoSize": true,
             "Wildcard1": {
-              "TextId": "TEXT_ALARM",
+              "TextId": "__SingleUse_NPYY",
               "UseBuffer": true,
               "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "valueAlarm",
-            "X": 153,
-            "Y": 60,
-            "Width": 25,
-            "Height": 23,
-            "LockPosition": true,
-            "TextId": "TMP_ITALIC_18_L",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_P99V",
-              "UseBuffer": true,
-              "BufferSize": 5
             }
           },
           {
@@ -506,31 +437,12 @@
         "CanvasBufferSize": 3600,
         "Components": [
           {
-            "Type": "CustomContainerInstance",
-            "Name": "buttons",
-            "Y": 47,
-            "Width": 240,
-            "Height": 147,
-            "LockPosition": true,
-            "CustomContainerDefinitionName": "Buttons"
-          },
-          {
-            "Type": "Image",
-            "Name": "icon",
-            "X": 95,
-            "Y": 95,
-            "Width": 50,
-            "Height": 50,
-            "LockPosition": true,
-            "RelativeFilename": "MenuAssets_CircleCross.png"
-          },
-          {
             "Type": "TextArea",
-            "Name": "text",
+            "Name": "deletedText",
             "X": 61,
             "Y": 145,
             "Width": 119,
-            "Height": 38,
+            "Height": 45,
             "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_30",
             "TextRotation": "0",
@@ -541,17 +453,25 @@
             },
             "AutoSize": true,
             "Wildcard1": {
-              "TextId": "TEXT_DELETED",
-              "UseBuffer": true,
-              "BufferSize": 10
+              "TextId": "TEXT_DELETED"
             }
           },
           {
+            "Type": "Image",
+            "Name": "icon",
+            "X": 95,
+            "Y": 95,
+            "Width": 50,
+            "Height": 50,
+            "LockPosition": true,
+            "RelativeFilename": "CircleCross_50x50.png"
+          },
+          {
             "Type": "TextArea",
-            "Name": "textAlarm",
-            "X": 89,
+            "Name": "messageText",
+            "X": 60,
             "Y": 60,
-            "Width": 54,
+            "Width": 120,
             "Height": 23,
             "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
@@ -561,32 +481,10 @@
               "Green": 192,
               "Blue": 192
             },
-            "AutoSize": true,
             "Wildcard1": {
-              "TextId": "TEXT_ALARM",
+              "TextId": "__SingleUse_PAA0",
               "UseBuffer": true,
               "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "valueAlarm",
-            "X": 153,
-            "Y": 60,
-            "Width": 25,
-            "Height": 23,
-            "LockPosition": true,
-            "TextId": "TMP_ITALIC_18_L",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_S8Q0",
-              "UseBuffer": true,
-              "BufferSize": 5
             }
           },
           {
@@ -614,14 +512,16 @@
         ]
       },
       {
-        "Name": "Alarm",
+        "Name": "Ringing",
+        "CanvasBufferSize": 3600,
         "Components": [
           {
             "Type": "CustomContainerInstance",
             "Name": "buttons",
             "Y": 47,
             "Width": 240,
-            "Height": 147,
+            "Height": 146,
+            "LockPosition": true,
             "CustomContainerDefinitionName": "Buttons"
           },
           {
@@ -631,15 +531,17 @@
             "Y": 80,
             "Width": 80,
             "Height": 80,
-            "RelativeFilename": "AlarmBig.png"
+            "LockPosition": true,
+            "RelativeFilename": "Alarm_80x80.png"
           },
           {
             "Type": "TextArea",
-            "Name": "textSnooze",
+            "Name": "snoozeText",
             "X": 137,
             "Y": 154,
             "Width": 73,
             "Height": 25,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_20",
             "TextRotation": "0",
             "Color": {
@@ -656,11 +558,12 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textStop",
+            "Name": "stopText",
             "X": 160,
             "Y": 55,
             "Width": 47,
             "Height": 25,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_20",
             "TextRotation": "0",
             "Color": {
@@ -685,7 +588,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "Alarm"
+              "ActionComponent": "Ringing"
             }
           }
         ]
@@ -704,6 +607,7 @@
             "Y": 38,
             "Width": 140,
             "Height": 3,
+            "LockPosition": true,
             "Color": {
               "Red": 64,
               "Green": 64,
@@ -715,11 +619,12 @@
           },
           {
             "Type": "TextArea",
-            "Name": "text",
+            "Name": "titleText",
             "X": 10,
             "Y": 11,
             "Width": 120,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "TMP_ITALIC_18",
             "TextRotation": "0",
             "Color": {
@@ -728,7 +633,7 @@
               "Blue": 192
             },
             "Wildcard1": {
-              "TextId": "__SingleUse_JVL6",
+              "TextId": "TEXT_NEW_TEXT",
               "UseBuffer": true,
               "BufferSize": 16
             }
@@ -740,131 +645,83 @@
         "Name": "Buttons",
         "Y": 47,
         "Width": 240,
-        "Height": 147,
+        "Height": 146,
         "Components": [
           {
-            "Type": "Image",
-            "Name": "buttonR2",
-            "X": 206,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
+            "Type": "Circle",
+            "Name": "bL1",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_R2.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 291.0,
+            "EndAngle": 308.0,
+            "CapPrecision": "Round"
           },
           {
-            "Type": "Image",
-            "Name": "buttonR1",
-            "X": 206,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
+            "Type": "Circle",
+            "Name": "bL2",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_R1.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 232.0,
+            "EndAngle": 249.0,
+            "CapPrecision": "Round"
           },
           {
-            "Type": "Image",
-            "Name": "buttonL2",
-            "X": 12,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
+            "Type": "Circle",
+            "Name": "bR2",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_L2.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 111.0,
+            "EndAngle": 128.0,
+            "CapPrecision": "Round"
           },
           {
-            "Type": "Image",
-            "Name": "buttonL1",
-            "X": 12,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
+            "Type": "Circle",
+            "Name": "bR1",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_L1.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR2a",
-            "X": 206,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R2A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR1a",
-            "X": 206,
-            "Width": 23,
-            "Height": 35,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R1A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL2a",
-            "X": 12,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L2A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL1a",
-            "X": 12,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L1A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR2r",
-            "X": 206,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R2R.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR1r",
-            "X": 206,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R1R.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL2r",
-            "X": 12,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L2R .png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL1r",
-            "X": 12,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L1R.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 52.0,
+            "EndAngle": 69.0,
+            "CapPrecision": "Round"
           }
         ],
         "Interactions": []
@@ -875,44 +732,38 @@
         "Height": 30,
         "Components": [
           {
-            "Type": "Image",
-            "Name": "railOn",
+            "Type": "Line",
+            "Name": "rail",
             "Width": 60,
             "Height": 30,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Toggle_On.png"
+            "StartX": 15.0,
+            "StartY": 15.0,
+            "EndX": 45.0,
+            "EndY": 15.0,
+            "LineWidth": 30.0,
+            "LineEndingStyle": "Round"
           },
           {
-            "Type": "Image",
-            "Name": "railOffGray",
-            "Width": 60,
-            "Height": 30,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Toggle_Def.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "railOff",
-            "Width": 60,
-            "Height": 30,
-            "LockPosition": true,
-            "RelativeFilename": "Toggle_Off.png"
-          },
-          {
-            "Type": "Image",
+            "Type": "Circle",
             "Name": "handle",
             "Width": 30,
             "Height": 30,
-            "LockPosition": true,
-            "RelativeFilename": "Toggle_Handle.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 15.0,
+            "CenterY": 15.0,
+            "Radius": 15.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt"
           }
         ],
         "Interactions": []
       },
       {
-        "Name": "MenuWheel",
+        "Name": "OptionWheel",
         "X": 20,
         "Y": 55,
         "Width": 200,
@@ -926,9 +777,9 @@
             "Height": 128,
             "LockPosition": true,
             "UseSelectedStyle": true,
-            "SelectedItemTemplateName": "MenuWheelItemSelected",
+            "SelectedItemTemplateName": "OptionWheelCenterItem",
             "IsCircular": true,
-            "ItemTemplateName": "MenuWheelItemNotSelected",
+            "ItemTemplateName": "OptionWheelItem",
             "NumberofItems": 11,
             "Easing": "Linear",
             "EasingOption": "Out",
@@ -940,7 +791,35 @@
         "Interactions": []
       },
       {
-        "Name": "MenuWheelItemSelected",
+        "Name": "OptionWheelItem",
+        "Width": 200,
+        "Height": 45,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "text",
+            "Y": 10,
+            "Width": 200,
+            "Height": 25,
+            "LockPosition": true,
+            "TextId": "TMP_SEMIBOLD_20",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "Wildcard1": {
+              "TextId": "TEXT_THURSDAY",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "OptionWheelCenterItem",
         "Width": 200,
         "Height": 45,
         "Components": [
@@ -1008,7 +887,7 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "toggleSwitch",
+            "Name": "toggle",
             "X": 70,
             "Y": 7,
             "Width": 60,
@@ -1016,34 +895,6 @@
             "Visible": false,
             "LockPosition": true,
             "CustomContainerDefinitionName": "Toggle"
-          }
-        ],
-        "Interactions": []
-      },
-      {
-        "Name": "MenuWheelItemNotSelected",
-        "Width": 200,
-        "Height": 45,
-        "Components": [
-          {
-            "Type": "TextArea",
-            "Name": "text",
-            "Y": 10,
-            "Width": 200,
-            "Height": 25,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_20",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "TEXT_THURSDAY",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
           }
         ],
         "Interactions": []
@@ -1064,9 +915,9 @@
             "Height": 143,
             "LockPosition": true,
             "UseSelectedStyle": true,
-            "SelectedItemTemplateName": "TimeWheelItemMinutesSelected",
+            "SelectedItemTemplateName": "TimeWheelMinutesCenterItem",
             "IsCircular": true,
-            "ItemTemplateName": "TimeWheelItemMinutesNotSelected",
+            "ItemTemplateName": "TimeWheelMinutesItem",
             "NumberofItems": 60,
             "Easing": "Linear",
             "EasingOption": "Out",
@@ -1082,9 +933,9 @@
             "Height": 143,
             "LockPosition": true,
             "UseSelectedStyle": true,
-            "SelectedItemTemplateName": "TimeWheelItemHoursSelected",
+            "SelectedItemTemplateName": "TimeWheelHoursCenterItem",
             "IsCircular": true,
-            "ItemTemplateName": "TimeWheelItemHoursNotSelected",
+            "ItemTemplateName": "TimeWheelHoursItem",
             "NumberofItems": 24,
             "Easing": "Linear",
             "EasingOption": "Out",
@@ -1156,34 +1007,7 @@
         "Interactions": []
       },
       {
-        "Name": "TimeWheelItemHoursSelected",
-        "Width": 94,
-        "Height": 45,
-        "Components": [
-          {
-            "Type": "TextArea",
-            "Name": "text",
-            "Y": -15,
-            "Width": 94,
-            "Height": 77,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_60_R",
-            "TextRotation": "0",
-            "Color": {
-              "Green": 128,
-              "Blue": 128
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_5BTS",
-              "UseBuffer": true,
-              "BufferSize": 5
-            }
-          }
-        ],
-        "Interactions": []
-      },
-      {
-        "Name": "TimeWheelItemHoursNotSelected",
+        "Name": "TimeWheelHoursItem",
         "Width": 94,
         "Height": 45,
         "Components": [
@@ -1210,7 +1034,34 @@
         "Interactions": []
       },
       {
-        "Name": "TimeWheelItemMinutesSelected",
+        "Name": "TimeWheelHoursCenterItem",
+        "Width": 94,
+        "Height": 45,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "text",
+            "Y": -15,
+            "Width": 94,
+            "Height": 77,
+            "LockPosition": true,
+            "TextId": "TMP_SEMIBOLD_60_R",
+            "TextRotation": "0",
+            "Color": {
+              "Green": 128,
+              "Blue": 128
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_5BTS",
+              "UseBuffer": true,
+              "BufferSize": 5
+            }
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "TimeWheelMinutesCenterItem",
         "Width": 94,
         "Height": 45,
         "Components": [
@@ -1237,7 +1088,7 @@
         "Interactions": []
       },
       {
-        "Name": "TimeWheelItemMinutesNotSelected",
+        "Name": "TimeWheelMinutesItem",
         "Width": 94,
         "Height": 45,
         "Components": [
@@ -1331,5 +1182,5 @@
     "OptionalComponents": [],
     "AdditionalFeatures": []
   },
-  "Version": "4.26.0"
+  "Version": "4.26.1"
 }

@@ -178,29 +178,11 @@
     <Filter Include="Header Files\gui\saved_screen">
       <UniqueIdentifier>041BF8ED-25A1-E78B-DD12-3AEEFBC04EF2</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\action_screen">
-      <UniqueIdentifier>5734CEA9-817E-2541-73E3-62D433D4F73A</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\action_screen">
-      <UniqueIdentifier>942C67AD-ACA8-0BAC-BBCB-7AE4471A6116</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gui\containers">
       <UniqueIdentifier>08ECEC2B-610E-A4D7-C4D7-6F2C9EBCB1F0</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\settime_screen">
-      <UniqueIdentifier>808615A0-3A11-FB18-D70A-BC896D6571B2</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\settime_screen">
-      <UniqueIdentifier>65861383-03E1-EDEE-9B4A-29395EC7A1C5</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\gui\containers">
       <UniqueIdentifier>40DF7DDC-783C-682B-C5EB-CB6F38F6792C</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\alarm_screen">
-      <UniqueIdentifier>AC21CD47-6E72-6E20-A299-989998142379</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\alarm_screen">
-      <UniqueIdentifier>145848F9-7502-DA4C-100E-A9F19DE8EC65</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\main_screen">
       <UniqueIdentifier>CBF72E00-B4C8-F523-90B3-175612659EDA</UniqueIdentifier>
@@ -226,47 +208,17 @@
     <Filter Include="Header Files\generated\gui_generated\deleted_screen">
       <UniqueIdentifier>A70F9BA0-BFE8-1ADA-288A-7DACE7EF855D</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\generated\gui_generated\alarm_screen">
-      <UniqueIdentifier>502E561C-5204-A1BF-F417-8F2C5782F15A</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\generated\gui_generated\main_screen">
       <UniqueIdentifier>360312AB-464E-A72E-4C51-AABAA5FD61EE</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\generated\gui_generated\saved_screen">
       <UniqueIdentifier>3AC9D0A7-6BC6-3002-E4C4-F13DFFCAF141</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\generated\gui_generated\alarm_screen">
-      <UniqueIdentifier>C54C9087-A6C3-A8BF-1F54-165BCA2C38B2</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\generated\gui_generated\main_screen">
       <UniqueIdentifier>C76295BE-84E5-9490-9D02-0BFB8FC4ADF6</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\generated\gui_generated\settime_screen">
-      <UniqueIdentifier>A7068B1C-000D-917D-47A9-79450C51F993</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\action_screen">
-      <UniqueIdentifier>D4C6A24B-9AB5-6D8C-C4F4-E173FB0DDF6A</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\settime_screen">
-      <UniqueIdentifier>DBFCC1AE-E496-AEA9-8F53-6D95D6C83078</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\action_screen">
-      <UniqueIdentifier>D9736B61-2442-8DFC-03B3-ADC3A1D5E7B3</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\generated\gui_generated\saved_screen">
       <UniqueIdentifier>A2B45043-58CB-7F37-DCDF-DD623C3527E7</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\start_screen">
-      <UniqueIdentifier>A99BC658-722F-560C-96BB-4B4147F473D0</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\start_screen">
-      <UniqueIdentifier>BD7C67F9-E22D-0466-3286-C31E22FB8CC7</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\start_screen">
-      <UniqueIdentifier>132A8414-7207-820A-2250-C717A0C59EDA</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\start_screen">
-      <UniqueIdentifier>297AA3AE-4B9A-1E1F-A87E-7A22C0CAEC64</UniqueIdentifier>
     </Filter>
     <Filter Include="SDK">
       <UniqueIdentifier>{d0cdfb97-73ff-438e-a07d-6af41ee69f07}</UniqueIdentifier>
@@ -331,9 +283,6 @@
     <Filter Include="Libs\Source">
       <UniqueIdentifier>{93cc23c7-b7fd-49fc-9e11-1be4eac92649}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs\Header\GSModelEvents">
-      <UniqueIdentifier>{c699e549-a11a-4c9c-87af-4b89866bd520}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SDK\ThirdParty">
       <UniqueIdentifier>{9cd0adae-3b13-4746-856c-b082a0453afd}</UniqueIdentifier>
     </Filter>
@@ -382,6 +331,42 @@
     <Filter Include="SDK\Libs\Source\Simulator\Components\Simulator">
       <UniqueIdentifier>{0bdabd9d-8e0a-49b2-97c8-e5dfc6b7120b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gui\ringing_screen">
+      <UniqueIdentifier>8C7868ED-E12D-2C64-BC4F-FE7595FB52BC</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\ringing_screen">
+      <UniqueIdentifier>FAFC2E28-11AB-8B14-36E8-9A3699DDDC5F</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui\menu_screen">
+      <UniqueIdentifier>38F5E689-65CD-1C52-7D04-3CE0F6F8401D</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\menu_screen">
+      <UniqueIdentifier>54D28A9F-F1F7-CA7A-A621-309DF141B74B</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui\edit_screen">
+      <UniqueIdentifier>0468258A-DC58-73DB-C746-6515352E64A7</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\edit_screen">
+      <UniqueIdentifier>26FC7A6E-A4F6-A886-8838-6E7918BE87F6</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\ringing_screen">
+      <UniqueIdentifier>29CCF1CA-59E9-19A0-9A7B-D12E307C32C1</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\ringing_screen">
+      <UniqueIdentifier>A89337B7-A70B-444E-2261-A67B9D57A3BF</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\menu_screen">
+      <UniqueIdentifier>1D22F047-E11D-C3FC-4BA0-33946AB9C5A6</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\menu_screen">
+      <UniqueIdentifier>034215C3-EDE5-3F19-B7B3-D7B8C334336F</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\edit_screen">
+      <UniqueIdentifier>71617643-E5D0-7D6A-D810-9276B4C3B555</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\edit_screen">
+      <UniqueIdentifier>5491EDBB-31AC-A798-32C9-6D968503F041</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -414,24 +399,6 @@
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp">
       <Filter>Source Files\gui\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\action_screen\ActionPresenter.cpp">
-      <Filter>Source Files\gui\action_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\action_screen\ActionView.cpp">
-      <Filter>Source Files\gui\action_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\action_screen\ActionViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\action_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\alarm_screen\AlarmPresenter.cpp">
-      <Filter>Source Files\gui\alarm_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\alarm_screen\AlarmView.cpp">
-      <Filter>Source Files\gui\alarm_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\alarm_screen\AlarmViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\alarm_screen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\containers\Buttons.cpp">
       <Filter>Source Files\gui\containers</Filter>
     </ClCompile>
@@ -456,24 +423,6 @@
     <ClCompile Include="..\..\generated\gui_generated\src\main_screen\MainViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\main_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MenuWheel.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MenuWheelItemNotSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelItemNotSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\MenuWheelItemSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\MenuWheelItemSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\saved_screen\SavedPresenter.cpp">
       <Filter>Source Files\gui\saved_screen</Filter>
     </ClCompile>
@@ -483,43 +432,10 @@
     <ClCompile Include="..\..\generated\gui_generated\src\saved_screen\SavedViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\saved_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\settime_screen\SetTimePresenter.cpp">
-      <Filter>Source Files\gui\settime_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\settime_screen\SetTimeView.cpp">
-      <Filter>Source Files\gui\settime_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\settime_screen\SetTimeViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\settime_screen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\containers\TimeWheel.cpp">
       <Filter>Source Files\gui\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemHoursNotSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemHoursNotSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemHoursSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemHoursSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemMinutesNotSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemMinutesNotSelectedBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\TimeWheelItemMinutesSelected.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelItemMinutesSelectedBase.cpp">
       <Filter>Source Files\generated\gui_generated\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gui\src\containers\Title.cpp">
@@ -533,15 +449,6 @@
     </ClCompile>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\ToggleBase.cpp">
       <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\start_screen\StartPresenter.cpp">
-      <Filter>Source Files\gui\start_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\start_screen\StartView.cpp">
-      <Filter>Source Files\gui\start_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\start_screen\StartViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\start_screen</Filter>
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Backlight.cpp">
       <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
@@ -579,24 +486,6 @@
     <ClCompile Include="$(SdkPath)\Libs\Source\JSON\JsonStreamWriter.cpp">
       <Filter>SDK\Libs\Source\JSON</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionPresenter.hpp">
-      <Filter>Header Files\gui\action_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionView.hpp">
-      <Filter>Header Files\gui\action_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\action_screen\ActionViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\action_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmPresenter.hpp">
-      <Filter>Header Files\gui\alarm_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmView.hpp">
-      <Filter>Header Files\gui\alarm_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\alarm_screen\AlarmViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\alarm_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\containers\Buttons.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
@@ -627,9 +516,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendHeapBase.hpp">
       <Filter>Header Files\generated\gui_generated\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\GuiConfig.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\main_screen\MainPresenter.hpp">
       <Filter>Header Files\gui\main_screen</Filter>
     </ClInclude>
@@ -638,24 +524,6 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\main_screen\MainViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\main_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheel.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemNotSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemNotSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\MJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
@@ -675,58 +543,16 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\saved_screen\SavedViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\saved_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimePresenter.hpp">
-      <Filter>Header Files\gui\settime_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimeView.hpp">
-      <Filter>Header Files\gui\settime_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\settime_screen\SetTimeViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\settime_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp">
       <Filter>Header Files\generated\gui_generated\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartPresenter.hpp">
-      <Filter>Header Files\gui\start_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartView.hpp">
-      <Filter>Header Files\gui\start_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\start_screen\StartViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\start_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\containers\TimeWheel.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursNotSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursNotSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesNotSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesNotSelectedBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesSelected.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesSelectedBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\containers\Title.hpp">
@@ -745,7 +571,7 @@
       <Filter>SDK\Libs\Source\Kernel</Filter>
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Port\TouchGFX\TouchGFXCommandProcessor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>SDK\Libs\Source\Port\TouchGFX</Filter>
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\App\AppCore.cpp">
       <Filter>SDK\Libs\Source\Simulator\App</Filter>
@@ -834,6 +660,156 @@
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Components\Sensors\SensorBatteryLevel.cpp">
       <Filter>SDK\Libs\Source\Simulator\Components\Sensors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\OptionWheel.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\OptionWheelBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\OptionWheelCenterItem.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\OptionWheelCenterItemBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\OptionWheelItem.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\OptionWheelItemBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\TimeWheelHoursCenterItem.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelHoursCenterItemBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\TimeWheelHoursItem.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelHoursItemBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\TimeWheelMinutesCenterItem.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelMinutesCenterItemBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\TimeWheelMinutesItem.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\TimeWheelMinutesItemBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheel.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\OptionWheelBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheelCenterItem.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\OptionWheelCenterItemBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheelConfig.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheelItem.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\OptionWheelItemBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelHoursCenterItem.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelHoursCenterItemBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelHoursItem.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelHoursItemBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelMinutesCenterItem.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelMinutesCenterItemBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelMinutesItem.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelMinutesItemBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\gui\src\edit_screen\EditPresenter.cpp">
+      <Filter>Source Files\gui\edit_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\edit_screen\EditView.cpp">
+      <Filter>Source Files\gui\edit_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\edit_screen\EditViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\edit_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\menu_screen\MenuPresenter.cpp">
+      <Filter>Source Files\gui\menu_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\menu_screen\MenuView.cpp">
+      <Filter>Source Files\gui\menu_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\menu_screen\MenuViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\menu_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\ringing_screen\RingingPresenter.cpp">
+      <Filter>Source Files\gui\ringing_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\ringing_screen\RingingView.cpp">
+      <Filter>Source Files\gui\ringing_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\ringing_screen\RingingViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\ringing_screen</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\gui\include\gui\edit_screen\EditPresenter.hpp">
+      <Filter>Header Files\gui\edit_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\edit_screen\EditView.hpp">
+      <Filter>Header Files\gui\edit_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\edit_screen\EditViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\edit_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menu_screen\MenuPresenter.hpp">
+      <Filter>Header Files\gui\menu_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\menu_screen\MenuView.hpp">
+      <Filter>Header Files\gui\menu_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\menu_screen\MenuViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\menu_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\ringing_screen\RingingPresenter.hpp">
+      <Filter>Header Files\gui\ringing_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\ringing_screen\RingingView.hpp">
+      <Filter>Header Files\gui\ringing_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\ringing_screen\RingingViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\ringing_screen</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\gui\src\containers\CountdownTimer.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\gui\include\gui\containers\CountdownTimer.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\common\AlarmLabels.hpp">
+      <Filter>Header Files\gui\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml">
@@ -1276,27 +1252,6 @@
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\GuiConfig.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionPresenter.hpp">
-      <Filter>Header Files\gui\action_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\action_screen\ActionView.hpp">
-      <Filter>Header Files\gui\action_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\action_screen\ActionViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\action_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmPresenter.hpp">
-      <Filter>Header Files\gui\alarm_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\alarm_screen\AlarmView.hpp">
-      <Filter>Header Files\gui\alarm_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\alarm_screen\AlarmViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\alarm_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\containers\Buttons.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
@@ -1321,23 +1276,26 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\main_screen\MainViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\main_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheel.hpp">
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheel.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelBase.hpp">
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\OptionWheelBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemNotSelected.hpp">
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheelItem.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemNotSelectedBase.hpp">
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\OptionWheelItemBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\MenuWheelItemSelected.hpp">
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheelCenterItem.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MenuWheelItemSelectedBase.hpp">
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\OptionWheelCenterItemBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\OptionWheelConfig.hpp">
+      <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\saved_screen\SavedPresenter.hpp">
       <Filter>Header Files\gui\saved_screen</Filter>
@@ -1348,43 +1306,34 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\saved_screen\SavedViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\saved_screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimePresenter.hpp">
-      <Filter>Header Files\gui\settime_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\settime_screen\SetTimeView.hpp">
-      <Filter>Header Files\gui\settime_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\settime_screen\SetTimeViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\settime_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\containers\TimeWheel.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursNotSelected.hpp">
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelHoursItem.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursNotSelectedBase.hpp">
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelHoursItemBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemHoursSelected.hpp">
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelHoursCenterItem.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemHoursSelectedBase.hpp">
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelHoursCenterItemBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesNotSelected.hpp">
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelMinutesItem.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesNotSelectedBase.hpp">
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelMinutesItemBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelItemMinutesSelected.hpp">
+    <ClInclude Include="..\..\gui\include\gui\containers\TimeWheelMinutesCenterItem.hpp">
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelItemMinutesSelectedBase.hpp">
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\TimeWheelMinutesCenterItemBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\containers\Title.hpp">
@@ -1399,26 +1348,11 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ToggleBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartPresenter.hpp">
-      <Filter>Header Files\gui\start_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\start_screen\StartView.hpp">
-      <Filter>Header Files\gui\start_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\start_screen\StartViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\start_screen</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Platform\OS\OS.hpp">
       <Filter>SDK\Libs\Header\Platform\OS</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\KernelBase.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SynchManager\SynchManager.hpp">
       <Filter>SDK\Libs\Header\SynchManager</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISynchManager.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h">
       <Filter>SDK\Libs\Header\UnaLogger</Filter>
@@ -1429,49 +1363,13 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IKernel.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IMutex.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISemaphore.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IBacklight.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IBuzzer.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IFileSystem.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IPower.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISensorManager.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISettings.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IVibro.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISensorDataListener.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISensorDriver.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Libs\Header\GSModelEvents\G2SEvents.hpp">
-      <Filter>Libs\Header\GSModelEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Libs\Header\GSModelEvents\S2GEvents.hpp">
-      <Filter>Libs\Header\GSModelEvents</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Libs\Header\AlarmManager.hpp">
       <Filter>Libs\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Libs\Header\AppTypes.hpp">
+    <ClInclude Include="..\..\..\..\Libs\Header\Alarm.hpp">
       <Filter>Libs\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Libs\Header\Service.hpp">
@@ -1482,30 +1380,6 @@
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\JSON\JsonStreamWriter.hpp">
       <Filter>SDK\Libs\Header\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IApp.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppCapabilities.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppControl.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISystem.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ITime.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\App.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppCapabilities.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\AppMemory.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Backlight.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
@@ -1519,23 +1393,8 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Logger.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Power.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\SensorManager.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\ServiceControl.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\IAppMemory.hpp">
-      <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Kernel\KernelBuilder.hpp">
       <Filter>SDK\Libs\Header\Kernel</Filter>
@@ -1550,9 +1409,6 @@
       <Filter>SDK\Libs\Header\Kernel</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\System.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Time.hpp">
       <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
   </ItemGroup>

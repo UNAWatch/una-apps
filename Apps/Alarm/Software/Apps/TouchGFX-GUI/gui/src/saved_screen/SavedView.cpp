@@ -1,6 +1,10 @@
 #include <gui/saved_screen/SavedView.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
+
+static constexpr uint16_t kDismissTicks = SDK::Utils::secToTicks(1, App::Config::kFrameRate);
 
 SavedView::SavedView()
+    : mDismissCb(this, &SavedView::onDismiss)
 {
 
 }
@@ -11,29 +15,24 @@ void SavedView::setupScreen()
 
     title.set(T_TEXT_ALARM_UC);
 
-    buttons.setL1(Buttons::NONE);
-    buttons.setL2(Buttons::NONE);
-    buttons.setR1(Buttons::NONE);
-    buttons.setR2(Buttons::NONE);
+    mDismissTimer.setDuration(kDismissTicks);
+    mDismissTimer.setCallback(mDismissCb);
+    mDismissTimer.start();
 }
 
 void SavedView::tearDownScreen()
 {
+    mDismissTimer.stop();
     SavedViewBase::tearDownScreen();
 }
 
 void SavedView::setAlarmId(size_t id)
 {
-    Unicode::snprintf(valueAlarmBuffer, VALUEALARM_SIZE, "%d", id + 1);
-    valueAlarm.invalidate();
+    Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%s %d", touchgfx::TypedText(T_TEXT_ALARM).getText(), id + 1);
+    messageText.invalidate();
 }
 
-void SavedView::handleTickEvent()
+void SavedView::onDismiss()
 {
-    if (mCounter > 0) {
-        mCounter--;
-    }
-    if (mCounter == 0) {
-        presenter->exitScreen();
-    }
+    presenter->exitScreen();
 }

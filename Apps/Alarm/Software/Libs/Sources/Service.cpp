@@ -1,21 +1,32 @@
 
 #include "Service.hpp"
 
-#define ARRAY_SIZE(a)   (sizeof(a) / sizeof(a[0]))
+#include <cstdio>
 
 #define LOG_MODULE_PRX      "Service"
 #define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
-#include <cstdio>
+static std::tm getLocalTime()
+{
+    std::tm tmResult {};
+    std::time_t utc = time(nullptr);
 
+#if defined(_WIN32) || defined(_WIN64)
+    localtime_s(&tmResult, &utc);
+#else
+    localtime_r(&utc, &tmResult);
+#endif
+
+    return tmResult;
+}
 
 Service::Service(SDK::Kernel &kernel)
         : mKernel(kernel)
-        , mGUIStarted(false)
-        , mAlarmManager(mKernel)
-        , mActiveAlarm()
+        , mGuiStarted(false)
         , mGuiSender(kernel)
+        , mAlarmManager(kernel)
+        , mActiveAlarm()
 {
 }
 
@@ -34,90 +45,84 @@ void Service::run()
     uint32_t startTime = mKernel.sys.getTimeMs();
 
     while (true) {
-        std::tm tmNow{};
-        time_t t = time(nullptr);
-#if defined(SIMULATOR)
-        localtime_s(&tmNow, &t);    // TODO: adjust fo real function
-#else
-        localtime_r(&t, &tmNow);
-#endif
-        uint32_t sleepTime = mAlarmManager.execute(tmNow);
+        uint32_t sleepTime = mAlarmManager.execute(getLocalTime());
 
         SDK::MessageBase *msg;
-        if(!mKernel.comm.getMessage(msg, sleepTime)) {
-            if (!mGUIStarted) {
-                // Just wait some time to see if GUI starts
-                if (mKernel.sys.getTimeMs() - startTime > 5000) {
-                    if (!mAlarmManager.hasActiveAlarms()) {
-                        LOG_INFO("No active alarms and GUI not started, exiting service\n");
-                        mAlarmManager.attachCallback(nullptr);
-                        return; // Exit app
-                    }
+        if (mKernel.comm.getMessage(msg, sleepTime)) {
+            switch (msg->getType()) {
+
+                // Kernel messages
+                case SDK::MessageType::COMMAND_APP_STOP:
+                    LOG_INFO("Force exit from the application\n");
+                    mAlarmManager.attachCallback(nullptr);
+                    // We must release message because this is the last event.
+                    mKernel.comm.releaseMessage(msg);
+                    return;
+
+                case SDK::MessageType::COMMAND_APP_NOTIF_GUI_RUN:
+                    LOG_INFO("GUI is now running\n");
+                    onStartGUI();
+                    break;
+
+                case SDK::MessageType::COMMAND_APP_NOTIF_GUI_STOP:
+                    LOG_INFO("GUI has stopped\n");
+                    onStopGUI();
+                    break;
+
+                // Custom messages
+                case CustomMessage::ALARM_LIST:
+                    LOG_DEBUG("ALARM_LIST\n");
+                    handleEvent(*static_cast<CustomMessage::AlarmList*>(msg));
+                    break;
+
+                case CustomMessage::ACTIVATED_EFFECT:
+                    LOG_DEBUG("ACTIVATED_EFFECT\n");
+                    handleEvent(*static_cast<CustomMessage::AlarmActivateEffect*>(msg));
+                    break;
+
+                case CustomMessage::ALARM_STOP:
+                    LOG_DEBUG("ALARM_STOP\n");
+                    handleEvent(*static_cast<CustomMessage::AlarmStop*>(msg));
+                    break;
+
+                case CustomMessage::ALARM_STOP_ALL:
+                    LOG_DEBUG("ALARM_STOP_ALL\n");
+                    handleEvent(*static_cast<CustomMessage::AlarmStopAll*>(msg));
+                    break;
+
+                case CustomMessage::ALARM_SNOOZE:
+                    LOG_DEBUG("ALARM_SNOOZE\n");
+                    handleEvent(*static_cast<CustomMessage::AlarmSnooze*>(msg));
+                    break;
+
+                case CustomMessage::ALARM_SNOOZE_ALL:
+                    LOG_DEBUG("ALARM_SNOOZE_ALL\n");
+                    handleEvent(*static_cast<CustomMessage::AlarmSnoozeAll*>(msg));
+                    break;
+
+                default:
+                    break;
+            }
+            // Release message after processing
+            mKernel.comm.releaseMessage(msg);
+        }
+
+        if (!mGuiStarted) {
+            // Just wait some time to see if GUI starts
+            if (mKernel.sys.getTimeMs() - startTime > 5000) {
+                if (!mAlarmManager.hasActiveAlarms()) {
+                    LOG_INFO("No active alarms and GUI not started, exiting service\n");
+                    mAlarmManager.attachCallback(nullptr);
+                    return; // Exit app
                 }
             }
-            continue;
         }
-
-        switch (msg->getType()) {
-            case SDK::MessageType::COMMAND_APP_STOP:
-                LOG_INFO("Force exit from the application\n");
-                mAlarmManager.attachCallback(nullptr);
-                // We must release message because this is the last event.
-                mKernel.comm.releaseMessage(msg);
-                return;
-
-            case SDK::MessageType::COMMAND_APP_NOTIF_GUI_RUN:
-                LOG_DEBUG("GUI is now running\n");
-                onStartGUI();
-                break;
-
-            case SDK::MessageType::COMMAND_APP_NOTIF_GUI_STOP:
-                LOG_DEBUG("GUI has stopped\n");
-                onStopGUI();
-                break;
-
-            case CustomMessage::ALARM_LIST:
-                LOG_DEBUG("ALARM_LIST\n");
-                handleEvent(*static_cast<CustomMessage::AlarmList*>(msg));
-                break;
-
-            case CustomMessage::ACTIVATED_EFFECT:
-                LOG_DEBUG("ACTIVATED_EFFECT\n");
-                handleEvent(*static_cast<CustomMessage::AlarmActiveteEffect*>(msg));
-                break;
-
-            case CustomMessage::ALARM_STOP:
-                LOG_DEBUG("ALARM_STOP\n");
-                handleEvent(*static_cast<CustomMessage::AlarmStop*>(msg));
-                break;
-
-            case CustomMessage::ALARM_STOP_ALL:
-                LOG_DEBUG("ALARM_STOP_ALL\n");
-                handleEvent(*static_cast<CustomMessage::AlarmStopAll*>(msg));
-                break;
-
-            case CustomMessage::ALARM_SNOOZE:
-                LOG_DEBUG("ALARM_SNOOZE\n");
-                handleEvent(*static_cast<CustomMessage::AlarmSnooze*>(msg));
-                break;
-
-            case CustomMessage::ALARM_SNOOZE_ALL:
-                LOG_DEBUG("ALARM_SNOOZE_ALL\n");
-                handleEvent(*static_cast<CustomMessage::AlarmSnoozeAll*>(msg));
-                break;
-
-            default:
-                break;
-        }
-        // Release message after processing
-        mKernel.comm.releaseMessage(msg);
-
     }
 }
 
 void Service::onStartGUI()
 {
-    mGUIStarted = true;
+    mGuiStarted = true;
 
     // If there is an active alarm, send it to GUI first
     if (mActiveAlarm.on) {
@@ -126,36 +131,31 @@ void Service::onStartGUI()
     }
 
     // Send current alarm list to GUI
-    mGuiSender.updList(mAlarmManager.getAlarmList());
+    mGuiSender.listUpd(mAlarmManager.getAlarmList());
 }
 
 void Service::onStopGUI()
 {
-    mGUIStarted = false;
+    mGuiStarted = false;
 }
 
 void Service::handleEvent(const CustomMessage::AlarmList& event)
 {
-    mAlarmManager.saveAlarmList(event.list);
+    mAlarmManager.saveAlarmList({event.alarms, event.alarms + event.count});
 }
 
-void Service::handleEvent(const CustomMessage::AlarmActiveteEffect& event)
+void Service::handleEvent(const CustomMessage::AlarmActivateEffect& event)
 {
     auto *backlightMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBacklightSet>();
     if (backlightMsg) {
-        backlightMsg->autoOffTimeoutMs = skBacklightTimeout;
+        backlightMsg->autoOffTimeoutMs = 4000;
         backlightMsg->brightness = 100;
         mKernel.comm.sendMessage(backlightMsg);
         mKernel.comm.releaseMessage(backlightMsg);
     }
 
-    bool isVibro = event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
-            event.alarm.effect == AppType::Alarm::Effect::EFFECT_VIBRO;
-
-    bool isBuzzer = event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
-            event.alarm.effect == AppType::Alarm::Effect::EFFECT_BEEP;
-
-    LOG_DEBUG("isVibro isBuzzer : %d %d\n", (int)isVibro, (int)isBuzzer);
+    bool isVibro = event.alarm.effect == Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
+            event.alarm.effect == Alarm::Effect::EFFECT_VIBRO;
 
     if (isVibro) {
         auto *vibroMsg = mKernel.comm.allocateMessage<SDK::Message::RequestVibroPlay>();
@@ -172,6 +172,9 @@ void Service::handleEvent(const CustomMessage::AlarmActiveteEffect& event)
             mKernel.comm.releaseMessage(vibroMsg);
         }
     }
+
+    bool isBuzzer = event.alarm.effect == Alarm::Effect::EFFECT_BEEP_AND_VIBRO ||
+            event.alarm.effect == Alarm::Effect::EFFECT_BEEP;
 
     if (isBuzzer) {
         auto *buzzerMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBuzzerPlay>();
@@ -197,28 +200,28 @@ void Service::handleEvent(const CustomMessage::AlarmActiveteEffect& event)
 void Service::handleEvent(const CustomMessage::AlarmStop& event)
 {
     mAlarmManager.disableAlarm(event.alarm);
-    stopAlarm();
+    stopRinging();
 }
 
-void Service::handleEvent(const CustomMessage::AlarmStopAll& event)
+void Service::handleEvent(const CustomMessage::AlarmStopAll& /*event*/)
 {
     mAlarmManager.disableAllActiveAlarm();
-    stopAlarm();
+    stopRinging();
 }
 
 void Service::handleEvent(const CustomMessage::AlarmSnooze& event)
 {
     mAlarmManager.snoozeAlarm(event.alarm);
-    stopAlarm();
+    stopRinging();
 }
 
-void Service::handleEvent(const CustomMessage::AlarmSnoozeAll& event)
+void Service::handleEvent(const CustomMessage::AlarmSnoozeAll& /*event*/)
 {
-    mAlarmManager.snoozeAllActiveAlarm();   
-    stopAlarm();
+    mAlarmManager.snoozeAllActiveAlarm();
+    stopRinging();
 }
 
-void Service::stopAlarm()
+void Service::stopRinging()
 {
     auto *buzzerMsg = mKernel.comm.allocateMessage<SDK::Message::RequestBuzzerPlay>();
     if (buzzerMsg) {
@@ -233,10 +236,10 @@ void Service::stopAlarm()
     }
 }
 
-void Service::onAlarm(const AppType::Alarm& alarm)
+void Service::onAlarm(const Alarm& alarm)
 {
     // Make sure GUI is started
-    if (!mGUIStarted) {
+    if (!mGuiStarted) {
         auto *msg = mKernel.comm.allocateMessage<SDK::Message::RequestAppRunGui>();
         if (msg) {
             mKernel.comm.sendMessage(msg);
@@ -245,15 +248,15 @@ void Service::onAlarm(const AppType::Alarm& alarm)
 
         mActiveAlarm = alarm; // save active alarm
     } else {
-        // clear active alarm
-        mActiveAlarm = {}; // clear active alarm
-        mGuiSender.alarmActivated(mActiveAlarm);
+        mGuiSender.alarmActivated(alarm);
+        mActiveAlarm = {};
     }
 }
 
-void Service::onListChanged(const std::vector<AppType::Alarm>& list)
+void Service::onListChanged(const std::vector<Alarm>& list)
 {
-    if (mGUIStarted) {
-        mGuiSender.updList(list);
+    if (mGuiStarted) {
+        mGuiSender.listUpd(list);
     }
 }
+

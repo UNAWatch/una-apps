@@ -6,7 +6,9 @@
 
 #include <gui/common/FrontendApplication.hpp>
 #include <touchgfx/containers/Container.hpp>
-#include <touchgfx/widgets/Image.hpp>
+#include <touchgfx/widgets/canvas/Line.hpp>
+#include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
+#include <touchgfx/widgets/canvas/Circle.hpp>
 
 class ToggleBase : public touchgfx::Container
 {
@@ -23,10 +25,10 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Image railOn;
-    touchgfx::Image railOffGray;
-    touchgfx::Image railOff;
-    touchgfx::Image handle;
+    touchgfx::Line rail;
+    touchgfx::PainterABGR2222 railPainter;
+    touchgfx::Circle handle;
+    touchgfx::PainterABGR2222 handlePainter;
 
 private:
 

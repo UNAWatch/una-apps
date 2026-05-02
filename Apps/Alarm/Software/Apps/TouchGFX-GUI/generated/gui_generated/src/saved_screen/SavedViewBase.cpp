@@ -4,8 +4,8 @@
 #include <gui_generated/saved_screen/SavedViewBase.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
+#include <images/BitmapDatabase.hpp>
 
 SavedViewBase::SavedViewBase()
 {
@@ -15,38 +15,26 @@ SavedViewBase::SavedViewBase()
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    buttons.setXY(0, 47);
-    add(buttons);
+    savedText.setXY(73, 145);
+    savedText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    savedText.setLinespacing(0);
+    Unicode::snprintf(savedTextBuffer, SAVEDTEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_SAVED).getText());
+    savedText.setWildcard(savedTextBuffer);
+    savedText.resizeToCurrentText();
+    savedText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
+    add(savedText);
 
     icon.setXY(95, 95);
-    icon.setBitmap(touchgfx::Bitmap(BITMAP_MENUASSETS_CIRCLETICK_ID));
+    icon.setBitmap(touchgfx::Bitmap(BITMAP_CIRCLETICK_50X50_ID));
     add(icon);
 
-    text.setXY(73, 145);
-    text.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    text.setLinespacing(0);
-    Unicode::snprintf(textBuffer, TEXT_SIZE, "%s", touchgfx::TypedText(T_TEXT_SAVED).getText());
-    text.setWildcard(textBuffer);
-    text.resizeToCurrentText();
-    text.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_30));
-    add(text);
-
-    textAlarm.setXY(89, 60);
-    textAlarm.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    textAlarm.setLinespacing(0);
-    Unicode::snprintf(textAlarmBuffer, TEXTALARM_SIZE, "%s", touchgfx::TypedText(T_TEXT_ALARM).getText());
-    textAlarm.setWildcard(textAlarmBuffer);
-    textAlarm.resizeToCurrentText();
-    textAlarm.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
-    add(textAlarm);
-
-    valueAlarm.setPosition(153, 60, 25, 23);
-    valueAlarm.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
-    valueAlarm.setLinespacing(0);
-    Unicode::snprintf(valueAlarmBuffer, VALUEALARM_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_P99V).getText());
-    valueAlarm.setWildcard(valueAlarmBuffer);
-    valueAlarm.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18_L));
-    add(valueAlarm);
+    messageText.setPosition(60, 60, 120, 23);
+    messageText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    messageText.setLinespacing(0);
+    Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_NPYY).getText());
+    messageText.setWildcard(messageTextBuffer);
+    messageText.setTypedText(touchgfx::TypedText(T_TMP_ITALIC_18));
+    add(messageText);
 
     title.setXY(50, 0);
     add(title);
@@ -59,7 +47,6 @@ SavedViewBase::~SavedViewBase()
 
 void SavedViewBase::setupScreen()
 {
-    buttons.initialize();
     title.initialize();
     transitionBegins();
 }
