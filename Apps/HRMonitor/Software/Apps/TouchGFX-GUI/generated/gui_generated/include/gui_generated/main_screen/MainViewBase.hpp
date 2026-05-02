@@ -8,7 +8,7 @@
 #include <mvp/View.hpp>
 #include <gui/main_screen/MainPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/ButtonsSet.hpp>
+#include <gui/containers/Buttons.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
@@ -28,21 +28,27 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    ButtonsSet buttons;
-    touchgfx::Image imageHR;
-    touchgfx::TextAreaWithOneWildcard textHR;
-    touchgfx::TextAreaWithOneWildcard textTRL;
-    touchgfx::TextAreaWithOneWildcard text;
+    Buttons buttons;
+    touchgfx::Image icon;
+    touchgfx::TextAreaWithOneWildcard trustLevelValue;
+    touchgfx::TextAreaWithOneWildcard trustLevelText;
+    touchgfx::TextAreaWithOneWildcard hrValue;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t TEXTHR_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar textHRBuffer[TEXTHR_SIZE];
-    static const uint16_t TEXTTRL_SIZE = 20;
-    touchgfx::Unicode::UnicodeChar textTRLBuffer[TEXTTRL_SIZE];
+    static const uint16_t TRUSTLEVELVALUE_SIZE = 5;
+    touchgfx::Unicode::UnicodeChar trustLevelValueBuffer[TRUSTLEVELVALUE_SIZE];
+    static const uint16_t HRVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar hrValueBuffer[HRVALUE_SIZE];
 
 private:
+
+    /*
+     * Canvas Buffer Size
+     */
+    static const uint32_t CANVAS_BUFFER_SIZE = 3600;
+    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 
 };
 

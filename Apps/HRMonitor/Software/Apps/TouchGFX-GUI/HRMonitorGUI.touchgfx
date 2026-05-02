@@ -3,49 +3,30 @@
     "Screens": [
       {
         "Name": "Main",
+        "CanvasBufferSize": 3600,
         "Components": [
           {
             "Type": "CustomContainerInstance",
             "Name": "buttons",
             "Y": 47,
             "Width": 240,
-            "Height": 147,
+            "Height": 146,
             "LockPosition": true,
-            "CustomContainerDefinitionName": "ButtonsSet"
+            "CustomContainerDefinitionName": "Buttons"
           },
           {
             "Type": "Image",
-            "Name": "imageHR",
+            "Name": "icon",
             "X": 97,
             "Y": 20,
             "Width": 46,
             "Height": 39,
             "LockPosition": true,
-            "RelativeFilename": "Heart.png"
+            "RelativeFilename": "Heart_46x39.png"
           },
           {
             "Type": "TextArea",
-            "Name": "textHR",
-            "X": 60,
-            "Y": 71,
-            "Width": 120,
-            "Height": 63,
-            "TextId": "TMP_MEDIUM_50",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_TKZU",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textTRL",
+            "Name": "trustLevelValue",
             "X": 158,
             "Y": 155,
             "Width": 37,
@@ -61,12 +42,12 @@
             "Wildcard1": {
               "TextId": "__SingleUse_XK5X",
               "UseBuffer": true,
-              "BufferSize": 20
+              "BufferSize": 5
             }
           },
           {
             "Type": "TextArea",
-            "Name": "text",
+            "Name": "trustLevelText",
             "X": 49,
             "Y": 155,
             "Width": 109,
@@ -80,7 +61,28 @@
               "Blue": 192
             },
             "Wildcard1": {
-              "TextId": "__SingleUse_JJ5T"
+              "TextId": "TEXT_TRUST_LEVEL"
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "hrValue",
+            "X": 60,
+            "Y": 71,
+            "Width": 120,
+            "Height": 63,
+            "LockPosition": true,
+            "TextId": "TMP_MEDIUM_50",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_TKZU",
+              "UseBuffer": true,
+              "BufferSize": 10
             }
           }
         ],
@@ -89,134 +91,86 @@
     ],
     "CustomContainerDefinitions": [
       {
-        "Name": "ButtonsSet",
+        "Name": "Buttons",
         "Y": 47,
         "Width": 240,
-        "Height": 147,
+        "Height": 146,
         "Components": [
           {
-            "Type": "Image",
-            "Name": "buttonR2",
-            "X": 206,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
+            "Type": "Circle",
+            "Name": "bL1",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_R2.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 291.0,
+            "EndAngle": 308.0,
+            "CapPrecision": "Round"
           },
           {
-            "Type": "Image",
-            "Name": "buttonR1",
-            "X": 206,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
+            "Type": "Circle",
+            "Name": "bL2",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_R1.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 232.0,
+            "EndAngle": 249.0,
+            "CapPrecision": "Round"
           },
           {
-            "Type": "Image",
-            "Name": "buttonL2",
-            "X": 12,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
+            "Type": "Circle",
+            "Name": "bR2",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_L2.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 111.0,
+            "EndAngle": 128.0,
+            "CapPrecision": "Round"
           },
           {
-            "Type": "Image",
-            "Name": "buttonL1",
-            "X": 12,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
+            "Type": "Circle",
+            "Name": "bR1",
+            "Width": 240,
+            "Height": 146,
             "LockPosition": true,
-            "RelativeFilename": "Button_L1.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR2a",
-            "X": 206,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R2A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR1a",
-            "X": 206,
-            "Width": 23,
-            "Height": 35,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R1A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL2a",
-            "X": 12,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L2A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL1a",
-            "X": 12,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L1A.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR2r",
-            "X": 206,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R2R.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonR1r",
-            "X": 206,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_R1R.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL2r",
-            "X": 12,
-            "Y": 112,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L2R .png"
-          },
-          {
-            "Type": "Image",
-            "Name": "buttonL1r",
-            "X": 12,
-            "Width": 23,
-            "Height": 35,
-            "Visible": false,
-            "LockPosition": true,
-            "RelativeFilename": "Button_L1R.png"
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "CenterX": 120.0,
+            "CenterY": 73.0,
+            "Radius": 113.0,
+            "LineWidth": 6.0,
+            "StartAngle": 52.0,
+            "EndAngle": 69.0,
+            "CapPrecision": "Round"
           }
         ],
         "Interactions": []
@@ -289,5 +243,5 @@
     "OptionalComponents": [],
     "AdditionalFeatures": []
   },
-  "Version": "4.26.0"
+  "Version": "4.26.1"
 }

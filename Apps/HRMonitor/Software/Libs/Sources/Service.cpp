@@ -1,53 +1,66 @@
-#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
-#include "SDK/Messages/SensorLayerMessages.hpp"
-
 #include "Service.hpp"
 
+#include <ctime>
+#include <algorithm>
+
+#include "SDK/Tools/FirmwareVersion.hpp"
+#include "SDK/Messages/SensorLayerMessages.hpp"
+#include "SDK/Timer/Timer.hpp"
+
+#include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRate.hpp"
+
 #define LOG_MODULE_PRX      "Service"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 Service::Service(SDK::Kernel& kernel)
-    : mKernel(SDK::KernelProviderService::GetInstance().getKernel())
-    , mSender(mKernel)
-    , mGUIStarted(false)
-    , mSensorHR(SDK::Sensor::Type::HEART_RATE, 1000, 2000)
-    , mHR(0)
-    , mHRTL(0)
+    : mKernel(kernel)
+    , mGuiStarted(false)
+    , mGuiSender(mKernel)
+    , mSensorHr(SDK::Sensor::Type::HEART_RATE, skSamplePeriod, skSampleLatency)
+    , mHr(0.0f)
+    , mHrTl(0.0f)
     , mActivityWriter(mKernel, "Activity")
 {}
 
+Service::~Service()
+{
+    mSensorHr.disconnect();
+}
+
 void Service::run()
 {
-    LOG_INFO("thread started\n");
+    LOG_INFO("Started\n");
 
-    mSensorHR.connect();
+    mSensorHr.connect();
 
     ActivityWriter::AppInfo info{};
     info.timestamp  = std::time(nullptr);
-    info.appVersion = ParseVersion(BUILD_VERSION);
+    info.appVersion = SDK::ParseVersion(BUILD_VERSION).u32;
     info.devID      = DEV_ID;
     info.appID      = APP_ID;
     mActivityWriter.start(info);
 
-    time_t startTime    = time(nullptr);
-    time_t utcTimestamp = 0;
+    time_t startTime    = info.timestamp;
+    time_t processedUtc = startTime;  // skip record at the same second as START event
 
-    float    hrAvgSum   = 0;
+    float    hrAvgSum   = 0.0f;
     uint32_t hrAvgCount = 0;
-    float    hrMax      = 0;
+    float    hrMax      = 0.0f;
 
-    uint32_t startTimeMs = mKernel.sys.getTimeMs();
+    SDK::Timer guiInitTimeout(TIMER_SECONDS(5));
+    guiInitTimeout.start();
 
     while (true) {
         SDK::MessageBase *msg;
-        if (mKernel.comm.getMessage(msg, 1000)) {
+        if (mKernel.comm.getMessage(msg, 500)) {
             // Command handling
             switch (msg->getType()) {
+
                 // Kernel messages
                 case SDK::MessageType::COMMAND_APP_STOP:
                     LOG_INFO("Force exit from the application\n");
-                    mSensorHR.disconnect();
+                    mSensorHr.disconnect();
                     // We must release message because this is the last event.
                     mKernel.comm.releaseMessage(msg);
                     return;
@@ -65,8 +78,8 @@ void Service::run()
                 // Sensors messages
                 case SDK::MessageType::EVENT_SENSOR_LAYER_DATA: {
                     auto event = static_cast<SDK::Message::Sensor::EventData*>(msg);
-                    SDK::Sensor::DataBatch data(event->data, event->count, event->stride);
-                    onSdlNewData(event->handle, data);
+                    SDK::Sensor::DataBatch batch(event->data, event->count, event->stride);
+                    handleSensorsData(event->handle, batch);
                 } break;
 
                 default:
@@ -77,114 +90,82 @@ void Service::run()
             mKernel.comm.releaseMessage(msg);
         }
 
-        if (mGUIStarted) {
-            // Save record to the FIT file
+        if (mGuiStarted) {
+            // Save record to the FIT file every second
             time_t utc = time(nullptr);
-            if (utcTimestamp != utc) {
-                utcTimestamp = utc;
+            if (processedUtc != utc) {
+                processedUtc = utc;
 
-                ActivityWriter::RecordData fitRecord {};
+                ActivityWriter::RecordData fitRecord{};
                 fitRecord.timestamp  = utc;
-                fitRecord.heartRate  = static_cast<uint8_t>(mHR);
-                fitRecord.trustLevel = static_cast<uint8_t>(mHRTL);
+                fitRecord.heartRate  = static_cast<uint8_t>(mHr);
+                fitRecord.trustLevel = static_cast<uint8_t>(mHrTl);
                 mActivityWriter.addRecord(fitRecord);
 
-                if (mHR > 1) {
-                    hrAvgSum += mHR;
+                if (mHr > 1.0f) {
+                    hrAvgSum += mHr;
                     ++hrAvgCount;
-                    hrMax = std::max(hrMax, mHR);
+                    hrMax = std::max(hrMax, mHr);
                 }
             }
         } else {
             // Just wait some time to see if GUI starts
-            if (mKernel.sys.getTimeMs() - startTimeMs > 5000) {
-                LOG_DEBUG("start GUI timeout\n");
+            if (guiInitTimeout.expired()) {
+                LOG_INFO("No activities, exiting service\n");
                 break;
             }
-            mKernel.sys.delay(100);
         }
     }
 
     time_t utc = time(nullptr);
 
     // Save lap to the FIT file
-    ActivityWriter::LapData fitLap {};
-    fitLap.timeStart = utc - startTime;
-    fitLap.duration = utc - startTime;
-    fitLap.elapsed = utc - startTime;
-    fitLap.hrAvg = static_cast<uint8_t>(hrAvgSum / hrAvgCount);
-    fitLap.hrMax = static_cast<uint8_t>(hrMax);
+    ActivityWriter::LapData fitLap{};
+    fitLap.timestamp = utc;
+    fitLap.timeStart = startTime;
+    fitLap.duration  = utc - startTime;
+    fitLap.elapsed   = utc - startTime;
+    fitLap.hrAvg     = static_cast<uint8_t>(hrAvgCount > 0 ? hrAvgSum / hrAvgCount : 0);
+    fitLap.hrMax     = static_cast<uint8_t>(hrMax);
     mActivityWriter.addLap(fitLap);
 
-    // Create FIT file
-
+    // Save session and close FIT file
     ActivityWriter::TrackData fitTrack{};
-    fitTrack.timeStart = utc;
-    fitTrack.duration = utc - startTime;
-    fitTrack.elapsed = utc - startTime;
-    fitTrack.hrAvg = static_cast<uint8_t>(hrAvgSum / hrAvgCount);
-    fitTrack.hrMax = static_cast<uint8_t>(hrMax);
-
+    fitTrack.timestamp = utc;
+    fitTrack.timeStart = startTime;
+    fitTrack.duration  = utc - startTime;
+    fitTrack.elapsed   = utc - startTime;
+    fitTrack.hrAvg     = static_cast<uint8_t>(hrAvgCount > 0 ? hrAvgSum / hrAvgCount : 0);
+    fitTrack.hrMax     = static_cast<uint8_t>(hrMax);
     mActivityWriter.stop(fitTrack);
 
-    mSensorHR.disconnect();
+    mSensorHr.disconnect();
 
-    LOG_INFO("thread stopped\n");
+    LOG_INFO("Stopped\n");
 }
 
 void Service::onStartGUI()
 {
-    LOG_INFO("GUI started\n");
-    mGUIStarted = true;
-    mSender.updateHeartRate(0.0f, 0.0f);
+    mGuiStarted = true;
+    mGuiSender.heartRate(0.0f, 0.0f);
 }
 
 void Service::onStopGUI()
 {
-    LOG_INFO("GUI stopped\n");
-    mGUIStarted = false;
+    mGuiStarted = false;
 }
 
-void Service::onSdlNewData(uint16_t handle, SDK::Sensor::DataBatch& data)
+void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
-    if (mSensorHR.matchesDriver(handle)) {
-        if (mGUIStarted) {
+    if (mSensorHr.matchesDriver(handle)) {
+        if (mGuiStarted) {
             SDK::SensorDataParser::HeartRate parser(data[0]);
             if (parser.isDataValid()) {
-                mHR   = parser.getBpm();
-                mHRTL = parser.getTrustLevel();
+                mHr   = parser.getBpm();
+                mHrTl = parser.getTrustLevel();
 
-                mSender.updateHeartRate(mHR, mHRTL);
+                mGuiSender.heartRate(mHr, mHrTl);
             }
         }
     }
-}
-
-uint32_t Service::ParseVersion(const char* str)
-{
-    if (str == nullptr) {
-        return 0;
-    }
-
-    typedef union {
-        struct {
-            uint8_t patch;
-            uint8_t minor;
-            uint8_t major;
-        };
-        uint32_t u32;
-    } FirmwareVersion_t;
-
-    FirmwareVersion_t v{};
-
-    int major, minor, patch;
-
-    if (sscanf(str, "%d.%d.%d", &major, &minor, &patch) == 3) {
-        v.major = static_cast<uint8_t>(major);
-        v.minor = static_cast<uint8_t>(minor);
-        v.patch = static_cast<uint8_t>(patch);
-        return v.u32;
-    }
-
-    return 0;
 }

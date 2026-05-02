@@ -22,11 +22,6 @@ public:
     {
 #if defined(SIMULATOR)
         SDK::Simulator::KernelHolder::Get().tick();
-        bool stopRequest = SDK::TouchGFXCommandProcessor::GetInstance().waitForFrameTick();
-        if (stopRequest) {
-			SDK::Simulator::KernelHolder::Get().markAsStopped();
-            return;
-        }
 #endif
         SDK::TouchGFXCommandProcessor::GetInstance().callCustomMessageHandler();
         model.tick();
