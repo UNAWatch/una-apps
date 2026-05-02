@@ -2308,6 +2308,9 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISynchManager.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Timer\Timer.hpp">
+      <Filter>SDK\Libs\Header\Timer</Filter>
+    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h">
       <Filter>SDK\Libs\Header\UnaLogger</Filter>
     </ClInclude>

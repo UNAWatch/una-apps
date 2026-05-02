@@ -324,6 +324,7 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Settings.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\Vibro.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\SynchManager\SynchManager.hpp"/>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Timer\Timer.hpp"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h"/>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Wrappers\StdLibWrappers.h"/>
     <ClInclude Include="$(SdkPath)\ThirdParty\coreJSON\source\include\core_json.h"/>
