@@ -19,10 +19,9 @@
 #include "SDK/Simulator/Kernel/Mock/Backlight.hpp"
 #include "SDK/Simulator/Kernel/Mock/Buzzer.hpp"
 #include "SDK/Simulator/Kernel/Mock/Vibro.hpp"
-#include "gui/common/GuiConfig.hpp"
 #include "Service.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <thread>
 
 #ifdef __linux__
@@ -67,7 +66,7 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
                        int                     argc,
                        char**                  argv)
 {
-    // Initialize Logger with Service's kernel. In real app Service and GUI will have each its own kernel.
+    // Initialize Logger with Service's kernel. In real app Service and GUI will each have its own kernel.
     Logger_init(srvKernel.getKernel().log);
     // Save Service's kernel for global access
     SDK::KernelProviderService::CreateInstance(&srvKernel.getKernel());
@@ -85,10 +84,10 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     SDK::App::KernelMessageDispatcher kernelMessage(appComm, appComm.getMsgManager(), mVibro, mBacklight, mBuzzer);
 
 
-	// Create the Application core
-	App::Core appCore(appComm, srvKernel, guiKernel);
+    // Create the Application core
+    App::Core appCore(appComm, srvKernel, guiKernel);
 
-    //For windows/linux, DMA transfers are simulated
+    // For windows/linux, DMA transfers are simulated
     touchgfx::NoDMA dma;
     LCD& lcd = setupLCD();
     touchgfx::NoTouchController tc;
@@ -98,13 +97,13 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     setupSimulator(argc, argv, hal);
 
     // Set custom frame rate
-    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / Gui::Config::kFrameRate);
+    static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(1000.0f / SDK::GUI::Config::kFrameRate);
 
-    //// Ensure there is a console window to print to using printf() or
-    //// std::cout, and read from using e.g. fgets or std::cin.
-    //// Alternatively, instead of using printf(), always use
-    //// touchgfx_printf() which will ensure there is a console to write
-    //// to.
+    // Ensure there is a console window to print to using printf() or
+    // std::cout, and read from using e.g. fgets or std::cin.
+    // Alternatively, instead of using printf(), always use
+    // touchgfx_printf() which will ensure there is a console to write
+    // to.
     touchgfx_enable_stdio();
 
     // Start thread
@@ -114,7 +113,7 @@ static int runTouchGFX(SDK::App::DualAppComm&  appComm,
     std::thread appMessageThread(appMessageThreadFunction, &kernelMessage);
 
     touchgfx::HAL::getInstance()->taskEntry();  // Main GUI loop
-	
+
     appCore.stopRequest();
 
     // Stop threads
@@ -143,10 +142,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
     // Create kernel objects and service control
     SDK::App::MessageCore         appMessageCore;
 
-	SDK::Simulator::Mock::SystemService serviceSystem;
+    SDK::Simulator::Mock::SystemService serviceSystem;
     SDK::Simulator::Kernel serviceKernel("service");
-	serviceKernel.setIAppComm(appMessageCore.getAppComm().getServiceComm());
-	serviceKernel.setISystem(&serviceSystem);
+    serviceKernel.setIAppComm(appMessageCore.getAppComm().getServiceComm());
+    serviceKernel.setISystem(&serviceSystem);
 
     SDK::Simulator::Mock::SystemGUI guiSystem;
     SDK::Simulator::Kernel guiKernel("gui");

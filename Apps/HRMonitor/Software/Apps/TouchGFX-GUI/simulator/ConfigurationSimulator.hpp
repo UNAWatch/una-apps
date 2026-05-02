@@ -35,14 +35,14 @@
 // Battery Level Sensor
 #define BATT_LEVEL_SIM_ENABLE      0 // 0 - Disable
 #define BATT_LEVEL_SIM_START_VALUE 100 // 10 - 100%
-#define BATT_LEVEL_SIM_STEP_VALUE  0.2 //percent 
+#define BATT_LEVEL_SIM_STEP_VALUE  0.2 //percent
 
 // IMU Writs Sensor
 #define IMU_WRIST_SIM_ENABLE           0 // 0 - Disable
-#define IMU_WRIST_SIM_WRIST_DETECT_KEY '5' // char type 
+#define IMU_WRIST_SIM_WRIST_DETECT_KEY '5' // char type
 
 // IMU StepCounter Sensor
 #define IMU_STEP_COUNTER_SIM_ENABLE         0 // 0 - Disable
-#define IMU_STEP_COUNTER_SIM_STRIDE_LENGTH  0.65 //meters per step. Walking 0.65–0.75 m, hiking 0.55–0.70 m, running 1.0–1.4 m
+#define IMU_STEP_COUNTER_SIM_STRIDE_LENGTH  0.65 //meters per step. Walking 0.65-0.75 m, hiking 0.55-0.70 m, running 1.0-1.4 m
 
 #endif /* __CONFIG_SIMULATOR_HPP */
