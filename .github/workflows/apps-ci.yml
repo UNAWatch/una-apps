@@ -246,6 +246,7 @@ jobs:
           BODY=$(echo "$BODY" | sed 's/^## \([^$]*\)$/*\1*/')
           BODY=$(echo "$BODY" | sed 's/^* /- /')
           BODY=$(echo "$BODY" | sed 's/\*\*Full Changelog\*\*:/ *Full Changelog*\n/')
+          if [ ${#BODY} -gt 2700 ]; then BODY="${BODY:0:2700}"$'\n''...'; fi
           PAYLOAD=$(jq -c -n --arg name "${{ steps.get_slack_params.outputs.name }}" --arg tag "${{ github.ref_name }}" --arg body "$BODY" --arg author "${{ steps.get_slack_params.outputs.author }}" --arg created "${{ steps.get_slack_params.outputs.created_at }}" --arg url "${{ steps.get_slack_params.outputs.url }}" '{
             text: (":roller_coaster: *UNA Apps*: " + $name),
             blocks: [
