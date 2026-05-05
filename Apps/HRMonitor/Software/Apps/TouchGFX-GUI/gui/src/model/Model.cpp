@@ -6,7 +6,7 @@
 #include "SDK/Port/TouchGFX/TouchGFXCommandProcessor.hpp"
 
 #define LOG_MODULE_PRX      "Model"
-#define LOG_MODULE_LEVEL    LOG_LEVEL_DEBUG
+#define LOG_MODULE_LEVEL    LOG_LEVEL_INFO
 #include "SDK/UnaLogger/Logger.h"
 
 #if defined(SIMULATOR)
@@ -24,21 +24,10 @@ Model::Model()
     SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(this);
 
 #if defined(SIMULATOR)
-    LOG_INFO("Application is running through simulator! \n");
-
-    std::string fileStoreDir = SDK::Simulator::KernelHolder::Get().getFsPath();
-    LOG_INFO("Path to files created by app:\n"
-        "       [%s]\n", fileStoreDir.c_str());
-
-    LOG_INFO("\n"
-        "       Keys:                       \n"
-        "       ----------------------------\n"
-        "       1   L1,                     \n"
-        "       2   L2,                     \n"
-        "       3   R1,                     \n"
-        "       4   R2,                     \n"
-        "       z   L1+R2                   \n"
-    );
+    std::string fsPath = SDK::Simulator::KernelHolder::Get().getFsPath();
+    LOG_INFO("Simulator.\n");
+    LOG_INFO("FS path: [%s].\n", fsPath.c_str());
+    LOG_INFO("Buttons: 1=L1 2=L2 3=R1 4=R2\n\n");
 #endif
 }
 
@@ -49,18 +38,27 @@ FrontendApplication& Model::application()
 
 void Model::tick()
 {
-    //LOG_DEBUG("called\n");
-
     if (mInvalidate) {
         mInvalidate = false;
         application().invalidate();
     }
+
+    if (mIdleTimer > 0) {
+        if (--mIdleTimer == 0) {
+            modelListener->onIdleTimeout();
+        }
+    }
+}
+
+void Model::handleKeyEvent(uint8_t key)
+{
+    mIdleTimer = App::Config::kScreenTimeoutSteps;
 }
 
 void Model::exitApp()
 {
     LOG_INFO("Manually exiting the application\n");
-    // Cleanup recourses
+    // Cleanup resources
 
     SDK::TouchGFXCommandProcessor::GetInstance().setAppLifeCycleCallback(nullptr);
     SDK::TouchGFXCommandProcessor::GetInstance().setCustomMessageHandler(nullptr);

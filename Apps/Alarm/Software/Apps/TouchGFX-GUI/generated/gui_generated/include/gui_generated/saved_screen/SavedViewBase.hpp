@@ -8,9 +8,8 @@
 #include <mvp/View.hpp>
 #include <gui/saved_screen/SavedPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <gui/containers/Buttons.hpp>
-#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/widgets/Image.hpp>
 #include <gui/containers/Title.hpp>
 
 class SavedViewBase : public touchgfx::View<SavedPresenter>
@@ -30,22 +29,18 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    Buttons buttons;
+    touchgfx::TextAreaWithOneWildcard savedText;
     touchgfx::Image icon;
-    touchgfx::TextAreaWithOneWildcard text;
-    touchgfx::TextAreaWithOneWildcard textAlarm;
-    touchgfx::TextAreaWithOneWildcard valueAlarm;
+    touchgfx::TextAreaWithOneWildcard messageText;
     Title title;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t TEXT_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar textBuffer[TEXT_SIZE];
-    static const uint16_t TEXTALARM_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar textAlarmBuffer[TEXTALARM_SIZE];
-    static const uint16_t VALUEALARM_SIZE = 5;
-    touchgfx::Unicode::UnicodeChar valueAlarmBuffer[VALUEALARM_SIZE];
+    static const uint16_t SAVEDTEXT_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar savedTextBuffer[SAVEDTEXT_SIZE];
+    static const uint16_t MESSAGETEXT_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar messageTextBuffer[MESSAGETEXT_SIZE];
 
 private:
 

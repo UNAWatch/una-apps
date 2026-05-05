@@ -8,25 +8,23 @@ using namespace touchgfx;
 
 class SavedView;
 
+/**
+ * @brief Presenter for the "alarm saved" confirmation screen.
+ *
+ * Shows the index of the just-saved alarm and routes away via
+ * switchToNextPriorityScreen() when the auto-dismiss timer fires or the
+ * user navigates back.
+ */
 class SavedPresenter : public touchgfx::Presenter, public ModelListener
 {
 public:
     SavedPresenter(SavedView& v);
 
-    /**
-     * The activate function is called automatically when this screen is "switched in"
-     * (ie. made active). Initialization logic can be placed here.
-     */
     virtual void activate();
-
-    /**
-     * The deactivate function is called automatically when this screen is "switched out"
-     * (ie. made inactive). Teardown functionality can be placed here.
-     */
     virtual void deactivate();
-
     virtual ~SavedPresenter() {}
 
+    /** @brief Navigate away from this confirmation screen. */
     void exitScreen();
 
 private:

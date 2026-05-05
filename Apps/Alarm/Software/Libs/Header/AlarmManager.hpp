@@ -1,19 +1,7 @@
-/**
- ******************************************************************************
- * @file    AlarmManager.hpp
- * @date    08-11-2024
- * @author  Denys Saienko <denys.saienko@droid-technologies.com>
- * @brief   Alarms manager class for handling alarm functionality.
- ******************************************************************************
- *
- ******************************************************************************
- */
-
-#ifndef __ALARM_MANAGER_HPP
-#define __ALARM_MANAGER_HPP
+#ifndef ALARM_MANAGER_HPP
+#define ALARM_MANAGER_HPP
 
 #include <cstdint>
-#include <cstdbool>
 #include <array>
 #include <vector>
 #include <memory>
@@ -23,247 +11,139 @@
 #include "SDK/JSON/JsonStreamReader.hpp"
 #include "SDK/JSON/JsonStreamWriter.hpp"
 
-#include "AppTypes.hpp"
+#include "Alarm.hpp"
 
- /**
-  * @class AlarmManager
-  * @brief Manages and processes alarms.
-  */
+/**
+ * @brief Manages the alarm list, persistence, and timed triggering.
+ *
+ * Responsibilities:
+ * - Load / save alarms from / to JSON file on the filesystem
+ * - Check every minute (via execute()) whether any alarm is due
+ * - Track snoozed alarms and re-trigger them after kSnoozedTimeMinutes
+ * - Notify an observer on alarm trigger and on list changes
+ */
 class AlarmManager {
-
 public:
 
     /**
-     * @class AlarmCallback
-     * @brief Callback interface for handling alarm events.
+     * @brief Observer interface for alarm events.
      */
     class AlarmCallback {
     public:
-        /**
-         * @brief Callback triggered when an alarm activates.
-         * @param alarm: The active alarm information.
-         */
-        virtual void onAlarm(const AppType::Alarm& alarm) {}
+        /** @brief Called when an alarm fires. */
+        virtual void onAlarm(const Alarm& alarm) {}
 
-        /**
-         * @brief Callback triggered when the alarm list changes.
-         * @param list: The updated list of alarms.
-         */
-        virtual void onListChanged(const std::vector<AppType::Alarm>& list) {}
+        /** @brief Called when the alarm list changes (load, save). */
+        virtual void onListChanged(const std::vector<Alarm>& list) {}
     protected:
         virtual ~AlarmCallback() = default;
     };
 
-    /**
-     * @brief Constructor for AlarmManager.
-     * @param kernel: Reference to the kernel interface.
-     */
     AlarmManager(const SDK::Kernel& kernel);
-
-    /**
-     * @brief Destructor for AlarmManager.
-     */
     virtual ~AlarmManager();
 
-    /**
-     * @brief Load the alarms from persistent storage.
-     */
+    /** @brief Load alarms from persistent storage and notify observer. */
     void load();
 
-    /**
-     * @brief Attach a callback to receive alarm events.
-     * @param pCallback: Pointer to the callback interface.
-     */
+    /** @brief Attach observer to receive alarm and list-change events. */
     void attachCallback(AlarmCallback* pCallback)
     {
         mObserver = pCallback;
     }
 
     /**
-     * @brief Timer callback function to be called periodically (every minute).
-     * This function checks for alarms that need to be triggered based on the current time.
-     * @param tmNow: The current time as a std::tm structure.
-     * @return Time in milliseconds until the next required call. Can be called earlier but not later than this time.
+     * @brief Check for due alarms; call once per minute.
+     * @param tmNow Current local time.
+     * @return Milliseconds until the next required call.
      */
     uint32_t execute(const std::tm& tmNow);
 
-    /**
-     * @brief Retrieve the current alarm list.
-     * @return The current list of alarms.
-     */
-    const std::vector<AppType::Alarm>& getAlarmList();
+    /** @brief Return the current alarm list (non-owning reference). */
+    const std::vector<Alarm>& getAlarmList();
 
     /**
-     * @brief Save a new alarm list to persistent storage.
-     * @param list: The list of alarms to save.
-     * @return 'true' if the save was successful, 'false' otherwise.
+     * @brief Overwrite the alarm list and persist to storage.
+     * @return true if saved successfully.
      */
-    bool saveAlarmList(const std::vector<AppType::Alarm>& list);
+    bool saveAlarmList(const std::vector<Alarm>& list);
 
-    /**
-     * @brief Disable a specific alarm.
-     * @param alarm: The alarm to disable.
-     */
-    void disableAlarm(const AppType::Alarm& alarm);
+    /** @brief Remove a specific alarm from the snoozed-alarm tracking list. */
+    void disableAlarm(const Alarm& alarm);
 
-    /**
-     * @brief Disable all currently active alarms.
-     */
+    /** @brief Clear the entire snoozed-alarm tracking list. */
     void disableAllActiveAlarm();
 
     /**
-     * @brief Snooze a specific alarm, delaying it by a set interval.
-     * @param alarm: The alarm to snooze.
+     * @brief Acknowledge snooze for a specific alarm.
+     *
+     * The alarm is already tracked in the snoozed list (added automatically
+     * when it first fired). This call is a no-op by design; re-triggering
+     * is handled by execute() on the next snooze interval.
      */
-    void snoozeAlarm(const AppType::Alarm& alarm);
+    void snoozeAlarm(const Alarm& alarm);
 
     /**
-     * @brief Snooze all currently active alarms.
+     * @brief Acknowledge snooze for all active alarms.
+     *
+     * Same semantics as snoozeAlarm() — no-op by design.
      */
     void snoozeAllActiveAlarm();
 
-    /**
-     * @brief Check if there are any active alarms or snoozed alarms.
-     * @return true if there are active alarms that need monitoring, false otherwise.
-     */
+    /** @brief Return true if any enabled or snoozed alarm exists. */
     bool hasActiveAlarms() const;
 
 private:
 
-    /// A constant reference to an IKernel object.
-    const SDK::Kernel& mKernel;
+    // -- Constants ------------------------------------------------------------
 
-    ///  File path for storing alarms.
-    static constexpr char skFilePath[] = "alarms.json";
+    static constexpr char    skFilePath[]        = "alarms.json";
+    static constexpr uint8_t kSnoozedTimeMinutes = 5;
+    static constexpr uint8_t kMaxSnoozeCount     = 5;
+    static constexpr size_t  kInitialCount       = 20;
 
-    /// Structure storing all alarms
-    std::vector<AppType::Alarm> mAlarms{};
+    // -- State ----------------------------------------------------------------
 
-    /// Buffer for JSON operations.
-    char mBuffer[1024]{};
+    const SDK::Kernel&      mKernel;
+    AlarmCallback*          mObserver = nullptr;
+    std::vector<Alarm>      mAlarms{};
+    char                    mBuffer[2048]{};
 
-    /// Observer for callbacks.
-    AlarmCallback* mObserver = nullptr;
+    // -- JSON key maps (index = enum value) -----------------------------------
 
-    /// JSON values for 'repeat' field
-    inline static constexpr std::array<std::string_view, AppType::Alarm::REPEAT_COUNT> kRepeatJsonKeyValue =
+    inline static constexpr std::array<std::string_view, Alarm::REPEAT_COUNT> kRepeatJsonKeyValue =
     { "no", "every_day", "week_days", "weekends",
-        "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
+      "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
 
-    /// JSON values for 'effect' field  
-    inline static constexpr std::array<std::string_view, AppType::Alarm::EFFECT_COUNT> kEffectJsonKeyValue =
+    inline static constexpr std::array<std::string_view, Alarm::EFFECT_COUNT> kEffectJsonKeyValue =
     { "beep_vibro", "vibro", "beep" };
 
-    /// Time interval for snoozed alarms in minutes.
-    static constexpr uint8_t kSnoozedTimeMinutes = 5;
+    // -- Snoozed-alarm tracking -----------------------------------------------
 
-    /// Maximum number of snoozes.
-    static constexpr uint8_t kMaxSnoozeCount = 5;
-
-    /// Initial list size.
-    static constexpr size_t kInitialCount = 20;
-
-    /**
-     * @struct SnoozedAlarm
-     * @brief Structure for storing snoozed alarm details.
-     */
     struct SnoozedAlarm {
-        AppType::Alarm info;                    ///< Original alarm info.
-        uint8_t snoozeCount = kMaxSnoozeCount;  ///< Count of remaining snoozes.
-        uint8_t nextTriggerHour = 0;            ///< Next hour for the alarm trigger.
-        uint8_t nextTriggerMinute = 0;          ///< Next minute for the alarm trigger.
+        Alarm   info;
+        uint8_t snoozeCount       = kMaxSnoozeCount;
+        uint8_t nextTriggerHour   = 0;
+        uint8_t nextTriggerMinute = 0;
     };
 
-    /// List of snoozed alarms.
     std::vector<SnoozedAlarm> mSnoozedAlarms;
 
-    /**
-     * @brief Save alarms to the file.
-     * @param alarms: List of alarms to save.
-     * @return 'true' if saving was successful, 'false' otherwise.
-     */
-    bool saveTofile(const std::vector<AppType::Alarm>& alarms);
+    // -- Helpers --------------------------------------------------------------
 
-    /**
-     * @brief Load alarms from the file.
-     * @param alarms: Structure to store the loaded alarms.
-     * @return 'true' if loading was successful, 'false' otherwise.
-     */
-    bool loadFromFile(std::vector<AppType::Alarm>& alarms);
+    bool     saveToFile(const std::vector<Alarm>& alarms);
+    bool     loadFromFile(std::vector<Alarm>& alarms);
+    uint32_t createJSON(const std::vector<Alarm>& alarms, char* buff, uint32_t buffSize);
+    bool     parseJSON(char* buff, uint32_t length, std::vector<Alarm>& alarms);
+    void     dump(const std::vector<Alarm>& alarms);
 
-    /**
-     * @brief Create JSON data from alarms.
-     * @param alarms: List of alarms to serialize.
-     * @param buff: Buffer to store JSON data.
-     * @param buffSize: Size of the buffer.
-     * @return Number of bytes written to buffer.
-     */
-    uint32_t createJSON(const std::vector<AppType::Alarm>& alarms, char* buff, uint32_t buffSize);
-
-    /**
-     * @brief Parse JSON data and load it into alarms.
-     * @param buff: Buffer containing JSON data.
-     * @param length: Length of the buffer.
-     * @param alarms: Structure to store parsed alarms.
-     * @return 'true' if parsing was successful, 'false' otherwise.
-     */
-    bool parseJSON(char* buff, uint32_t length, std::vector<AppType::Alarm>& alarms);
-
-    /**
-     * @brief Print all alarms to log for debugging.
-     * @param alarms: List of alarms to print.
-     */
-    void dump(const std::vector<AppType::Alarm>& alarms);
-
-    /**
-     * @brief Check if any alarms are due at the current time.
-     * @param currentHour: Current hour.
-     * @param currentMinute: Current minute.
-     * @param currentDay: Current day of the week.
-     * @param tmNow: Current time structure for snooze calculations.
-     */
-    void checkAlarms(uint8_t currentHour, uint8_t currentMinute, uint8_t currentDay, const std::tm& tmNow);
-
-    /**
-     * @brief Add a snoozed alarm.
-     * @param alarm: The alarm to snooze.
-     * @param tmNow: Current time structure for calculations.
-     */
-    void addSnoozedAlarm(const AppType::Alarm& alarm, const std::tm& tmNow);
-
-    /**
-     * @brief Update trigger time for a snoozed alarm.
-     * @param snoozed: Snoozed alarm to update.
-     * @param tmNow: Current time structure for calculations.
-     */
+    void checkAlarms(uint8_t currentHour, uint8_t currentMinute,
+                     uint8_t currentDay, const std::tm& tmNow);
+    void addSnoozedAlarm(const Alarm& alarm, const std::tm& tmNow);
     void updateSnoozedTriggerTime(SnoozedAlarm& snoozed, const std::tm& tmNow);
-
-    /**
-     * @brief Remove snoozed alarms that are no longer active.
-     */
     void removeObsoleteSnoozedAlarms();
 
-    /**
-     * @brief Check if an alarm is due on the current day.
-     * @param alarm: Alarm to check.
-     * @param currentDay: Current day of the week.
-     * @return 'true' if the alarm is due today, 'false' otherwise.
-     */
-    bool isAlarmDueToday(const AppType::Alarm& alarm, uint8_t currentDay) const;
-
-    /**
-     * @brief Check if an alarm is currently snoozed.
-     * @param alarm: Alarm to check.
-     * @return 'true' if the alarm is snoozed, 'false' otherwise.
-     */
-    bool isSnoozed(const AppType::Alarm& alarm) const;
-
-    /**
-     * @brief Disable a specific one-time alarm in mAlarms.
-     * @param alarm: The one-time alarm to disable.
-     * @return true if alarm was disabled and save is needed, false otherwise.
-     */
-    bool disableOneTimeAlarm(const AppType::Alarm& alarm);
+    bool isAlarmDueToday(const Alarm& alarm, uint8_t currentDay) const;
+    bool isSnoozed(const Alarm& alarm) const;
 };
 
-#endif /* __ALARM_MANAGER_HPP */
+#endif // ALARM_MANAGER_HPP

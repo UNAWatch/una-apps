@@ -187,6 +187,9 @@
     <Filter Include="SDK\Libs\Source\Simulator">
       <UniqueIdentifier>{f3a37b1c-c854-4ba3-b96e-328eb0bf19ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\Libs\Source\Timer">
+      <UniqueIdentifier>{f3f32349-7093-44fb-8ba1-052b34c306a1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="SDK\Libs\Source\UnaLogger">
       <UniqueIdentifier>{b7bff1f9-96da-4789-bffb-93bf6598efd9}</UniqueIdentifier>
     </Filter>
@@ -217,6 +220,9 @@
     <Filter Include="SDK\Libs\Header\Interfaces">
       <UniqueIdentifier>{0f56cfeb-ec18-49a3-8760-93875ed47540}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SDK\Libs\Header\Timer">
+      <UniqueIdentifier>{71bb9f03-4ca5-4534-bf63-1a4f69d4c34a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="SDK\Libs\Header\UnaLogger">
       <UniqueIdentifier>{4a882200-7775-4f1a-aa25-f5f480bb91fc}</UniqueIdentifier>
     </Filter>
@@ -246,9 +252,6 @@
     </Filter>
     <Filter Include="Libs\Source">
       <UniqueIdentifier>{93cc23c7-b7fd-49fc-9e11-1be4eac92649}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Libs\Header\GSModelEvents">
-      <UniqueIdentifier>{c699e549-a11a-4c9c-87af-4b89866bd520}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\gui\main_screen">
       <UniqueIdentifier>867E566B-C66F-989E-C8A4-EAA264E301EE</UniqueIdentifier>
@@ -363,17 +366,11 @@
     <ClCompile Include="..\..\generated\gui_generated\src\main_screen\MainViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\main_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\ButtonsSet.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\ButtonsSetBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\FileSystem.cpp">
       <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
     </ClCompile>
-    <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Sensors\SensorCore.cpp">
-      <Filter>SDK\Libs\Source\Simulator\Sensors</Filter>
+    <ClCompile Include="$(SdkPath)\Libs\Source\Timer\Timer.cpp">
+      <Filter>SDK\Libs\Source\Timer</Filter>
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\UnaLogger\Logger.cpp">
       <Filter>SDK\Libs\Source\UnaLogger</Filter>
@@ -512,6 +509,12 @@
     </ClCompile>
     <ClCompile Include="$(SdkPath)\Libs\Source\Simulator\Kernel\Mock\Vibro.cpp">
       <Filter>SDK\Libs\Source\Simulator\Kernel\Mock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\containers\Buttons.cpp">
+      <Filter>Source Files\gui\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\ButtonsBase.cpp">
+      <Filter>Source Files\generated\gui_generated\containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -955,20 +958,11 @@
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\common\GuiConfig.hpp">
-      <Filter>Header Files\gui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\model\AppTypes.hpp">
-      <Filter>Header Files\gui\model</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\SensorCore.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Sensors\ISensorCore.hpp">
-      <Filter>SDK\Libs\Header\Simulator\Sensors</Filter>
-    </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISynchManager.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Timer\Timer.hpp">
+      <Filter>SDK\Libs\Header\Timer</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\UnaLogger\Logger.h">
       <Filter>SDK\Libs\Header\UnaLogger</Filter>
@@ -1012,11 +1006,8 @@
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Interfaces\ISensorDriver.hpp">
       <Filter>SDK\Libs\Header\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Libs\Header\GSModelEvents\G2SEvents.hpp">
-      <Filter>Libs\Header\GSModelEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Libs\Header\GSModelEvents\S2GEvents.hpp">
-      <Filter>Libs\Header\GSModelEvents</Filter>
+    <ClInclude Include="..\..\..\..\Libs\Header\Commands.hpp">
+      <Filter>Libs\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Libs\Header\Service.hpp">
       <Filter>Libs\Header</Filter>
@@ -1029,12 +1020,6 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\main_screen\MainViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\main_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\ButtonsSet.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ButtonsSetBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Libs\Header\ActivityWriter.hpp">
       <Filter>Libs\Header</Filter>
@@ -1115,31 +1100,37 @@
       <Filter>SDK\Libs\Header\Kernel</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\FitHelper\FitHelper.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\FitHelper</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Messages\CommandMessages.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Messages</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Messages\MessageBase.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Messages</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Messages\MessageGuard.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Messages</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Messages\MessageTypes.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Messages</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Messages\SensorLayerMessages.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Messages</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Kernel.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Simulator\Kernel</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\Kernel\Mock\System.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Simulator\Kernel\Mock</Filter>
     </ClInclude>
     <ClInclude Include="$(SdkPath)\Libs\Header\SDK\Simulator\OS\OS.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>SDK\Libs\Header\Simulator\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\containers\Buttons.hpp">
+      <Filter>Header Files\gui\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ButtonsBase.hpp">
+      <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

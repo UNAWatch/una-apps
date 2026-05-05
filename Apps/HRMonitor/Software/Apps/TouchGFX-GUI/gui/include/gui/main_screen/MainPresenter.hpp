@@ -4,11 +4,10 @@
 #include <gui/model/ModelListener.hpp>
 #include <mvp/Presenter.hpp>
 
-using namespace touchgfx;
-
 class MainView;
 
-class MainPresenter : public touchgfx::Presenter, public ModelListener
+class MainPresenter : public touchgfx::Presenter,
+                      public ModelListener
 {
 public:
     MainPresenter(MainView& v);

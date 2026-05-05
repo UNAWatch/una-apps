@@ -8,7 +8,7 @@ class ModelListener
 {
 public:
     ModelListener() : model(0) {}
-    
+
     virtual ~ModelListener() {}
 
     void bind(Model* m)
@@ -22,8 +22,6 @@ public:
 
 protected:
     Model* model;
-
-    
 };
 
 #endif // MODELLISTENER_HPP

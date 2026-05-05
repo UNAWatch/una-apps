@@ -1,6 +1,10 @@
 #include <gui/deleted_screen/DeletedView.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
+
+static constexpr uint16_t kDismissTicks = SDK::Utils::secToTicks(1, App::Config::kFrameRate);
 
 DeletedView::DeletedView()
+    : mDismissCb(this, &DeletedView::onDismiss)
 {
 
 }
@@ -11,29 +15,24 @@ void DeletedView::setupScreen()
 
     title.set(T_TEXT_ALARM_UC);
 
-    buttons.setL1(Buttons::NONE);
-    buttons.setL2(Buttons::NONE);
-    buttons.setR1(Buttons::NONE);
-    buttons.setR2(Buttons::NONE);
+    mDismissTimer.setDuration(kDismissTicks);
+    mDismissTimer.setCallback(mDismissCb);
+    mDismissTimer.start();
 }
 
 void DeletedView::tearDownScreen()
 {
+    mDismissTimer.stop();
     DeletedViewBase::tearDownScreen();
 }
 
 void DeletedView::setAlarmId(size_t id)
 {
-    Unicode::snprintf(valueAlarmBuffer, VALUEALARM_SIZE, "%d", id + 1);
-    valueAlarm.invalidate();
+    Unicode::snprintf(messageTextBuffer, MESSAGETEXT_SIZE, "%s %d", touchgfx::TypedText(T_TEXT_ALARM).getText(), id + 1);
+    messageText.invalidate();
 }
 
-void DeletedView::handleTickEvent()
+void DeletedView::onDismiss()
 {
-    if (mCounter > 0) {
-        mCounter--;
-    }
-    if (mCounter == 0) {
-        presenter->exitScreen();
-    }
+    presenter->exitScreen();
 }

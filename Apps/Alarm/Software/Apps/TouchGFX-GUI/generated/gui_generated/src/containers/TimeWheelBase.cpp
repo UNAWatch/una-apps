@@ -102,26 +102,26 @@ void TimeWheelBase::updateItemCallbackHandler(touchgfx::DrawableListItemsInterfa
     if (items == &minutesWheelListItems)
     {
         touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        TimeWheelItemMinutesNotSelected* cc = (TimeWheelItemMinutesNotSelected*)d;
+        TimeWheelMinutesItem* cc = (TimeWheelMinutesItem*)d;
         minutesWheelUpdateItem(*cc, itemIndex);
     }
     if (items == &minutesWheelSelectedListItems)
     {
         touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        TimeWheelItemMinutesSelected* cc = (TimeWheelItemMinutesSelected*)d;
+        TimeWheelMinutesCenterItem* cc = (TimeWheelMinutesCenterItem*)d;
         minutesWheelUpdateCenterItem(*cc, itemIndex);
     }
 
     if (items == &hoursWheelListItems)
     {
         touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        TimeWheelItemHoursNotSelected* cc = (TimeWheelItemHoursNotSelected*)d;
+        TimeWheelHoursItem* cc = (TimeWheelHoursItem*)d;
         hoursWheelUpdateItem(*cc, itemIndex);
     }
     if (items == &hoursWheelSelectedListItems)
     {
         touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        TimeWheelItemHoursSelected* cc = (TimeWheelItemHoursSelected*)d;
+        TimeWheelHoursCenterItem* cc = (TimeWheelHoursCenterItem*)d;
         hoursWheelUpdateCenterItem(*cc, itemIndex);
     }
 }

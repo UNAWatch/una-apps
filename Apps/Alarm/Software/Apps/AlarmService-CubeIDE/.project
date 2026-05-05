@@ -64,14 +64,14 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Libs/Header/Alarm.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Alarm.hpp</locationURI>
+		</link>
+		<link>
 			<name>Libs/Header/AlarmManager.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AlarmManager.hpp</locationURI>
-		</link>
-		<link>
-			<name>Libs/Header/AppTypes.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/AppTypes.hpp</locationURI>
 		</link>
 		<link>
 			<name>Libs/Header/Commands.hpp</name>
@@ -192,11 +192,6 @@
 			<name>SDK/Libs/Header/Messages/CommandMessages.hpp</name>
 			<type>1</type>
 			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/CommandMessages.hpp</locationURI>
-		</link>
-		<link>
-			<name>SDK/Libs/Header/Messages/ConcreteMessages.hpp</name>
-			<type>1</type>
-			<locationURI>SDK_LOC/Libs/Header/SDK/Messages/ConcreteMessages.hpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header/Messages/MessageBase.hpp</name>

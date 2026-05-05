@@ -1,5 +1,5 @@
-
-#pragma once
+#ifndef SERVICE_HPP
+#define SERVICE_HPP
 
 #include "SDK/Kernel/Kernel.hpp"
 
@@ -15,30 +15,40 @@ public:
 
     void run();
 
-    // User-defined event handlers
+private:
+    // -- Infrastructure -------------------------------------------------------
+
+    SDK::Kernel&          mKernel;
+    bool                  mGuiStarted;
+    CustomMessage::Sender mGuiSender;
+
+    // -- Alarm & persistence --------------------------------------------------
+
+    AlarmManager    mAlarmManager;
+    Alarm           mActiveAlarm;
+
+    // -- Lifecycle ------------------------------------------------------------
+
+    void onStartGUI();
+    void onStopGUI();
+
+    // -- Ringing control ------------------------------------------------------
+
+    void stopRinging();
+
+    // -- Event handlers -------------------------------------------------------
+
     void handleEvent(const CustomMessage::AlarmList& event);
-    void handleEvent(const CustomMessage::AlarmActiveteEffect& event);
+    void handleEvent(const CustomMessage::AlarmActivateEffect& event);
     void handleEvent(const CustomMessage::AlarmStop& event);
     void handleEvent(const CustomMessage::AlarmStopAll& event);
     void handleEvent(const CustomMessage::AlarmSnooze& event);
     void handleEvent(const CustomMessage::AlarmSnoozeAll& event);
 
-private:
-    static constexpr uint32_t skBacklightTimeout = 5000;
+    // -- AlarmManager callbacks -----------------------------------------------
 
-    const SDK::Kernel&  mKernel;
-    bool                mGUIStarted;
-
-    void onStartGUI();
-    void onStopGUI();
-
-    void stopAlarm();
-
-    // AlarmManager::AlarmCallback implementation
-    void onAlarm(const AppType::Alarm& alarm);
-    void onListChanged(const std::vector<AppType::Alarm>& list);
-
-    AlarmManager            mAlarmManager;
-    AppType::Alarm          mActiveAlarm;
-    CustomMessage::Sender   mGuiSender;
+    void onAlarm(const Alarm& alarm);
+    void onListChanged(const std::vector<Alarm>& list);
 };
+
+#endif // SERVICE_HPP
