@@ -64,9 +64,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Libs/Header/Service.hpp</locationURI>
 		</link>
 		<link>
-			<name>Libs/Source/GlanceTextMetrics.cpp</name>
+			<name>Libs/Source/Service.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/GlanceHR/Software/Libs/Source/GlanceTextMetrics.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Libs/Source/Service.cpp</locationURI>
 		</link>
 		<link>
 			<name>SDK/Libs/Header</name>
