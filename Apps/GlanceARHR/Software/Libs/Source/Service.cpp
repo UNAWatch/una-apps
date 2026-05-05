@@ -164,7 +164,7 @@ void Service::createGuiControls()
     mGlanceTitle = mGlanceUI.createText();
 
     mGlanceTitle
-        .pos({ 20, 0 }, { 200, 25 })
+        .pos({ kTitleX, kTitleY }, { kTitleW, kTitleH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_20)
         .color(GlanceColor_t::GLANCE_COLOR_TEAL)
         .setText("AVG / R HR")
@@ -175,7 +175,7 @@ void Service::createGuiControls()
     mGlanceValueAHR = mGlanceUI.createText();
 
     mGlanceValueAHR
-        .pos({ 44, 28 }, { 80, 34 })
+        .pos({ kValueAHRX, kValueAHRY }, { kValueAHRW, kValueAHRH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
@@ -185,7 +185,7 @@ void Service::createGuiControls()
     mGlanceValueRHR = mGlanceUI.createText();
 
     mGlanceValueRHR
-        .pos({ 116, 28 }, { 80, 34 })
+        .pos({ kValueRHRX, kValueRHRY }, { kValueRHRW, kValueRHRH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
