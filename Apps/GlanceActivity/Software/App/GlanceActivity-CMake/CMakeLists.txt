@@ -14,6 +14,8 @@ set(LIBS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../Libs")
 
 # Includes all build steps and required tools
 # Sets toolchain before project
+
+set(APP_USE_ICONS Off)
 include($ENV{UNA_SDK}/cmake/una-app.cmake)
 
 # Includes sets: SCRIPTS_PATH,
