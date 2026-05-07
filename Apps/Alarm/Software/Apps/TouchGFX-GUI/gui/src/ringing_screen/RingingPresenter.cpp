@@ -10,6 +10,8 @@ RingingPresenter::RingingPresenter(RingingView& v)
 void RingingPresenter::activate()
 {
     play();
+    
+    view.setTime(model->getActiveAlarm().timeHours, model->getActiveAlarm().timeMinutes);
 }
 
 void RingingPresenter::deactivate()
