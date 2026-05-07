@@ -18,8 +18,8 @@ RingingViewBase::RingingViewBase()
     buttons.setXY(0, 47);
     add(buttons);
 
-    icon.setXY(80, 80);
-    icon.setBitmap(touchgfx::Bitmap(BITMAP_ALARM_80X80_ID));
+    icon.setXY(90, 86);
+    icon.setBitmap(touchgfx::Bitmap(BITMAP_ALARM_60X60_ID));
     add(icon);
 
     snoozeText.setXY(137, 154);
@@ -39,6 +39,14 @@ RingingViewBase::RingingViewBase()
     stopText.resizeToCurrentText();
     stopText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_20));
     add(stopText);
+
+    timeValue.setPosition(15, 105, 75, 32);
+    timeValue.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
+    timeValue.setLinespacing(0);
+    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_Z0MH).getText());
+    timeValue.setWildcard(timeValueBuffer);
+    timeValue.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_25));
+    add(timeValue);
 }
 
 RingingViewBase::~RingingViewBase()

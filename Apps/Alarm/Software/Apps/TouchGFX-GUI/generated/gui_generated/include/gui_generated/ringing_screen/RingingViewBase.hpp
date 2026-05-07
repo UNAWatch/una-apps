@@ -33,6 +33,7 @@ protected:
     touchgfx::Image icon;
     touchgfx::TextAreaWithOneWildcard snoozeText;
     touchgfx::TextAreaWithOneWildcard stopText;
+    touchgfx::TextAreaWithOneWildcard timeValue;
 
     /*
      * Wildcard Buffers
@@ -41,6 +42,8 @@ protected:
     touchgfx::Unicode::UnicodeChar snoozeTextBuffer[SNOOZETEXT_SIZE];
     static const uint16_t STOPTEXT_SIZE = 10;
     touchgfx::Unicode::UnicodeChar stopTextBuffer[STOPTEXT_SIZE];
+    static const uint16_t TIMEVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar timeValueBuffer[TIMEVALUE_SIZE];
 
 private:
 

@@ -33,6 +33,12 @@ void RingingView::tearDownScreen()
     RingingViewBase::tearDownScreen();
 }
 
+void RingingView::setTime(uint8_t h, uint8_t m)
+{
+    Unicode::snprintf(timeValueBuffer, TIMEVALUE_SIZE, "%02u:%02u", h, m);
+    timeValue.invalidate();
+}
+
 void RingingView::onSnooze()
 {
     presenter->snooze(); // exit from screen

@@ -527,12 +527,12 @@
           {
             "Type": "Image",
             "Name": "icon",
-            "X": 80,
-            "Y": 80,
-            "Width": 80,
-            "Height": 80,
+            "X": 90,
+            "Y": 86,
+            "Width": 60,
+            "Height": 60,
             "LockPosition": true,
-            "RelativeFilename": "Alarm_80x80.png"
+            "RelativeFilename": "Alarm_60x60.png"
           },
           {
             "Type": "TextArea",
@@ -574,6 +574,27 @@
             "AutoSize": true,
             "Wildcard1": {
               "TextId": "TEXT_STOP",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "timeValue",
+            "X": 15,
+            "Y": 105,
+            "Width": 75,
+            "Height": 32,
+            "LockPosition": true,
+            "TextId": "TMP_SEMIBOLD_25",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_Z0MH",
               "UseBuffer": true,
               "BufferSize": 10
             }
