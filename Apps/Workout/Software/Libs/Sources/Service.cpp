@@ -794,7 +794,7 @@ uint8_t Service::getHrZone(float hr) const
         return 0;
     }
 
-    uint8_t zone = 1;
+    uint8_t zone = 0;
     const uint8_t thresholdCount = (mHrThresholdCount > mHrThresholds.size()) ? mHrThresholds.size() : mHrThresholdCount;
     for (uint8_t i = 0; i < thresholdCount; ++i) {
         if (hr > mHrThresholds[i]) {
