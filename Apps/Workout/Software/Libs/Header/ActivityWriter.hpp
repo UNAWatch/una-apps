@@ -20,7 +20,7 @@
 #include "SDK/FitHelper/FitHelper.hpp"
 
 extern "C" {
-#include "fit_example.h"
+#include "fit_product.h"
 }
 
 /**
@@ -63,23 +63,25 @@ public:
     };
 
     struct LapData {
-        std::time_t timestamp = 0;      // UTC
-        std::time_t timeStart = 0;      // UTC
-        std::time_t duration  = 0;      // seconds
-        std::time_t elapsed   = 0;      // seconds
-        float       hrAvg     = 0.0f;   // bpm
-        float       hrMax     = 0.0f;   // bpm
-        float       calories  = 0.0f;   // kcal
+        std::time_t timestamp        = 0;     // UTC
+        std::time_t timeStart        = 0;     // UTC
+        std::time_t duration         = 0;     // seconds
+        std::time_t elapsed          = 0;     // seconds
+        float       hrAvg            = 0.0f;  // bpm
+        float       hrMax            = 0.0f;  // bpm
+        float       calories         = 0.0f;  // kcal -- total active calories
+        float       restingCalories  = 0.0f;  // kcal -- BMR over the lap (MET 1.0)
     };
 
     struct TrackData {
-        std::time_t timestamp = 0;      // UTC
-        std::time_t timeStart = 0;      // UTC
-        std::time_t duration  = 0;      // seconds
-        std::time_t elapsed   = 0;      // seconds
-        float       hrAvg     = 0.0f;   // bpm
-        float       hrMax     = 0.0f;   // bpm
-        float       calories  = 0.0f;   // kcal
+        std::time_t timestamp          = 0;    // UTC
+        std::time_t timeStart          = 0;    // UTC
+        std::time_t duration           = 0;    // seconds
+        std::time_t elapsed            = 0;    // seconds
+        float       hrAvg              = 0.0f; // bpm
+        float       hrMax              = 0.0f; // bpm
+        float       calories           = 0.0f; // kcal -- total active calories
+        float       metabolicCalories  = 0.0f; // kcal -- BMR over the session (MET 1.0)
     };
 
     ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir);
@@ -113,6 +115,7 @@ private:
 
     SDK::Component::FitHelper mFHBatteryLevelField;
     SDK::Component::FitHelper mFHBatteryVoltageField;
+    SDK::Component::FitHelper mFHLapRestingCaloriesField;
 
     enum class MsgNumber {
         FILE = 1,
@@ -124,6 +127,7 @@ private:
         EVENT,
         BATTERY_LEVEL,
         BATTERY_VOLTAGE,
+        LAP_RESTING_CALORIES,
     };
 
     FIT_RECORD_MESG prepareRecordMsg(const RecordData& record);
