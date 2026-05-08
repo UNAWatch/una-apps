@@ -619,15 +619,27 @@ void Service::processTrack()
 void Service::updateHrDerivedMetrics()
 {
     mTrackData.hrZone = getHrZone(mTrackData.hr);
-    if (mTrackState != Track::State::ACTIVE || mTrackData.hrZone == 0) {
+    if (mTrackState != Track::State::ACTIVE) {
         return;
     }
 
-    const float met = getZoneMet(mTrackData.hrZone);
+    // Basal metabolic rate accrues every active second regardless of HR.
+    // Surfaced as session "metabolic_calories" / lap "resting_calories" in the FIT file.
+    static constexpr float kRestingMet = 1.0f;
+    const float restingKcal = kRestingMet * skDefaultWeightKg * (1.0f / 3600.0f);
+    mTrackData.restingCaloriesTotal += restingKcal;
+    mTrackData.restingCaloriesLap   += restingKcal;
+
+    // Active calories: zone-MET when HR is in a zone; BMR fallback otherwise
+    // (HR below zone 1 or no valid HR sample yet).
+    const float met = (mTrackData.hrZone == 0) ? kRestingMet : getZoneMet(mTrackData.hrZone);
     const float calories = met * skDefaultWeightKg * (1.0f / 3600.0f);
     mTrackData.totalCalories += calories;
-    mTrackData.lapCalories += calories;
-    mTrackData.zoneTimeSec[mTrackData.hrZone - 1] += kOneSecond;
+    mTrackData.lapCalories   += calories;
+
+    if (mTrackData.hrZone >= 1) {
+        mTrackData.zoneTimeSec[mTrackData.hrZone - 1] += kOneSecond;
+    }
 }
 
 void Service::saveLap()
@@ -647,9 +659,10 @@ void Service::saveLap()
     fitLap.duration  = mTimeCounter.getLapValueActive();
     fitLap.elapsed   = mTimeCounter.getLapValueTotal();
 
-    fitLap.hrAvg     = mHrCounter.getLapAverage();
-    fitLap.hrMax     = mHrCounter.getLapMaximum();
-    fitLap.calories  = mTrackData.lapCalories;
+    fitLap.hrAvg            = mHrCounter.getLapAverage();
+    fitLap.hrMax            = mHrCounter.getLapMaximum();
+    fitLap.calories         = mTrackData.lapCalories;
+    fitLap.restingCalories  = mTrackData.restingCaloriesLap;
 
     mActivityWriter.addLap(fitLap);
     mTrackData.lapNum++;
@@ -671,6 +684,7 @@ void Service::saveLap()
     mTrackData.avgLapHR = 0.0f;
     mTrackData.maxLapHR = 0.0f;
     mTrackData.lapCalories = 0.0f;
+    mTrackData.restingCaloriesLap = 0.0f;
 
     mLapNotEmpty = false;
 }
@@ -721,9 +735,10 @@ void Service::stopTrack(bool discard)
         fitTrack.duration  = mTimeCounter.getValueActive();
         fitTrack.elapsed   = mTimeCounter.getValueTotal();
 
-        fitTrack.hrAvg     = mHrCounter.getAverage();
-        fitTrack.hrMax     = mHrCounter.getMaximum();
-        fitTrack.calories  = mTrackData.totalCalories;
+        fitTrack.hrAvg              = mHrCounter.getAverage();
+        fitTrack.hrMax              = mHrCounter.getMaximum();
+        fitTrack.calories           = mTrackData.totalCalories;
+        fitTrack.metabolicCalories  = mTrackData.restingCaloriesTotal;
 
         mActivityWriter.stop(fitTrack);
 

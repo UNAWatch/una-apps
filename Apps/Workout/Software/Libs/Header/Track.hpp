@@ -47,6 +47,10 @@ struct Data {
     uint8_t hrZone         = 0;   ///< 0 = none, 1..5 = active zone
     float totalCalories    = 0.0f;
     float lapCalories      = 0.0f;
+    /// Basal (BMR) calories accumulated at MET 1.0 every active second, regardless of HR.
+    /// Reported in the FIT file as session "metabolic_calories" / lap "resting_calories".
+    float restingCaloriesTotal = 0.0f;
+    float restingCaloriesLap   = 0.0f;
     std::time_t zoneTimeSec[5] = {0, 0, 0, 0, 0}; ///< cumulative time in zones 1..5
 };
 

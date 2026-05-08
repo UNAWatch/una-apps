@@ -37,6 +37,7 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
     , mFHRecord(static_cast<uint8_t>(MsgNumber::RECORD), fit_mesg_defs[FIT_MESG_RECORD])
     , mFHBatteryLevelField(static_cast<uint8_t>(MsgNumber::BATTERY_LEVEL), 2, { &mFHRecord })
     , mFHBatteryVoltageField(static_cast<uint8_t>(MsgNumber::BATTERY_VOLTAGE), 3, { &mFHRecord })
+    , mFHLapRestingCaloriesField(static_cast<uint8_t>(MsgNumber::LAP_RESTING_CALORIES), 4, { &mFHLap })
 {
     assert(pathToDir != nullptr);
 
@@ -63,7 +64,8 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
                       FIT_SESSION_FIELD_NUM_SUB_SPORT,
                       FIT_SESSION_FIELD_NUM_AVG_HEART_RATE,
                       FIT_SESSION_FIELD_NUM_MAX_HEART_RATE,
-                      FIT_SESSION_FIELD_NUM_TOTAL_CALORIES });
+                      FIT_SESSION_FIELD_NUM_TOTAL_CALORIES,
+                      FIT_SESSION_FIELD_NUM_METABOLIC_CALORIES });
 
     mFHEvent.init({ FIT_EVENT_FIELD_NUM_TIMESTAMP,
                     FIT_EVENT_FIELD_NUM_EVENT,
@@ -88,6 +90,12 @@ ActivityWriter::ActivityWriter(const SDK::Kernel& kernel, const char* pathToDir)
                                   FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
                                   FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
                                   FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
+
+    mFHLapRestingCaloriesField.init({ FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_NAME,
+                                      FIT_FIELD_DESCRIPTION_FIELD_NUM_UNITS,
+                                      FIT_FIELD_DESCRIPTION_FIELD_NUM_DEVELOPER_DATA_INDEX,
+                                      FIT_FIELD_DESCRIPTION_FIELD_NUM_FIELD_DEFINITION_NUMBER,
+                                      FIT_FIELD_DESCRIPTION_FIELD_NUM_FIT_BASE_TYPE_ID });
 }
 
 void ActivityWriter::start(const AppInfo& info)
@@ -158,6 +166,19 @@ void ActivityWriter::start(const AppInfo& info)
         battVoltage.field_definition_number = mFHBatteryVoltageField.getFieldID();
         battVoltage.fit_base_type_id        = FIT_BASE_TYPE_UINT16;
         mFHBatteryVoltageField.writeMessage(&battVoltage, fp);
+
+        // Field 2: lap-level "resting calories" (BMR over the lap, kcal).
+        // Kept as a developer field because resting_calories is not part of the
+        // public FIT Profile (session metabolic_calories below is, and lives on
+        // the session message as a native field instead).
+        mFHLapRestingCaloriesField.writeDef(fp);
+        FIT_FIELD_DESCRIPTION_MESG lapRestingCalories{};
+        strncpy(lapRestingCalories.field_name, "resting_calories", FIT_FIELD_DESCRIPTION_MESG_FIELD_NAME_COUNT - 1);
+        strncpy(lapRestingCalories.units, "kcal", FIT_FIELD_DESCRIPTION_MESG_UNITS_COUNT - 1);
+        lapRestingCalories.developer_data_index    = 0;
+        lapRestingCalories.field_definition_number = mFHLapRestingCaloriesField.getFieldID();
+        lapRestingCalories.fit_base_type_id        = FIT_BASE_TYPE_UINT16;
+        mFHLapRestingCaloriesField.writeMessage(&lapRestingCalories, fp);
     }
 
     mFHEvent.writeDef(fp);
@@ -255,6 +276,10 @@ void ActivityWriter::addLap(const LapData& lap)
 
     mFHLap.writeMessage(&lap_mesg, fp);
 
+    // Developer field: lap resting (BMR) calories, kcal.
+    const FIT_UINT16 restingCalories = static_cast<FIT_UINT16>(lap.restingCalories + 0.5f);
+    mFHLap.writeFieldMessage(0, &restingCalories, fp);
+
     mLapCounter++;
 }
 
@@ -280,9 +305,10 @@ void ActivityWriter::stop(const TrackData& track)
         session_mesg.total_elapsed_time = static_cast<FIT_UINT32>(track.elapsed * 1000);  // 1000 * s + 0, Time (includes pauses)
         session_mesg.total_timer_time = static_cast<FIT_UINT32>(track.duration * 1000);   // 1000 * s + 0, Timer Time (excludes pauses)
 
-        session_mesg.avg_heart_rate = static_cast<FIT_UINT8>(track.hrAvg);   // 1 * bpm + 0, average heart rate (excludes pause time)
-        session_mesg.max_heart_rate = static_cast<FIT_UINT8>(track.hrMax);   // 1 * bpm + 0,
-        session_mesg.total_calories = static_cast<FIT_UINT16>(track.calories + 0.5f); // 1 * kcal + 0
+        session_mesg.avg_heart_rate     = static_cast<FIT_UINT8>(track.hrAvg);   // 1 * bpm + 0, average heart rate (excludes pause time)
+        session_mesg.max_heart_rate     = static_cast<FIT_UINT8>(track.hrMax);   // 1 * bpm + 0,
+        session_mesg.total_calories     = static_cast<FIT_UINT16>(track.calories + 0.5f);          // 1 * kcal + 0
+        session_mesg.metabolic_calories = static_cast<FIT_UINT16>(track.metabolicCalories + 0.5f); // 1 * kcal + 0, BMR over the session
 
         session_mesg.num_laps = mLapCounter;
 

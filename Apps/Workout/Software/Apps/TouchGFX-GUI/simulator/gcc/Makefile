@@ -38,10 +38,10 @@ Libs/Source/Simulator/Kernel/Mock/Vibro.cpp\
 Libs/Source/UnaLogger/Logger.cpp\
 Libs/Source/Wrappers/StdLibWrappers.c\
 ThirdParty/coreJSON/source/core_json.c\
-ThirdParty/FitSDKRelease_21.171.00/c/fit.c\
-ThirdParty/FitSDKRelease_21.171.00/c/fit_convert.c\
-ThirdParty/FitSDKRelease_21.171.00/c/fit_crc.c\
-ThirdParty/FitSDKRelease_21.171.00/c/fit_product.c\
+ThirdParty/FitSDKRelease_21.202.00/c/fit.c\
+ThirdParty/FitSDKRelease_21.202.00/c/fit_convert.c\
+ThirdParty/FitSDKRelease_21.202.00/c/fit_crc.c\
+ThirdParty/FitSDKRelease_21.202.00/c/fit_product.c\
 Libs/Source/JSON/JsonStreamReader.cpp\
 Libs/Source/JSON/JsonStreamWriter.cpp\
 Libs/Source/TrackMap/TrackMapBuilder.cpp\
@@ -88,7 +88,7 @@ ADDITIONAL_SOURCES :=
 ADDITIONAL_INCLUDE_PATHS := $(SDK)/Libs/Header\
 ../../Libs/Header\
 $(SDK)/ThirdParty/coreJSON/source/include\
-$(SDK)/ThirdParty/FitSDKRelease_21.171.00/c\
+$(SDK)/ThirdParty/FitSDKRelease_21.202.00/c\
 ADDITIONAL_LIBRARY_PATHS := 
 ADDITIONAL_LIBRARIES :=
 
