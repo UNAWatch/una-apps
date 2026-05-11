@@ -6,7 +6,7 @@
 /**
  * @brief Summary face showing heart rate summary: peak and average HR over the session.
  *
- * One of four swipeable faces on the TrackSummary screen.
+ * One of the swipeable faces on the TrackSummary screen.
  */
 class SummaryFaceHeartRate : public SummaryFaceHeartRateBase
 {

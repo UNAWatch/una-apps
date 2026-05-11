@@ -5,6 +5,12 @@
   </Languages>
   <Texts>
     <TextGroup Id="Template">
+      <Text Id="ResourceId17" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">TOTAL KCAL</Translation>
+      </Text>
+      <Text Id="ResourceId16" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">ACTIVE KCAL</Translation>
+      </Text>
       <Text Id="ResourceId14" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">New Text</Translation>
       </Text>
@@ -339,6 +345,24 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="ResourceId15" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">RESTING KCAL</Translation>
+      </Text>
+      <Text Id="__SingleUse_M1HM" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">1301</Translation>
+      </Text>
+      <Text Id="__SingleUse_IYCO" Alignment="Left" TypographyId="Poppins_SemiBold_30">
+        <Translation Language="GB">10:05:49</Translation>
+      </Text>
+      <Text Id="__SingleUse_0SLK" Alignment="Center" TypographyId="Poppins_Medium_18">
+        <Translation Language="GB">&lt;&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_5LBG" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">133</Translation>
+      </Text>
+      <Text Id="__SingleUse_WFDB" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">1145</Translation>
+      </Text>
       <Text Id="__SingleUse_FZIH" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">Do you want&#10;to discard&#10;the activity?</Translation>
       </Text>

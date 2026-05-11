@@ -27,6 +27,10 @@ TrackSummaryViewBase::TrackSummaryViewBase()
     summaryFaceHeartRate.setVisible(false);
     add(summaryFaceHeartRate);
 
+    summaryFaceCal.setXY(0, 0);
+    summaryFaceCal.setVisible(false);
+    add(summaryFaceCal);
+
     summaryFaceOverview.setXY(0, 0);
     add(summaryFaceOverview);
 }
@@ -42,6 +46,7 @@ void TrackSummaryViewBase::setupScreen()
     scrollIndicator.initialize();
     summaryFaceLaps.initialize();
     summaryFaceHeartRate.initialize();
+    summaryFaceCal.initialize();
     summaryFaceOverview.initialize();
     transitionBegins();
 }

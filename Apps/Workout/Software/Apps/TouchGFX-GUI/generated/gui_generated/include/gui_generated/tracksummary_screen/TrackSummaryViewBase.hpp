@@ -12,6 +12,7 @@
 #include <gui/containers/ScrollIndicator.hpp>
 #include <gui/containers/SummaryFaceLaps.hpp>
 #include <gui/containers/SummaryFaceHeartRate.hpp>
+#include <gui/containers/SummaryFaceCal.hpp>
 #include <gui/containers/SummaryFaceOverview.hpp>
 
 class TrackSummaryViewBase : public touchgfx::View<TrackSummaryPresenter>
@@ -35,6 +36,7 @@ protected:
     ScrollIndicator scrollIndicator;
     SummaryFaceLaps summaryFaceLaps;
     SummaryFaceHeartRate summaryFaceHeartRate;
+    SummaryFaceCal summaryFaceCal;
     SummaryFaceOverview summaryFaceOverview;
 
 private:

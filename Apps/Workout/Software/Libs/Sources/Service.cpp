@@ -695,7 +695,10 @@ void Service::buildPartialSummary()
     mSummary.time      = mTimeCounter.getValueActive();
     mSummary.hrMax     = mHrCounter.getMaximum();
     mSummary.hrAvg     = mHrCounter.getAverage();
-    mSummary.calories  = mTrackData.totalCalories;
+    mSummary.calories         = mTrackData.totalCalories;
+    mSummary.restingCalories  = mTrackData.restingCaloriesTotal;
+    mSummary.activeCalories   = std::fmax(0.0f,
+        mTrackData.totalCalories - mTrackData.restingCaloriesTotal);
 }
 
 void Service::stopTrack(bool discard)

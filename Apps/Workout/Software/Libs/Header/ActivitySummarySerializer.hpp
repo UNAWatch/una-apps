@@ -15,6 +15,8 @@
  *     "hr_max":84,
  *     "hr_avg":74,
  *     "calories":42.5,
+ *     "resting_calories":12.0,
+ *     "active_calories":30.5,
  *     "lap_count":2,
  *     "laps":[
  *         {"dur":62,"hr_avg":120,"hr_max":135},
