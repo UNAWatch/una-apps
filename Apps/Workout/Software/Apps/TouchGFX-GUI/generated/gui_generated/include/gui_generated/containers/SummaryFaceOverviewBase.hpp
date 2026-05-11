@@ -6,10 +6,10 @@
 
 #include <gui/common/FrontendApplication.hpp>
 #include <touchgfx/containers/Container.hpp>
+#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/canvas/Line.hpp>
 #include <touchgfx/widgets/canvas/PainterABGR2222.hpp>
-#include <touchgfx/widgets/Image.hpp>
 #include <gui/containers/Title.hpp>
 
 class SummaryFaceOverviewBase : public touchgfx::Container
@@ -27,8 +27,9 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::TextAreaWithOneWildcard caloriesValue;
-    touchgfx::TextAreaWithOneWildcard caloriesText;
+    touchgfx::Image heartIcon;
+    touchgfx::TextAreaWithOneWildcard maxHRValue;
+    touchgfx::TextAreaWithOneWildcard maxHRText;
     touchgfx::Line line2;
     touchgfx::PainterABGR2222 line2Painter;
     touchgfx::TextAreaWithOneWildcard avgHRValue;
@@ -42,10 +43,10 @@ protected:
     /*
      * Wildcard Buffers
      */
-    static const uint16_t CALORIESVALUE_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar caloriesValueBuffer[CALORIESVALUE_SIZE];
-    static const uint16_t CALORIESTEXT_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar caloriesTextBuffer[CALORIESTEXT_SIZE];
+    static const uint16_t MAXHRVALUE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar maxHRValueBuffer[MAXHRVALUE_SIZE];
+    static const uint16_t MAXHRTEXT_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar maxHRTextBuffer[MAXHRTEXT_SIZE];
     static const uint16_t AVGHRVALUE_SIZE = 10;
     touchgfx::Unicode::UnicodeChar avgHRValueBuffer[AVGHRVALUE_SIZE];
     static const uint16_t AVGHRTEXT_SIZE = 10;
