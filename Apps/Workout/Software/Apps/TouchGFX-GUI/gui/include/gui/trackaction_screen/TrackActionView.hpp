@@ -18,8 +18,6 @@ public:
     void setUnitsImperial(bool isImperial);
     void setTimer(std::time_t sec);
     void setCalories(float calories);
-    void setZoneTimes(const std::time_t zoneTimes[5]);
-    void setCurrentZone(uint8_t zone);
     void setAvgHR(float hr);
 
 protected:
@@ -28,8 +26,6 @@ protected:
     bool mIsImperial = false;
 
     float mCalories      = 0.0f;
-    std::time_t mZoneTotalSec = 0;
-    uint8_t mCurrentZone = 0;
     float mAvgHr         = 0.0f;
 
     ItemLayout mItemLayout {};

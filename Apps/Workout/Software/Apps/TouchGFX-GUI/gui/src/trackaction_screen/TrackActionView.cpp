@@ -30,7 +30,7 @@ void TrackActionView::setupScreen()
 
     infoCarousel.setPeriod(kTrackTitleInfoSwitchPeriod);
     infoCarousel.setUpdateCallback(mCarouselCb);
-    infoCarousel.setCount(4);   // fires onCarouselUpdate(0) immediately
+    infoCarousel.setCount(2);   // fires onCarouselUpdate(0) immediately
 
     menuLayout.invalidate();
 }
@@ -66,21 +66,6 @@ void TrackActionView::setTimer(std::time_t sec)
 void TrackActionView::setCalories(float calories)
 {
     mCalories = calories;
-    infoCarousel.refresh();
-}
-
-void TrackActionView::setZoneTimes(const std::time_t zoneTimes[5])
-{
-    mZoneTotalSec = 0;
-    for (uint8_t i = 0; i < 5; ++i) {
-        mZoneTotalSec += zoneTimes[i];
-    }
-    infoCarousel.refresh();
-}
-
-void TrackActionView::setCurrentZone(uint8_t zone)
-{
-    mCurrentZone = zone;
     infoCarousel.refresh();
 }
 
@@ -134,11 +119,6 @@ void TrackActionView::onCarouselUpdate(int16_t index)
     switch (index) {
 
     case 0:
-        infoCarousel.setTitle(T_TEXT_TOTAL);
-        Unicode::snprintfFloat(buf, kBufSize, "%.0f", mCalories);
-        break;
-
-    case 1:
         infoCarousel.setTitle(T_TEXT_AVG_DOT_HR);
         if (mAvgHr < App::Display::kMinHR) {
             Unicode::snprintf(buf, kBufSize, "---");
@@ -147,17 +127,9 @@ void TrackActionView::onCarouselUpdate(int16_t index)
         }
         break;
 
-    case 2:
-        infoCarousel.setTitle(T_TEXT_TIME_UC);
-        {
-            auto hms = SDK::Utils::toHMS(mZoneTotalSec);
-            Unicode::snprintf(buf, kBufSize, "%u:%02u", hms.h, hms.m);
-        }
-        break;
-
-    case 3:
-        infoCarousel.setTitle(T_TEXT_HR_UC);
-        Unicode::snprintf(buf, kBufSize, "%u", mCurrentZone);
+    case 1:
+        infoCarousel.setTitle(T_TEXT_CALORIE_UC);
+        Unicode::snprintfFloat(buf, kBufSize, "%.0f", mCalories);
         break;
 
     default:

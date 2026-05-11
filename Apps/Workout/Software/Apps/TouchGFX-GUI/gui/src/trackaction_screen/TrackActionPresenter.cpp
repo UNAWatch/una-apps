@@ -28,8 +28,6 @@ void TrackActionPresenter::onTrackData(const Track::Data& data)
 {
     view.setTimer(data.totalTime);
     view.setCalories(data.totalCalories);
-    view.setZoneTimes(data.zoneTimeSec);
-    view.setCurrentZone(data.hrZone);
     view.setAvgHR(data.avgHR);
 }
 
