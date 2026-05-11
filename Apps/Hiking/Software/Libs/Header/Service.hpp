@@ -78,7 +78,7 @@ private:
     SDK::Filter::SimpleLPF                              mAltitudeFilter;
     SDK::Metric::DeltaCounter                           mAltitudeCounter;
     SDK::Metric::ResettableMonotonicCounter<uint32_t>   mStepCounter;
-    SDK::Metric::MonotonicCounter<uint32_t>             mFloorCounter;
+    SDK::Metric::ResettableMonotonicCounter<uint32_t>   mFloorCounter;
 
     SDK::Metric::ThrottledSample<float, SDK::Interface::ISystem> mBatterySoc;     ///< State of charge, percent
     SDK::Metric::ThrottledSample<float, SDK::Interface::ISystem> mBatteryVoltage; ///< Voltage, volts
