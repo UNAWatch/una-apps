@@ -61,6 +61,8 @@ bool ActivitySummarySerializer::save(const ActivitySummary& summary)
     writer.add("hr_max", summary.hrMax);
     writer.add("hr_avg", summary.hrAvg);
     writer.add("calories", summary.calories);
+    writer.add("resting_calories", summary.restingCalories);
+    writer.add("active_calories", summary.activeCalories);
 
     writer.add("lap_count", static_cast<uint32_t>(summary.laps.size()));
     writer.startArray("laps");
@@ -152,6 +154,15 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
     reader.get("hr_avg", summary.hrAvg);
     summary.calories = 0.0f;
     reader.get("calories", summary.calories);
+
+    summary.restingCalories = 0.0f;
+    summary.activeCalories  = 0.0f;
+    const bool hasRestingCal = reader.get("resting_calories", summary.restingCalories);
+    const bool hasActiveCal  = reader.get("active_calories", summary.activeCalories);
+    // Older summaries only stored total "calories"; treat it as active for the split UI.
+    if (!hasRestingCal && !hasActiveCal && summary.calories > 0.0f) {
+        summary.activeCalories = summary.calories;
+    }
 
     // Laps
     uint32_t lapCount = 0;

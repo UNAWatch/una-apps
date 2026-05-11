@@ -156,6 +156,8 @@
     <ClCompile Include="..\..\generated\gui_generated\src\containers\LapListItemBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\MainMenuBackground.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\MainMenuBackgroundBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\SummaryFaceCal.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\SummaryFaceCalBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml"/>
@@ -459,6 +461,8 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\LapListItemBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\MainMenuBackground.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MainMenuBackgroundBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\SummaryFaceCal.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SummaryFaceCalBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc"/>

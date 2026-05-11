@@ -18,9 +18,10 @@ public:
 
 protected:
     enum Face : uint8_t {
-        FACE_OVERVIEW  = 0,
-        FACE_HEARTRATE = 1,
-        FACE_LAPS      = 2,
+        FACE_OVERVIEW   = 0,
+        FACE_CALORIES   = 1,
+        FACE_HEARTRATE  = 2,
+        FACE_LAPS       = 3,
     };
 
     uint8_t mCurrentFace    = FACE_OVERVIEW;

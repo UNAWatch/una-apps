@@ -15,7 +15,7 @@ void TrackSummaryView::setupScreen()
     buttons.setR2(Buttons::NONE);
 
     scrollIndicator.setConfig(ScrollIndicator::kSmall);
-    scrollIndicator.setCount(2);
+    scrollIndicator.setCount(3);
     scrollIndicator.setActiveId(FACE_OVERVIEW);
 
     mCurrentFace = FACE_OVERVIEW;
@@ -34,12 +34,18 @@ void TrackSummaryView::setSummary(const ActivitySummary& s, bool isPaused)
     summaryFaceOverview.setTotalTime(s.time);
     summaryFaceOverview.setAvgHR(s.hrAvg);
     summaryFaceOverview.setMaxHR(s.hrMax);
+
+    summaryFaceCal.setTotalTime(s.time);
+    summaryFaceCal.setTotalCalories(s.calories);
+    summaryFaceCal.setActiveCalories(s.activeCalories);
+    summaryFaceCal.setRestingCalories(s.restingCalories);
+
     summaryFaceHeartRate.setMaxHR(s.hrMax);
     summaryFaceHeartRate.setAvgHR(s.hrAvg);
 
     summaryFaceLaps.setLaps(s.laps);
     mLapsPageCount = summaryFaceLaps.getPageCount();
-    scrollIndicator.setCount(2 + mLapsPageCount);
+    scrollIndicator.setCount(3 + mLapsPageCount);
 
     if (isPaused) {
         buttons.setR1(Buttons::NONE);
@@ -53,10 +59,12 @@ void TrackSummaryView::setSummary(const ActivitySummary& s, bool isPaused)
 void TrackSummaryView::updateFace()
 {
     summaryFaceOverview.setVisible(mCurrentFace == FACE_OVERVIEW);
+    summaryFaceCal.setVisible(mCurrentFace == FACE_CALORIES);
     summaryFaceHeartRate.setVisible(mCurrentFace == FACE_HEARTRATE);
     summaryFaceLaps.setVisible(mCurrentFace == FACE_LAPS);
 
     summaryFaceOverview.invalidate();
+    summaryFaceCal.invalidate();
     summaryFaceHeartRate.invalidate();
     summaryFaceLaps.invalidate();
 

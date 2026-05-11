@@ -35,7 +35,12 @@ struct ActivitySummary {
     time_t time;        ///< Total track time in seconds
     float hrMax;        ///< Maximum Heart Rate in bpm
     float hrAvg;        ///< Average Heart Rate in bpm
-    float calories;     ///< Estimated total energy expenditure (kcal)
+    /// Total energy (kcal): zone-weighted MET model including MET 1.0 when HR is out of zone.
+    float calories = 0.0f;
+    /// Basal (BMR) component at MET 1.0 every active second (matches FIT session metabolic_calories).
+    float restingCalories = 0.0f;
+    /// Calories above basal from the zone MET model: @c calories - @c restingCalories (clamped >= 0).
+    float activeCalories = 0.0f;
 
     std::vector<LapSummary> laps; ///< Per-lap summary data
 };
