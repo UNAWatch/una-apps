@@ -815,12 +815,11 @@
           },
           {
             "Type": "CustomContainerInstance",
-            "Name": "summaryFaceHeartRate",
+            "Name": "summaryFaceZones",
             "Width": 240,
             "Height": 240,
             "Visible": false,
-            "LockPosition": true,
-            "CustomContainerDefinitionName": "SummaryFaceHeartRate"
+            "CustomContainerDefinitionName": "SummaryFaceZones"
           },
           {
             "Type": "CustomContainerInstance",
@@ -2421,6 +2420,7 @@
             "Y": 129,
             "Width": 77,
             "Height": 32,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_25",
             "TextRotation": "0",
             "Color": {
@@ -2441,6 +2441,7 @@
             "Y": 133,
             "Width": 91,
             "Height": 21,
+            "LockPosition": true,
             "TextId": "TMP_MEDIUM_18",
             "TextRotation": "0",
             "Color": {
@@ -2477,6 +2478,7 @@
             "Y": 175,
             "Width": 78,
             "Height": 32,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_25",
             "TextRotation": "0",
             "Color": {
@@ -2497,6 +2499,7 @@
             "Y": 179,
             "Width": 91,
             "Height": 23,
+            "LockPosition": true,
             "TextId": "__SingleUse_Q39K",
             "TextRotation": "0",
             "Color": {
@@ -2563,134 +2566,168 @@
             "X": 50,
             "Width": 140,
             "Height": 41,
+            "LockPosition": true,
             "CustomContainerDefinitionName": "Title"
           }
         ],
         "Interactions": []
       },
       {
-        "Name": "SummaryFaceHeartRate",
-        "Width": 240,
-        "Height": 240,
+        "Name": "ZoneInfo",
+        "Width": 180,
+        "Height": 20,
         "Components": [
           {
-            "Type": "TextArea",
-            "Name": "maxHrText",
-            "X": 81,
-            "Y": 118,
-            "Width": 78,
-            "Height": 25,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_20",
-            "TextRotation": "0",
+            "Type": "Line",
+            "Name": "background",
+            "X": 66,
+            "Width": 60,
+            "Height": 20,
             "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
+              "Red": 64,
+              "Green": 64,
+              "Blue": 64
             },
-            "Wildcard1": {
-              "TextId": "TEXT_MAX_HR_UC",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "maxHrValue",
-            "X": 70,
-            "Y": 77,
-            "Width": 100,
-            "Height": 51,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_40",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 192,
-              "Green": 192,
-              "Blue": 192
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_CMV2",
-              "UseBuffer": true,
-              "BufferSize": 10
-            }
+            "StartX": 6.0,
+            "StartY": 10.0,
+            "EndX": 48.0,
+            "EndY": 10.0,
+            "LineWidth": 11.0,
+            "LineEndingStyle": "Round"
           },
           {
             "Type": "Line",
-            "Name": "line",
-            "X": 25,
-            "Y": 147,
-            "Width": 190,
-            "Height": 3,
-            "LockPosition": true,
+            "Name": "bar",
+            "X": 66,
+            "Width": 60,
+            "Height": 20,
             "Color": {
-              "Green": 128,
-              "Blue": 128
+              "Red": 192
             },
-            "EndX": 190.0,
-            "LineWidth": 10.0,
+            "StartX": 6.0,
+            "StartY": 10.0,
+            "EndX": 26.0,
+            "EndY": 10.0,
+            "LineWidth": 11.0,
             "LineEndingStyle": "Round"
           },
           {
             "Type": "TextArea",
-            "Name": "avgHrText",
-            "X": 81,
-            "Y": 191,
-            "Width": 75,
-            "Height": 25,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_20",
+            "Name": "zoneText",
+            "Width": 9,
+            "Height": 20,
+            "TextId": "__SingleUse_RUD6",
             "TextRotation": "0",
             "Color": {
               "Red": 192,
               "Green": 192,
               "Blue": 192
             },
+            "AutoSize": true,
             "Wildcard1": {
-              "TextId": "TEXT_AVG_HR",
+              "TextId": "__SingleUse_AIE6",
+              "UseBuffer": true,
+              "BufferSize": 2
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "zoneTime",
+            "X": 135,
+            "Width": 41,
+            "Height": 20,
+            "TextId": "__SingleUse_F90O",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 192,
+              "Green": 192,
+              "Blue": 192
+            },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_X62D",
               "UseBuffer": true,
               "BufferSize": 10
             }
           },
           {
             "Type": "TextArea",
-            "Name": "avgHrValue",
-            "X": 70,
-            "Y": 150,
-            "Width": 100,
-            "Height": 51,
-            "LockPosition": true,
-            "TextId": "TMP_SEMIBOLD_40",
+            "Name": "zonePercent",
+            "X": 18,
+            "Width": 37,
+            "Height": 20,
+            "TextId": "__SingleUse_CRAK",
             "TextRotation": "0",
             "Color": {
-              "Red": 192,
               "Green": 192,
               "Blue": 192
             },
             "Wildcard1": {
-              "TextId": "__SingleUse_FMCS",
+              "TextId": "__SingleUse_LZ0O",
               "UseBuffer": true,
               "BufferSize": 10
             }
-          },
-          {
-            "Type": "Image",
-            "Name": "heartIcon",
-            "X": 105,
-            "Y": 48,
-            "Width": 30,
-            "Height": 30,
-            "LockPosition": true,
-            "RelativeFilename": "Heart_30x30.png"
-          },
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "SummaryFaceZones",
+        "Width": 240,
+        "Height": 240,
+        "Components": [
           {
             "Type": "CustomContainerInstance",
             "Name": "title",
             "X": 50,
             "Width": 140,
             "Height": 41,
-            "LockPosition": true,
             "CustomContainerDefinitionName": "Title"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "zoneInfo1",
+            "X": 29,
+            "Y": 154,
+            "Width": 180,
+            "Height": 20,
+            "CustomContainerDefinitionName": "ZoneInfo"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "zoneInfo2",
+            "X": 29,
+            "Y": 133,
+            "Width": 180,
+            "Height": 20,
+            "CustomContainerDefinitionName": "ZoneInfo"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "zoneInfo3",
+            "X": 29,
+            "Y": 112,
+            "Width": 180,
+            "Height": 20,
+            "CustomContainerDefinitionName": "ZoneInfo"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "zoneInfo4",
+            "X": 29,
+            "Y": 91,
+            "Width": 180,
+            "Height": 20,
+            "CustomContainerDefinitionName": "ZoneInfo"
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "zoneInfo5",
+            "X": 29,
+            "Y": 70,
+            "Width": 180,
+            "Height": 20,
+            "CustomContainerDefinitionName": "ZoneInfo"
           }
         ],
         "Interactions": []

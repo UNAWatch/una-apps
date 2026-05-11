@@ -699,6 +699,10 @@ void Service::buildPartialSummary()
     mSummary.restingCalories  = mTrackData.restingCaloriesTotal;
     mSummary.activeCalories   = std::fmax(0.0f,
         mTrackData.totalCalories - mTrackData.restingCaloriesTotal);
+
+    for (size_t i = 0; i < std::size(mSummary.zoneTimeSec); ++i) {
+        mSummary.zoneTimeSec[i] = mTrackData.zoneTimeSec[i];
+    }
 }
 
 void Service::stopTrack(bool discard)

@@ -64,6 +64,12 @@ bool ActivitySummarySerializer::save(const ActivitySummary& summary)
     writer.add("resting_calories", summary.restingCalories);
     writer.add("active_calories", summary.activeCalories);
 
+    writer.startArray("zone_times_sec");
+    for (const std::time_t sec : summary.zoneTimeSec) {
+        writer.add(static_cast<uint32_t>(sec));
+    }
+    writer.endArray();
+
     writer.add("lap_count", static_cast<uint32_t>(summary.laps.size()));
     writer.startArray("laps");
     for (const LapSummary& lap : summary.laps) {
@@ -162,6 +168,17 @@ bool ActivitySummarySerializer::load(ActivitySummary& summary)
     // Older summaries only stored total "calories"; treat it as active for the split UI.
     if (!hasRestingCal && !hasActiveCal && summary.calories > 0.0f) {
         summary.activeCalories = summary.calories;
+    }
+
+    // Zone times. Missing in pre-zones summaries -> leave zeros.
+    for (size_t i = 0; i < std::size(summary.zoneTimeSec); ++i) {
+        summary.zoneTimeSec[i] = 0;
+        char query[32];
+        snprintf(query, sizeof(query), "zone_times_sec[%zu]", i);
+        uint32_t sec = 0;
+        if (reader.get(query, sec)) {
+            summary.zoneTimeSec[i] = static_cast<std::time_t>(sec);
+        }
     }
 
     // Laps
