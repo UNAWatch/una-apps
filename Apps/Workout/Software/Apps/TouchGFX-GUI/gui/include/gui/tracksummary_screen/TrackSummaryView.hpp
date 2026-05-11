@@ -20,7 +20,7 @@ protected:
     enum Face : uint8_t {
         FACE_OVERVIEW   = 0,
         FACE_CALORIES   = 1,
-        FACE_HEARTRATE  = 2,
+        FACE_ZONES      = 2,
         FACE_LAPS       = 3,
     };
 

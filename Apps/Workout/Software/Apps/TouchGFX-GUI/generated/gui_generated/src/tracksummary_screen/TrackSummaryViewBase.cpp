@@ -23,9 +23,9 @@ TrackSummaryViewBase::TrackSummaryViewBase()
     summaryFaceLaps.setVisible(false);
     add(summaryFaceLaps);
 
-    summaryFaceHeartRate.setXY(0, 0);
-    summaryFaceHeartRate.setVisible(false);
-    add(summaryFaceHeartRate);
+    summaryFaceZones.setXY(0, 0);
+    summaryFaceZones.setVisible(false);
+    add(summaryFaceZones);
 
     summaryFaceCal.setXY(0, 0);
     summaryFaceCal.setVisible(false);
@@ -45,7 +45,7 @@ void TrackSummaryViewBase::setupScreen()
     buttons.initialize();
     scrollIndicator.initialize();
     summaryFaceLaps.initialize();
-    summaryFaceHeartRate.initialize();
+    summaryFaceZones.initialize();
     summaryFaceCal.initialize();
     summaryFaceOverview.initialize();
     transitionBegins();

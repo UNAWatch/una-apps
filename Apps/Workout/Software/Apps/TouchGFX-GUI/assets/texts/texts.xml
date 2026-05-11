@@ -345,6 +345,24 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_X62D" Alignment="Left" TypographyId="Poppins_Regular_16">
+        <Translation Language="GB">23:58</Translation>
+      </Text>
+      <Text Id="__SingleUse_AIE6" Alignment="Left" TypographyId="Poppins_Regular_16">
+        <Translation Language="GB">3</Translation>
+      </Text>
+      <Text Id="__SingleUse_LZ0O" Alignment="Left" TypographyId="Poppins_Regular_16">
+        <Translation Language="GB">100%</Translation>
+      </Text>
+      <Text Id="__SingleUse_CRAK" Alignment="Right" TypographyId="Poppins_Regular_16">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_F90O" Alignment="Left" TypographyId="Poppins_Regular_16">
+        <Translation Language="GB">&lt;&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_RUD6" Alignment="Center" TypographyId="Poppins_Regular_16">
+        <Translation Language="GB">&lt;&gt;</Translation>
+      </Text>
       <Text Id="ResourceId15" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">RESTING KCAL</Translation>
       </Text>
@@ -395,12 +413,6 @@
       </Text>
       <Text Id="__SingleUse_5T2E" Alignment="Left" TypographyId="Poppins_SemiBold_30">
         <Translation Language="GB">10:05:49</Translation>
-      </Text>
-      <Text Id="__SingleUse_CMV2" Alignment="Left" TypographyId="Poppins_SemiBold_30">
-        <Translation Language="GB">165</Translation>
-      </Text>
-      <Text Id="__SingleUse_FMCS" Alignment="Left" TypographyId="Poppins_SemiBold_30">
-        <Translation Language="GB">117</Translation>
       </Text>
       <Text Id="__SingleUse_XTK2" Alignment="Left" TypographyId="Poppins_Regular_18">
         <Translation Language="GB">566</Translation>

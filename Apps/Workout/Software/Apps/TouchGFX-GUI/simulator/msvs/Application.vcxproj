@@ -146,8 +146,6 @@
     <ClCompile Include="..\..\generated\gui_generated\src\containers\ScrollIndicatorBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\PauseIndicator.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\PauseIndicatorBase.cpp"/>
-    <ClCompile Include="..\..\gui\src\containers\SummaryFaceHeartRate.cpp"/>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\SummaryFaceHeartRateBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\SummaryFaceLaps.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\SummaryFaceLapsBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\SummaryFaceOverview.cpp"/>
@@ -158,6 +156,10 @@
     <ClCompile Include="..\..\generated\gui_generated\src\containers\MainMenuBackgroundBase.cpp"/>
     <ClCompile Include="..\..\gui\src\containers\SummaryFaceCal.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\SummaryFaceCalBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\SummaryFaceZones.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\SummaryFaceZonesBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\containers\ZoneInfo.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\containers\ZoneInfoBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xml"/>
@@ -451,8 +453,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ScrollIndicatorBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\PauseIndicator.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\PauseIndicatorBase.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\containers\SummaryFaceHeartRate.hpp"/>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SummaryFaceHeartRateBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\SummaryFaceLaps.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SummaryFaceLapsBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\SummaryFaceOverview.hpp"/>
@@ -463,6 +463,10 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\MainMenuBackgroundBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\containers\SummaryFaceCal.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SummaryFaceCalBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\SummaryFaceZones.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\SummaryFaceZonesBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\containers\ZoneInfo.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\ZoneInfoBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc"/>

@@ -42,6 +42,11 @@ struct ActivitySummary {
     /// Calories above basal from the zone MET model: @c calories - @c restingCalories (clamped >= 0).
     float activeCalories = 0.0f;
 
+    /// Cumulative seconds spent in HR zones 1..5 (0-indexed).
+    /// Active seconds with HR below the zone-1 threshold are NOT included here; the
+    /// HR-zones summary screen lumps them into the zone-1 row for display only.
+    std::time_t zoneTimeSec[5] = {0, 0, 0, 0, 0};
+
     std::vector<LapSummary> laps; ///< Per-lap summary data
 };
 

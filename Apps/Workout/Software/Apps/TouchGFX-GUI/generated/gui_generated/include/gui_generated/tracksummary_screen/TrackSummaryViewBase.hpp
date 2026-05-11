@@ -11,7 +11,7 @@
 #include <gui/containers/Buttons.hpp>
 #include <gui/containers/ScrollIndicator.hpp>
 #include <gui/containers/SummaryFaceLaps.hpp>
-#include <gui/containers/SummaryFaceHeartRate.hpp>
+#include <gui/containers/SummaryFaceZones.hpp>
 #include <gui/containers/SummaryFaceCal.hpp>
 #include <gui/containers/SummaryFaceOverview.hpp>
 
@@ -35,7 +35,7 @@ protected:
     Buttons buttons;
     ScrollIndicator scrollIndicator;
     SummaryFaceLaps summaryFaceLaps;
-    SummaryFaceHeartRate summaryFaceHeartRate;
+    SummaryFaceZones summaryFaceZones;
     SummaryFaceCal summaryFaceCal;
     SummaryFaceOverview summaryFaceOverview;
 

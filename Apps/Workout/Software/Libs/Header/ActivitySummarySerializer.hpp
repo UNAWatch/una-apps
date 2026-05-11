@@ -17,6 +17,7 @@
  *     "calories":42.5,
  *     "resting_calories":12.0,
  *     "active_calories":30.5,
+ *     "zone_times_sec":[12,34,56,78,9],
  *     "lap_count":2,
  *     "laps":[
  *         {"dur":62,"hr_avg":120,"hr_max":135},
