@@ -21,7 +21,7 @@ TrackDiscardConfirmationViewBase::TrackDiscardConfirmationViewBase()
     questionText.setPosition(35, 88, 170, 80);
     questionText.setColor(touchgfx::Color::getColorFromRGB(192, 192, 192));
     questionText.setLinespacing(-5);
-    questionTextBuffer[0] = 0;
+    Unicode::snprintf(questionTextBuffer, QUESTIONTEXT_SIZE, "%s", touchgfx::TypedText(T___SINGLEUSE_FZIH).getText());
     questionText.setWildcard(questionTextBuffer);
     questionText.setTypedText(touchgfx::TypedText(T_TMP_SEMIBOLD_20));
     add(questionText);
