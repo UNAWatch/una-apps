@@ -290,7 +290,7 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
         SDK::SensorDataParser::StepCounter parser(data[0]);
         if (parser.isDataValid()) {
             mStepCounter.add(parser.getStepCount());
-            LOG_DEBUG("Steps %u\n", parser.getStepCount());
+            LOG_INFO("Steps %u\n", parser.getStepCount());
         }
     } else if (mSensorFloorCounter.matchesDriver(handle)) {
         SDK::SensorDataParser::FloorCounter parser(data[0]);

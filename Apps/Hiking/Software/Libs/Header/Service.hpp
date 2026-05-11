@@ -8,6 +8,7 @@
 #include "SDK/TrackMap/TrackMapBuilder.hpp"
 #include "SDK/Metrics/MonotonicTime.hpp"
 #include "SDK/Metrics/MonotonicCounter.hpp"
+#include "SDK/Metrics/ResettableMonotonicCounter.hpp"
 #include "SDK/Metrics/VariableCounter.hpp"
 #include "SDK/Metrics/DeltaCounter.hpp"
 #include "SDK/Metrics/ThrottledSample.hpp"
@@ -76,7 +77,7 @@ private:
     SDK::Metric::VariableCounter                        mHrCounter;
     SDK::Filter::SimpleLPF                              mAltitudeFilter;
     SDK::Metric::DeltaCounter                           mAltitudeCounter;
-    SDK::Metric::MonotonicCounter<uint32_t>             mStepCounter;
+    SDK::Metric::ResettableMonotonicCounter<uint32_t>   mStepCounter;
     SDK::Metric::MonotonicCounter<uint32_t>             mFloorCounter;
 
     SDK::Metric::ThrottledSample<float, SDK::Interface::ISystem> mBatterySoc;     ///< State of charge, percent
