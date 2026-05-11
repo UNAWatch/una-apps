@@ -336,6 +336,9 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_FZIH" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">Do you want&#10;to discard&#10;the activity?</Translation>
+      </Text>
       <Text Id="__SingleUse_Q39K" Alignment="Center" TypographyId="Poppins_Medium_18">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
