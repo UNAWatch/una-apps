@@ -25,6 +25,10 @@ void MainMenu::setNumberOfItems(int16_t numberOfItems)
 {
     wheel.setNumberOfItems(numberOfItems);
     scrollIndicator.setCount(numberOfItems);
+    if (numberOfItems == 1) {
+        wheel.setCircular(false);
+        scrollIndicator.setVisible(false);
+    }
 }
 
 int16_t MainMenu::getNumberOfItems()
