@@ -36,7 +36,7 @@ private:
     static constexpr int16_t kIconX = 39;
     static constexpr int16_t kIconY = 25;
 
-    static constexpr int16_t kValueX = 65;
+    static constexpr int16_t kValueX = 70;
     static constexpr int16_t kValueY = 28;
     static constexpr int16_t kValueW = 100;
     static constexpr int16_t kValueH = 40;
