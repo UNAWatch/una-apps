@@ -31,8 +31,12 @@ void SummaryFaceOverview::setAvgHR(float hr)
     avgHRValue.invalidate();
 }
 
-void SummaryFaceOverview::setCalories(float kcal)
+void SummaryFaceOverview::setMaxHR(float hr)
 {
-    Unicode::snprintfFloat(caloriesValueBuffer, CALORIESVALUE_SIZE, "%.0f", kcal);
-    caloriesValue.invalidate();
+    if (hr < App::Display::kMinHR) {
+        Unicode::snprintf(maxHRValueBuffer, MAXHRVALUE_SIZE, "---");
+    } else {
+        Unicode::snprintfFloat(maxHRValueBuffer, MAXHRVALUE_SIZE, "%.0f", hr);
+    }
+    maxHRValue.invalidate();
 }

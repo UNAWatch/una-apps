@@ -5,6 +5,9 @@
   </Languages>
   <Texts>
     <TextGroup Id="Template">
+      <Text Id="ResourceId14" Alignment="Left" TypographyId="Poppins_Regular_18">
+        <Translation Language="GB">New Text</Translation>
+      </Text>
       <Text Id="ResourceId13" Alignment="Left" TypographyId="Poppins_Regular_16">
         <Translation Language="GB">New Text</Translation>
       </Text>

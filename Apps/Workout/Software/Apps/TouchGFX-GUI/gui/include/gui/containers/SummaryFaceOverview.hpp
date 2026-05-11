@@ -5,7 +5,7 @@
 #include <ctime>
 
 /**
- * @brief Summary face: session time (H:MM:SS), average HR, and total calories.
+ * @brief Summary face: session time (H:MM:SS), average HR, and max HR.
  *
  * One of the swipeable faces on the TrackSummary screen.
  * Label text widgets are expected to be set in TouchGFX Designer.
@@ -24,8 +24,8 @@ public:
     /** @brief Average heart rate (bpm), or "---" when below @ref App::Display::kMinHR. */
     void setAvgHR(float hr);
 
-    /** @brief Total calories (kcal), displayed as a whole number. */
-    void setCalories(float kcal);
+    /** @brief Maximum heart rate (bpm), or "---" when below @ref App::Display::kMinHR. */
+    void setMaxHR(float hr);
 
 protected:
 };

@@ -2190,10 +2190,20 @@
         "Height": 240,
         "Components": [
           {
+            "Type": "Image",
+            "Name": "heartIcon",
+            "X": 27,
+            "Y": 128,
+            "Width": 30,
+            "Height": 30,
+            "LockPosition": true,
+            "RelativeFilename": "Heart_30x30.png"
+          },
+          {
             "Type": "TextArea",
-            "Name": "caloriesValue",
+            "Name": "maxHRValue",
             "X": 135,
-            "Y": 173,
+            "Y": 129,
             "Width": 77,
             "Height": 32,
             "TextId": "TMP_SEMIBOLD_25",
@@ -2211,9 +2221,9 @@
           },
           {
             "Type": "TextArea",
-            "Name": "caloriesText",
-            "X": 43,
-            "Y": 179,
+            "Name": "maxHRText",
+            "X": 48,
+            "Y": 133,
             "Width": 91,
             "Height": 21,
             "TextId": "TMP_MEDIUM_18",
@@ -2224,7 +2234,7 @@
               "Blue": 192
             },
             "Wildcard1": {
-              "TextId": "TEXT_CALORIE_UC",
+              "TextId": "TEXT_MAX_HR_UC",
               "UseBuffer": true,
               "BufferSize": 10
             }
@@ -2249,10 +2259,9 @@
             "Type": "TextArea",
             "Name": "avgHRValue",
             "X": 132,
-            "Y": 127,
+            "Y": 175,
             "Width": 78,
             "Height": 32,
-            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_25",
             "TextRotation": "0",
             "Color": {
@@ -2269,11 +2278,10 @@
           {
             "Type": "TextArea",
             "Name": "avgHRText",
-            "X": 39,
-            "Y": 133,
-            "Width": 100,
-            "Height": 21,
-            "LockPosition": true,
+            "X": 48,
+            "Y": 179,
+            "Width": 91,
+            "Height": 23,
             "TextId": "__SingleUse_Q39K",
             "TextRotation": "0",
             "Color": {
@@ -2310,6 +2318,7 @@
             "Y": 60,
             "Width": 134,
             "Height": 35,
+            "LockPosition": true,
             "TextId": "TMP_SEMIBOLD_40",
             "TextRotation": "0",
             "Color": {

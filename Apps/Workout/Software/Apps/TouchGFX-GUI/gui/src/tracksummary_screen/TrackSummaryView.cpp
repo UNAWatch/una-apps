@@ -33,7 +33,7 @@ void TrackSummaryView::setSummary(const ActivitySummary& s, bool isPaused)
 
     summaryFaceOverview.setTotalTime(s.time);
     summaryFaceOverview.setAvgHR(s.hrAvg);
-    summaryFaceOverview.setCalories(s.calories);
+    summaryFaceOverview.setMaxHR(s.hrMax);
     summaryFaceHeartRate.setMaxHR(s.hrMax);
     summaryFaceHeartRate.setAvgHR(s.hrAvg);
 
