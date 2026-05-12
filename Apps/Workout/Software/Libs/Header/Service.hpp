@@ -36,7 +36,7 @@ private:
 
     static constexpr uint32_t skBatteryLogPeriodMs   = 5 * 60 * 1000;
     static constexpr float    skFusionSampleRateHz   = 100.0f;
-    static constexpr float    skDefaultWeightKg      = 75.0f; ///< Fixed indoor-workout estimate until user profile weight is wired in.
+    static constexpr float    skDefaultWeightKg      = 75.0f; ///< Fallback when the system profile weight is absent or zero.
 
     // -- Infrastructure -------------------------------------------------------
 
@@ -79,6 +79,7 @@ private:
     SDK::Metric::ThrottledSample<float, SDK::Interface::ISystem> mBatteryVoltage; ///< Voltage, volts
 
     float mSeaLevelPressure = 0.0f; // Pa
+    float mWeightKg = skDefaultWeightKg;  ///< From system profile; falls back to skDefaultWeightKg.
     std::array<uint8_t, CustomMessage::kHrThresholdsCount> mHrThresholds = {};
     uint8_t mHrThresholdCount = 0;
 

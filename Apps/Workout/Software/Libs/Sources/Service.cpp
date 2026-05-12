@@ -496,6 +496,10 @@ void Service::sendInitialInfoToGui()
         if (msg.send(100) && msg.ok()) {
             mIsImperial = msg->imperialUnits;
 
+            if (msg->weightKg > 0.0f) {
+                mWeightKg = msg->weightKg;
+            }
+
             if (msg->heartRateCount > CustomMessage::kHrThresholdsCount) {
                 msg->heartRateCount = CustomMessage::kHrThresholdsCount;
             }
@@ -626,14 +630,14 @@ void Service::updateHrDerivedMetrics()
     // Basal metabolic rate accrues every active second regardless of HR.
     // Surfaced as session "metabolic_calories" / lap "resting_calories" in the FIT file.
     static constexpr float kRestingMet = 1.0f;
-    const float restingKcal = kRestingMet * skDefaultWeightKg * (1.0f / 3600.0f);
+    const float restingKcal = kRestingMet * mWeightKg * (1.0f / 3600.0f);
     mTrackData.restingCaloriesTotal += restingKcal;
     mTrackData.restingCaloriesLap   += restingKcal;
 
     // Active calories: zone-MET when HR is in a zone; BMR fallback otherwise
     // (HR below zone 1 or no valid HR sample yet).
     const float met = (mTrackData.hrZone == 0) ? kRestingMet : getZoneMet(mTrackData.hrZone);
-    const float calories = met * skDefaultWeightKg * (1.0f / 3600.0f);
+    const float calories = met * mWeightKg * (1.0f / 3600.0f);
     mTrackData.totalCalories += calories;
     mTrackData.lapCalories   += calories;
 
