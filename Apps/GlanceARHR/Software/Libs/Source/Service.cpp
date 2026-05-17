@@ -12,19 +12,16 @@
 #include "SDK/SensorLayer/DataParsers/SensorDataParserHeartRateMetrics.hpp"
 #include "SDK/SensorLayer/SensorDataBatch.hpp"
 
-#include "icon_60x60.h"
-#include "icon_30x30.h"
-
 Service::Service(SDK::Kernel &kernel)
     : mKernel(kernel)
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValueAHR()
     , mGlanceValueRHR()
-    , mSensorHRMetrics(SDK::Sensor::Type::HEART_RATE_METRICS)
-    , mAHRValue(0)
-    , mRHRValue(0)
-    , mIsValid(false)
+    , mSensorHRMetrics(SDK::Sensor::Type::HEART_RATE_METRICS_DAILY)
+    , mAvgHrValue(0)
+    , mRestHrValue(0)
+    , mDataReceived(false)
 {
 }
 
@@ -107,16 +104,30 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
     if (mSensorHRMetrics.matchesDriver(handle)) {
         SDK::SensorDataParser::HeartRateMetrics p(data[0]);
-        mAHRValue = p.getAhr();
-        mRHRValue = p.getRhr();
-        glanceUpdate();
+
+        if (!p.isDataValid()) {
+            return;
+        }
+
+        float newAHRValue = p.getAhr();
+        float newRHRValue = p.getRhr();
+
+        LOG_DEBUG("AHR: %.1f, RHR: %.1f\n", newAHRValue, newRHRValue);
+
+        if ((static_cast<uint32_t>(newAHRValue) != mAvgHrValue) ||
+            (static_cast<uint32_t>(newRHRValue) != mRestHrValue) ||
+            !mDataReceived)
+        {
+            mDataReceived = true;
+            mAvgHrValue = static_cast<uint32_t>(newAHRValue);
+            mRestHrValue = static_cast<uint32_t>(newRHRValue);
+            glanceUpdate();
+        }
     }
 }
 
 void Service::onGlanceTick()
 {
-    //LOG_DEBUG("Glance tick\n");
-
     if (mGlanceUI.isInvalid()) {
         if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
             upd->name           = APP_NAME;
@@ -128,7 +139,7 @@ void Service::onGlanceTick()
         mGlanceUI.setValid();
    }
 }
-//"240X60"
+
 bool Service::configGui()
 {
     bool status = false;
@@ -148,19 +159,12 @@ bool Service::configGui()
 
 void Service::glanceUpdate()
 {
-    mGlanceValueAHR.print("%.0f", mAHRValue);
-    mGlanceValueRHR.print("%.0f", mRHRValue);
+    mGlanceValueAHR.print("%u", mAvgHrValue);
+    mGlanceValueRHR.print("%u", mRestHrValue);
 }
 
 void Service::createGuiControls()
 {
-    // |-------------|
-    // | AHR / R HR  |
-    // |------|------|
-    // |  v   |  v   |
-    // |-------------|
-
-
     mGlanceTitle = mGlanceUI.createText();
 
     mGlanceTitle
@@ -178,7 +182,8 @@ void Service::createGuiControls()
         .pos({ kValueAHRX, kValueAHRY }, { kValueAHRW, kValueAHRH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER)
+        .setText("---");
 
 
 
@@ -188,5 +193,6 @@ void Service::createGuiControls()
         .pos({ kValueRHRX, kValueRHRY }, { kValueRHRW, kValueRHRH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER)
+        .setText("---");
 }

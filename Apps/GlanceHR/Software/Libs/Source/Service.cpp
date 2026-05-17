@@ -20,7 +20,7 @@ Service::Service(SDK::Kernel &kernel)
     , mIcon()
     , mSensorHR(SDK::Sensor::Type::HEART_RATE)
     , mHrValue(0)
-    , mIsValid(false)
+    , mOutFormat(OutFormat::NONE)
 {
 }
 
@@ -103,10 +103,17 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
     if (mSensorHR.matchesDriver(handle)) {
         SDK::SensorDataParser::HeartRate p(data[0]);
+
+        if (!p.isDataValid()) {
+            return;
+        }
+
         float newValue = p.getBpm();
-        LOG_DEBUG("hr = %.2f\n", newValue);
-        if (static_cast<uint32_t>(newValue) != static_cast<uint32_t>(mHrValue)) {
-            mHrValue = newValue;
+
+        LOG_DEBUG("HR: %.1f\n", newValue);
+
+        if (static_cast<uint32_t>(newValue) != mHrValue || mOutFormat == OutFormat::NONE) {
+            mHrValue = static_cast<uint32_t>(newValue);
             glanceUpdate();
         }
     }
@@ -114,8 +121,6 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 
 void Service::onGlanceTick()
 {
-    //LOG_DEBUG("Glance tick\n");
-
     if (mGlanceUI.isInvalid()) {
         if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
             upd->name           = APP_NAME;
@@ -147,26 +152,38 @@ bool Service::configGui()
 
 void Service::glanceUpdate()
 {
-    if (mHrValue > 1.0 && !mIsValid) {
-        mIsValid = true;
+    OutFormat newFormat = mHrValue > 0 ? OutFormat::HR : OutFormat::CALCULATION;
 
-        mGlanceValue.pos({ kValidValueX, kValidValueY },
-                         { kValidValueW, kValidValueH })
-            .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
-            .setText("")
-            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
-    } else if (mHrValue <= 1.0 && mIsValid) {
-        mIsValid = false;
+    if (newFormat != mOutFormat) {
+        mOutFormat = newFormat;
 
-        mGlanceValue.pos({ kCalculatingValueX, kCalculatingValueY },
-                         { kCalculatingValueW, kCalculatingValueH })
-            .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
-            .setText(skTextCalculating)
-            .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
-    }
+        switch (newFormat) {
+            case OutFormat::CALCULATION:
+                mGlanceValue.pos({ kCalculatingValueX, kCalculatingValueY },
+                                 { kCalculatingValueW, kCalculatingValueH })
+                    .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
+                    .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT)
+                    .setText(skTextCalculating);
+                break;
 
-    if (mIsValid) {
-        mGlanceValue.print("%.0f", mHrValue);
+            case OutFormat::HR:
+                mGlanceValue.pos({ kValidValueX, kValidValueY },
+                                 { kValidValueW, kValidValueH })
+                    .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
+                    .print("%u", mHrValue)
+                    .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
+                break;
+
+            case OutFormat::NONE:
+                // configured in createGuiControls()
+            default:
+                break;
+        }
+    } else {
+        if (mOutFormat == OutFormat::HR) {
+            // live update
+            mGlanceValue.print("%u", mHrValue);
+        }
     }
 }
 
@@ -185,9 +202,10 @@ void Service::createGuiControls()
                ICON_HR_ABGR2222);
 
     mGlanceValue = mGlanceUI.createText();
-    mGlanceValue.pos({ kCalculatingValueX, kCalculatingValueY }, { kCalculatingValueW, kCalculatingValueH })
-        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_18)
+    mGlanceValue.pos({ kValidValueX, kValidValueY },
+                     { kValidValueW, kValidValueH })
+        .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .setText(skTextCalculating)
-        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_LEFT);
+        .setText("---")
+        .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }

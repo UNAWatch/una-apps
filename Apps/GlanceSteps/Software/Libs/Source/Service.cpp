@@ -18,7 +18,8 @@ Service::Service(SDK::Kernel &kernel)
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValue()
-    , mSensorPedo(SDK::Sensor::Type::STEP_COUNTER)
+    , mSensorPedo(SDK::Sensor::Type::STEP_COUNTER_DAILY)
+    , mStepsValue(0)
     , mDataReceived(false)
 {
 }
@@ -104,27 +105,24 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
     if (mSensorPedo.matchesDriver(handle)) {
         SDK::SensorDataParser::StepCounter p(data[0]);
 
-        if (p.isDataValid()) {
-            LOG_DEBUG("steps = %d\n", p.getStepCount());
-            uint32_t newValue = p.getStepCount();
-            if (mStepsValue != newValue) {
-                mStepsValue = newValue;
-                mGlanceValue.print("%u", mStepsValue);
-            }
+        if (!p.isDataValid()) {
+            return;
+        }
 
-            if (!mDataReceived && mStepsValue == 0) {
-                mGlanceValue.print("%u", mStepsValue);
-            }
+        uint32_t newValue = p.getStepCount();
 
+        LOG_DEBUG("Steps: %u\n", newValue);
+
+        if (newValue != mStepsValue || !mDataReceived) {
             mDataReceived = true;
+            mStepsValue = newValue;
+            glanceUpdate();
         }
     }
 }
 
 void Service::onGlanceTick()
 {
-    //LOG_DEBUG("Glance tick\n");
-
     if (mGlanceUI.isInvalid()) {
         if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
             upd->name           = APP_NAME;
@@ -154,6 +152,11 @@ bool Service::configGui()
     return status;
 }
 
+void Service::glanceUpdate()
+{
+    mGlanceValue.print("%u", mStepsValue);
+}
+
 void Service::createGuiControls()
 {
     mGlanceUI.createImage().init({kIconX, kIconY}, {ICON_STEPS_WIDTH, ICON_STEPS_HEIGHT}, ICON_STEPS_ABGR2222);
@@ -169,6 +172,6 @@ void Service::createGuiControls()
     mGlanceValue.pos({ kValueX, kValueY }, { kValueW, kValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .setText("")
+        .setText("---")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }

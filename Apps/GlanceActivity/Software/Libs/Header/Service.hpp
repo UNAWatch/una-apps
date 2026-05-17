@@ -23,6 +23,8 @@ private:
 
     void handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
+    void glanceUpdate();
+
     void onGlanceTick();
     bool configGui();
     void createGuiControls();
@@ -48,6 +50,8 @@ private:
     SDK::Glance::ControlImage mIcon;
 
     SDK::Sensor::Connection mSensorActivity;
+    uint32_t                mActivityTimeValue;
+    bool                    mDataReceived;
 };
 
 #endif

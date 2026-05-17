@@ -49,7 +49,8 @@ private:
     SDK::Glance::ControlImage mIcon;
 
     SDK::Sensor::Connection mSensorSOC;
-    float                   mSOCValue;
+    uint32_t                mSOCValue;
+    bool                    mDataReceived;
 };
 
 #endif
