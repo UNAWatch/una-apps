@@ -56,8 +56,14 @@ private:
     SDK::Glance::ControlImage mIcon;
 
     SDK::Sensor::Connection mSensorHR;
-    float                   mHrValue;
-    bool                    mIsValid;
+    uint32_t                mHrValue;
+
+    enum class OutFormat {
+      NONE = 0,
+      CALCULATION,
+      HR,
+    };
+    OutFormat mOutFormat;
 };
 
 #endif

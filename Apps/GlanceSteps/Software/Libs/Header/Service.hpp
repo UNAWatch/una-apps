@@ -23,6 +23,8 @@ private:
 
     void handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data);
 
+    void glanceUpdate();
+
     void onGlanceTick();
     bool configGui();
     void createGuiControls();

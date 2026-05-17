@@ -20,6 +20,7 @@ Service::Service(SDK::Kernel &kernel)
     , mIcon()
     , mSensorSOC(SDK::Sensor::Type::BATTERY_LEVEL)
     , mSOCValue(0)
+    , mDataReceived(false)
 {
 }
 
@@ -102,15 +103,18 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
     if (mSensorSOC.matchesDriver(handle)) {
         SDK::SensorDataParser::BatteryLevel p(data[0]);
-        if (p.isDataValid()) {
-            float value = p.getCharge();
-            if (value > 100.0) {
-                value = 100.0;
-            }
 
-            LOG_DEBUG("level = %.2f\n", value);
+        if (!p.isDataValid()) {
+            return;
+        }
 
-            mSOCValue = value;
+        float newValue = p.getCharge();
+
+        LOG_DEBUG("Level: %.1f\n", newValue);
+
+        if (static_cast<uint32_t>(newValue) != mSOCValue || !mDataReceived) {
+            mDataReceived = true;
+            mSOCValue = static_cast<uint32_t>(newValue);
             glanceUpdate();
         }
     }
@@ -118,8 +122,6 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 
 void Service::onGlanceTick()
 {
-    //LOG_DEBUG("Glance tick\n");
-
     if (mGlanceUI.isInvalid()) {
         if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
             upd->name           = APP_NAME;
@@ -151,7 +153,7 @@ bool Service::configGui()
 
 void Service::glanceUpdate()
 {
-    mGlanceValue.print("%.0f%%", mSOCValue);
+    mGlanceValue.print("%u%%", mSOCValue);
 
     /**
      *  Level     s1          s2      s3      s4
@@ -162,13 +164,13 @@ void Service::glanceUpdate()
      *  75-100 %  teal        teal    teal    teal
      */
 
-    if (mSOCValue >= 75.0f) {
+    if (mSOCValue >= 75) {
         mIcon.setImage(ICON_BATTERY_100_ABGR2222);
-    } else if (mSOCValue >= 50.0f) {
+    } else if (mSOCValue >= 50) {
         mIcon.setImage(ICON_BATTERY_75_ABGR2222);
-    } else if (mSOCValue >= 25.0f) {
+    } else if (mSOCValue >= 25) {
         mIcon.setImage(ICON_BATTERY_50_ABGR2222);
-    } else if (mSOCValue >= 1.0f) {
+    } else if (mSOCValue >= 1) {
         mIcon.setImage(ICON_BATTERY_25_ABGR2222);
     } else {
         mIcon.setImage(ICON_BATTERY_0_ABGR2222);
@@ -191,6 +193,6 @@ void Service::createGuiControls()
     mGlanceValue.pos({ kValueX, kValueY }, { kValueW, kValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .setText("")
+        .setText("---")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }

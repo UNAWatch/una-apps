@@ -19,7 +19,9 @@ Service::Service(SDK::Kernel &kernel)
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValue()
-    , mSensorActivity(SDK::Sensor::Type::ACTIVITY)
+    , mSensorActivity(SDK::Sensor::Type::ACTIVITY_TIME_DAILY)
+    , mActivityTimeValue(0)
+    , mDataReceived(false)
 {
 }
 
@@ -101,14 +103,25 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
     if (mSensorActivity.matchesDriver(handle)) {
         SDK::SensorDataParser::Activity p(data[0]);
-        mGlanceValue.print("%u", p.getDuration());
+
+        if (!p.isDataValid()) {
+            return;
+        }
+
+        uint32_t newValue = p.getDuration();
+
+        LOG_DEBUG("Activity minutes: %u\n", p.getDuration());
+
+        if (newValue != mActivityTimeValue || !mDataReceived) {
+            mDataReceived = true;
+            mActivityTimeValue = newValue;
+            glanceUpdate();
+        }
     }
 }
 
 void Service::onGlanceTick()
 {
-    //LOG_DEBUG("Glance tick\n");
-
     if (mGlanceUI.isInvalid()) {
         if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
             upd->name           = APP_NAME;
@@ -138,6 +151,11 @@ bool Service::configGui()
     return status;
 }
 
+void Service::glanceUpdate()
+{
+    mGlanceValue.print("%u", mActivityTimeValue);
+}
+
 void Service::createGuiControls()
 {
     mGlanceTitle = mGlanceUI.createText();
@@ -156,6 +174,6 @@ void Service::createGuiControls()
     mGlanceValue.pos({ kValueX, kValueY }, { kValueW, kValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .setText("")
+        .setText("---")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }

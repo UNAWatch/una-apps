@@ -51,9 +51,9 @@ private:
     SDK::Glance::ControlText mGlanceValueRHR;
 
     SDK::Sensor::Connection mSensorHRMetrics;
-    float                   mAHRValue;
-    float                   mRHRValue;
-    bool                    mIsValid;
+    uint32_t                mAvgHrValue;
+    uint32_t                mRestHrValue;
+    bool                    mDataReceived;
 };
 
 #endif

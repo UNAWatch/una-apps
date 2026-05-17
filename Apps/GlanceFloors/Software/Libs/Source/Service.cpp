@@ -17,7 +17,7 @@ Service::Service(SDK::Kernel &kernel)
     , mGlanceUI()
     , mGlanceTitle()
     , mGlanceValue()
-    , mSensorFloors(SDK::Sensor::Type::FLOOR_COUNTER)
+    , mSensorFloors(SDK::Sensor::Type::FLOOR_COUNTER_DAILY)
     , mFloorsValue(0)
     , mDataReceived(false)
 {
@@ -102,27 +102,25 @@ void Service::handleSensorsData(uint16_t handle, SDK::Sensor::DataBatch& data)
 {
     if (mSensorFloors.matchesDriver(handle)) {
         SDK::SensorDataParser::FloorCounter p(data[0]);
-        if (p.isDataValid()) {
-            LOG_DEBUG("up = %d down = %d\n", p.getFloorsUp(), p.getFloorsDown());
-            uint32_t newValue = p.getFloorsDown() + p.getFloorsUp();
-            if (mFloorsValue != newValue) {
-                mFloorsValue = newValue;
-                mGlanceValue.print("%u", mFloorsValue);
-            }
 
-            if (!mDataReceived && mFloorsValue == 0) {
-                mGlanceValue.print("%u", mFloorsValue);
-            }
+        if (!p.isDataValid()) {
+            return;
+        }
 
+        uint32_t newValue = static_cast<uint32_t>(p.getFloorsDown() + p.getFloorsUp());
+
+        LOG_DEBUG("Floors: %u (up: %d, down: %d)\n", newValue, p.getFloorsUp(), p.getFloorsDown());
+
+        if (newValue != mFloorsValue || !mDataReceived) {
             mDataReceived = true;
+            mFloorsValue = newValue;
+            glanceUpdate();
         }
     }
 }
 
 void Service::onGlanceTick()
 {
-    //LOG_DEBUG("Glance tick\n");
-
     if (mGlanceUI.isInvalid()) {
         if (auto upd = SDK::make_msg<SDK::Message::RequestGlanceUpdate>(mKernel)) {
             upd->name           = APP_NAME;
@@ -152,6 +150,11 @@ bool Service::configGui()
     return status;
 }
 
+void Service::glanceUpdate()
+{
+    mGlanceValue.print("%u", mFloorsValue);
+}
+
 void Service::createGuiControls()
 {
     mGlanceUI.createImage().init({kIconX, kIconY}, {ICON_FLOORS_WIDTH, ICON_FLOORS_HEIGHT}, ICON_FLOORS_ABGR2222);
@@ -167,6 +170,6 @@ void Service::createGuiControls()
     mGlanceValue.pos({ kValueX, kValueY }, { kValueW, kValueH })
         .font(GlanceFont_t::GLANCE_FONT_POPPINS_SEMIBOLD_30)
         .color(GlanceColor_t::GLANCE_COLOR_WHITE)
-        .setText("")
+        .setText("---")
         .alignment(GlanceAlignH_t::GLANCE_ALIGN_H_CENTER);
 }
