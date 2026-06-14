@@ -356,6 +356,12 @@ void Service::onStopGUI()
 {
     mGuiStarted = false;
 
+    // GPS early-acquire is tied to GUI (see connectGps in onStartGUI). Release it when
+    // the GUI stops
+    if (mSensorGpsLocation.isConnected()) {
+        mSensorGpsLocation.disconnect();
+    }
+
     mSensorWristMotion.disconnect();
 }
 
